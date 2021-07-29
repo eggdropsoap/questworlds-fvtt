@@ -1,0 +1,31 @@
+{
+	"name": "questworlds",
+	"title": "QuestWorlds",
+	"description": "A system to play QuestWorlds, the rules-lite storytelling RPG from Chaosium, on Foundry VTT. Based on the QuestWorlds SRD.",
+	"version": "0.1.0",
+	"author": "eggdropsoap",
+	"license": "LICENSE.md",
+	"readme": "README.md",
+	"changelog": "CHANGELOG.md",
+	"bugs": "",
+	"minimumCoreVersion": "0.8.7",
+	"esmodules": [ "qw.js" ],
+	"styles": [ "qw.css" ],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"socket": false,
+	"initiative": null,
+	"gridDistance": 10,
+	"gridUnits": "ft",
+	"primaryTokenAttribute": null,
+	"secondaryTokenAttribute": null,
+	"url": "",
+	"manifest": "",
+	"download": ""
+}
+

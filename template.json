@@ -1,0 +1,52 @@
+{
+    "Actor": {
+      "types": ["character", "npc"],
+      "templates": {
+        "base": {
+          "biography": ""
+        }
+      },
+      "character": {
+        "templates": ["base"],
+        "points": {
+            "asyougo": 20,
+            "hero": 0,
+            "unspent_xp": 0,
+            "earned_xp": 0
+        }
+      },
+      "npc": {
+        "templates": ["base"]
+      }
+    },
+    "Item": {
+      "types": ["keyword", "ability", "sidekick", "flaw", "benefit", "consequence"],
+      "templates": {
+        "base": {
+          "description": "",
+          "rating": 0,
+          "masteries": 0  
+        }
+      },
+      "keyword": {
+        "templates": ["base"],
+        "breakouts": []
+      },
+      "ability": {
+        "templates": ["base"]
+      },
+      "sidekick": {
+        "templates": ["base"],
+        "abilities": []
+      },
+      "flaw": {
+        "templates": ["base"]
+      },
+      "benefit": {
+        "templates": ["base"]
+      },
+      "consequence": {
+        "templates": ["base"]
+      }
+    }
+  }
