@@ -25,6 +25,9 @@ Hooks.once('init', async function() {
   // Add custom constants for configuration.
   CONFIG.QUESTWORLDS = QUESTWORLDS;
 
+  // Hook debugging
+  CONFIG.debug.hooks = false;
+
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -65,6 +68,26 @@ Handlebars.registerHelper('concat', function() {
 
 Handlebars.registerHelper('toLowerCase', function(str) {
   return str.toLowerCase();
+});
+
+Handlebars.registerHelper('fullRating', function() {
+  var outStr = '';
+  const mastery_symbol = 'M';
+  if (arguments.length > 1) {
+    outStr = arguments[0].rating;
+    var masteries = arguments[0].masteries;
+    if (masteries > 0) {
+      outStr += mastery_symbol;
+    }
+    if (masteries > 1) {
+      outStr += masteries;
+    }
+  }
+  return outStr;
+});
+
+Handlebars.registerHelper('iseq', function (value1,value2) {
+  return value1 == value2;
 });
 
 /* -------------------------------------------- */

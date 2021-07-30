@@ -8,7 +8,7 @@
   {{#each benefits as |item id|}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <div class="item-name">
-        <h4>{{item.name}}</h4>
+        <h4>{{item.name}} {{fullRating item.data}}</h4>
       </div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
