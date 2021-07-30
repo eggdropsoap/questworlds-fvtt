@@ -19,7 +19,7 @@
 		}
 	],
 	"socket": false,
-	"initiative": null,
+	"initiative": "1d20",
 	"gridDistance": 10,
 	"gridUnits": "ft",
 	"primaryTokenAttribute": null,

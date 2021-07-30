@@ -3,11 +3,14 @@
       "types": ["character", "npc"],
       "templates": {
         "base": {
-          "biography": ""
+            "concept": "",
+            "description": ""
         }
       },
       "character": {
         "templates": ["base"],
+        "biography": "",
+        "notes": "",
         "points": {
             "asyougo": 20,
             "hero": 0,

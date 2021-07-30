@@ -11,8 +11,8 @@ export class QuestWorldsActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["questworlds", "sheet", "actor"],
       template: "systems/questworlds/templates/actor/actor-sheet.html",
-      width: 600,
-      height: 600,
+      width: 750,
+      height: 650,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }
@@ -67,10 +67,12 @@ export class QuestWorldsActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
+    /* we don't have ability scores in QW
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.data.abilities)) {
       v.label = game.i18n.localize(CONFIG.QUESTWORLDS.abilities[k]) ?? k;
     }
+    */
   }
 
   /**
@@ -82,44 +84,31 @@ export class QuestWorldsActorSheet extends ActorSheet {
    */
   _prepareItems(context) {
     // Initialize containers.
-    const gear = [];
-    const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: []
-    };
-
+    const abilities = [];
+    const flaws = [];
+    const benefits = [];
+    
     // Iterate through items, allocating to containers
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
-      // Append to gear.
-      if (i.type === 'item') {
-        gear.push(i);
+      // Append to main abilities.
+      if (i.type === 'keyword' || i.type === 'ability' || i.type === 'sidekick') {
+        abilities.push(i);
       }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
+      // Append to flaws.
+      else if (i.type === 'flaw') {
+        flaws.push(i);
       }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
-        }
+      // Append to benefits and consequences.
+      else if (i.type === 'benefit' || i.type === 'consequence') {
+        benefits.push(i);
       }
     }
 
     // Assign and return
-    context.gear = gear;
-    context.features = features;
-    context.spells = spells;
+    context.abilities = abilities;
+    context.flaws = flaws;
+    context.benefits = benefits;
    }
 
   /* -------------------------------------------- */
@@ -157,7 +146,7 @@ export class QuestWorldsActorSheet extends ActorSheet {
     html.find('.rollable').click(this._onRoll.bind(this));
 
     // Drag events for macros.
-    if (this.actor.owner) {
+    if (this.actor.isOwner) {
       let handler = ev => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
         if (li.classList.contains("inventory-header")) return;

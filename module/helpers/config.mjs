@@ -4,6 +4,7 @@ export const QUESTWORLDS = {};
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
+/*
  QUESTWORLDS.abilities = {
   "str": "QUESTWORLDS.AbilityStr",
   "dex": "QUESTWORLDS.AbilityDex",
@@ -21,3 +22,4 @@ QUESTWORLDS.abilityAbbreviations = {
   "wis": "QUESTWORLDS.AbilityWisAbbr",
   "cha": "QUESTWORLDS.AbilityChaAbbr"
 };
+*/

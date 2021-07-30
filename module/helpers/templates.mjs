@@ -7,9 +7,9 @@
   return loadTemplates([
 
     // Actor partials.
-    "systems/questworlds/templates/actor/parts/actor-features.html",
-    "systems/questworlds/templates/actor/parts/actor-items.html",
-    "systems/questworlds/templates/actor/parts/actor-spells.html",
-    "systems/questworlds/templates/actor/parts/actor-effects.html",
+    "systems/questworlds/templates/actor/parts/actor-abilities.html",
+    "systems/questworlds/templates/actor/parts/actor-benefits.html",
+    "systems/questworlds/templates/actor/parts/actor-flaws.html",
+    //"systems/questworlds/templates/actor/parts/actor-effects.html",
   ]);
 };

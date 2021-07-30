@@ -1,0 +1,36 @@
+{
+    "QUESTWORLDS.Character": "Character",
+    "QUESTWORLDS.Npc": "NPC",
+
+    "QUESTWORLDS.Biography": "Biography",
+    "QUESTWORLDS.Concept": "Concept",
+    "QUESTWORLDS.Description": "Description",
+    "QUESTWORLDS.HeroPoints": "Hero Points",
+    "QUESTWORLDS.UnspentXP": "Unspent XP",
+    "QUESTWORLDS.EarnedXP": "Earned XP",
+    "QUESTWORLDS.AsYouGoPoints": "Creation Points",
+    
+    "QUESTWORLDS.NavMain": "Character",
+    "QUESTWORLDS.NavBiography": "Biography",
+    "QUESTWORLDS.NavArt": "Art",
+    "QUESTWORLDS.NavNotes": "Notes",
+
+
+    "QUESTWORLDS.KeywordsAndAbilities": "Keywords and Abilities",
+    "QUESTWORLDS.Flaws": "Flaws",
+    "QUESTWORLDS.BenefitsAndConsequences": "Benefits and Consequences",
+    
+    
+    "QUESTWORLDS.ItemKeyword": "Keyword",
+    "QUESTWORLDS.ItemAbility": "Ability",
+    "QUESTWORLDS.ItemSidekick": "Sidekick",
+    "QUESTWORLDS.ItemFlaw": "Flaw",
+    "QUESTWORLDS.ItemBenefit": "Benefit",
+    "QUESTWORLDS.ItemBenefit_L": "Benefit of Victory",
+    "QUESTWORLDS.ItemConsequence": "Consequence",
+    "QUESTWORLDS.ItemConsequence_L": "Consequence of Defeat",
+
+
+    "QUESTWORLDS.Add": "Add",
+    "QUESTWORLDS.Delete": "Delete"
+}
