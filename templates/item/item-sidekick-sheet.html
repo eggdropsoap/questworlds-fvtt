@@ -3,7 +3,7 @@
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div style="text-transform: capitalize; font-variant: small-caps; font-weight:bold;">{{localize (concat 'QUESTWORLDS.' item.type) }}</div>
-      <h3 class="charname">{{item.name}} {{fullRating data}} {{data.description}}</h3>
+      <h3 class="charname"><strong>{{item.name}}</strong></h3>
     </div>
   </header>
 
@@ -23,7 +23,28 @@
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+
+      {{!-- list of abilities --}}
+      <ol class="items-list">
+        <li class="item flexrow items-header">
+          <div class="item-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus"></i> {{localize 'QUESTWORLDS.Add'}}</a>
+          </div>
+        </li>
+        {{#if (iseq data.abilities.length 0)}}
+        <li></li>
+        {{else}}
+        {{#each abilities as |item id|}}
+        <li class="item" data-item-id="{{item._id}}">
+          {{item.name}}
+        </li>
+        {{/each}}
+        {{/if}}
+      </ol>
+
     </div>
+
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="settings">
