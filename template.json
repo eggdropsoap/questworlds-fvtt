@@ -33,7 +33,7 @@
         "templates": ["base"],
         "rating": 0,
         "masteries": 0,
-        "breakouts": []
+        "breakouts": {}
       },
       "ability": {
         "templates": ["base"],
@@ -42,7 +42,7 @@
     },
       "sidekick": {
         "templates": ["base"],
-        "abilities": []
+        "abilities": {}
       },
       "flaw": {
         "templates": ["base"],
