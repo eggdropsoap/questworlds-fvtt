@@ -26,30 +26,36 @@
       "types": ["keyword", "ability", "sidekick", "flaw", "benefit", "consequence"],
       "templates": {
         "base": {
-          "description": "",
-          "rating": 0,
-          "masteries": 0  
+          "description": ""
         }
       },
       "keyword": {
         "templates": ["base"],
+        "rating": 0,
+        "masteries": 0,
         "breakouts": []
       },
       "ability": {
-        "templates": ["base"]
-      },
+        "templates": ["base"],
+        "rating": 0,
+        "masteries": 0  
+    },
       "sidekick": {
         "templates": ["base"],
         "abilities": []
       },
       "flaw": {
-        "templates": ["base"]
-      },
+        "templates": ["base"],
+        "rating": 0,
+        "masteries": 0  
+    },
       "benefit": {
-        "templates": ["base"]
-      },
+        "templates": ["base"],
+        "rating": 0
+    },
       "consequence": {
-        "templates": ["base"]
-      }
+        "templates": ["base"],
+        "rating": 0
+    }
     }
   }
