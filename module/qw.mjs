@@ -86,6 +86,12 @@ Handlebars.registerHelper('fullRating', function() {
   return outStr;
 });
 
+Handlebars.registerHelper('whichItemPartial', function (itemType) {
+  // throw away item type until this works at all
+  return "systems/questworlds/templates/actor/parts/actor-abilities-" + itemType + ".html"
+  //return "actor-abilities-" + itemType + ".html"
+});
+
 Handlebars.registerHelper('iseq', function (value1,value2) {
   return value1 == value2;
 });

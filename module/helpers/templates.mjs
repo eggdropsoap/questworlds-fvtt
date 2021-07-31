@@ -8,6 +8,9 @@
 
     // Actor partials.
     "systems/questworlds/templates/actor/parts/actor-abilities.html",
+    "systems/questworlds/templates/actor/parts/actor-abilities-ability.html",
+    "systems/questworlds/templates/actor/parts/actor-abilities-keyword.html",
+    "systems/questworlds/templates/actor/parts/actor-abilities-sidekick.html",
     "systems/questworlds/templates/actor/parts/actor-benefits.html",
     "systems/questworlds/templates/actor/parts/actor-flaws.html",
     //"systems/questworlds/templates/actor/parts/actor-effects.html",

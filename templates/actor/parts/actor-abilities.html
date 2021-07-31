@@ -13,11 +13,7 @@
         </div>
         <h4>
           <a class="rollable" data-roll-type="item">
-            {{#if (iseq item.type 'keyword')}}
-            <strong>{{item.name}} {{fullRating item.data}}</strong>
-            {{else}}
-            {{item.name}} {{fullRating item.data}}
-            {{/if}}
+            {{> (whichItemPartial item.type) item=item}}
           </a>
         </h4>
       </div>

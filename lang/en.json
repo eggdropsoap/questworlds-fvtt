@@ -19,7 +19,15 @@
     "QUESTWORLDS.KeywordsAndAbilities": "Keywords and Abilities",
     "QUESTWORLDS.Flaws": "Flaws",
     "QUESTWORLDS.BenefitsAndConsequences": "Benefits and Consequences",
-    
+
+    "QUESTWORLDS.keyword": "keyword",
+    "QUESTWORLDS.ability": "ability",
+    "QUESTWORLDS.sidekick": "sidekick",
+    "QUESTWORLDS.breakout": "breakout",
+    "QUESTWORLDS.flaw": "flaw",
+    "QUESTWORLDS.benefit": "benefit",
+    "QUESTWORLDS.consequence": "consequence",
+
     
     "QUESTWORLDS.ItemKeyword": "Keyword",
     "QUESTWORLDS.ItemAbility": "Ability",

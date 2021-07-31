@@ -23,7 +23,7 @@
   <section class="sheet-body">
 
     {{!-- Game Information Tab --}}
-    <div class="tab features" data-group="primary" data-tab="main">
+    <div class="tab main" data-group="primary" data-tab="main">
 
       {{!-- Hero points, XP, and such --}}
       <section class="resources grid grid-3col">
@@ -88,12 +88,12 @@
     </div>
 
     {{!-- Art Tab --}}
-    <div class="tab items" data-group="primary" data-tab="art">
+    <div class="tab art" data-group="primary" data-tab="art">
       <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
     </div>
 
     {{!-- Notes Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="notes">
+    <div class="tab notes" data-group="primary" data-tab="notes">
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
       {{editor content=data.notes target="data.notes" rollData=rollData button=true owner=owner editable=editable}}
     </div>
