@@ -29,6 +29,38 @@
       <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+   
+      {{!-- list of breakouts --}}
+      <ol class="items-list breakouts-list">
+        <li class="item flexrow items-header">
+          <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}} (count: {{data.breakouts.length}})</div>
+          <div class="breakout-controls item-controls">
+            <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i> {{localize 'QUESTWORLDS.Add'}}</a>
+          </div>
+        </li>
+        {{#if (iseq data.breakouts.length 0)}}
+        <li></li>
+        {{else}}
+        {{#each data.breakouts as |item id|}}
+        <li class="item" data-item-id="{{item.id}}">
+          <div class="flexrow">
+            <div class="item-name">
+                <h4>
+                    <a class="rollable" data-roll-type="item">
+                      {{item.name}} +{{item.bonus}} ({{item.id}})
+                    </a>
+                </h4>
+                </div>
+            <div class="item-controls">
+                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+        {{/if}}
+      </ol>
+
     </div>
 
     {{!-- Attributes Tab --}}

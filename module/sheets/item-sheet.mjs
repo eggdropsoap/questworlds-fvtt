@@ -1,3 +1,5 @@
+import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -59,5 +61,9 @@ export class QuestWorldsItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+
+    // Add or Remove breakout ability
+    html.find(".breakouts-list").on("click", ".breakout-controls", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
+
   }
 }
