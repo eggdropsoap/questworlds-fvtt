@@ -88,72 +88,9 @@ export class BreakoutsSheetHelper {
     breakouts.push(newBreakout);
     console.log(breakouts);
     console.log(app.object.update);
+
     // update the item data
-    theKeyword.update({'data.breakouts': breakouts});
-    
-    /*
-    // Determine the new attribute key for ungrouped attributes.
-    let objKeys = Object.keys(attrs).filter(k => !Object.keys(groups).includes(k));
-    let nk = Object.keys(attrs).length + 1;
-    let newValue = `attr${nk}`;
-    let newKey = document.createElement("div");
-    while ( objKeys.includes(newValue) ) {
-      ++nk;
-      newValue = `attr${nk}`;
-    };
-
-    // Build options for construction HTML inputs.
-    let htmlItems = {
-      key: {
-        type: "text",
-        value: newValue
-      }
-    };
-
-    // Grouped attributes.
-    if ( group ) {
-      objKeys = attrs[group] ? Object.keys(attrs[group]) : [];
-      nk = objKeys.length + 1;
-      newValue = `attr${nk}`;
-      while ( objKeys.includes(newValue) ) {
-        ++nk;
-        newValue =  `attr${nk}`;
-      }
-
-      // Update the HTML options used to build the new input.
-      htmlItems.key.value = newValue;
-      htmlItems.group = {
-        type: "hidden",
-        value: group
-      };
-      htmlItems.dtype = {
-        type: "hidden",
-        value: dtype
-      };
-    }
-    // Ungrouped attributes.
-    else {
-      // Choose a default dtype based on the last attribute, fall back to "String".
-      if (!dtype) {
-        let lastAttr = document.querySelector('.attributes > .attributes-group .attribute:last-child .attribute-dtype')?.value;
-        dtype = lastAttr ? lastAttr : "String";
-        htmlItems.dtype = {
-          type: "hidden",
-          value: dtype
-        };
-      }
-    }
-
-    // Build the form elements used to create the new grouped attribute.
-    newKey.innerHTML = EntitySheetHelper.getAttributeHtml(htmlItems, nk, group);
-
-    // Append the form element and submit the form.
-    newKey = newKey.children[0];
-    form.appendChild(newKey);
-    */
-    
-    //await app._onSubmit(event);
-    
+    theKeyword.update({'data.breakouts': breakouts});    
   }
 
   /**
