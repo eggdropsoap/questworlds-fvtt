@@ -74,12 +74,11 @@ export class BreakoutsSheetHelper {
     console.log("createBreakout() reached");
 
     const a = event.target;
-//    const group = a.dataset.group;
-//    let dtype = a.dataset.dtype;
-    const breakouts = app.object.data.data.breakouts;
-//    const groups = app.object.data.data.groups;
+    //    let dtype = a.dataset.dtype;
+    const theKeyword = app.object;
+    const breakouts = theKeyword.data.data.breakouts;
     const form = app.form;
-
+    
     // push New Breakout into the item's breakouts array
     let newBreakout = {
       "id": "breakout-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
@@ -88,7 +87,10 @@ export class BreakoutsSheetHelper {
     }
     breakouts.push(newBreakout);
     console.log(breakouts);
-
+    console.log(app.object.update);
+    // update the item data
+    theKeyword.update({'data.breakouts': breakouts});
+    
     /*
     // Determine the new attribute key for ungrouped attributes.
     let objKeys = Object.keys(attrs).filter(k => !Object.keys(groups).includes(k));
@@ -148,8 +150,10 @@ export class BreakoutsSheetHelper {
     // Append the form element and submit the form.
     newKey = newKey.children[0];
     form.appendChild(newKey);
-    await app._onSubmit(event);
     */
+    
+    //await app._onSubmit(event);
+    
   }
 
   /**
