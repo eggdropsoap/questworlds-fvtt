@@ -41,19 +41,19 @@
         {{#if (iseq data.breakouts.length 0)}}
         <li></li>
         {{else}}
-        {{#each data.breakouts as |item id|}}
-        <li class="item" data-item-id="{{item.id}}">
+        {{#each data.breakouts as |breakout id|}}
+        <li class="item" data-item-id="{{breakout.id}}">
           <div class="flexrow">
             <div class="item-name">
                 <h4>
                     <a class="rollable" data-roll-type="item">
-                      {{item.name}} +{{item.bonus}}
+                      {{breakout.name}} +{{breakout.bonus}} ({{breakout.id}})
                     </a>
                 </h4>
                 </div>
-            <div class="item-controls">
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            <div class="item-controls breakout-controls">
+                <a class="breakout-control item-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="breakout-control item-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
             </div>
           </div>
         </li>

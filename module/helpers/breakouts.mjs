@@ -7,11 +7,11 @@ export class BreakoutsSheetHelper {
    */
   static async onClickBreakoutControl(event) {
     event.preventDefault();
-    const a = event.target;
+    const a = event.currentTarget;
     const action = a.dataset.action;
 
     console.log("Click processing: " + action)
-    //console.log(event)
+    console.log(event)
 
     // Perform create and delete actions.
     switch ( action ) {
@@ -22,6 +22,10 @@ export class BreakoutsSheetHelper {
       case "delete":
         console.log("Delete processing")
         BreakoutsSheetHelper.deleteBreakout(event, this);
+        break;
+      case "edit":
+        console.log("Edit processing")
+        BreakoutsSheetHelper.editBreakout(event, this);
         break;
     }
   }
@@ -65,15 +69,14 @@ export class BreakoutsSheetHelper {
   /* -------------------------------------------- */
 
   /**
-   * Create new breakouts.
+   * Create a new breakout.
    * @param {MouseEvent} event    The originating left click event
    * @param {Object} app          The form application object.
    * @private
    */
   static async createBreakout(event, app) {
-    console.log("createBreakout() reached");
 
-    const a = event.target;
+    const a = event.currentTarget;
     //    let dtype = a.dataset.dtype;
     const theKeyword = app.object;
     const breakouts = theKeyword.data.data.breakouts;
@@ -86,30 +89,44 @@ export class BreakoutsSheetHelper {
       "bonus": 1,
     }
     breakouts.push(newBreakout);
-    console.log(breakouts);
-    console.log(app.object.update);
 
     // update the item data
     theKeyword.update({'data.breakouts': breakouts});    
-  }
+  
+  } // createBreakout()
 
   /**
-   * Delete an attribute.
+   * Delete a breakout.
    * @param {MouseEvent} event    The originating left click event
    * @param {Object} app          The form application object.
    * @private
    */
   static async deleteBreakout(event, app) {
-    console.log("deleteBreakout() stub reached");
-    return;
 
     const a = event.currentTarget;
-    const li = a.closest(".attribute");
-    if ( li ) {
-      li.parentElement.removeChild(li);
-      await app._onSubmit(event);
-    }
-  }
+    const breakout_id = a.dataset.breakoutId;
+    const theKeyword = app.object;
+    const breakouts = theKeyword.data.data.breakouts;
 
+    //find and remove the breakout by id from temporary data
+    let prunedBreakouts = breakouts.filter(item => { return item.id !== breakout_id });
+    
+    //update the item data
+    theKeyword.update({'data.breakouts': prunedBreakouts});
+  
+  } // deleteBreakout()
 
-}
+  /**
+   * Edit a breakout.
+   * @param {MouseEvent} event    The originating left click event
+   * @param {Object} app          The form application object.
+   * @private
+   */
+  static async editBreakout(event, app) {
+    console.log("editBreakout() stub reached");
+     
+    return;
+    
+  } // editBreakout()
+
+} // class BreakoutsSheetHelper
