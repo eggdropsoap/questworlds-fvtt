@@ -363,9 +363,15 @@
   display: flex;
 }
 
-.questworlds .breakouts-list .item-name, .questworlds .item .sidekick-description {
+.questworlds.sheet.actor .breakouts-list .item-name, .questworlds.sheet.actor .item .sidekick-description {
   margin-left: 36px;
   min-height: 20px;
+}
+
+.questworlds.sheet.item .breakouts-list .item-name {
+  margin-left: 6px;
+  min-height: 20px;
+  border-bottom: 1px;
 }
 
 .questworlds .items-list .item-name h3, .questworlds .items-list .item-name h4 {

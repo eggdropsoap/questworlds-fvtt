@@ -14,6 +14,11 @@
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
 </div>
+{{#if item.data.description}}
+<div class="flexrow item-name sidekick-description">
+    <h4>({{item.data.description}})</h4>
+</div>
+{{/if}}
 
 {{#if item.data.breakouts}}
 <ol class="items-list breakouts-list">

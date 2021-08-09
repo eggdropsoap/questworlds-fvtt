@@ -23,44 +23,50 @@
     <div class="tab" data-group="primary" data-tab="details">
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
-      <label class="resource-label">Rating</label>
-      <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number"/>
-      <label class="resource-label">Masteries</label>
-      <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
-   
+      <div class="flexrow">
+        <div>
+          <label class="resource-label">Rating</label>
+          <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number"/>
+        </div>
+        <div>
+          <label class="resource-label">Masteries</label>
+          <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
+        </div>
+      </div>
       {{!-- list of breakouts --}}
-      <ol class="items-list breakouts-list">
-        <li class="item flexrow items-header">
-          <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}} (count: {{data.breakouts.length}})</div>
-          <div class="breakout-controls item-controls">
-            <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i> {{localize 'QUESTWORLDS.Add'}}</a>
-          </div>
-        </li>
-        {{#if (iseq data.breakouts.length 0)}}
-        <li></li>
-        {{else}}
-        {{#each data.breakouts as |breakout id|}}
-        <li class="item" data-item-id="{{breakout.id}}">
-          <div class="flexrow">
-            <div class="item-name">
-                <h4>
-                    <a class="rollable" data-roll-type="item">
-                      {{breakout.name}} +{{breakout.bonus}} ({{breakout.id}})
-                    </a>
-                </h4>
-                </div>
-            <div class="item-controls breakout-controls">
-                <a class="breakout-control item-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="breakout-control item-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+      <div style="margin-top: 0.6em;">
+        <ol class="items-list breakouts-list">
+          <li class="item flexrow items-header">
+            <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
+            <div class="breakout-controls item-controls">
+              <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
             </div>
-          </div>
-        </li>
-        {{/each}}
-        {{/if}}
-      </ol>
-
+          </li>
+          {{#if (iseq data.breakouts.length 0)}}
+          <li></li>
+          {{else}}
+          {{#each data.breakouts as |breakout id|}}
+          <li class="item" data-item-id="{{breakout.id}}">
+            <div class="flexrow">
+              <div class="item-name">
+                  <h4>
+                      <a class="rollable" data-roll-type="item">
+                        {{breakout.name}} +{{breakout.bonus}}
+                      </a>
+                  </h4>
+                  </div>
+              <div class="item-controls breakout-controls">
+                  <a class="breakout-control item-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="breakout-control item-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          {{/if}}
+        </ol>
+      </div>
     </div>
 
     {{!-- Attributes Tab --}}
