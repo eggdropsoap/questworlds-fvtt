@@ -10,21 +10,15 @@ export class BreakoutsSheetHelper {
     const a = event.currentTarget;
     const action = a.dataset.action;
 
-    console.log("Click processing: " + action)
-    console.log(event)
-
     // Perform create and delete actions.
     switch ( action ) {
       case "create":
-        console.log("Create processing")
         BreakoutsSheetHelper.createBreakout(event, this);
         break;
       case "delete":
-        console.log("Delete processing")
         BreakoutsSheetHelper.deleteBreakout(event, this);
         break;
       case "edit":
-        console.log("Edit processing")
         BreakoutsSheetHelper.editBreakout(event, this);
         break;
     }
@@ -123,7 +117,6 @@ export class BreakoutsSheetHelper {
    * @private
    */
   static async editBreakout(event, app) {
-    console.log("editBreakout() stub reached");
 
     const a = event.currentTarget;
     const breakout_id = a.dataset.breakoutId;
@@ -132,9 +125,6 @@ export class BreakoutsSheetHelper {
 
     const breakoutData = breakouts.filter(item => { return item.id == breakout_id })[0];
 
-    console.log(theKeyword);
-    console.log(breakouts);
-    console.log(breakoutData);
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
 
     new Dialog({
@@ -161,19 +151,14 @@ export class BreakoutsSheetHelper {
         name: html.find("input#breakout-name").val(),
         id: breakout_id,
       }
-      console.log("updatedBreakout:")
-      console.log(changedBreakout);
-      // ui.notifications.info(`Value: ${value}`);
 
       // find the right breakout and replace with a splice
-      console.log(breakouts);
       const updatedBreakouts = breakouts;
       updatedBreakouts.splice(breakouts.findIndex(item => { return item.id == breakout_id }),1,changedBreakout);
-      console.log(updatedBreakouts);
 
       //update the item data
       theKeyword.update({'data.breakouts': updatedBreakouts});
-    }
+    } // updateBreakout()
 
     return;
     
