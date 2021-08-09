@@ -152,12 +152,16 @@ export class BreakoutsSheetHelper {
         id: breakout_id,
       }
 
-      // find the right breakout and replace with a splice
+      // find the right breakout and get index in list
       const updatedBreakouts = breakouts;
-      updatedBreakouts.splice(breakouts.findIndex(item => { return item.id == breakout_id }),1,changedBreakout);
+      const targetIndex = breakouts.findIndex(item => { return item.id == breakout_id })
+   
+      // create updated copy of list of breakouts with a splice
+      updatedBreakouts.splice(targetIndex,1,changedBreakout);
 
-      //update the item data
+      //update the item data with copy contents
       theKeyword.update({'data.breakouts': updatedBreakouts});
+
     } // updateBreakout()
 
     return;
