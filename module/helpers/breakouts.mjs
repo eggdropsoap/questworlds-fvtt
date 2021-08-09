@@ -124,7 +124,57 @@ export class BreakoutsSheetHelper {
    */
   static async editBreakout(event, app) {
     console.log("editBreakout() stub reached");
-     
+
+    const a = event.currentTarget;
+    const breakout_id = a.dataset.breakoutId;
+    const theKeyword = app.object;
+    const breakouts = theKeyword.data.data.breakouts;
+
+    const breakoutData = breakouts.filter(item => { return item.id == breakout_id })[0];
+
+    console.log(theKeyword);
+    console.log(breakouts);
+    console.log(breakoutData);
+    const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
+
+    new Dialog({
+      title: "Editing Breakout",
+      content: dialogContent,
+      buttons: {
+        saveButton: {
+          label: "Save",
+          callback: (html) => updateBreakout(html)
+          //icon: `<i class="fas fa-check"></i>`
+        },
+        cancelButton: {
+          label: "Cancel",
+          icon: `<i class="fas fa-times"></i>`
+        },
+      },
+      default: "saveButton"
+    }).render(true);
+
+    function updateBreakout(html) {
+      const name = html.find("input#breakout-name").val();
+      const changedBreakout = {
+        bonus: Number.parseInt(html.find("input#breakout-bonus").val()),
+        name: html.find("input#breakout-name").val(),
+        id: breakout_id,
+      }
+      console.log("updatedBreakout:")
+      console.log(changedBreakout);
+      // ui.notifications.info(`Value: ${value}`);
+
+      // find the right breakout and replace with a splice
+      console.log(breakouts);
+      const updatedBreakouts = breakouts;
+      updatedBreakouts.splice(breakouts.findIndex(item => { return item.id == breakout_id }),1,changedBreakout);
+      console.log(updatedBreakouts);
+
+      //update the item data
+      theKeyword.update({'data.breakouts': updatedBreakouts});
+    }
+
     return;
     
   } // editBreakout()
