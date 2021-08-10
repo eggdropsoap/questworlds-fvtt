@@ -41,5 +41,9 @@
 
 
     "QUESTWORLDS.Add": "Add",
-    "QUESTWORLDS.Delete": "Delete"
+    "QUESTWORLDS.Delete": "Delete",
+
+    "SETTINGS.useRuneFontN": "Enable Rune Font",
+    "SETTINGS.useRuneFontL": "Enable a Glorantha rune font for abilities and the Mastery symbol."
+
 }

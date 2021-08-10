@@ -7,6 +7,8 @@ import { QuestWorldsItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { QUESTWORLDS } from "./helpers/config.mjs";
+// Import system settings
+import { registerSystemSettings } from "./helpers/settings.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -21,6 +23,9 @@ Hooks.once('init', async function() {
     QuestWorldsItem,
     rollItemMacro
   };
+
+  // register system settings
+  registerSystemSettings();
 
   // Add custom constants for configuration.
   CONFIG.QUESTWORLDS = QUESTWORLDS;
@@ -72,7 +77,12 @@ Handlebars.registerHelper('toLowerCase', function(str) {
 
 Handlebars.registerHelper('fullRating', function() {
   var outStr = '';
-  const mastery_symbol = 'M';
+  let mastery_symbol = 'M';
+  const useRunes = game.settings.get("questworlds","useRuneFont");
+
+  if (useRunes) {
+    mastery_symbol = '<span class="runes">W</span>';
+  }
   if (arguments.length > 1) {
     outStr = arguments[0].rating;
     var masteries = arguments[0].masteries;
@@ -83,7 +93,7 @@ Handlebars.registerHelper('fullRating', function() {
       outStr += masteries;
     }
   }
-  return outStr;
+  return new Handlebars.SafeString(outStr);
 });
 
 Handlebars.registerHelper('whichItemPartial', function (itemType) {

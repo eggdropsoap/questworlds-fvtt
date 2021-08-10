@@ -4,6 +4,20 @@
   font-family: "Roboto", sans-serif;
 }
 
+@font-face {
+  font-family: "Core Runes";
+  src: url("fonts/core-runes.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Glorantha Core Rune Font";
+  src: url("fonts/GloranthaCoreRunes1.5.ttf") format("truetype");
+}
+
+.runes {
+  font-family: "Glorantha Core Rune Font", "Core Runes", "Roboto", sans-serif;
+}
+
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
