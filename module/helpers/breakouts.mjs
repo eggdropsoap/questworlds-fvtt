@@ -98,6 +98,7 @@ export class BreakoutsSheetHelper {
   static async deleteBreakout(event, app) {
 
     const a = event.currentTarget;
+    const li = $(event.currentTarget).parents("li.breakout");
     const breakout_id = a.dataset.breakoutId;
     const theKeyword = app.object;
     const breakouts = theKeyword.data.data.breakouts;
@@ -105,8 +106,13 @@ export class BreakoutsSheetHelper {
     //find and remove the breakout by id from temporary data
     let prunedBreakouts = breakouts.filter(item => { return item.id !== breakout_id });
     
-    //update the item data
-    theKeyword.update({'data.breakouts': prunedBreakouts});
+    /**
+     * animate the removal, then
+     * update the item after animation ends (or fails)
+     */
+    li.slideUp(200).promise().always(
+      () => theKeyword.update({'data.breakouts': prunedBreakouts})
+    );
   
   } // deleteBreakout()
 
