@@ -48,18 +48,18 @@
           <li></li>
           {{else}}
           {{#each data.breakouts as |breakout id|}}
-          <li class="item breakout" data-item-id="{{breakout.id}}">
+          <li class="breakout" data-item-id="{{breakout.id}}">
             <div class="flexrow">
-              <div class="item-name">
+              <div class="breakout-name">
                   <h4>
-                      <a class="rollable" data-roll-type="item">
+                      <a class="rollable" data-roll-type="breakout">
                         {{breakout.name}} +{{breakout.bonus}}
                       </a>
                   </h4>
                   </div>
-              <div class="item-controls breakout-controls">
-                  <a class="breakout-control item-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="breakout-control item-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+              <div class="breakout-controls">
+                  <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
               </div>
             </div>
           </li>
