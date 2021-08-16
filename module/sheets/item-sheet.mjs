@@ -62,7 +62,7 @@ export class QuestWorldsItemSheet extends ItemSheet {
 
     // Roll handlers, click handlers, etc. would go here.
 
-    // Add or Remove breakout ability
+    // Add, remove, or edit breakout ability
     html.find(".breakouts-list").on("click", ".breakout-control", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
 
   }
