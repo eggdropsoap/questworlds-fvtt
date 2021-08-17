@@ -10,6 +10,7 @@
         </h4>
         </div>
     <div class="item-controls">
+        <a class="breakout-control breakout-create" data-action="create" title="Add Breakout Ability"><i class="fas fa-plus"></i></a>
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -23,18 +24,18 @@
 {{#if item.data.breakouts}}
 <ol class="breakouts-list">
     {{#each item.data.breakouts as |breakout id|}}
-    <li class="breakout" data-item-id="{{breakout.id}}">
+    <li class="breakout" data-breakout-id="{{breakout.id}}">
         <div class="flexrow">
         <div class="breakout-name">
             <h4>
-                <a class="rollable" data-roll-type="item" data-item-id="{{item.id}}" data-breakout-id="{{breakout.id}}">
+                <a class="rollable" data-roll-type="item" data-item-id="{{item._id}}" data-breakout-id="{{breakout.id}}">
                     {{breakout.name}} +{{breakout.bonus}}
                 </a>
             </h4>
             </div>
         <div class="breakout-controls">
-            <a class="breakout-control breakout-edit" data-action="edit" title="Edit Breakout"><i class="fas fa-edit"></i></a>
-            <a class="breakout-control breakout-delete" title="Delete Breakout"><i class="fas fa-trash"></i></a>
+            <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Breakout"><i class="fas fa-edit"></i></a>
+            <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Breakout"><i class="fas fa-trash"></i></a>
         </div>
         </div>
     </li>

@@ -1,3 +1,5 @@
+import { QuestWorldsItemSheet} from "../sheets/item-sheet.mjs"
+
 export class BreakoutsSheetHelper {
 
   /**
@@ -10,16 +12,30 @@ export class BreakoutsSheetHelper {
     const a = event.currentTarget;
     const action = a.dataset.action;
 
+    /** if this is an item object
+     * then
+     *      theItem = this.object, easy!
+     * else
+     *      this should be an actor object,
+     *      so get the item by id from the actor's embedded items,
+     *      using data from the parent li.item tag
+     *      (in an ugly one-liner, sorry)
+     * 
+     * TODO: instead use an anonymous function that returns the right object,
+     *       for readability and maintainability
+     */
+    const theItem = this instanceof QuestWorldsItemSheet ? this.object : this.object.getEmbeddedDocument("Item",$(event.currentTarget).parents("li.item")[0].dataset.itemId);
+
     // Perform create and delete actions.
     switch ( action ) {
       case "create":
-        BreakoutsSheetHelper.createBreakout(event, this);
+        BreakoutsSheetHelper.createBreakout(event, theItem);
         break;
       case "delete":
-        BreakoutsSheetHelper.deleteBreakout(event, this);
+        BreakoutsSheetHelper.deleteBreakout(event, theItem);
         break;
       case "edit":
-        BreakoutsSheetHelper.editBreakout(event, this);
+        BreakoutsSheetHelper.editBreakout(event, theItem);
         break;
     }
   }
@@ -27,7 +43,7 @@ export class BreakoutsSheetHelper {
   /* -------------------------------------------- */
 
   /**
-   * Listen for the roll button on attributes.
+   * Listen for the roll button on attributes^H^H^H^Hbreakouts.
    * @param {MouseEvent} event    The originating left click event
    */
 /*  static onAttributeRoll(event) {
@@ -65,16 +81,12 @@ export class BreakoutsSheetHelper {
   /**
    * Create a new breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} app          The form application object.
+   * @param {Object} theKeyword   The item object.
    * @private
    */
-  static async createBreakout(event, app) {
+  static async createBreakout(event, theKeyword) {
 
-    const a = event.currentTarget;
-    //    let dtype = a.dataset.dtype;
-    const theKeyword = app.object;
     const breakouts = theKeyword.data.data.breakouts;
-    const form = app.form;
     
     // push New Breakout into the item's breakouts array
     let newBreakout = {
@@ -92,15 +104,14 @@ export class BreakoutsSheetHelper {
   /**
    * Delete a breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} app          The form application object.
+   * @param {Object} theKeyword   The item object.
    * @private
    */
-  static async deleteBreakout(event, app) {
+  static async deleteBreakout(event, theKeyword) {
 
     const a = event.currentTarget;
     const li = $(event.currentTarget).parents("li.breakout");
     const breakout_id = a.dataset.breakoutId;
-    const theKeyword = app.object;
     const breakouts = theKeyword.data.data.breakouts;
 
     //find and remove the breakout by id from temporary data
@@ -110,7 +121,7 @@ export class BreakoutsSheetHelper {
      * animate the removal, then
      * update the item after animation ends (or fails)
      */
-    li.slideUp(200).promise().always(
+    li.slideUp(150).promise().always(
       () => theKeyword.update({'data.breakouts': prunedBreakouts})
     );
   
@@ -119,20 +130,18 @@ export class BreakoutsSheetHelper {
   /**
    * Edit a breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} app          The form application object.
+   * @param {Object} theKeyword   The item object.
    * @private
    */
-  static async editBreakout(event, app) {
+  static async editBreakout(event, theKeyword) {
 
     const a = event.currentTarget;
     const breakout_id = a.dataset.breakoutId;
-    const theKeyword = app.object;
     const breakouts = theKeyword.data.data.breakouts;
-
     const breakoutData = breakouts.filter(item => { return item.id == breakout_id })[0];
-
+    
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
-
+    
     new Dialog({
       title: "Editing Breakout",
       content: dialogContent,

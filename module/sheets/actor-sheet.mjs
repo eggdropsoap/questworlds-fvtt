@@ -1,4 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -141,6 +142,11 @@ export class QuestWorldsActorSheet extends ActorSheet {
 
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+
+    // Remove or edit breakout ability
+    html.find(".item-controls").on("click", ".breakout-create", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
+    // Add new breakout ability
+    html.find(".breakouts-list").on("click", ".breakout-control", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
