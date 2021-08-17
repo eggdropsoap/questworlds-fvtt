@@ -2,7 +2,8 @@
 import { QuestWorldsActor } from "./documents/actor.mjs";
 import { QuestWorldsItem } from "./documents/item.mjs";
 // Import sheet classes.
-import { QuestWorldsActorSheet } from "./sheets/actor-sheet.mjs";
+import { QuestWorldsActorCharacterSheet } from "./sheets/actor-character-sheet.mjs";
+import { QuestWorldsActorNpcSheet } from "./sheets/actor-npc-sheet.mjs";
 import { QuestWorldsItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
@@ -48,7 +49,17 @@ Hooks.once('init', async function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("questworlds", QuestWorldsActorSheet, { makeDefault: true });
+  Actors.registerSheet("questworlds", QuestWorldsActorCharacterSheet, {
+    types: ["character"],
+    makeDefault: true,
+    label: "QUESTWORLDS.BasicCharacterSheet"
+  });
+  Actors.registerSheet("questworlds", QuestWorldsActorNpcSheet, {
+    types: ["npc"],
+    makeDefault: true,
+    label: "QUESTWORLDS.BasicNpcSheet"
+  });
+
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("questworlds", QuestWorldsItemSheet, { makeDefault: true });
 

@@ -2,6 +2,9 @@
     "QUESTWORLDS.Character": "Character",
     "QUESTWORLDS.Npc": "NPC",
 
+    "QUESTWORLDS.BasicCharacterSheet": "QuestWorlds Core Character Sheet",
+    "QUESTWORLDS.BasicNpcSheet": "Questworlds Core NPC Sheet",
+
     "QUESTWORLDS.Biography": "Biography",
     "QUESTWORLDS.Concept": "Concept",
     "QUESTWORLDS.Description": "Description",

@@ -5,7 +5,7 @@ import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class QuestWorldsActorSheet extends ActorSheet {
+export class QuestWorldsActorCharacterSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -14,13 +14,18 @@ export class QuestWorldsActorSheet extends ActorSheet {
       template: "systems/questworlds/templates/actor/actor-sheet.html",
       width: 750,
       height: 650,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
     });
   }
 
   /** @override */
   get template() {
     return `systems/questworlds/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+  }
+
+  /** @override */
+  get height() {
+    return 300;
   }
 
   /* -------------------------------------------- */
