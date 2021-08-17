@@ -304,7 +304,8 @@
 
 .questworlds .sheet-body,
 .questworlds .sheet-body .tab,
-.questworlds .sheet-body .tab .editor {
+.questworlds .sheet-body .tab .editor,
+.questworlds .sheet-body .editor {
   height: 100%;
 }
 
