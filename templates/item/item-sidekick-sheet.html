@@ -25,23 +25,37 @@
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
 
       {{!-- list of abilities --}}
-      <ol class="items-list">
-        <li class="item flexrow items-header">
-          <div class="item-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
-          <div class="item-controls">
-            <a class="item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus"></i> {{localize 'QUESTWORLDS.Add'}}</a>
-          </div>
-        </li>
-        {{#if (iseq data.abilities.length 0)}}
-        <li></li>
-        {{else}}
-        {{#each abilities as |item id|}}
-        <li class="item" data-item-id="{{item._id}}">
-          {{item.name}}
-        </li>
-        {{/each}}
-        {{/if}}
-      </ol>
+      <div style="margin-top: 0.6em;">
+        <ol class="items-list abilities-list">
+          <li class="item flexrow items-header abilities-header">
+            <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
+            <div class="item-controls ability-controls">
+              <a class="ability-control ability-create item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#if (iseq data.abilities.length 0)}}
+          <li></li>
+          {{else}}
+          {{#each abilities as |ability index|}}
+          <li class="item ability" data-item-id="{{ability.id}}">
+            <div class="flexrow">
+              <div class="ability-name">
+                  <h4>
+                      <a class="rollable" data-roll-type="ability">
+                        {{ability.name}} {{ability.rating}} {{ability.masteries}}
+                      </a>
+                  </h4>
+              </div>
+              <div class="ability-controls">
+                  <a class="ability-control ability-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="ability-control ability-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+              </div>
+            </div>  
+          </li>
+          {{/each}}
+          {{/if}}
+        </ol>
+      </div>
 
     </div>
 
