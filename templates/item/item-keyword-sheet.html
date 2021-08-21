@@ -44,9 +44,6 @@
               <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
             </div>
           </li>
-          {{#if (iseq data.breakouts.length 0)}}
-          <li></li>
-          {{else}}
           {{#each data.breakouts as |breakout id|}}
           <li class="breakout" data-item-id="{{breakout.id}}">
             <div class="flexrow">
@@ -63,8 +60,9 @@
               </div>
             </div>
           </li>
+          {{else}}
+          <li></li>
           {{/each}}
-          {{/if}}
         </ol>
       </div>
     </div>

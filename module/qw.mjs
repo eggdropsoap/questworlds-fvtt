@@ -113,9 +113,9 @@ Handlebars.registerHelper('whichItemPartial', function (itemType) {
   //return "actor-abilities-" + itemType + ".html"
 });
 
-Handlebars.registerHelper('iseq', function (value1,value2) {
+/* Handlebars.registerHelper('iseq', function (value1,value2) {
   return value1 == value2;
-});
+}); */
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
