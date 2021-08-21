@@ -33,27 +33,49 @@
               <a class="ability-control ability-create item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus"></i></a>
             </div>
           </li>
-          {{#if (iseq data.abilities.length 0)}}
-          <li></li>
-          {{else}}
           {{#each abilities as |ability index|}}
-          <li class="item ability" data-item-id="{{ability.id}}">
+          <li class="item ability" data-ability-id="{{ability.id}}">
             <div class="flexrow">
               <div class="ability-name">
                   <h4>
                       <a class="rollable" data-roll-type="ability">
-                        {{ability.name}} {{ability.rating}} {{ability.masteries}}
+                        {{#if ability.breakouts}}<strong>{{/if~}}
+                        {{ability.name}}
+                        {{~#if ability.breakouts}}</strong>{{/if}}
+                        {{ability.rating}} {{ability.masteries}}
                       </a>
                   </h4>
               </div>
               <div class="ability-controls">
-                  <a class="ability-control ability-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="ability-control ability-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+                  <a class="ability-control ability-edit" data-action="edit" data-ability-id="{{ability.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="ability-control ability-delete" data-action="delete" data-ability-id="{{ability.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
               </div>
-            </div>  
+            </div>
+            {{#if ability.breakouts}}
+            <ol class="breakouts-list">
+                {{#each ability.breakouts as | breakout |}}
+                <li class="breakout" data-breakout-id="{{breakout.id}}">
+                    <div class="flexrow">
+                    <div class="breakout-name">
+                        <h4>
+                            <a class="rollable" data-roll-type="item" data-keyword-id="{{ability.id}}" data-breakout-id="{{breakout.id}}">
+                                {{breakout.name}} +{{breakout.bonus}}
+                            </a>
+                        </h4>
+                        </div>
+                    <div class="breakout-controls">
+                        <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Breakout"><i class="fas fa-edit"></i></a>
+                        <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Breakout"><i class="fas fa-trash"></i></a>
+                    </div>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
+            {{/if}}
           </li>
+          {{else}}
+          <li></li>
           {{/each}}
-          {{/if}}
         </ol>
       </div>
 
