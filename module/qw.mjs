@@ -195,5 +195,5 @@ if ( game.settings.get("questworlds","useRuneFont") ) {
             inline: "span",
             classes: "runes"
         });
-    });
-  }
+  });
+}
