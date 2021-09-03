@@ -1,21 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import "runes.css";
+
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
-}
-
-@font-face {
-  font-family: "Core Runes";
-  src: url("fonts/core-runes.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Glorantha Core Rune Font";
-  src: url("fonts/GloranthaCoreRunes1.5.ttf") format("truetype");
-}
-
-.runes {
-  font-family: "Glorantha Core Rune Font", "Core Runes", "Roboto", sans-serif;
 }
 
 .rollable:hover, .rollable:focus {

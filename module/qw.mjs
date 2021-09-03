@@ -175,3 +175,25 @@ function rollItemMacro(itemName) {
   // Trigger the item roll
   return item.roll();
 }
+
+/* -------------------------------------------- */
+/*  TinyMCE Customizations                      */
+/* -------------------------------------------- */
+
+/**
+ * Add a Runes option to TinyMCE's Custom formats menu
+ */
+if ( game.settings.get("questworlds","useRuneFont") ) {
+  Hooks.on("ready", async () => {
+    // Make TinyMCE display the new formatting live
+    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/runes.css");
+
+    // Add menu option (inside Paragraph > Custom)
+    const formats = CONFIG.TinyMCE.style_formats.find(n => n.title === "Custom");
+    formats.items.push({
+            title: "Runes",
+            inline: "span",
+            classes: "runes"
+        });
+    });
+  }
