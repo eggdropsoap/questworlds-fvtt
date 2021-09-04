@@ -9,5 +9,7 @@
     <li class="item" data-item-id="{{item._id}}">
       {{> (whichItemPartial item.type) item=item}}
     </li>
+  {{else}}
+    <li></li>
   {{/each}}
 </ol>
