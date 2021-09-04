@@ -19,12 +19,12 @@ export class QuestWorldsItemSheet extends ItemSheet {
   /** @override */
   get template() {
     const path = "systems/questworlds/templates/item";
-    // Return a single sheet for all item types.
-    //return `${path}/item-sheet.html`;
-
-    // Alternatively, you could use the following return statement to do a
-    // unique item sheet by type, like `weapon-sheet.html`.
-   return `${path}/item-${this.item.data.type}-sheet.html`;
+    
+    // Return a sheet for each item type and/or item type variant
+    if (this.item.data.type == "ability")
+      return `${path}/item-${this.item.data.data.variant}-sheet.html`;
+    else
+      return `${path}/item-${this.item.data.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
