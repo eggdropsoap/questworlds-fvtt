@@ -95,8 +95,6 @@ export class BreakoutsSheetHelper {
       "type": "breakout",
       "rating": 5,
     }
-    console.log(typeof(embeds));
-    console.log(embeds);
     embeds.push(newBreakout);
 
     // update the item data
