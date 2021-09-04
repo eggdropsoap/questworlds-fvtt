@@ -87,10 +87,6 @@ Handlebars.registerHelper('toLowerCase', function(str) {
 });
 
 Handlebars.registerHelper('fullRating', function(context) {
-  console.log("itemType:");
-  console.log(context.itemType);
-  console.log(context);
-
   let outStr = '';
   let mastery_symbol = 'M';
 
