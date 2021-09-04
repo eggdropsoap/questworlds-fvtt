@@ -107,25 +107,25 @@ export class BreakoutsSheetHelper {
   /**
    * Delete a breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} theKeyword   The item object.
+   * @param {Object} item   The item object.
    * @private
    */
-  static async deleteBreakout(event, theKeyword) {
+  static async deleteBreakout(event, item) {
 
     const a = event.currentTarget;
     const li = $(event.currentTarget).parents("li.breakout");
     const breakout_id = a.dataset.breakoutId;
-    const breakouts = theKeyword.data.data.breakouts;
+    const embeds = item.data.data.embeds;
 
     //find and remove the breakout by id from temporary data
-    let prunedBreakouts = breakouts.filter(item => { return item.id !== breakout_id });
+    let prunedEmbeds = embeds.filter(entry => { return entry.id !== breakout_id });
     
     /**
      * animate the removal, then
      * update the item after animation ends (or fails)
      */
     li.slideUp(150).promise().always(
-      () => theKeyword.update({'data.breakouts': prunedBreakouts})
+      () => item.update({'data.embeds': prunedEmbeds})
     );
   
   } // deleteBreakout()
@@ -133,15 +133,15 @@ export class BreakoutsSheetHelper {
   /**
    * Edit a breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} theKeyword   The item object.
+   * @param {Object} item   The item object.
    * @private
    */
-  static async editBreakout(event, theKeyword) {
+  static async editBreakout(event, item) {
 
     const a = event.currentTarget;
     const breakout_id = a.dataset.breakoutId;
-    const breakouts = theKeyword.data.data.breakouts;
-    const breakoutData = breakouts.filter(item => { return item.id == breakout_id })[0];
+    const embeds = item.data.data.embeds;
+    const breakoutData = embeds.filter(item => { return item.id == breakout_id })[0];
     
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
     
@@ -165,20 +165,20 @@ export class BreakoutsSheetHelper {
     function updateBreakout(html) {
       const name = html.find("input#breakout-name").val();
       const changedBreakout = {
-        bonus: Number.parseInt(html.find("input#breakout-bonus").val()),
+        rating: Number.parseInt(html.find("input#breakout-rating").val()),
         name: html.find("input#breakout-name").val(),
         id: breakout_id,
       }
 
       // find the right breakout and get index in list
-      const updatedBreakouts = breakouts;
-      const targetIndex = breakouts.findIndex(item => { return item.id == breakout_id })
+      const updatedBreakouts = embeds;
+      const targetIndex = embeds.findIndex(entry => { return entry.id == breakout_id })
    
-      // create updated copy of list of breakouts with a splice
+      // create updated copy of list of embeds with a splice
       updatedBreakouts.splice(targetIndex,1,changedBreakout);
 
       //update the item data with copy contents
-      theKeyword.update({'data.breakouts': updatedBreakouts});
+      item.update({'data.embeds': updatedBreakouts});
 
     } // updateBreakout()
 
