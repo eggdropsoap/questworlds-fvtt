@@ -86,51 +86,63 @@ Handlebars.registerHelper('toLowerCase', function(str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper('fullRating', function() {
+Handlebars.registerHelper('fullRating', function(context) {
+  console.log("itemType:");
+  console.log(context.itemType);
+  console.log(context);
+
   let outStr = '';
   let mastery_symbol = 'M';
+
+  const rating = context.rating;
+  const masteries = context.masteries;
+  const itemType = context.itemType;
+
   const useRunes = game.settings.get("questworlds","useRuneFont");
 
   if (useRunes) {
     mastery_symbol = '<span class="runes">W</span>';
   }
-  if (arguments.length > 1) {
-    const rating = arguments[0].rating;
-    const masteries = arguments[0].masteries;
-    const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
-    // if either portion is negative, put the negative on the front
-    if (rating < 0 || masteries < 0) {
-      outStr += minusChar;
-    }
-    // skip the basic rating part if it's zero…
-    if (Math.abs(rating) > 0) {
-      outStr += Math.abs(rating);
-    }
-    // … but if no rating, add a + for "+M" if there are positive Ms
-    if (rating == 0 && masteries > 0) {
+
+  const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
+
+  // if either portion is negative, put the negative on the front
+  if (rating < 0 || masteries < 0) {
+    outStr += minusChar;
+  }
+  // output basic rating part if it's non-zero
+  if (Math.abs(rating) > 0) {
+    // if it's positive and a benefit/consequence, prefix '+' first
+    if (rating > 0 && itemType == 'benefit') {
       outStr += "+";
     }
-
-    // Master symbol with no number if 1, with number if > 1
-    if (Math.abs(masteries) > 0) {
-      outStr += mastery_symbol;
-    }
-    if (Math.abs(masteries) > 1) {
-      outStr += Math.abs(masteries);
-    }
+    // positive rating
+    outStr += Math.abs(rating);
   }
+  // when rating is zero and there are positive Ms, add a + for "+M"
+  if (rating == 0 && masteries > 0) {
+    outStr += "+";
+  }
+
+  // Master symbol with no number if 1, with number if > 1
+  if (Math.abs(masteries) > 0) {
+    outStr += mastery_symbol;
+  }
+  if (Math.abs(masteries) > 1) {
+    outStr += Math.abs(masteries);
+  }
+
   return new Handlebars.SafeString(outStr);
 });
 
-Handlebars.registerHelper('whichItemPartial', function (itemType) {
-  // throw away item type until this works at all
-  return "systems/questworlds/templates/actor/parts/actor-abilities-" + itemType + ".html"
-  //return "actor-abilities-" + itemType + ".html"
+Handlebars.registerHelper('whichItemPartial', function (itemType, variantType) {
+  let template = "systems/questworlds/templates/actor/parts/actor-abilities-" + variantType + ".html";
+  return template;
 });
 
-/* Handlebars.registerHelper('iseq', function (value1,value2) {
+Handlebars.registerHelper('iseq', function (value1,value2) {
   return value1 == value2;
-}); */
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

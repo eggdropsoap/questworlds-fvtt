@@ -44,9 +44,11 @@ export class QuestWorldsItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
 
-    // Add the actor's data to context.data for easier access, as well as flags.
+    // Add the item's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
+    // Add item type to the data.
+    context.data.itemType = context.item.type;
 
     return context;
   }

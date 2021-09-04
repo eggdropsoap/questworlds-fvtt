@@ -96,7 +96,11 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     
     // Iterate through items, allocating to containers
     for (let i of context.items) {
+      // Set up image
       i.img = i.img || DEFAULT_TOKEN;
+      // Graft item.type into item.data for convenient access
+      i.data.itemType = i.type;
+
       // Append to main abilities.
       if (i.type === 'keyword' || i.type === 'ability' || i.type === 'sidekick') {
         abilities.push(i);
