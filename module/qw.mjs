@@ -87,7 +87,7 @@ Handlebars.registerHelper('toLowerCase', function(str) {
 });
 
 Handlebars.registerHelper('fullRating', function() {
-  var outStr = '';
+  let outStr = '';
   let mastery_symbol = 'M';
   const useRunes = game.settings.get("questworlds","useRuneFont");
 
@@ -95,13 +95,28 @@ Handlebars.registerHelper('fullRating', function() {
     mastery_symbol = '<span class="runes">W</span>';
   }
   if (arguments.length > 1) {
-    outStr = arguments[0].rating;
-    var masteries = arguments[0].masteries;
-    if (masteries > 0) {
+    const rating = arguments[0].rating;
+    const masteries = arguments[0].masteries;
+    const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
+    // if either portion is negative, put the negative on the front
+    if (rating < 0 || masteries < 0) {
+      outStr += minusChar;
+    }
+    // skip the basic rating part if it's zero…
+    if (Math.abs(rating) > 0) {
+      outStr += Math.abs(rating);
+    }
+    // … but if no rating, add a + for "+M" if there are positive Ms
+    if (rating == 0 && masteries > 0) {
+      outStr += "+";
+    }
+
+    // Master symbol with no number if 1, with number if > 1
+    if (Math.abs(masteries) > 0) {
       outStr += mastery_symbol;
     }
-    if (masteries > 1) {
-      outStr += masteries;
+    if (Math.abs(masteries) > 1) {
+      outStr += Math.abs(masteries);
     }
   }
   return new Handlebars.SafeString(outStr);
