@@ -33,7 +33,7 @@
       },
       "ability": {
         "templates": ["base"],
-        "variant": "",
+        "variant": "ability",
         "rune": "",
         "embeds": {}
       },
