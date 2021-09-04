@@ -33,15 +33,20 @@
     "QUESTWORLDS.consequence": "consequence",
 
     
-    "QUESTWORLDS.ItemKeyword": "Keyword",
-    "QUESTWORLDS.ItemAbility": "Ability",
-    "QUESTWORLDS.ItemSidekick": "Sidekick",
-    "QUESTWORLDS.ItemFlaw": "Flaw",
-    "QUESTWORLDS.ItemBenefit": "Benefit",
-    "QUESTWORLDS.ItemBenefit_L": "Benefit of Victory",
-    "QUESTWORLDS.ItemConsequence": "Consequence",
-    "QUESTWORLDS.ItemConsequence_L": "Consequence of Defeat",
+    "QUESTWORLDS.Keyword": "Keyword",
+    "QUESTWORLDS.Ability": "Ability",
+    "QUESTWORLDS.Sidekick": "Sidekick",
+    "QUESTWORLDS.Flaw": "Flaw",
+    "QUESTWORLDS.Benefit": "Benefit",
+    "QUESTWORLDS.Benefit_L": "Benefit of Victory",
+    "QUESTWORLDS.Consequence": "Consequence",
+    "QUESTWORLDS.Consequence_L": "Consequence of Defeat",
 
+    "QUESTWORLDS.Groups": "Groups",
+    "QUESTWORLDS.MagicGroup": "Magic Group",
+    "QUESTWORLDS.magicgroup": "Magic Group",
+
+    "QUESTWORLDS.AbilityType": "Ability Type",
 
     "QUESTWORLDS.Add": "Add",
     "QUESTWORLDS.Delete": "Delete",
