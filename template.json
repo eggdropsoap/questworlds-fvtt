@@ -23,39 +23,24 @@
       }
     },
     "Item": {
-      "types": ["keyword", "ability", "sidekick", "flaw", "benefit", "consequence"],
+      "types": ["ability", "flaw", "lingering"],
       "templates": {
         "base": {
-          "description": ""
+          "description": "",
+          "rating": 0,
+          "masteries": 0
         }
-      },
-      "keyword": {
-        "templates": ["base"],
-        "rating": 0,
-        "masteries": 0,
-        "breakouts": {}
       },
       "ability": {
         "templates": ["base"],
-        "rating": 0,
-        "masteries": 0  
-    },
-      "sidekick": {
-        "templates": ["base"],
-        "abilities": {}
+        "variant": "",
+        "embeds": {}
       },
       "flaw": {
-        "templates": ["base"],
-        "rating": 0,
-        "masteries": 0  
-    },
-      "benefit": {
-        "templates": ["base"],
-        "rating": 0
-    },
-      "consequence": {
-        "templates": ["base"],
-        "rating": 0
-    }
+        "templates": ["base"]
+      },
+      "lingering": {
+        "templates": ["base"]
+      }
     }
   }
