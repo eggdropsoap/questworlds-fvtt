@@ -35,7 +35,7 @@
         "templates": ["base"],
         "variant": "ability",
         "rune": "",
-        "embeds": {}
+        "embeds": []
       },
       "flaw": {
         "templates": ["base"]

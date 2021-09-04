@@ -81,23 +81,26 @@ export class BreakoutsSheetHelper {
   /**
    * Create a new breakout.
    * @param {MouseEvent} event    The originating left click event
-   * @param {Object} theKeyword   The item object.
+   * @param {Object} item   The item object.
    * @private
    */
-  static async createBreakout(event, theKeyword) {
+  static async createBreakout(event, item) {
 
-    const breakouts = theKeyword.data.data.breakouts;
+    const embeds = item.data.data.embeds;
     
-    // push New Breakout into the item's breakouts array
+    // push New Breakout into the item's embeds array
     let newBreakout = {
       "id": "breakout-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
       "name": "New Breakout Ability",
-      "bonus": 1,
+      "type": "breakout",
+      "rating": 5,
     }
-    breakouts.push(newBreakout);
+    console.log(typeof(embeds));
+    console.log(embeds);
+    embeds.push(newBreakout);
 
     // update the item data
-    theKeyword.update({'data.breakouts': breakouts});    
+    item.update({'data.embeds': embeds});    
   
   } // createBreakout()
 
