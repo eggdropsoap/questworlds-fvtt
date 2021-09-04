@@ -2,7 +2,7 @@
 	"name": "questworlds",
 	"title": "QuestWorlds",
 	"description": "A Foundry VTT system to play QuestWorlds, the rules-lite storytelling RPG from Chaosium. Based on the rules in the QuestWorlds SRD.",
-	"version": "0.0.3",
+	"version": "0.0.5",
 	"author": "eggdropsoap",
 	"license": "LICENSE.md",
 	"readme": "README.md",

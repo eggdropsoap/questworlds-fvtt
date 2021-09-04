@@ -23,7 +23,7 @@
       }
     },
     "Item": {
-      "types": ["ability", "flaw", "lingering"],
+      "types": ["ability", "flaw", "benefit"],
       "templates": {
         "base": {
           "description": "",
@@ -34,12 +34,13 @@
       "ability": {
         "templates": ["base"],
         "variant": "",
+        "rune": "",
         "embeds": {}
       },
       "flaw": {
         "templates": ["base"]
       },
-      "lingering": {
+      "benefit": {
         "templates": ["base"]
       }
     }
