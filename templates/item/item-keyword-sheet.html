@@ -44,13 +44,13 @@
               <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
             </div>
           </li>
-          {{#each data.breakouts as |breakout id|}}
+          {{#each data.embeds as |breakout id|}}
           <li class="breakout" data-breakout-id="{{breakout.id}}">
             <div class="flexrow">
               <div class="breakout-name">
                   <h4>
                       <a class="rollable" data-roll-type="breakout">
-                        {{breakout.name}} +{{breakout.bonus}}
+                        {{breakout.name}} +{{breakout.rating}}
                       </a>
                   </h4>
               </div>
@@ -70,6 +70,7 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="settings">
       {{!-- As you add new fields, add them in here! --}}
+      {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
         <label class="resource-label">Runes</label>
         <span class="runes">
           <input name="foo" type="text" value="" placeholder="boyB"/>

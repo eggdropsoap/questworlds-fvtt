@@ -4,8 +4,8 @@
   <header class="sheet-header">
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.Ability'}}</div>
-      <h3 class="charname">{{item.name}} {{fullRating data}} {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
+      <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.MagicGroup'}}</div>
+      <h3 class="charname">{{item.name}} {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
     </div>
   </header>
 
@@ -23,10 +23,6 @@
     <div class="tab" data-group="primary" data-tab="details">
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
-      <label class="resource-label">Rating</label>
-      <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number"/>
-      <label class="resource-label">Masteries</label>
-      <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
     </div>
