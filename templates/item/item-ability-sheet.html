@@ -4,8 +4,8 @@
   <header class="sheet-header">
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <div style="text-transform: capitalize; font-variant: small-caps; font-weight:bold;">{{localize (concat 'QUESTWORLDS.' item.type) }}</div>
-      <h3 class="charname">{{item.name}} {{fullRating data}} {{data.description}}</h3>
+      <div style="text-transform: capitalize; font-variant: small-caps; font-weight:bold;">{{localize (concat 'QUESTWORLDS.' data.variant) }}</div>
+      <h3 class="charname">{{item.name}} {{fullRating data}} {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
     </div>
   </header>
 
@@ -33,7 +33,17 @@
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="settings">
-      {{!-- As you add new fields, add them in here! --}}
+      <label class="resource-label" autocapitalize="words">Ability Type</label>
+      <select name="data.variant">
+        <optgroup label="{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}"">
+          <option value="ability" {{#if (iseq data.variant 'ability')}}selected{{/if}}>{{localize 'QUESTWORLDS.Ability'}}</option>
+          <option value="keyword" {{#if (iseq data.variant 'keyword')}}selected{{/if}}>{{localize 'QUESTWORLDS.Keyword'}}</option>
+          <option value="sidekick" {{#if (iseq data.variant 'sidekick')}}selected{{/if}}>{{localize 'QUESTWORLDS.Sidekick'}}</option>
+        </optgroup>
+        <optgroup label="{{localize 'QUESTWORLDS.Groups'}}">
+          <option value="magicgroup" {{#if (iseq data.variant 'magicgroup')}}selected{{/if}}>{{localize 'QUESTWORLDS.MagicGroup'}}</option>
+        </optgroup>
+      </select>
     </div>
   </section>
 </form>

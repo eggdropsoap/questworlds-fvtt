@@ -7,7 +7,7 @@
   </li>
   {{#each abilities as |item id|}}
     <li class="item" data-item-id="{{item._id}}">
-      {{> (whichItemPartial item.type) item=item}}
+      {{> (whichItemPartial item.type item.data.variant) item=item}}
     </li>
   {{else}}
     <li></li>
