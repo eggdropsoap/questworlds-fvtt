@@ -140,6 +140,10 @@ Handlebars.registerHelper('iseq', function (value1,value2) {
   return value1 == value2;
 });
 
+Handlebars.registerHelper('isgt', function (value1,value2) {
+  return value1 > value2;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
