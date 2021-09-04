@@ -21,15 +21,15 @@
 </div>
 {{/if}}
 
-{{#if item.data.breakouts}}
+{{#if item.data.embeds}}
 <ol class="breakouts-list">
-    {{#each item.data.breakouts as |breakout id|}}
+    {{#each item.data.embeds as |breakout id|}}
     <li class="breakout" data-breakout-id="{{breakout.id}}">
         <div class="flexrow">
         <div class="breakout-name">
             <h4>
                 <a class="rollable" data-roll-type="item">
-                    {{breakout.name}} +{{breakout.bonus}}
+                    {{breakout.name}} +{{breakout.rating}}
                 </a>
             </h4>
             </div>
