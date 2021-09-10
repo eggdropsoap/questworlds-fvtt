@@ -1,6 +1,3 @@
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
-import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
-
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -34,23 +31,9 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
     context.data = actorData.data;
     context.flags = actorData.flags;
 
-/*     // Prepare character data and items.
-    if (actorData.type == 'character') {
-      this._prepareItems(context);
-      this._prepareCharacterData(context);
-    }
- */
-    // Prepare NPC data and items.
-    if (actorData.type == 'npc') {
-      this._prepareItems(context);
-    }
-
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
-/*     // Prepare active effects
-    context.effects = prepareActiveEffectCategories(this.actor.effects);
- */
     return context;
   }
 
@@ -62,12 +45,7 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
-    /* we don't have ability scores in QW
-    // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.abilities)) {
-      v.label = game.i18n.localize(CONFIG.QUESTWORLDS.abilities[k]) ?? k;
-    }
-    */
+
   }
 
   /**
@@ -78,32 +56,7 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareItems(context) {
-    // Initialize containers.
-    const abilities = [];
-    const flaws = [];
-    const benefits = [];
-    
-    // Iterate through items, allocating to containers
-    for (let i of context.items) {
-      i.img = i.img || DEFAULT_TOKEN;
-      // Append to main abilities.
-      if (i.type === 'keyword' || i.type === 'ability' || i.type === 'sidekick') {
-        abilities.push(i);
-      }
-      // Append to flaws.
-      else if (i.type === 'flaw') {
-        flaws.push(i);
-      }
-      // Append to benefits and consequences.
-      else if (i.type === 'benefit' || i.type === 'consequence') {
-        benefits.push(i);
-      }
-    }
 
-    // Assign and return
-    context.abilities = abilities;
-    context.flaws = flaws;
-    context.benefits = benefits;
    }
 
   /* -------------------------------------------- */
@@ -112,48 +65,10 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Render the item sheet for viewing/editing prior to the editable check.
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.sheet.render(true);
-    });
-
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
-
-    // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
-    });
-
-    // Active Effect management
-    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
-
-    // Remove or edit breakout ability
-    html.find(".item-controls").on("click", ".breakout-create", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
-    // Add new breakout ability
-    html.find(".breakouts-list").on("click", ".breakout-control", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
-
-    // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
-
-    // Drag events for macros.
-    if (this.actor.isOwner) {
-      let handler = ev => this._onDragStart(ev);
-      html.find('li.item').each((i, li) => {
-        if (li.classList.contains("inventory-header")) return;
-        li.setAttribute("draggable", true);
-        li.addEventListener("dragstart", handler, false);
-      });
-    }
   }
 
   /**
