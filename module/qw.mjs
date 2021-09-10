@@ -210,8 +210,9 @@ function rollItemMacro(itemName) {
 /**
  * Add a Runes option to TinyMCE's Custom formats menu
  */
-if ( game.settings.get("questworlds","useRuneFont") ) {
-  Hooks.on("ready", async () => {
+
+ Hooks.on("ready", async () => {
+  if ( game.settings.get("questworlds","useRuneFont") ) {
     // Make TinyMCE display the new formatting live
     CONFIG.TinyMCE.content_css.push("systems/questworlds/css/runes.css");
 
@@ -222,5 +223,5 @@ if ( game.settings.get("questworlds","useRuneFont") ) {
             inline: "span",
             classes: "runes"
         });
-  });
-}
+  }
+});
