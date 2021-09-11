@@ -18,7 +18,8 @@
   grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  margin: 10px 0;
+  /* margin: 10px 0; */
+  margin: 0;
   padding: 0;
 }
 
@@ -257,6 +258,12 @@
   margin-bottom: 10px;
 }
 
+.sheet nav.sheet-tabs {
+/* .questworlds .sheet nav.sheet-tabs { */
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 .questworlds .sheet-header .profile-img {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100px;
@@ -272,10 +279,20 @@
 }
 
 .questworlds .sheet-header h1.charname {
-  height: 50px;
+  /* height: 50px; */
   padding: 0px;
-  margin: 5px 0;
+  margin: 0;
   border-bottom: 0;
+}
+
+.questworlds .sheet-header .charconcept {
+  font-weight: bold;
+}
+
+.questworlds .sheet-header input {
+  background-color: inherit;
+  border-width: 0;
+  border-style: none;
 }
 
 .questworlds .sheet-header h1.charname input {
@@ -290,19 +307,64 @@
   flex: 0;
 }
 
-.questworlds .sheet-body,
+.questworlds .sheet-body {
+  height: 450px;
+}
 .questworlds .sheet-body .tab,
+.questworlds .sheet-body .tab.biography .grid,
+.questworlds .sheet-body .tab.biography .grid section,
 .questworlds .sheet-body .tab .editor,
+.questworlds .sheet-body .tab .editor-content,
 .questworlds .sheet-body .editor {
   height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.questworlds .sheet-body .tab.biography .grid {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.questworlds .sheet-body .tab.biography .editor {
+  height: 93%;
+}
+
+
+/* .actor .window-content {
+  overflow-y: hidden;
+}
+
+.actor .sheet-body {
+  overflow-y: auto;
+} */
+
+.questworlds .tox {
+  background-color: inherit;
 }
 
 .questworlds .tox .tox-editor-container {
-  background: #fff;
+  background-color: rgba(255,255,255,.2);
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
 }
+
+/* .questworlds .tox .tox-toolbar__primary {
+  background-color: inherit;
+} */
 
 .questworlds .tox .tox-edit-area {
   padding: 0 8px;
+}
+
+.questworlds .resources {
+  border-top-style: solid;
+  border-top-color: rgb(181, 179, 164);
+  border-top-width: 1px;
+  margin-top: 8px;
+  padding-top: 4px;
+  padding-bottom: 8px;
 }
 
 .questworlds .resource-label {

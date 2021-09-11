@@ -2,21 +2,24 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
-    </div>
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+      <div class="header-fields">
+        <h1 class="charname">
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        </h1>
+        <input name="data.concept" type="text" class="charconcept" value="{{data.concept}}" data-dtype="String" placeholder="{{localize 'QUESTWORLDS.CharacterConcept'}}">
+
+
+        {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+        use both the "grid" and "grid-Ncol" class where "N" can be any number
+        from 1 to 12 and will create that number of columns.  --}}
+      </div>
   </header>
 
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
-    <label for="data.concept" class="resource-label rollable flexlarge align-left">{{localize 'QUESTWORLDS.Concept'}}</label>
-    <input type="text" name="data.concept" value="{{data.concept}}" data-dtype="String">
     <h2>{{localize 'QUESTWORLDS.Description'}}</h2>
     {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
 
