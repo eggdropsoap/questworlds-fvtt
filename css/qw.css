@@ -258,13 +258,25 @@
   margin-bottom: 10px;
 }
 
-.sheet nav.sheet-tabs {
-/* .questworlds .sheet nav.sheet-tabs { */
+.questworlds.sheet nav.sheet-tabs {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.questworlds .sheet-header .profile-img {
+.questworlds .character .sheet-header .profile-img {
+  margin-left: auto;
+  border-color: rgb(141, 139, 127);
+}
+
+.questworlds .character .sheet-header .profile-img {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 60px;
+  flex: 0 0 60px;
+  height: 60px;
+  margin-right: 0;
+}
+
+.questworlds .npc .sheet-header .profile-img {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100px;
   flex: 0 0 100px;
@@ -358,18 +370,41 @@
   padding: 0 8px;
 }
 
+.questworlds .sheet-body .main .abilities {
+  padding-bottom: 48px;
+}
+
 .questworlds .resources {
   border-top-style: solid;
   border-top-color: rgb(181, 179, 164);
   border-top-width: 1px;
+  background-color: rgb(181, 179, 164); /* fallback */
+  background-image: url("/ui/parchment.jpg");
+  /* background-image: url("/ui/denim.png"); */
+  background-repeat: repeat;
+  background-size: auto;
+
   margin-top: 8px;
-  padding-top: 4px;
+  padding-top: 8px;
   padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 22px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .questworlds .resource-label {
   font-weight: bold;
 }
+
+.questworlds .resources .resource input {
+  flex: 1;
+  width: 4em;
+  height: 1.4em;
+}
+
 
 .questworlds .items-header {
   height: 28px;
