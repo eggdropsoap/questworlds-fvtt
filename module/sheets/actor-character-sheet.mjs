@@ -45,6 +45,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     context.data = actorData.data;
     context.flags = actorData.flags;
 
+    // Add some game settings to the context
+    context.settings = {
+      "useRuneFont": game.settings.get("questworlds","useRuneFont"),
+      "sidekickName": game.settings.get("questworlds","sidekickName")
+    };
+    
     // Prepare character data and items.
     if (actorData.type == 'character') {
       this._prepareItems(context);

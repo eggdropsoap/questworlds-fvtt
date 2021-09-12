@@ -50,6 +50,12 @@ export class QuestWorldsItemSheet extends ItemSheet {
     // Add item type to the data.
     context.data.itemType = context.item.type;
 
+    // Add some game settings to the context
+    context.settings = {
+      "useRuneFont": game.settings.get("questworlds","useRuneFont"),
+      "sidekickName": game.settings.get("questworlds","sidekickName")
+    };
+
     return context;
   }
 

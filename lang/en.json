@@ -37,6 +37,7 @@
     "QUESTWORLDS.Keyword": "Keyword",
     "QUESTWORLDS.Ability": "Ability",
     "QUESTWORLDS.Sidekick": "Sidekick",
+    "QUESTWORLDS.Companion": "Companion",
     "QUESTWORLDS.Flaw": "Flaw",
     "QUESTWORLDS.Benefit": "Benefit",
     "QUESTWORLDS.Benefit_L": "Benefit of Victory",
@@ -53,6 +54,8 @@
     "QUESTWORLDS.Delete": "Delete",
 
     "SETTINGS.useRuneFontN": "Enable Rune Font",
-    "SETTINGS.useRuneFontL": "Enable a Glorantha rune font for abilities and the Mastery symbol."
+    "SETTINGS.useRuneFontL": "Enables a Glorantha rune font for abilities and the Mastery symbol.",
+    "SETTINGS.sidekickNameN": "Sidekick Name",
+    "SETTINGS.sidekickNameL": "Sets what “sidekick” abilities are called on character and item sheets."
 
 }

@@ -12,4 +12,23 @@ export const registerSystemSettings = function() {
     default: false,
   });
 
+  /**
+   * What to call a "Sidekick" in the UI / sheets
+   */
+  game.settings.register("questworlds", "sidekickName", {
+    name: "SETTINGS.sidekickNameN",
+    hint: "SETTINGS.sidekickNameL",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      "Sidekick": "Sidekick",
+      "Companion": "Companion"
+    },
+    default: "sidekick",
+/*     onChange: value => { // A callback function which triggers when the setting is changed
+      console.log(value);
+    } */
+  });
+
 }
