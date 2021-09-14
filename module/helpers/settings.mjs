@@ -22,10 +22,29 @@ export const registerSystemSettings = function() {
     config: true,
     type: String,
     choices: {
-      "Sidekick": "Sidekick",
-      "Companion": "Companion"
+      "Sidekick": "QUESTWORLDS.Sidekick",
+      "Companion": "QUESTWORLDS.Companion"
     },
     default: "sidekick",
+/*     onChange: value => { // A callback function which triggers when the setting is changed
+      console.log(value);
+    } */
+  });
+
+  /**
+   * Whether Keywords have breakouts or sub-abilities
+   */
+   game.settings.register("questworlds", "keywordBreakout", {
+    name: "SETTINGS.keywordBreakoutN",
+    hint: "SETTINGS.keywordBreakoutL",
+    scope: "world",
+    config: true,
+    type: String,
+    choices: {
+      "breakout": "QUESTWORLDS.keywordUmbrellaOptionName",
+      "ability": "QUESTWORLDS.keywordPackageOptionName"
+    },
+    default: "breakout",
 /*     onChange: value => { // A callback function which triggers when the setting is changed
       console.log(value);
     } */

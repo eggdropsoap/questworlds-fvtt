@@ -1,4 +1,4 @@
-import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
+import { EmbedsEvents } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -53,7 +53,8 @@ export class QuestWorldsItemSheet extends ItemSheet {
     // Add some game settings to the context
     context.settings = {
       "useRuneFont": game.settings.get("questworlds","useRuneFont"),
-      "sidekickName": game.settings.get("questworlds","sidekickName")
+      "sidekickName": game.settings.get("questworlds","sidekickName"),
+      "keywordBreakout": game.settings.get("questworlds","keywordBreakout")
     };
 
     return context;
@@ -71,7 +72,7 @@ export class QuestWorldsItemSheet extends ItemSheet {
     // Roll handlers, click handlers, etc. would go here.
 
     // Add, remove, or edit breakout ability
-    html.find(".breakouts-list").on("click", ".breakout-control", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
+    html.find(".breakouts-list").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
   }
 }

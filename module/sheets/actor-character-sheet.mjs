@@ -1,5 +1,6 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
 import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
+import { EmbedsEvents } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -48,7 +49,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Add some game settings to the context
     context.settings = {
       "useRuneFont": game.settings.get("questworlds","useRuneFont"),
-      "sidekickName": game.settings.get("questworlds","sidekickName")
+      "sidekickName": game.settings.get("questworlds","sidekickName"),
+      "keywordBreakout": game.settings.get("questworlds","keywordBreakout")
     };
     
     // Prepare character data and items.
@@ -158,11 +160,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
-    // Remove or edit breakout ability
-    html.find(".item-controls").on("click", ".breakout-create", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
-    // Add new breakout ability
-    html.find(".breakouts-list").on("click", ".breakout-control", BreakoutsSheetHelper.onClickBreakoutControl.bind(this));
+    // Add new embedded ability (note the different parent element.class!)
+    html.find(".item-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
+    // Remove, or edit embedded ability
+    html.find(".breakouts-list").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
+    
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 

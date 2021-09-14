@@ -40,8 +40,8 @@
         <ol class="items-list breakouts-list">
           <li class="item flexrow items-header">
             <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
-            <div class="breakout-controls item-controls">
-              <a class="breakout-control breakout-create item-control" title="Create item" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+            <div class="breakout-controls">
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="{{settings.keywordBreakout}}"><i class="fas fa-plus"></i></a>
             </div>
           </li>
           {{#each data.embeds as |breakout id|}}
@@ -50,7 +50,7 @@
               <div class="breakout-name">
                   <h4>
                       <a class="rollable" data-roll-type="breakout">
-                        {{breakout.name}} +{{breakout.rating}}
+                        {{breakout.name}} +{{breakout.rating}} ({{breakout.type}})
                       </a>
                   </h4>
               </div>

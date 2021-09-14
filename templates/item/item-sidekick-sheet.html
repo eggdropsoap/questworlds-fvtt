@@ -18,7 +18,7 @@
 
 
     {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="details">
+    <div class="tab main" data-group="primary" data-tab="details">
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Description</label>
@@ -26,39 +26,41 @@
 
       {{!-- list of abilities --}}
       <div style="margin-top: 0.6em;">
-        <ol class="items-list abilities-list">
+        <ol class="items-list breakouts-list">
           <li class="item flexrow items-header abilities-header">
             <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
-            <div class="item-controls ability-controls">
-              <a class="ability-control ability-create item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus"></i></a>
+            <div class="breakout-controls">
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
             </div>
           </li>
-          {{#each abilities as |ability index|}}
-          <li class="item ability" data-ability-id="{{ability.id}}">
+          {{#each data.embeds as |breakout index|}}
+          <li class="item breakout" data-ability-id="{{breakout.id}}">
             <div class="flexrow">
-              <div class="ability-name">
+              <div class="breakout-name">
                   <h4>
-                      <a class="rollable" data-roll-type="ability">
-                        {{#if ability.breakouts}}<strong>{{/if~}}
-                        {{ability.name}}
-                        {{~#if ability.breakouts}}</strong>{{/if}}
-                        {{ability.rating}} {{ability.masteries}}
+                      <a class="rollable" data-roll-type="{{breakout.type}}">
+                        {{#if (iseq breakout.type 'keyword')}}<strong>{{/if~}}
+                        {{breakout.name}}
+                        {{~#if (iseq breakout.type 'keyword')}}</strong>{{/if}}
+                        {{breakout.rating}} {{breakout.masteries}} ({{breakout.type}})
                       </a>
                   </h4>
               </div>
-              <div class="ability-controls">
-                  <a class="ability-control ability-edit" data-action="edit" data-ability-id="{{ability.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="ability-control ability-delete" data-action="delete" data-ability-id="{{ability.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+              <div class="breakout-controls">
+                  <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="Add Breakout"><i class="fas fa-plus"></i></a>
+                  <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+                  <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
               </div>
             </div>
-            {{#if ability.breakouts}}
+            {{#if breakout.embeds}}
             <ol class="breakouts-list">
-                {{#each ability.breakouts as | breakout |}}
+                {{#each breakout.embeds as | breakout |}}
                 <li class="breakout" data-breakout-id="{{breakout.id}}">
                     <div class="flexrow">
                     <div class="breakout-name">
                         <h4>
-                            <a class="rollable" data-roll-type="item" data-keyword-id="{{ability.id}}" data-breakout-id="{{breakout.id}}">
+                            <a class="rollable" data-roll-type="item" data-keyword-id="{{breakout.id}}" data-breakout-id="{{breakout.id}}">
                                 {{breakout.name}} +{{breakout.bonus}}
                             </a>
                         </h4>

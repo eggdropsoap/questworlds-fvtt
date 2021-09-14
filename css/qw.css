@@ -319,26 +319,26 @@
   flex: 0;
 }
 
-.questworlds .sheet-body {
+.questworlds.actor .sheet-body {
   height: 450px;
 }
-.questworlds .sheet-body .tab,
-.questworlds .sheet-body .tab.biography .grid,
-.questworlds .sheet-body .tab.biography .grid section,
-.questworlds .sheet-body .tab .editor,
-.questworlds .sheet-body .tab .editor-content,
-.questworlds .sheet-body .editor {
+.questworlds.actor .sheet-body .tab,
+.questworlds.actor .sheet-body .tab.biography .grid,
+.questworlds.actor .sheet-body .tab.biography .grid section,
+.questworlds.actor .sheet-body .tab .editor,
+.questworlds.actor .sheet-body .tab .editor-content,
+.questworlds.actor .sheet-body .editor {
   height: 100%;
   padding-top: 0;
   padding-bottom: 0;
 }
 
-.questworlds .sheet-body .tab.biography .grid {
+.questworlds.actor .sheet-body .tab.biography .grid {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.questworlds .sheet-body .tab.biography .editor {
+.questworlds.actor .sheet-body .tab.biography .editor {
   height: 93%;
 }
 
@@ -461,6 +461,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.questworlds.sheet.item ol.breakouts-list {
+  padding-bottom: 1em;
+}
+.questworlds.sheet.item ol.breakouts-list ol {
+  padding-bottom: 0;
 }
 
 .questworlds.sheet.actor .breakouts-list .breakout-name, .questworlds.sheet.actor .item .sidekick-description {
