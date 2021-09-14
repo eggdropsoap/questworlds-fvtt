@@ -5,11 +5,11 @@
       <a class="item-control item-create" title="Create item" data-type="ability"><i class="fas fa-plus" title="{{localize 'QUESTWORLDS.Add'}}"></i></a>
     </div>
   </li>
-  {{#each abilities as |item id|}}
-    <li class="item" data-item-id="{{item._id}}">
-      {{> (whichItemPartial item.type item.data.variant) item=item settings=../settings}}
-    </li>
+  {{#each abilities as | item |}}
+  <li class="item" data-item-id="{{item._id}}">
+    {{> (whichItemPartial item.type item.data.variant) item=item settings=../settings}}
+  </li>
   {{else}}
-    <li></li>
+  <li></li>
   {{/each}}
 </ol>
