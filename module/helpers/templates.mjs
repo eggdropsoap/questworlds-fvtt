@@ -18,5 +18,12 @@
 
     // Item partials
     "systems/questworlds/templates/item/parts/item-ability-settings.html",
+
+    // Shared embed partials
+    "systems/questworlds/templates/embeds/embed.html",
+    "systems/questworlds/templates/embeds/embed-ability.html",
+    "systems/questworlds/templates/embeds/embed-breakout.html",
+    "systems/questworlds/templates/embeds/embed-info.html",
+    "systems/questworlds/templates/embeds/embed-keyword.html",
   ]);
 };

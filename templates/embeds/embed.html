@@ -1,0 +1,40 @@
+<li class="breakout" id="{{breakout.id}}" data-breakout-id="{{breakout.id}}"> {{log breakout}}
+    <div class="flexrow">
+      <div class="breakout-name">
+          <h4>
+              <a class="rollable" data-roll-type="{{breakout.type}}">
+                {{#if (iseq breakout.type 'keyword')}}<strong>{{/if~}}
+                {{breakout.name}}
+                {{~#if (iseq breakout.type 'keyword')}}</strong>{{/if}}
+                {{breakout.rating}} {{breakout.masteries}} ({{breakout.type}})
+              </a>
+          </h4>
+      </div>
+      <div class="breakout-controls">
+          <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="Add Breakout"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+      </div>
+    </div>
+    {{#if breakout.embeds}}
+    <ol class="breakouts-list">
+        {{#each breakout.embeds as | breakout |}}
+        <li class="breakout" data-breakout-id="{{breakout.id}}">
+            <div class="flexrow">
+            <div class="breakout-name">
+                <h4>
+                    <a class="rollable" data-roll-type="item" data-keyword-id="{{breakout.id}}" data-breakout-id="{{breakout.id}}">
+                        {{breakout.name}} +{{breakout.bonus}}
+                    </a>
+                </h4>
+                </div>
+            <div class="breakout-controls">
+                <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Breakout"><i class="fas fa-edit"></i></a>
+                <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Breakout"><i class="fas fa-trash"></i></a>
+            </div>
+            </div>
+        </li>
+        {{/each}}
+    </ol>
+    {{/if}}
+  </li>
