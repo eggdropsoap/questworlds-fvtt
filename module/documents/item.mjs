@@ -140,7 +140,7 @@ export class QuestWorldsItem extends Item {
       // if found (not null) push into nested list
       if (parent) parent.embeds.push(newBreakout);
     }
-    else {
+    else { // it's an Item, not an embed
       // push new sub-ability directly into the item's top-level embeds array
       embeds.push(newBreakout);
     }
