@@ -160,7 +160,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
-    // Add, remove, or edit embedded ability
+    // Remove, or edit embedded ability
+    html.find(".item-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
+    // Remove, or edit embedded ability
     html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
     
