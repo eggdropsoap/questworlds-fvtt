@@ -52,7 +52,7 @@ export class QuestWorldsItemSheet extends ItemSheet {
 
     // Add some game settings to the context
     context.settings = {
-      "useRuneFont": game.settings.get("questworlds","useRuneFont"),
+      "useRunes": game.settings.get("questworlds","useRunes"),
       "sidekickName": game.settings.get("questworlds","sidekickName"),
       "keywordBreakout": game.settings.get("questworlds","keywordBreakout")
     };

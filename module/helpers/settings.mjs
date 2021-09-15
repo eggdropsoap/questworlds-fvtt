@@ -1,11 +1,11 @@
 export const registerSystemSettings = function() {
 
   /**
-   * Whether to enable suport for rune fonts
+   * Whether to enable suport for runes
    */
-   game.settings.register("questworlds", "useRuneFont", {
-    name: "SETTINGS.useRuneFontN",
-    hint: "SETTINGS.useRuneFontL",
+   game.settings.register("questworlds", "useRunes", {
+    name: "SETTINGS.useRunesN",
+    hint: "SETTINGS.useRunesL",
     scope: "world",
     config: true,
     type: Boolean,

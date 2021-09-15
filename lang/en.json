@@ -59,8 +59,8 @@
     "QUESTWORLDS.AddBreakoutAbility": "Add Breakout Ability",
     "QUESTWORLDS.AddInfo": "Add Info Line",
 
-    "SETTINGS.useRuneFontN": "Enable Rune Font",
-    "SETTINGS.useRuneFontL": "Enables a Glorantha rune font for abilities and the Mastery symbol.",
+    "SETTINGS.useRunesN": "Enable Runes",
+    "SETTINGS.useRunesL": "Enables support for Glorantha runes for abilities and the Mastery symbol. Please install one or more rune fonts in the setting below.",
     "SETTINGS.sidekickNameN": "Sidekick Name",
     "SETTINGS.sidekickNameL": "Sets what “sidekick” abilities are called on character and item sheets.",
     "SETTINGS.keywordBreakoutN": "Keyword type",

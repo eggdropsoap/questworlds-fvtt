@@ -94,7 +94,7 @@ Handlebars.registerHelper('fullRating', function(context) {
   const masteries = context.masteries;
   const abilityType = context.itemType || context.type;
   
-  const useRunes = game.settings.get("questworlds","useRuneFont");
+  const useRunes = game.settings.get("questworlds","useRunes");
 
   if (useRunes) {
     mastery_symbol = '<span class="runes">W</span>';
@@ -217,7 +217,7 @@ function rollItemMacro(itemName) {
  */
 
  Hooks.on("ready", async () => {
-  if ( game.settings.get("questworlds","useRuneFont") ) {
+  if ( game.settings.get("questworlds","useRunes") ) {
     // Make TinyMCE display the new formatting live
     CONFIG.TinyMCE.content_css.push("systems/questworlds/css/runes.css");
 
