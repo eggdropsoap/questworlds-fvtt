@@ -3,6 +3,7 @@
         <h4>
             <a class="rollable" data-roll-type="item">
                 {{item.name}} {{fullRating item.data}}
+                {{#if item.data.description}}({{item.data.description}}){{/if}}
             </a>
         </h4>
     </div>
@@ -11,3 +12,11 @@
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
 </div>
+
+{{#if item.data.embeds}}
+<ol class="breakouts-list">
+    {{#each item.data.embeds as | breakout |}}
+        {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+    {{/each}}
+</ol>
+{{/if}}

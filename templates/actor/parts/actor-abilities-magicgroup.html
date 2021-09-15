@@ -20,22 +20,8 @@
 
 {{#if item.data.embeds}}
 <ol class="breakouts-list">
-    {{#each item.data.embeds as |breakout id|}}
-    <li class="breakout" data-breakout-id="{{breakout.id}}">
-        <div class="flexrow">
-        <div class="breakout-name">
-            <h4>
-                <a class="rollable" data-roll-type="item">
-                    {{breakout.name}} +{{breakout.rating}}
-                </a>
-            </h4>
-            </div>
-        <div class="breakout-controls">
-            <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Breakout"><i class="fas fa-edit"></i></a>
-            <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Breakout"><i class="fas fa-trash"></i></a>
-        </div>
-        </div>
-    </li>
+    {{#each item.data.embeds as | breakout |}}
+        {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
     {{/each}}
 </ol>
 {{/if}}

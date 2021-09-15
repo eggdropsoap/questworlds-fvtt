@@ -25,6 +25,27 @@
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+
+      {{!-- list of abilities --}}
+      <div class="abilities">
+        <ol class="items-list breakouts-list">
+          <li class="item flexrow items-header abilities-header">
+            <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
+            <div class="breakout-controls">
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each data.embeds as |breakout index|}}
+            {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+          {{else}}
+          <li></li>
+          {{/each}}
+        </ol>
+      </div>
+      
     </div>
 
     {{!-- Attributes Tab --}}

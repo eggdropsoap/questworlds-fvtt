@@ -38,6 +38,7 @@
     "QUESTWORLDS.Ability": "Ability",
     "QUESTWORLDS.Sidekick": "Sidekick",
     "QUESTWORLDS.Companion": "Companion",
+    "QUESTWORLDS.Breakout": "Breakout",
     "QUESTWORLDS.Flaw": "Flaw",
     "QUESTWORLDS.Benefit": "Benefit",
     "QUESTWORLDS.Benefit_L": "Benefit of Victory",
@@ -51,10 +52,12 @@
     "QUESTWORLDS.AbilityType": "Ability Type",
 
     "QUESTWORLDS.Add": "Add",
+    "QUESTWORLDS.Edit": "Edit",
     "QUESTWORLDS.Delete": "Delete",
     "QUESTWORLDS.AddAbility": "Add Ability",
     "QUESTWORLDS.AddKeyword": "Add Keyword",
     "QUESTWORLDS.AddBreakoutAbility": "Add Breakout Ability",
+    "QUESTWORLDS.AddInfo": "Add Info Line",
 
     "SETTINGS.useRuneFontN": "Enable Rune Font",
     "SETTINGS.useRuneFontL": "Enables a Glorantha rune font for abilities and the Mastery symbol.",
