@@ -25,13 +25,15 @@
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
 
       {{!-- list of abilities --}}
-      <div style="margin-top: 0.6em;">
+      <div class="abilities">
         <ol class="items-list breakouts-list">
           <li class="item flexrow items-header abilities-header">
             <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
             <div class="breakout-controls">
               <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
               <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakout'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
             </div>
           </li>
           {{#each data.embeds as |breakout index|}}

@@ -160,10 +160,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
-    // Add new embedded ability (note the different parent element.class!)
-    html.find(".item-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
-    // Remove, or edit embedded ability
-    html.find(".breakouts-list").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
+    // Add, remove, or edit embedded ability
+    html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
     
     // Rollable abilities.

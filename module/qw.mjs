@@ -92,8 +92,8 @@ Handlebars.registerHelper('fullRating', function(context) {
 
   const rating = context.rating;
   const masteries = context.masteries;
-  const itemType = context.itemType;
-
+  const abilityType = context.itemType || context.type;
+  
   const useRunes = game.settings.get("questworlds","useRuneFont");
 
   if (useRunes) {
@@ -108,8 +108,8 @@ Handlebars.registerHelper('fullRating', function(context) {
   }
   // output basic rating part if it's non-zero
   if (Math.abs(rating) > 0) {
-    // if it's positive and a benefit/consequence, prefix '+' first
-    if (rating > 0 && itemType == 'benefit') {
+    // if it's positive and a benefit/consequence or breakout, prefix '+' first
+    if (rating > 0 && (abilityType == 'benefit' || abilityType == 'breakout')) {
       outStr += "+";
     }
     // positive rating
@@ -133,6 +133,11 @@ Handlebars.registerHelper('fullRating', function(context) {
 
 Handlebars.registerHelper('whichItemPartial', function (itemType, variantType) {
   let template = "systems/questworlds/templates/actor/parts/actor-abilities-" + variantType + ".html";
+  return template;
+});
+
+Handlebars.registerHelper('whichEmbedPartial', function (embedType) {
+  let template = "systems/questworlds/templates/embeds/embed-" + embedType + ".html";
   return template;
 });
 

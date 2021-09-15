@@ -370,8 +370,20 @@
   padding: 0 8px;
 }
 
-.questworlds .sheet-body .main .abilities {
+.questworlds.actor .character .sheet-body .main .abilities {
   padding-bottom: 48px;
+}
+.questworlds.item .sheet-body .abilities {
+  margin-top: 0.6em;
+}
+
+/* .questworlds.sheet.actor .item .description, */
+.questworlds .sheet-body .abilities ol ol,
+.questworlds .sheet-body .abilities ol ol ol,
+.questworlds .sheet-body .abilities ol ol ol ol,
+.questworlds .sheet-body .abilities ol ol ol ol ol,
+.questworlds .sheet-body .abilities ol ol ol ol ol ol {
+  padding-left: 1em;
 }
 
 .questworlds .resources {
@@ -470,10 +482,15 @@
   padding-bottom: 0;
 }
 
-.questworlds.sheet.actor .breakouts-list .breakout-name, .questworlds.sheet.actor .item .sidekick-description {
-  margin-left: 36px;
+.questworlds.sheet.actor .breakouts-list .breakout-name,
+.questworlds.sheet.actor .item .description {
   min-height: 20px;
 }
+
+/* .questworlds.sheet.actor .item .description {
+  margin-top: -4px;
+} */
+
 
 .questworlds.sheet.item .breakouts-list .breakout-name {
   margin-left: 6px;
@@ -491,7 +508,7 @@
 
 .questworlds .breakouts-list .breakout-name h3,
 .questworlds .breakouts-list .breakout-name h4,
-.questworlds .item .sidekick-description h4 {
+.questworlds .item .description h4 {
   margin-top: 0;
 }
 
@@ -523,7 +540,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0 0 0 2px;
+  padding: 0;
   border-bottom: 1px solid #c9c7b8;
 }
 

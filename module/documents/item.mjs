@@ -13,14 +13,42 @@ const legalEmbedTypes = [
 class EmbeddedAbility {
 
   constructor(type, name, rating, masteries, rune) {
+    // one id schema for all embeds, since they can switch type later
     this.id = "embed-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     this.type = legalEmbedTypes.includes(type) ? type : 'info';
+
+    // STUB: name should be localized in the switch statement
     this.name = name || "New " + this.type.charAt(0).toUpperCase() + this.type.slice(1);
-    this.rating = rating || 0;
+
+    switch(type) {
+      case 'ability':
+        // new abilities default to 13M0
+        this.rating = rating || 13;
+        break;
+      case 'breakout':
+        // new breakouts default to +1
+        this.rating = rating || 1;
+        break;
+      case 'keyword':
+        // new keywords default to 13
+        this.rating = rating || 13;
+        break;
+      case 'info':
+        // info doesn't need a rating
+        this.rating = rating || 0;
+        break;
+      default:
+        this.rating = rating || 0;  // should never happen since not in legalEmbedTypes
+    }
+
+    // nothing defaults to having a mastery
     this.masteries = masteries || 0;
+
+    // nothing starts with a rune
     this.rune = rune || null;
 
+    // initialize with its own empty embeds list
     this.embeds = [];
   }
 
@@ -105,11 +133,9 @@ export class QuestWorldsItem extends Item {
     const newEmbedType = a.dataset.type;
 
     const newBreakout = new EmbeddedAbility(newEmbedType);
-    // console.log(newBreakout);
-
+    
     if (parentId) {
       // find the sub-ability to embed the new ability inside
-      // console.log(`Looking for nested ability ${parentId}…`);
       const parent = this.getEmbedById(embeds,parentId);
       // if found (not null) push into nested list
       if (parent) parent.embeds.push(newBreakout);
@@ -118,8 +144,6 @@ export class QuestWorldsItem extends Item {
       // push new sub-ability directly into the item's top-level embeds array
       embeds.push(newBreakout);
     }
-
-    console.log(embeds);
 
     // update the item data
     item.update({'data.embeds': embeds});    
@@ -134,21 +158,30 @@ export class QuestWorldsItem extends Item {
   static async deleteEmbed(event, item) {
 
     const a = event.currentTarget;
-    const li = $(a).parents("li.breakout");
+    // const li = $(a).parents("li.breakout");
     const breakout_id = a.dataset.breakoutId;
-    const embeds = item.data.data.embeds;
+    const ability = item.data.data;
 
-    //find and remove the breakout by id from temporary data
-    let prunedEmbeds = embeds.filter(entry => { return entry.id !== breakout_id });
- 
-    // console.log(prunedEmbeds);
+    /** removeFromTree() is (c) Rodrigo Rodrigues, licensed CC BY-SA 4.0 at https://stackoverflow.com/a/55083533/480642 */
+    function removeFromTree(node, targetId) {
+      if (node.id == targetId) {
+        node = undefined
+      } else {
+        node.embeds.forEach((child, id) => {
+          if (!removeFromTree(child, targetId)) node.embeds.splice(id, 1)
+        })
+      }
+      return node
+    }
+    let prunedAbility = removeFromTree(ability, breakout_id);
+    if (!prunedAbility) { console.error(`prunedAbility is ${typeof(prunedEmbeds)}`); return };
 
     /**
      * animate the removal, then
      * update the item after animation ends (or fails)
      */
-    li.slideUp(150).promise().always(
-      () => item.update({'data.embeds': prunedEmbeds})
+    $(breakout_id).slideUp(150).promise().always(
+      () => {console.log(`Slideup promise on ${breakout_id}`); item.update({'data.embeds': prunedAbility.embeds}) }
     );
 
   } // deleteEmbed()
@@ -163,7 +196,7 @@ export class QuestWorldsItem extends Item {
     const a = event.currentTarget;
     const breakout_id = a.dataset.breakoutId;
     const embeds = item.data.data.embeds;
-    const breakoutData = embeds.filter(item => { return item.id == breakout_id })[0];
+    const breakoutData = this.getEmbedById(embeds, breakout_id);
     
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
     // TODO: dialogs per breakout type
@@ -190,16 +223,15 @@ export class QuestWorldsItem extends Item {
       const newRating = Number.parseInt(html.find("input#breakout-rating").val());
       const newName = html.find("input#breakout-name").val()
 
-      // find the right breakout and get index in list
-      const i = embeds.findIndex(entry => { return entry.id == breakout_id });
-      const targetEmbed = embeds[i];
+      // extract a reference to the right breakout
+      const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
 
+      // update data in embeds via the reference
       targetEmbed.name = newName;
       targetEmbed.rating = newRating;
 
       //update the item data with copy contents
       item.update({'data.embeds': embeds});
-      console.log(embeds);
     
     } // updateBreakout()
     
@@ -208,15 +240,31 @@ export class QuestWorldsItem extends Item {
   /**
    * Find and return an embedded breakout by id from an Item.
    * Returns null if not found.
-   * @param {Array} embeds    // the Item
-   * @param {String} id       // the id to find
+   * @param {Array} embeds        // the Item
+   * @param {String} id           // the id to find
+   * @param {Function} callback   // An optional callback to process the found entry directly
    */
   static getEmbedById(embeds, id) {
-    // PLACEHOLDER: this only works for the top-level embeds
-    // TODO: recurse into structure to find at arbitrary nesting levels
-    const i = embeds.findIndex(entry => { return entry.id == id });
+
+    /**
+     * flatten() is (c) Thomas, licensed CC BY-SA 3.0 at https://stackoverflow.com/a/35272973/480642
+     * Create a flattened array of an arbitrarily nested structure
+     *    that does its nesting in an 'embeds' node.
+     * @param {Array} into   // An array to append discovered entries onto
+     * @param {Any} node     // The object containing nesting things
+    */
+    function flatten(into, node){
+      if(node == null) return into;
+      if(Array.isArray(node)) return node.reduce(flatten, into);
+      into.push(node);
+      return flatten(into, node.embeds);
+    }
+    
+    const list = flatten([], embeds);
+
+    const i = list.findIndex(entry => { return entry.id == id });
     if (i == -1) return null;
-    return embeds[i];
+    return list[i];
   }
 
 }
