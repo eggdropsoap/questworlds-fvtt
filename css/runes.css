@@ -4,10 +4,39 @@
 }
 
 @font-face {
-    font-family: "Glorantha Core Rune Font";
+    font-family: "Rune Font - Glorantha Core";
     src: url("fonts/GloranthaCoreRunes1.5.ttf") format("truetype");
+    size-adjust: 103%;
 }
 
+@font-face {
+    font-family: "Rune Font - Jovanovic";
+    src: local("RQ");
+    size-adjust: 90%;
+}
+
+@font-face {
+    font-family: "Rune Font - Core Runes";
+    src: local("Core Runes");
+    size-adjust: 90%;
+}
+
+@font-face {
+    font-family: "Rune Font - Hero Wars";
+    src: local("Hero Wars Runes");
+    size-adjust: 120%;
+}
+
+
 .runes {
-    font-family: "Glorantha Core Rune Font", "Core Runes", "Roboto", sans-serif;
+    font-family:
+    "Rune Font - Glorantha Core",
+    /* "Rune Font - Jovanovic", */
+    /* "Rune Font - Core Runes", */
+    /* "Rune Font - Hero Wars", */
+    "Roboto", sans-serif;
+}
+
+.runes input::placeholder {
+    color: #888;
 }

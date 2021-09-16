@@ -377,6 +377,13 @@
   margin-top: 0.6em;
 }
 
+.questworlds .sheet-body .abilities ol>li.item {
+  padding-left: 2px;
+}
+.questworlds .sheet-body .abilities ol>li.items-header {
+  padding-left: 0;
+}
+
 /* .questworlds.sheet.actor .item .description, */
 .questworlds .sheet-body .abilities ol ol,
 .questworlds .sheet-body .abilities ol ol ol,
@@ -386,7 +393,7 @@
   padding-left: 1em;
 }
 
-.questworlds .resources {
+.questworlds .resources.footer {
   border-top-style: solid;
   border-top-color: rgb(181, 179, 164);
   border-top-width: 1px;
@@ -411,7 +418,7 @@
   font-weight: bold;
 }
 
-.questworlds .resources .resource input {
+.questworlds .resources.footer .resource input {
   flex: 1;
   width: 4em;
   height: 1.4em;

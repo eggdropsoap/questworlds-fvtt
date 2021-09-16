@@ -2,6 +2,9 @@
     <div class="item-name">
         <h4>
             <a class="rollable" data-roll-type="item">
+                {{#if settings.useRunes}}
+                <span class="runes">{{item.data.rune}}</span>
+                {{/if}}
                 {{item.name}} {{fullRating item.data}}
                 {{#if item.data.description}}({{item.data.description}}){{/if}}
             </a>

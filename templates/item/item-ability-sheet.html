@@ -21,6 +21,12 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="details">
+      {{#if settings.useRunes}}
+      <label class="resource-label">Rune</label>
+      <span class="runes">
+        <input name="data.rune" type="text" value="{{data.rune}}" placeholder=""/>
+      </span>
+      {{/if}}
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Rating</label>
@@ -29,6 +35,22 @@
       <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+      {{!-- list of breakouts --}}
+      <div style="margin-top: 0.6em;">
+        <ol class="items-list breakouts-list">
+          <li class="item flexrow items-header">
+            <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
+            <div class="breakout-controls">
+              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
+            </div>
+          </li>
+          {{#each data.embeds as | breakout |}}
+          {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+          {{else}}
+          <li></li>
+          {{/each}}
+        </ol>
+      </div>
     </div>
 
     {{!-- Attributes Tab --}}

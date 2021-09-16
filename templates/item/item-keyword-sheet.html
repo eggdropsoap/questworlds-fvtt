@@ -5,7 +5,13 @@
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.Keyword'}}</div>
-      <h3 class="charname">{{item.name}} {{fullRating data}}{{#if data.description}} ({{data.description}}){{/if}}</h3>
+      <h3 class="charname">
+        {{#if settings.useRunes}}
+          {{#if data.rune}}<span class="runes">{{data.rune}}</span>{{/if}}
+        {{/if}}
+        {{item.name}} {{fullRating data}}
+        {{#if data.description}}({{data.description}}){{/if}}
+      </h3>
     </div>
   </header>
 
@@ -21,6 +27,12 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="details">
+      {{#if settings.useRunes}}
+      <label class="resource-label">Rune</label>
+      <span class="runes">
+        <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/>
+      </span>
+      {{/if}}
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Description</label>
@@ -40,26 +52,14 @@
         <ol class="items-list breakouts-list">
           <li class="item flexrow items-header">
             <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
-            <div class="breakout-controls">
-              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="{{settings.keywordBreakout}}"><i class="fas fa-plus"></i></a>
+            <div class="breakout-controls" id="menu-{{item.id}}">
+              <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
+              <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
+              <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
             </div>
           </li>
-          {{#each data.embeds as |breakout id|}}
-          <li class="breakout" data-breakout-id="{{breakout.id}}">
-            <div class="flexrow">
-              <div class="breakout-name">
-                  <h4>
-                      <a class="rollable" data-roll-type="breakout">
-                        {{breakout.name}} +{{breakout.rating}} ({{breakout.type}})
-                      </a>
-                  </h4>
-              </div>
-              <div class="breakout-controls">
-                  <a class="breakout-control breakout-edit" data-action="edit" data-breakout-id="{{breakout.id}}" title="Edit Item"><i class="fas fa-edit"></i></a>
-                  <a class="breakout-control breakout-delete" data-action="delete" data-breakout-id="{{breakout.id}}" title="Delete Item"><i class="fas fa-trash"></i></a>
-              </div>
-            </div>
-          </li>
+          {{#each data.embeds as | breakout |}}
+          {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
           {{else}}
           <li></li>
           {{/each}}
