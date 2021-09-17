@@ -1,0 +1,44 @@
+<form id="#rune-settings" class="flexcol" autocomplete="off">
+    <p class="notes">
+        Configure one or more uploaded fonts by entering the <em>letter</em> the font uses for each listed rune.
+    </p>
+
+    <!-- header -->
+    <header class="table-header flexrow">
+        <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
+        {{# each fonts as | font |}}
+        <label>
+            {{font.name}} ({{@index}})
+        </label>
+        {{else}}
+        <label>
+            (No font installed)
+        </label>
+        {{/each}}
+    </header>
+    <ul>
+        <!-- List of Runes -->
+        {{#each runes as | rune |}}
+        <li class="form-group">
+            <label clas="index" for="{{rune.token}}" class="resource-lable">
+                {{localize rune.name}}
+            </label>
+            <div class="form-fields">
+                {{#each rune.fonts as | symbol |}}
+                <input style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" type="text" name="{{rune.token}}.fonts.{{@index}}" value="{{symbol}}" data-dtype="String"/>
+                <span class="runes">{{symbol}}</span>
+                </div>
+                {{else}}
+                <input style="flex: 1; width: 3em; height: 1.4em;" type="text" name="{{rune.token}}.font0" value="" data-dtype="String"/>
+                {{/each}}
+            </div>
+            <p class="hint token" style="font-family: 'Courier New'; background-color: beige;">[[{{rune.token}}]]</p>
+        </li>
+        {{/each}}
+    </ul>
+
+
+    <div style="border-top: 1px solid darkgrey;">
+        Footer
+    </div>
+</form>
