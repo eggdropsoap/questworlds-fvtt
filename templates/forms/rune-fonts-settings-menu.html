@@ -1,4 +1,6 @@
 <form id="#rune-settings" class="flexcol" autocomplete="off">
+
+    <h2>Runes By Font</h2>
     <p class="notes">
         Configure one or more uploaded fonts by entering the <em>letter</em> the font uses for each listed rune.
     </p>
@@ -8,11 +10,17 @@
         <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
         {{# each fonts as | font |}}
         <label>
-            {{font.name}} ({{@index}})
+            <!-- {{font.name}} ({{@index}}) -->
+            <div>
+                <input type="text" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
+            </div>
+            <div>
+                <input type="text" name="fonts.{{@index}}.file" value="{{font.file}}" data-dtype="String"/>
+            </div>
         </label>
         {{else}}
         <label>
-            (No font installed)
+            (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?]
         </label>
         {{/each}}
     </header>
@@ -20,23 +28,41 @@
         <!-- List of Runes -->
         {{#each runes as | rune |}}
         <li class="form-group">
-            <label clas="index" for="{{rune.token}}" class="resource-lable">
-                {{localize rune.name}}
+            <label class="index" for="{{rune.token}}" class="resource-label">
+                <span class="{{rune.render.class}}">{{rune.render.text}}</span> {{localize rune.name}}
+                <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
+                <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
             </label>
             <div class="form-fields">
                 {{#each rune.fonts as | symbol |}}
-                <input style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" type="text" name="{{rune.token}}.fonts.{{@index}}" value="{{symbol}}" data-dtype="String"/>
-                <span class="runes">{{symbol}}</span>
-                </div>
+                <input type="text" name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+                <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
                 {{else}}
-                <input style="flex: 1; width: 3em; height: 1.4em;" type="text" name="{{rune.token}}.font0" value="" data-dtype="String"/>
+                &nbsp;
                 {{/each}}
             </div>
-            <p class="hint token" style="font-family: 'Courier New'; background-color: beige;">[[{{rune.token}}]]</p>
+            <p class="hint token" style="font-family: 'Courier New'; background-color: lightgrey;">[[{{rune.token}}]]</p>
         </li>
         {{/each}}
     </ul>
 
+    <h2>Custom Runes</h2>
+    <p class="notes">
+        Add custom runes here. Each rune needs a display name, a token to refer to it, and a image file.
+    </p>
+    <header class="table-header flexrow">
+        <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
+        <label>{{localize 'QUESTWORLDS.Token'}}</label>
+        <label>{{localize 'QUESTWORLDS.ImageFile'}}</label>
+    </header>
+    {{#each customrunes as | rune |}}
+        {{rune.name}} {{rune.token}} {{rune.file}}        
+    {{else}}
+        [blank]
+        [blank]
+        [blank]
+        Add custom rune? [Button!]
+    {{/each}}
 
     <div style="border-top: 1px solid darkgrey;">
         Footer

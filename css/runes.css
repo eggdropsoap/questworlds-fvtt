@@ -6,7 +6,7 @@
 @font-face {
     font-family: "Rune Font - Glorantha Core";
     src: url("fonts/GloranthaCoreRunes1.5.ttf") format("truetype");
-    size-adjust: 103%;
+    size-adjust: 110%;
 }
 
 @font-face {
@@ -29,13 +29,25 @@
 
 
 .runes {
-    font-family:
-    "Rune Font - Glorantha Core",
-    /* "Rune Font - Jovanovic", */
-    /* "Rune Font - Core Runes", */
-    /* "Rune Font - Hero Wars", */
+    font-family: "Rune Font - Glorantha Core",
     "Roboto", sans-serif;
 }
+
+.rune-font0 {
+    font-family: "Rune Font - Glorantha Core",
+    "Roboto", sans-serif;
+}
+
+.rune-font1 {
+    font-family: "Rune Font - Jovanovic",
+    "Roboto", sans-serif;
+}
+
+.rune-font2 {
+    font-family: "Rune Font - Hero Wars",
+    "Roboto", sans-serif;
+}
+
 
 .runes input::placeholder {
     color: #888;
