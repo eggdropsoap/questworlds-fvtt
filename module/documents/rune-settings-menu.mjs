@@ -104,6 +104,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                     break;  // we only want the first hit
                 }
             }
+            // add the properties to each 'runeFontSettings'.runes[entry]
             rune.render = {
                 class: fontname,
                 text: charvalue,
