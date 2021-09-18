@@ -25,27 +25,38 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
 
     getData() {
         const settingData = game.settings.get('questworlds', 'runeFontSettings');
+        // const settingData = {};   // DEBUG
         
-        /* set defaults in case of no settings data */
+        /* set defaults in case of no settings data, or new defaults */
         /* TODO: revise so that new entries added to defaultRunes merge in gracefully */
-        if (!settingData.hasOwnProperty('runes')) {
-            console.log("No default runes set up");
+        if (!settingData.hasOwnProperty('runes')) settingData.runes = {};
+        // let settingsRunesCount = settingData.runes ? Object.keys(settingData.runes).length : 0;
+        let settingsRunesCount = Object.keys(settingData.runes).length;
+        let defaultRunesCount = defaultRunes.length;
+        if (settingsRunesCount < defaultRunesCount) {
+            console.log(`defaultRunes contains ${defaultRunesCount - settingsRunesCount} new Runes. Merging…`);
             // console.log(defaultRunes);
-            // construct the settings object from the default runes set
-            settingData.runes = {};
-            for (let value of defaultRunes.sort() ) {
+            // construct the settings object, merging from the default runes set
+            for (let value of defaultRunes ) {
                 settingData.runes[value] = {
-                    name: 'QUESTWORLDS.runes.' + value,
-                    token: value,
-                    fonts: {}
+                // let temp = {
+                    ...{
+                        name: 'QUESTWORLDS.runes.' + value,
+                        token: value,
+                        fonts: {}
+                    },
+                    ...settingData.runes[value]
                 }
+                // console.log(settingData.runes[value]);
             }
         }
 
         if (!settingData.hasOwnProperty('customrunes')) settingData.customrunes = {};
-        // if (!settingData.hasOwnProperty('fonts')) settingData.fonts = [];
+        if (!settingData.hasOwnProperty('fonts')) settingData.fonts = [];
         // vvv stub for development testing! remove! vvv
-        if (!settingData.hasOwnProperty('fonts')) settingData.fonts = [ { name: "Hello", file: "" }, { name: "Goodbye", file: "" } ];
+        // settingData.fonts = [];
+        settingData.fonts = [ { name: "Hello", file: "" } ];
+        // settingData.fonts = [ { name: "Hello", file: "" }, { name: "Goodbye", file: "" } ];
 
         /* once we have settings data or default data, normalize data for the form */
 
@@ -57,9 +68,9 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 // check length of .fonts and pad out to length of master list of fonts
                 let rune = settingData.runes[runeProp];
                 let localFontCount = Object.keys(rune.fonts).length;
-                console.log(rune);
-                console.log(localFontCount);
-                console.log(masterFontCount);
+                // console.log(rune);
+                // console.log(localFontCount);
+                // console.log(masterFontCount);
                 if (localFontCount < masterFontCount) {
                     for (let i = localFontCount; i < masterFontCount; i++) {
                         rune.fonts[`${i}`] = '';    // construct dictionary, not array (for form compatibility)
@@ -69,7 +80,10 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             }
         }
         
-        // console.log(settingData);
+        // add convenience data to the context
+        settingData.fontCount = masterFontCount;
+
+        console.log(settingData);
         return settingData;
     }
 

@@ -69,9 +69,9 @@ export const defaultRunes = [
     /* Other */
     "horse",
     "bear",
-    "sky",
     "god_world",
     "hell",
     "heat",
+    "cold",
 
 ]

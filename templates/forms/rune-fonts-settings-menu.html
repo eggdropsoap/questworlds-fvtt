@@ -4,6 +4,7 @@
     <p class="notes">
         Configure one or more uploaded fonts by entering the <em>letter</em> the font uses for each listed rune.
     </p>
+    <p class="notes">Number of installed fonts: {{fontCount}}.</p>
 
     <!-- header -->
     <header class="table-header flexrow">
@@ -35,8 +36,12 @@
             </label>
             <div class="form-fields">
                 {{#each rune.fonts as | symbol |}}
-                <input type="text" name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+                <input type="
+                    {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
+                    " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+                {{#if (lt @key ../../fontCount)}}
                 <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
+                {{/if}}
                 {{else}}
                 &nbsp;
                 {{/each}}
