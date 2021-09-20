@@ -1,8 +1,25 @@
-<form id="#rune-settings" class="flexcol" autocomplete="off">
+<form id="#rune-settings" class="flexcol" autocomplete="off" style="max-width: 620px; padding: 16px;">
 
-    <h2>Runes By Font</h2>
+    <h2>Configure Rune Fonts</h2>
+
+    <h3>Runes Displayed Using Fonts</h3>
     <p class="notes">
-        Configure one or more uploaded fonts by entering the <em>letter</em> the font uses for each listed rune.
+        A number of fonts offering support for Gloranthan Runes can be found online.
+        These fonts use different letters for each Rune,
+        and have a different selection of Runes.
+    </p>
+    <p class="notes">
+        Upload font files here then choose which font and letter to use for each Rune.
+        Leave a letter blank to use the next font for that Rune.
+        Fonts are ordered left to right.
+        Drag fonts to change their order.
+    </p>
+    <p class="notes">
+        The official Glorantha Core Runes font can be found at
+        <a href="https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/">
+            Glorantha Core Rune Font 
+        </a>
+        on the The Well of Daliath.
     </p>
     <p class="notes">Number of installed fonts: {{fontCount}}.</p>
 
@@ -16,16 +33,20 @@
                 <input type="text" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
             </div>
             <div>
-                <input type="text" name="fonts.{{@index}}.file" value="{{font.file}}" data-dtype="String"/>
+                <input type="text" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
             </div>
         </label>
-        {{else}}
-        <label>
-            (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?]
-        </label>
         {{/each}}
+        <label>
+            <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
+                <i class="fas fa-file-import fa-fw"></i> ~Add Font~
+            </button>
+            <input type="hidden" name="newfont.url" data-dtype="String"/>
+            <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
+            <!-- (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?] -->
+        </label>
     </header>
-    <ul>
+    <ul style="padding-left: 0;">
         <!-- List of Runes -->
         {{#each runes as | rune |}}
         <li class="form-group">
@@ -42,8 +63,9 @@
                 {{#if (lt @key ../../fontCount)}}
                 <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
                 {{/if}}
-                {{else}}
-                &nbsp;
+                {{#if (eq ../../fontCount 0)}}
+                <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
+                {{/if}}
                 {{/each}}
             </div>
             <p class="hint token" style="font-family: 'Courier New'; background-color: lightgrey;">[[{{rune.token}}]]</p>
@@ -72,4 +94,5 @@
     <div style="border-top: 1px solid darkgrey;">
         Footer
     </div>
+
 </form>
