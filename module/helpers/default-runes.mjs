@@ -58,13 +58,13 @@ export const defaultRunes = [
     "sartar",
 
     /* Moon Phases Runes */
-    "dying_moon",
-    "crescent_go",
+    "black_moon",
+    "crescent_come",
     "full_half_moon",
     "full_moon",
     "empty_half_moon",
-    "crescent_come",
-    "black_moon",
+    "crescent_go",
+    "dying_moon",
 
     /* Other */
     "horse",
