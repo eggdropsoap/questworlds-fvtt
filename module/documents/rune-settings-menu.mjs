@@ -93,28 +93,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         console.log("_updateObject() fired")
         const data = expandObject(formData);
         // console.log(data);
-        
-        // iterate the built-in runes to add convenience properties for font & char
-        for (var runeKey in data.runes) {
-            let rune = data.runes[runeKey];
-            // console.log(rune.token);
-            let fontname;
-            let charvalue;
-            for (var fontKey in rune.fonts) {
-                let char = rune.fonts[fontKey];
-                if (char) {
-                    fontname = `rune-font${fontKey}`;
-                    charvalue = char;
-                    break;  // we only want the first hit
-                }
-            }
-            // add the properties to each 'runeFontSettings'.runes[entry]
-            rune.render = {
-                class: fontname,
-                text: charvalue,
-            }
-            // console.log(rune);
-        }
 
         /* handle fonts inputs */
 
@@ -122,25 +100,82 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         if (!data.hasOwnProperty('fonts')) data.fonts = [];
 
         // if font data from form, it'll be an object, so reserialize as array
-        console.log("It's an Object. Converting to array");
+        // console.log("It's an Object. Converting to array");
         data.fonts = Object.values(data.fonts);
         // console.log(Object.values(data.fonts));
+
+        // iterate the built-in runes to
+        // - convert dictionary to array
+        // - remove entries for fonts that have also be removed
+        // then
+        // - add calculated rendering properties for font & char
+        for (var runeKey in data.runes) {
+            let rune = data.runes[runeKey];
+            // console.log(`--------${rune.token}--------`);
+            // console.log(data.fonts);
+            // convert obj to array
+            
+            // if no font data in the rune (maybe was wiped), create the property
+            if (!rune.hasOwnProperty('fonts')) rune.fonts = [];
+
+            rune.fonts = Object.values(rune.fonts);
+            // remove entries for removed fonts
+            rune.fonts = rune.fonts.filter((e, i) => { return data.fonts[i].url } );
+
+            // console.log(rune.fonts);
+
+            // create the render properties
+            let fontclass;
+            let charvalue;
+            for (let fontIdx = 0; fontIdx < rune.fonts.length; fontIdx++) {
+                let char = rune.fonts[fontIdx];
+                if (char) {
+                    // console.log(char);
+                    // console.log(fontIdx);
+                    fontclass = `rune-font${fontIdx}`;
+                    charvalue = char;
+                    break;  // we only want the first hit
+                }
+            }
+            // add the properties (or defaults) to each 'runeFontSettings'.runes[entry]
+            rune.render = {
+                class: fontclass || "rune-token",
+                text: charvalue || `[[${rune.token}]]`,
+            }
+            // console.log(rune.token);
+            // console.log(rune.render);
+            // break; // debug: only Air
+        }
+
+        // remove any deleted entries from the font list
+        data.fonts = data.fonts.filter( (e) => { return e.url } );
+        // console.log(data.fonts);
+
 
         // if a new font file was uploaded or selected, process and push into .fonts array
         if (data.newfont.url) {
             console.log("New font detected");
-            console.log(data.newfont);
+            // console.log(data.newfont);
             let newFont = data.newfont;
-            newFont.name = newFont.url;
 
-            data.fonts.push(newFont);
-            delete data.newfont;
+            // ignore new font if already in the list
+            if (! data.fonts.map( (e) => {return e.url} ).includes(newFont.url) ) {
+                newFont.name = fontUrlToName(newFont.url);
+                // newFont.name = newFont.url.split('/').pop().split('.').slice(0,-1).join('.');
+                // console.log(typeof newFont.name);
+                // console.log(newFont.name);
+                // // then remove underscores
+                // newFont.name = newFont.name.replaceAll('_','');
+                // console.log(newFont.name);
+                data.fonts.push(newFont);
+            };
         }
+        // don't store formdata from the new font button
+        delete data.newfont;
 
         console.log(data);
 
         game.settings.set('questworlds', 'runeFontSettings', data).then(() => {this.render(true)});
-
     }
 
     /** @override */
@@ -159,10 +194,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 this.filepickers.push(fp);
 
                 fp.browse();
-                // console.log(fp);
-                // console.log(this);
-                // TODO: start saving data and confirm newfont.url is targeted right
-
             };
         }
     }
@@ -170,7 +201,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
 }
 
 
-/* support font file extensions */
+/* FilePicker with support for font file extensions */
 class FontFilePicker extends FilePicker {
     constructor(options={}) {
         super(options);
@@ -178,8 +209,26 @@ class FontFilePicker extends FilePicker {
             "ttf",
             "otf",
         ]
-        // TODO: Actually use the font file extensions constant
-        this.extensions = [".ttf"];
+        this.extensions = FONT_FILE_EXTENSIONS.reduce((arr, t) => {
+            arr.push(`.${t}`);
+            arr.push(`.${t.toUpperCase()}`);
+            return arr;
+        }, []);
     }
+}
 
+function fontUrlToName(str) {
+    // name = cut off directories
+    let result = str.split('/').pop();
+
+    //  remove extension of filename, respecting dots on rest of name
+    result = result.split('.').slice(0,-1).join('.');
+
+    // then remove underscores
+    result = result.replaceAll('_','');
+
+    // convert camelCase or CamelCase to Camel Case
+    result = result.replace(/([a-z])([A-Z0-9])/g, "$1 $2");
+
+    return result;
 }
