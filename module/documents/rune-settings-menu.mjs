@@ -198,13 +198,27 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             };
         }
 
-        // TODO: add listener to buttons that remove fonts
-        // delete font controls, leveraging empty URL input logic in _updateObject()
+        // hook font delete controls, leveraging empty URL input logic in _updateObject()
         html.find('.font-controls').on('click','a.font-control[data-action="delete"]', (event) => {
-            let target = event.currentTarget.dataset.target;
-            html.find(`input[name="${target}"]`).val('');
-            this.submit();
-            // TODO: gate behind an "are you sure?" dialog
+
+            // gate behind an "are you sure?" dialog
+
+            let dialogHTML =
+            "<p>~<strong>Are you sure?</strong></p>" + 
+            "<p>All rune mappings for this font will be forgotten.~</p>";
+
+            Dialog.confirm({
+                title: "Remove Font",
+                content: dialogHTML,
+                yes: () => {
+                    // blank the target input & trigger submit
+                    let target = event.currentTarget.dataset.target;
+                    html.find(`input[name="${target}"]`).val('');
+                    this.submit();
+                },
+                no: () => {},
+                defaultYes: false
+              });
         });
     }
 
