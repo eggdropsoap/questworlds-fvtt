@@ -182,6 +182,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
     activateListeners(html) {
         super.activateListeners(html)
 
+        // the add font button opens a filepicker
         for ( let fpbutton of html.find('button.font-file-picker') ) {
             fpbutton.onclick = event => {
                 event.preventDefault();
@@ -196,6 +197,15 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 fp.browse();
             };
         }
+
+        // TODO: add listener to buttons that remove fonts
+        // delete font controls, leveraging empty URL input logic in _updateObject()
+        html.find('.font-controls').on('click','a.font-control[data-action="delete"]', (event) => {
+            let target = event.currentTarget.dataset.target;
+            html.find(`input[name="${target}"]`).val('');
+            this.submit();
+            // TODO: gate behind an "are you sure?" dialog
+        });
     }
 
 }

@@ -28,7 +28,8 @@
         <div class="table-controls">
             <label>
                 <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
-                    <i class="fas fa-file-import fa-fw"></i> ~Add Font~
+                    <i class="fas fa-file-import fa-fw"></i>
+                    ~Add Font~
                 </button>
                 <input type="hidden" name="newfont.url" data-dtype="String"/>
                 <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
@@ -48,8 +49,11 @@
                 <div>
                     <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
                 </div>
-                <div>
-                    <input type="text" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
+                <div class="font-controls">
+                    <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="~Delete Font~">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    <input type="hidden" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
                 </div>
             </label>
             {{/each}}
