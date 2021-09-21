@@ -65,6 +65,7 @@ export const registerSystemSettings = function() {
     icon: "fas fa-font",               // A Font Awesome icon used in the submenu button
     type: RuneFontsSettingsMenuClass,   // A FormApplication subclass
     restricted: true,                   // Restrict this submenu to gamemaster only?
+    width: 620,           // initial width
   });
   
   
