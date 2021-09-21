@@ -11,7 +11,7 @@
 	"minimumCoreVersion": "0.8.8",
 	"esmodules": [
 		"module/qw.mjs",
-		"scripts/greensock/esm/gsap-core.js"
+		"../scripts/greensock/esm/gsap-core.js"
 	],
 	"styles": [ "css/qw.css" ],
 	"languages": [
