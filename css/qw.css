@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 @import "runes.css";
+@import "rune-settings.css";
 
 /* Global styles */
 .window-app {
@@ -273,6 +274,8 @@
   -ms-flex: 0 0 60px;
   flex: 0 0 60px;
   height: 60px;
+  /* debug */
+  /* height: 90px; */
   margin-right: 0;
 }
 
@@ -621,3 +624,7 @@
 .questworlds .effects .item .effect-controls {
   border: none;
 }
+
+
+
+

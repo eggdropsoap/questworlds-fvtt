@@ -1,4 +1,4 @@
-<form id="#rune-settings" class="flexcol" autocomplete="off" style="max-width: 620px; padding: 16px;">
+<form id="rune-settings" class="flexcol" autocomplete="off">
 
     <h2>Configure Rune Fonts</h2>
 
@@ -23,55 +23,69 @@
     </p>
     <p class="notes">Number of installed fonts: {{fontCount}}.</p>
 
-    <!-- header -->
-    <header class="table-header flexrow">
-        <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
-        {{# each fonts as | font |}}
-        <label>
-            <!-- {{font.name}} ({{@index}}) -->
-            <div>
-                <input type="text" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
-            </div>
-            <div>
-                <input type="text" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
-            </div>
-        </label>
-        {{/each}}
-        <label>
-            <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
-                <i class="fas fa-file-import fa-fw"></i> ~Add Font~
-            </button>
-            <input type="hidden" name="newfont.url" data-dtype="String"/>
-            <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
-            <!-- (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?] -->
-        </label>
-    </header>
-    <ul style="padding-left: 0;">
-        <!-- List of Runes -->
-        {{#each runes as | rune |}}
-        <li class="form-group">
-            <label class="index" for="{{rune.token}}" class="resource-label">
-                <span class="{{rune.render.class}}">{{rune.render.text}}</span> {{localize rune.name}}
-                <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
-                <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
+    <div id="built-in-runes">
+        <!-- font button -->
+        <div class="table-controls">
+            <label>
+                <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
+                    <i class="fas fa-file-import fa-fw"></i> ~Add Font~
+                </button>
+                <input type="hidden" name="newfont.url" data-dtype="String"/>
+                <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
+                <!-- (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?] -->
             </label>
-            <div class="form-fields">
+        </div>
+        <!-- header -->
+        <header class="table-header"> <!-- flexrow? -->
+            <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
+            <!-- List of fonts -->
+            {{# each fonts as | font |}}
+            <label>
+                <!-- {{font.name}} ({{@index}}) -->
+                <div class="font-name">
+                    {{font.name}}
+                </div>
+                <div>
+                    <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
+                </div>
+                <div>
+                    <input type="text" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
+                </div>
+            </label>
+            {{/each}}
+        </header>
+        <ul style="padding-left: 0;">
+            <!-- List of Runes -->
+            {{#each runes as | rune |}}
+            <li class="form-group">
+                <label class="index" for="{{rune.token}}" class="resource-label">
+                    {{#if (ne rune.render.class 'rune-token')}}
+                    <span class="{{rune.render.class}}">{{rune.render.text}}</span>
+                    {{/if}}
+                    {{localize rune.name}}
+                    <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
+                    <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
+                    <p class="hint rune-token" style="font-family: 'Courier New'; background-color: lightgrey;">[[{{rune.token}}]]</p>
+                </label>
                 {{#each rune.fonts as | symbol |}}
-                <input type="
-                    {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
-                    " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
                 {{#if (lt @key ../../fontCount)}}
-                <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
-                {{/if}}
-                {{#if (eq ../../fontCount 0)}}
-                <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
+                <div class="form-fields">
+                    <input type="
+                        {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
+                        " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+                    {{#if (lt @key ../../fontCount)}}
+                    <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
+                    {{/if}}
+                    {{#if (eq ../../fontCount 0)}}
+                    <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
+                    {{/if}}
+                </div>
                 {{/if}}
                 {{/each}}
-            </div>
-            <p class="hint token" style="font-family: 'Courier New'; background-color: lightgrey;">[[{{rune.token}}]]</p>
-        </li>
-        {{/each}}
-    </ul>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 
     <h2>Custom Runes</h2>
     <p class="notes">
