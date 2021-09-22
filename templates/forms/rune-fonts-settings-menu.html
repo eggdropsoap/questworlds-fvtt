@@ -1,8 +1,7 @@
 <form id="rune-settings" class="flexcol" autocomplete="off">
 
-    <h2>Configure Rune Fonts</h2>
+    <h2>Configure Fonts for Built-in Runes</h2>
 
-    <h3>Runes Displayed Using Fonts</h3>
     <p class="notes">
         A number of fonts offering support for Gloranthan Runes can be found online.
         These fonts use different letters for each Rune,
@@ -22,8 +21,14 @@
         on the The Well of Daliath.
     </p>
     <p class="notes">Number of installed fonts: {{fontCount}}.</p>
+    {{!--
+    <p>
+        <a class="test" style="border: 1px solid black; padding: 1ex; margin: 1ex;"><i class="fas fa-test"></i> Test Button</a>
+    </p>
+    --}}
 
     <div id="built-in-runes">
+        <input type="checkbox" name="fontupdate" style="display: none">
         <!-- font button -->
         <div class="table-controls">
             <label>
@@ -42,12 +47,19 @@
             <!-- List of fonts -->
             {{# each fonts as | font |}}
             <label>
-                <!-- {{font.name}} ({{@index}}) -->
                 <div class="font-name">
                     {{font.name}}
                 </div>
                 <div>
                     <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
+                    <label for="fonts.{{@index}}.scale">~Size~</label>
+                    <input class="font-scale" type="number" name="fonts.{{@index}}.scale" value="
+                    {{~#if font.scale~}}
+                    {{~font.scale~}}
+                    {{~else~}}
+                    100
+                    {{~/if~}}
+                    " min="50" max="200" step="1" data-dtype="Number" readonly>
                 </div>
                 <div class="font-controls">
                     <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="~Delete Font~">

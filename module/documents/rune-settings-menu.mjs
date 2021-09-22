@@ -24,7 +24,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
     }
 
     getData() {
-        console.log("getData() fired");
+        // console.log("getData() fired");
 
         const settingData = game.settings.get('questworlds', 'runeFontSettings');
         // const settingData = {};   // DEBUG: Clear settings. If paired with .set(), wipes stored settings too!
@@ -85,12 +85,12 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
 
 
         // console.log(this.filepickers);
-        console.log(settingData);   // DEBUG: for inspecting data structure sent to form
+        // console.log(settingData);   // DEBUG: for inspecting data structure sent to form
         return settingData;
     }
 
     _updateObject(event, formData) {
-        console.log("_updateObject() fired")
+        // console.log("_updateObject() fired")
         const data = expandObject(formData);
         // console.log(data);
 
@@ -147,33 +147,50 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // break; // debug: only Air
         }
 
-        // remove any deleted entries from the font list
+        // remove any blanked entries from the font list
         data.fonts = data.fonts.filter( (e) => { return e.url } );
-        // console.log(data.fonts);
+
+        console.log(data.fonts);
 
 
         // if a new font file was uploaded or selected, process and push into .fonts array
         if (data.newfont.url) {
-            console.log("New font detected");
-            // console.log(data.newfont);
+            // console.log("New font detected");
             let newFont = data.newfont;
 
             // ignore new font if already in the list
             if (! data.fonts.map( (e) => {return e.url} ).includes(newFont.url) ) {
                 newFont.name = fontUrlToName(newFont.url);
-                // newFont.name = newFont.url.split('/').pop().split('.').slice(0,-1).join('.');
-                // console.log(typeof newFont.name);
-                // console.log(newFont.name);
-                // // then remove underscores
-                // newFont.name = newFont.name.replaceAll('_','');
-                // console.log(newFont.name);
                 data.fonts.push(newFont);
             };
         }
-        // don't store formdata from the new font button
-        delete data.newfont;
+
+        if (data.fontupdate) {
+            // set the CSS rules for font support
+            let rules = [];
+            for ( const [k,v] of Object.entries(data.fonts) ) {
+                console.log(k, v);
+                let index = k;
+                let fallback = '"Roboto", sans-serif';
+                let name = v.name;
+                let url = v.url;
+                let ext = url.split('.').pop().toUpperCase();
+                let format = {
+                    "TTF": "truetype",
+                    "OTF": "opentype",
+                }[ext];
+                rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("truetype"); }`);
+                rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
+            }
+            console.log("CSS Rules", rules);
+            setRuneCSSRules(rules);
+        }
 
         console.log(data);
+
+        // don't store temporary state formdata
+        delete data.newfont;
+        delete data.fontupdate;
 
         game.settings.set('questworlds', 'runeFontSettings', data).then(() => {this.render(true)});
     }
@@ -182,7 +199,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
     activateListeners(html) {
         super.activateListeners(html)
 
-        // the add font button opens a filepicker
+        // make the add-font button opens a font-supporting filepicker
         for ( let fpbutton of html.find('button.font-file-picker') ) {
             fpbutton.onclick = event => {
                 event.preventDefault();
@@ -195,6 +212,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 this.filepickers.push(fp);
 
                 fp.browse();
+                setFontUpdates();    // TODO: make this respect the fp's cancel button
             };
         }
 
@@ -204,22 +222,31 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // gate behind an "are you sure?" dialog
 
             let dialogHTML =
-            "<p>~<strong>Are you sure?</strong></p>" + 
-            "<p>All rune mappings for this font will be forgotten.~</p>";
+                "<p><strong>" + 
+                game.i18n.localize('AreYouSure') +
+                "</strong></p>" + 
+                "<p>~All rune mappings for this font will be forgotten.~</p>";
 
             Dialog.confirm({
-                title: "Remove Font",
+                title: "~Remove Font~",
                 content: dialogHTML,
                 yes: () => {
                     // blank the target input & trigger submit
                     let target = event.currentTarget.dataset.target;
                     html.find(`input[name="${target}"]`).val('');
+                    setFontUpdates();
                     this.submit();
                 },
                 no: () => {},
                 defaultYes: false
               });
         });
+
+        // // test button
+        // html.find('.test')[0].onclick = event => {
+        //     let newRules = ["div { color: red; }", "div { background-color: greenyellow;"];
+        //     setRuneCSSRules(newRules);
+        // };
     }
 
 }
@@ -255,4 +282,48 @@ function fontUrlToName(str) {
     result = result.replace(/([a-z])([A-Z0-9])/g, "$1 $2");
 
     return result;
+}
+
+function setRuneCSSRules(rules=[]) {
+    if (!rules) return;
+    // console.log("setRuneCSSRules()", rules);
+
+    // Create the style element, if necessary
+    let elem = $('style#qwRunes');
+    let replace = false;
+    if (!elem.length) {
+        elem = $('<style id="qwRunes"></style>');
+        $('head').append(elem);
+    } else {
+        replace = true; // already exists, therefore needs emptying
+    }
+
+    // Find its CSSStyleSheet entry in document.styleSheets
+    let runeSheet = null;
+    for (let sheet of document.styleSheets) {
+        if (sheet.ownerNode == elem[0]) {
+            runeSheet = sheet;
+            break;
+        }
+    }
+
+    // empty if previously determined necessary
+    if (replace) {
+        for (let i = runeSheet.cssRules.length - 1; i >= 0; i--) {
+            runeSheet.deleteRule(i);
+        }
+    }
+
+    // insert the rules in order
+    for (let rule of rules) {
+        runeSheet.insertRule(rule, runeSheet.cssRules.length);
+    }
+
+    // console.log(runeSheet.cssRules.length);
+    // console.log("End of setRuneCSSRules()", runeSheet);
+}
+
+/* mark the form as having font changes to handle */
+function setFontUpdates() {
+    $('input[name="fontupdate"]').prop('checked', true);
 }

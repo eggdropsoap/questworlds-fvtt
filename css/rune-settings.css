@@ -79,3 +79,9 @@ caption   { display: table-caption } */
     border: inherit;
     max-width: 150px;
 }
+
+#rune-settings #built-in-runes input.font-scale {
+    width: 3em;
+    height: 1.4em;
+    display: inline;
+}
