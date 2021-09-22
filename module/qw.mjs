@@ -10,6 +10,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { QUESTWORLDS } from "./helpers/config.mjs";
 // Import system settings
 import { registerSystemSettings } from "./helpers/settings.mjs";
+import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -62,6 +63,13 @@ Hooks.once('init', async function() {
 
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("questworlds", QuestWorldsItemSheet, { makeDefault: true });
+
+  // initialize dynamic stylesheet for runes, conditional on useRunes
+  if (game.settings.get("questworlds","useRunes")) {
+    const runeFontSettings = game.settings.get("questworlds","runeFontSettings");
+    setRuneCSSRules(runeFontSettings.cssRules);
+  }
+
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
