@@ -47,9 +47,7 @@
             <!-- List of fonts -->
             {{# each fonts as | font |}}
             <label>
-                <div class="font-name">
-                    {{font.name}}
-                </div>
+                <div class="font-name">{{font.name}}</div>
                 <div>
                     <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
                     <label for="fonts.{{@index}}.scale">~Size~</label>
