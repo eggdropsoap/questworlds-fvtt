@@ -1,54 +1,30 @@
-@font-face {
-    font-family: "Core Runes";
-    src: url("fonts/core-runes.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Rune Font - Glorantha Core";
-    src: url("fonts/GloranthaCoreRunes1.5.ttf") format("truetype");
-    size-adjust: 110%;
-}
-
-@font-face {
-    font-family: "Rune Font - Jovanovic";
-    src: local("RQ");
-    size-adjust: 90%;
-}
-
-@font-face {
-    font-family: "Rune Font - Core Runes";
-    src: local("Core Runes");
-    size-adjust: 90%;
-}
-
-@font-face {
-    font-family: "Rune Font - Hero Wars";
-    src: local("Hero Wars Runes");
-    size-adjust: 120%;
-}
-
-
-.runes {
-    font-family: "Rune Font - Glorantha Core",
-    "Roboto", sans-serif;
-}
-
-.rune-font0 {
-    font-family: "Rune Font - Glorantha Core",
-    "Roboto", sans-serif;
-}
-
-.rune-font1 {
-    font-family: "Rune Font - Jovanovic",
-    "Roboto", sans-serif;
-}
-
-.rune-font2 {
-    font-family: "Rune Font - Hero Wars",
-    "Roboto", sans-serif;
-}
-
 
 .runes input::placeholder {
     color: #888;
+}
+
+
+/* fallback rune styling for bare tokens */
+.questworlds .rune-token {
+    font-family: "Roboto Condensed", sans-serif;
+    font-variant: small-caps;
+    color: darkslategrey;
+    /* background-color: lightgrey; */
+  }
+
+/* mark runes during editing in TinyMCE */
+.tox .rune-token,
+.tox .rune-font0,
+.tox .rune-font1,
+.tox .rune-font2,
+.tox .rune-font3,
+.tox .rune-font4,
+.tox .rune-font5,
+.tox .rune-font6,
+.tox .rune-font7,
+.tox .rune-font8,
+.tox .rune-font9 {
+    font-family: "Roboto Mono", monospace;
+    color: darkslategrey;
+    /* background-color: lightgrey; */
 }

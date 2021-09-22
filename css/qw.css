@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
-/* @import "runes.css"; */
+@import "runes.css";
 @import "rune-settings.css";
 
 /* Global styles */
@@ -625,13 +625,3 @@
 .questworlds .effects .item .effect-controls {
   border: none;
 }
-
-/* fallback rune styling for bare tokens */
-.questworlds .rune-token {
-  font-family: "Roboto Condensed", sans-serif;
-  font-variant: small-caps;
-  color: darkslategrey;
-  /* background-color: lightgrey; */
-}
-
-
