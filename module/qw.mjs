@@ -150,6 +150,7 @@ Handlebars.registerHelper('rune', function(token) {
     // console.log(token);
     let runeFontSettings = game.settings.get('questworlds','runeFontSettings');
     let spanClass = runeFontSettings.runes[token]?.render.class;
+    let spanTitle = game.i18n.localize(runeFontSettings.runes[token]?.name);
     let spanText = runeFontSettings.runes[token]?.render.text;
 
     if (!spanText) return '';   // token not in the list of known rune tokens
@@ -157,7 +158,7 @@ Handlebars.registerHelper('rune', function(token) {
     // console.log(token);
     // console.log(spanClass);
     // console.log(spanText);
-    return new Handlebars.SafeString(`<span class="${spanClass}">${spanText}</span>`);
+    return new Handlebars.SafeString(`<span class="${spanClass}" title="${spanTitle}">${spanText}</span>`);
   }
 });
 
