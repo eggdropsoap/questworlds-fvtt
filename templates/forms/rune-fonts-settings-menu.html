@@ -50,14 +50,6 @@
                 <div class="font-name">{{font.name}}</div>
                 <div>
                     <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
-                    <label for="fonts.{{@index}}.scale">~Size~</label>
-                    <input class="font-scale" type="number" name="fonts.{{@index}}.scale" value="
-                    {{~#if font.scale~}}
-                    {{~font.scale~}}
-                    {{~else~}}
-                    100
-                    {{~/if~}}
-                    " min="50" max="200" step="1" data-dtype="Number" readonly>
                 </div>
                 <div class="font-controls">
                     <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="~Delete Font~">
