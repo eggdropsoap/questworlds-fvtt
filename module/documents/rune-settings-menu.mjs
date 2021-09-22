@@ -140,7 +140,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // add the properties (or defaults) to each 'runeFontSettings'.runes[entry]
             rune.render = {
                 class: fontclass || "rune-token",
-                text: charvalue || `[[${rune.token}]]`,
+                text: charvalue || `(${rune.token.replace('_',' ')})`,
             }
             // console.log(rune.token);
             // console.log(rune.render);
