@@ -150,7 +150,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         // remove any blanked entries from the font list
         data.fonts = data.fonts.filter( (e) => { return e.url } );
 
-        console.log(data.fonts);
+        // console.log(data.fonts);
 
 
         // if a new font file was uploaded or selected, process and push into .fonts array
@@ -169,7 +169,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // set the CSS rules for font support
             let rules = [];
             for ( const [k,v] of Object.entries(data.fonts) ) {
-                console.log(k, v);
+                // console.log(k, v);
                 let index = k;
                 let fallback = '"Roboto", sans-serif';
                 let name = v.name;
@@ -182,11 +182,19 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("truetype"); }`);
                 rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
             }
-            console.log("CSS Rules", rules);
+            // console.log("CSS Rules", rules);
+            data.cssRules = rules;
             setRuneCSSRules(rules);
+        } else {
+            // if we haven't had a font update this render, cssRules will be null and blanked!
+            // if useRunes, make sure cssRules is preserved; otherwise, the blanking is tidy
+            if ( game.settings.get('questworlds','useRunes') ) {
+                const old_data = game.settings.get('questworlds','runeFontSettings');
+                data.cssRules = old_data.cssRules;
+            }
         }
 
-        console.log(data);
+        // console.log(data);
 
         // don't store temporary state formdata
         delete data.newfont;
@@ -284,7 +292,7 @@ function fontUrlToName(str) {
     return result;
 }
 
-function setRuneCSSRules(rules=[]) {
+export function setRuneCSSRules(rules=[]) {
     if (!rules) return;
     // console.log("setRuneCSSRules()", rules);
 
