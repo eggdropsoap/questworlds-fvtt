@@ -139,7 +139,7 @@ Handlebars.registerHelper('fullRating', function(context) {
   return new Handlebars.SafeString(outStr);
 });
 
-Handlebars.registerHelper('runes', function(token) {
+Handlebars.registerHelper('rune', function(token) {
   let useRunes = game.settings.get('questworlds','useRunes');
 
   // empty field, or not using runes anyway, don't render
@@ -147,16 +147,16 @@ Handlebars.registerHelper('runes', function(token) {
     return '';
   }
   else {
-    console.log(token);
+    // console.log(token);
     let runeFontSettings = game.settings.get('questworlds','runeFontSettings');
     let spanClass = runeFontSettings.runes[token]?.render.class;
     let spanText = runeFontSettings.runes[token]?.render.text;
 
     if (!spanText) return '';   // token not in the list of known rune tokens
 
-    console.log(token);
-    console.log(spanClass);
-    console.log(spanText);
+    // console.log(token);
+    // console.log(spanClass);
+    // console.log(spanText);
     return new Handlebars.SafeString(`<span class="${spanClass}">${spanText}</span>`);
   }
 });

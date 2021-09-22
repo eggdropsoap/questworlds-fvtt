@@ -6,7 +6,7 @@
     <div class="header-fields">
       <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.Keyword'}}</div>
       <h3 class="charname">
-        {{#if settings.useRunes}}{{runes data.rune}}{{/if}}
+        {{#if settings.useRunes}}{{rune data.rune}}{{/if}}
         {{item.name}} {{fullRating data}}
         {{#if data.description}}({{data.description}}){{/if}}
       </h3>
@@ -27,9 +27,8 @@
     <div class="tab" data-group="primary" data-tab="details">
       {{#if settings.useRunes}}
       <label class="resource-label">Rune</label>
-      <span class="{{runes}}">
-        <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/>
-      </span>
+      {{!-- <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/> --}}
+      {{> "systems/questworlds/templates/item/parts/item-rune-picker.html" }}
       {{/if}}
       <label class="resource-label">Name</label>
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>

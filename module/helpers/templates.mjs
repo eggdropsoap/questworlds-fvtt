@@ -18,6 +18,7 @@
 
     // Item partials
     "systems/questworlds/templates/item/parts/item-ability-settings.html",
+    "systems/questworlds/templates/item/parts/item-rune-picker.html",
 
     // Shared embed partials
     "systems/questworlds/templates/embeds/embed.html",
