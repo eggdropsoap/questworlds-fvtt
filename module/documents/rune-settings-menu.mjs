@@ -43,7 +43,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // construct the settings object, merging from the default runes set
             for (let value of defaultRunes ) {
                 settingData.runes[value] = {
-                // let temp = {
                     ...{
                         name: 'QUESTWORLDS.runes.' + value,
                         token: value,
@@ -51,7 +50,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                     },
                     ...settingData.runes[value]
                 }
-                // console.log(settingData.runes[value]);
             }
         }
 
@@ -76,15 +74,12 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                         rune.fonts[`${i}`] = '';    // construct as dictionary since form uses @key
                     }
                 }
-                // console.log(rune);
             }
         }
         
         // add convenience data to the context
         settingData.fontCount = masterFontCount;
 
-
-        // console.log(this.filepickers);
         // console.log(settingData);   // DEBUG: for inspecting data structure sent to form
         return settingData;
     }
@@ -100,9 +95,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         if (!data.hasOwnProperty('fonts')) data.fonts = [];
 
         // if font data from form, it'll be an object, so reserialize as array
-        // console.log("It's an Object. Converting to array");
         data.fonts = Object.values(data.fonts);
-        // console.log(Object.values(data.fonts));
 
         // iterate the built-in runes to
         // - convert dictionary to array
@@ -111,9 +104,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         // - add calculated rendering properties for font & char
         for (var runeKey in data.runes) {
             let rune = data.runes[runeKey];
-            // console.log(`--------${rune.token}--------`);
-            // console.log(data.fonts);
-            // convert obj to array
             
             // if no font data in the rune (maybe was wiped), create the property
             if (!rune.hasOwnProperty('fonts')) rune.fonts = [];
@@ -122,16 +112,12 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // remove entries for removed fonts
             rune.fonts = rune.fonts.filter((e, i) => { return data.fonts[i].url } );
 
-            // console.log(rune.fonts);
-
             // create the render properties
             let fontclass;
             let charvalue;
             for (let fontIdx = 0; fontIdx < rune.fonts.length; fontIdx++) {
                 let char = rune.fonts[fontIdx];
                 if (char) {
-                    // console.log(char);
-                    // console.log(fontIdx);
                     fontclass = `rune-font${fontIdx}`;
                     charvalue = char;
                     break;  // we only want the first hit
@@ -142,20 +128,13 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 class: fontclass || "rune-token",
                 text: charvalue || `(${rune.token.replace('_',' ')})`,
             }
-            // console.log(rune.token);
-            // console.log(rune.render);
-            // break; // debug: only Air
         }
 
         // remove any blanked entries from the font list
         data.fonts = data.fonts.filter( (e) => { return e.url } );
 
-        // console.log(data.fonts);
-
-
         // if a new font file was uploaded or selected, process and push into .fonts array
         if (data.newfont.url) {
-            // console.log("New font detected");
             let newFont = data.newfont;
 
             // ignore new font if already in the list
@@ -169,7 +148,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
             // set the CSS rules for font support
             let rules = [];
             for ( const [k,v] of Object.entries(data.fonts) ) {
-                // console.log(k, v);
                 let index = k;
                 let fallback = '"Roboto", sans-serif';
                 let name = v.name;
@@ -182,7 +160,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("truetype"); }`);
                 rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
             }
-            // console.log("CSS Rules", rules);
+
             data.cssRules = rules;
             setRuneCSSRules(rules);
         } else {
@@ -213,9 +191,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 event.preventDefault();
 
                 const options = this._getFilePickerOptions(event);
-                // console.log("FP options");
                 options.callback = () => {this.submit();}
-                // console.log(options);
                 const fp = new FontFilePicker(options);
                 this.filepickers.push(fp);
 
@@ -294,7 +270,6 @@ function fontUrlToName(str) {
 
 export function setRuneCSSRules(rules=[]) {
     if (!rules) return;
-    // console.log("setRuneCSSRules()", rules);
 
     // Create the style element, if necessary
     let elem = $('style#qwRunes');
@@ -326,9 +301,6 @@ export function setRuneCSSRules(rules=[]) {
     for (let rule of rules) {
         runeSheet.insertRule(rule, runeSheet.cssRules.length);
     }
-
-    // console.log(runeSheet.cssRules.length);
-    // console.log("End of setRuneCSSRules()", runeSheet);
 }
 
 /* mark the form as having font changes to handle */

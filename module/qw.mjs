@@ -147,7 +147,6 @@ Handlebars.registerHelper('rune', function(token) {
     return '';
   }
   else {
-    // console.log(token);
     let runeFontSettings = game.settings.get('questworlds','runeFontSettings');
     let spanClass = runeFontSettings.runes[token]?.render.class;
     let spanTitle = game.i18n.localize(runeFontSettings.runes[token]?.name);
@@ -155,9 +154,6 @@ Handlebars.registerHelper('rune', function(token) {
 
     if (!spanText) return '';   // token not in the list of known rune tokens
 
-    // console.log(token);
-    // console.log(spanClass);
-    // console.log(spanText);
     return new Handlebars.SafeString(`<span class="${spanClass}" title="${spanTitle}">${spanText}</span>`);
   }
 });
@@ -250,22 +246,5 @@ Hooks.on("ready", async () => {
   // Make TinyMCE display the new formatting live
   if ( game.settings.get("questworlds","useRunes") ) {
     CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
-    console.log(CONFIG.TinyMCE.content_css);
-
-    /* 
-    // get a list of rune fonts suitable for the formats menu list below
-    const runeFormats = Object.values(game.settings.get('questworlds','runeFontSettings').fonts)
-      .map( (e,i) => {
-        return {
-          title: e.name,
-          inline: 'span',
-          classes: `rune-font${i}`,
-        }
-      });
-
-    // Add list to menu option (inside Paragraph > Custom)
-    const formats = CONFIG.TinyMCE.style_formats.find(n => n.title === "Custom");
-    formats.items = formats.items.concat(runeFormats);
-    */
   }
 });
