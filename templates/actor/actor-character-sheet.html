@@ -31,13 +31,14 @@
         use both the "grid" and "grid-Ncol" class where "N" can be any number
         from 1 to 12 and will create that number of columns.  --}}
       <section class="abilities grid grid-2col">
+        {{!-- Left column --}}
         <aside class="sidebar">
           <section>
             {{> "systems/questworlds/templates/actor/parts/actor-abilities.html"}}
           </section>
         </aside>
 
-        {{!-- For the main features list, put in right column --}}
+        {{!-- Right column --}}
         <section class="main">
           <section>
             {{> "systems/questworlds/templates/actor/parts/actor-flaws.html"}}
