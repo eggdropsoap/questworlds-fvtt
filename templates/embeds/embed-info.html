@@ -1,7 +1,8 @@
 <div class="breakout-name">
     <h4>
         <a class="rollable" data-roll-type="{{breakout.type}}">
-          {{breakout.name}} {{#if breakout.description}}({{breakout.description}}){{/if}}
+            {{runes breakout.runes}}
+            {{breakout.name}} {{#if breakout.description}}({{breakout.description}}){{/if}}
         </a>
     </h4>
 </div>

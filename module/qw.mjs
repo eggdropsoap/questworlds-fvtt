@@ -95,6 +95,15 @@ Handlebars.registerHelper('toLowerCase', function(str) {
   return str.toLowerCase();
 });
 
+Handlebars.registerHelper('mastery', function(str){
+  let mastery_symbol = 'M';
+
+  if (game.settings.get("questworlds","useRunes")) {
+    mastery_symbol = tokenMarkupToHTML('[[mastery]]');
+  }
+  return new Handlebars.SafeString(mastery_symbol);
+});
+
 Handlebars.registerHelper('fullRating', function(context) {
   let outStr = '';
   let mastery_symbol = 'M';
@@ -138,6 +147,12 @@ Handlebars.registerHelper('fullRating', function(context) {
   }
 
   return new Handlebars.SafeString(outStr);
+});
+
+Handlebars.registerHelper('runes', function(tokens) {
+  let useRunes = game.settings.get('questworlds','useRunes');
+  if (!useRunes || !tokens) return '';
+  else return new Handlebars.SafeString(tokenMarkupToHTML(tokens));
 });
 
 Handlebars.registerHelper('rune', function(token) {

@@ -3,6 +3,7 @@
         <h4>
             <a class="rollable" data-roll-type="item">
                 <strong>{{item.name}} {{fullRating item.data}}</strong>
+                {{#if data.description}}({{data.description}}){{/if}}
             </a>
         </h4>
         </div>
@@ -12,9 +13,9 @@
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
 </div>
-{{#if item.data.description}}
+{{#if data.linkedAbility}}
 <div class="flexrow item-name description">
-    <h4>({{item.data.description}})</h4>
+    <h4>{{data.linkedAbility}}</h4>
 </div>
 {{/if}}
 

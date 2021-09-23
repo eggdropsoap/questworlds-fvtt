@@ -197,9 +197,13 @@ export class QuestWorldsItem extends Item {
     const breakout_id = a.dataset.breakoutId;
     const embeds = item.data.data.embeds;
     const breakoutData = this.getEmbedById(embeds, breakout_id);
+    breakoutData.settings = {
+      useRunes: game.settings.get('questworlds','useRunes'),
+    }
     
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
     // TODO: dialogs per breakout type
+    // TODO: Handle multiple runes input
 
     new Dialog({
       title: "Editing Breakout",
@@ -207,8 +211,8 @@ export class QuestWorldsItem extends Item {
       buttons: {
         saveButton: {
           label: "Save",
-          callback: (html) => updateBreakout(html)
-          //icon: `<i class="fas fa-check"></i>`
+          icon: `<i class="fas fa-save"></i>`,
+          callback: (html) => updateBreakout(html),
         },
         cancelButton: {
           label: "Cancel",
@@ -220,15 +224,23 @@ export class QuestWorldsItem extends Item {
 
     function updateBreakout(html) {
       // get new info from the dialog
-      const newRating = Number.parseInt(html.find("input#breakout-rating").val());
-      const newName = html.find("input#breakout-name").val()
+      const newRunes = html.find('input[name="runes"]').val();
+      const newName = html.find('input[name="name"]').val();
+      const newRating = Number.parseInt(html.find('input[name="rating"]').val());
+      const newMasteries = Number.parseInt(html.find('input[name="masteries"]').val());
+
 
       // extract a reference to the right breakout
       const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
 
       // update data in embeds via the reference
+      targetEmbed.runes = newRunes;
       targetEmbed.name = newName;
       targetEmbed.rating = newRating;
+      targetEmbed.masteries = newMasteries;
+
+      // console.log(targetEmbed);
+      // console.log(embeds);
 
       //update the item data with copy contents
       item.update({'data.embeds': embeds});

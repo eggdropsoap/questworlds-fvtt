@@ -5,7 +5,7 @@
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.MagicGroup'}}</div>
-      <h3 class="charname">{{item.name}} {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
+      <h3 class="charname"><strong>{{item.name}}</strong> {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
     </div>
   </header>
 
@@ -25,6 +25,8 @@
       <input name="name" type="text" value="{{item.name}}" placeholder=""/>
       <label class="resource-label">Description</label>
       <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+      <label class="resource-label">Linked Ability</label>
+      <input name="data.linkedAbility" type="text" value="{{data.linkedAbility}}" data-dtype="String"/>
 
       {{!-- list of abilities --}}
       <div class="abilities">

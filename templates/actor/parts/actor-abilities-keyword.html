@@ -4,6 +4,7 @@
             <a class="rollable" data-roll-type="item">
                 {{~#if settings.useRunes}}{{rune item.data.rune}} {{/if~}}
                 <strong>{{item.name}} {{fullRating item.data}}</strong>
+                {{#if item.data.description}}({{data.description}}){{/if}}
             </a>
         </h4>
         </div>
@@ -14,11 +15,6 @@
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
 </div>
-{{#if item.data.description}}
-<div class="flexrow item-name description">
-    <h4>({{item.data.description}})</h4>
-</div>
-{{/if}}
 
 {{#if item.data.embeds}}
 <ol class="breakouts-list">
