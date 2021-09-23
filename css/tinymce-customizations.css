@@ -1,6 +1,7 @@
 /** TinyMCE editors isolate themselves from the surrounding page, so page CSS is ignored.
-  * This CSS file is imported directly, but doesn't have access to the dynamically-generated
-  * rune fonts stylesheet.
+  * A CSS file can be imported directly into TinyMCE, but won't have access to the
+  * dynamically-generated rune fonts stylesheet.
+  * This is a good-enough-for-now compromise.
   */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');

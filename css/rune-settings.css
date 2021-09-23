@@ -1,16 +1,5 @@
-/* table     { display: table }
-tr        { display: table-row }
-thead     { display: table-header-group }
-tbody     { display: table-row-group }
-tfoot     { display: table-footer-group }
-col       { display: table-column }
-colgroup  { display: table-column-group }
-td, th    { display: table-cell }
-caption   { display: table-caption } */
-
 #rune-settings {
     padding: 16px;
-    /* max-width: 620px; */
 }
 
 #rune-settings .notes {
@@ -36,16 +25,9 @@ caption   { display: table-caption } */
     border: inherit;
 }
 
-/* #rune-settings #built-in-runes .table-header .header-set {
-    display: table-row;
-    border: inherit;
-    background-color: greenyellow;
-} */
-
 #rune-settings #built-in-runes .table-header label {
     display: table-cell;
     border: inherit;
-    /* max-width: 150px; */
     max-width: 100px;
 }
 
@@ -53,9 +35,6 @@ caption   { display: table-caption } */
     overflow: hidden;
     text-align: center;
 }
-/* #rune-settings #built-in-runes .table-header label.index {
-    max-width: fit-content;
-} */
 
 #rune-settings #built-in-runes ul {
     display: table-row-group;

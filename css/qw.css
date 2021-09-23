@@ -22,7 +22,6 @@
   grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  /* margin: 10px 0; */
   margin: 0;
   padding: 0;
 }
@@ -271,8 +270,6 @@
   -ms-flex: 0 0 60px;
   flex: 0 0 60px;
   height: 60px;
-  /* debug */
-  /* height: 90px; */
   margin-right: 0;
 }
 
@@ -297,7 +294,6 @@
 }
 
 .questworlds .sheet-header h1.charname {
-  /* height: 50px; */
   padding: 0px;
   margin: 0;
   border-bottom: 0;
@@ -349,14 +345,6 @@
 }
 
 
-/* .actor .window-content {
-  overflow-y: hidden;
-}
-
-.actor .sheet-body {
-  overflow-y: auto;
-} */
-
 .questworlds .tox {
   background-color: inherit;
 }
@@ -367,10 +355,6 @@
   border-style: solid;
   border-width: 1px;
 }
-
-/* .questworlds .tox .tox-toolbar__primary {
-  background-color: inherit;
-} */
 
 .questworlds .tox .tox-edit-area {
   padding: 0 8px;
@@ -413,7 +397,6 @@
   border-top-width: 1px;
   background-color: rgb(181, 179, 164); /* fallback */
   background-image: url("/ui/parchment.jpg");
-  /* background-image: url("/ui/denim.png"); */
   background-repeat: repeat;
   background-size: auto;
 
@@ -511,10 +494,6 @@
 .questworlds.sheet.actor .item .description {
   min-height: 20px;
 }
-
-/* .questworlds.sheet.actor .item .description {
-  margin-top: -4px;
-} */
 
 
 .questworlds.sheet.item .breakouts-list .breakout-name {
