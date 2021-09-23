@@ -606,7 +606,8 @@
   font-size: 12px;
 }
 
-.questworlds .items-list .items-header {
+.questworlds .items-list .item.items-header,
+.questworlds .items-list .item.items-header:last-child {
   height: 28px;
   margin: 2px 0;
   padding: 0;

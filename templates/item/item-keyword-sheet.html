@@ -44,7 +44,7 @@
           <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
         </div>
       </div>
-      
+
       {{!-- list of breakouts --}}
       <div class="abilities">
         <ol class="items-list breakouts-list">
@@ -58,8 +58,6 @@
           </li>
           {{#each data.embeds as | breakout |}}
           {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
-          {{else}}
-          <li></li>
           {{/each}}
         </ol>
       </div>
