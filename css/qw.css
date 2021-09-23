@@ -358,6 +358,13 @@
   border-width: 0;
   border-style: none;
 }
+.questworlds .sheet-header input:hover {
+  background-color: rgba(0,0,0,0.05);   /* show Foundry's default form field shading on hover */
+}
+.questworlds .sheet-header input:focus {
+  box-shadow: none; /* get rid of red shadow */
+  background-color: rgba(0,0,0,0.05);
+}
 
 .questworlds .sheet-header h1.charname input {
   width: 100%;
