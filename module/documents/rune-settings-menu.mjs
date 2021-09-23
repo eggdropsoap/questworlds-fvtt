@@ -147,8 +147,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         if (data.fontupdate) {
             // set the CSS rules for font support
             let rules = [];
-            for ( const [k,v] of Object.entries(data.fonts) ) {
-                let index = k;
+            for ( const [index,v] of Object.entries(data.fonts) ) {
                 let fallback = '"Roboto", sans-serif';
                 let name = v.name;
                 let url = v.url;
@@ -157,7 +156,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                     "TTF": "truetype",
                     "OTF": "opentype",
                 }[ext];
-                rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("truetype"); }`);
+                rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("${format}"); }`);
                 rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
             }
 
