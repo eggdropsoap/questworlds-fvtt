@@ -320,17 +320,20 @@
   background: none;
   margin: 0;
 }
-.questworlds.sheet.item .ability-variant .select-wrapper:hover::after {
+.questworlds.sheet.item .ability-variant .select-wrapper::after {
   content: "\0232A";  /* Unicode "RIGHT-POINTING ANGLE BRACKET" */
   font-family: 'Noto Sans JP', sans-serif;  /* needed for display */
   font-size: 90%;
   top: 50%;
   right: -0.6ex;
   transform: translateY(-50%);
-  color: rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.07);
   position: absolute;
   height: fit-content;
   pointer-events: none; /* allow click-through */
+}
+.questworlds.sheet.item .ability-variant .select-wrapper:hover::after {
+  color: rgba(0,0,0,0.4);
 }
 .questworlds.sheet.item .ability-variant select:focus {
   /* override foundry style */
