@@ -371,6 +371,7 @@
 
 .questworlds.actor .character .sheet-body .main .abilities {
   padding-bottom: 48px;
+  columns: 2;
 }
 .questworlds.item .sheet-body .abilities {
   margin-top: 0.6em;
@@ -381,6 +382,13 @@
 }
 .questworlds .sheet-body .abilities ol>li.items-header {
   padding-left: 0;
+}
+
+.questworlds .character .sheet-body .abilities ol.items-list>li.item {
+  break-inside: avoid;
+}
+.questworlds .character .sheet-body .abilities ol>li.items-header {
+  
 }
 
 /* .questworlds.sheet.actor .item .description, */
