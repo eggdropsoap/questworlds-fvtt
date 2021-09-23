@@ -30,24 +30,12 @@
       {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
         use both the "grid" and "grid-Ncol" class where "N" can be any number
         from 1 to 12 and will create that number of columns.  --}}
-      <section class="abilities grid grid-2col">
-        {{!-- Left column --}}
-        <aside class="sidebar">
-          <section>
-            {{> "systems/questworlds/templates/actor/parts/actor-abilities.html"}}
-          </section>
-        </aside>
-
-        {{!-- Right column --}}
-        <section class="main">
-          <section>
-            {{> "systems/questworlds/templates/actor/parts/actor-flaws.html"}}
-          </section>
-          <section>
-            {{> "systems/questworlds/templates/actor/parts/actor-benefits.html"}}
-          </section>
-        </section>
-
+      <!-- <section class="abilities grid grid-2col"> -->
+      <section class="abilities" style="columns: 2;">
+        {{!-- One list, two columns --}}
+        {{> "systems/questworlds/templates/actor/parts/actor-abilities.html"}}
+        {{> "systems/questworlds/templates/actor/parts/actor-flaws.html"}}
+        {{> "systems/questworlds/templates/actor/parts/actor-benefits.html"}}
       </section>
 
       {{!-- Hero points, XP, and such --}}
