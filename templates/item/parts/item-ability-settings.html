@@ -1,5 +1,6 @@
-<label class="resource-label" autocapitalize="words">Ability Type</label>
-<select name="data.variant">
+<div class="ability-variant">
+<div class="select-wrapper">
+  <select name="data.variant">
   <optgroup label="{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}"">
     <option value="ability" {{#if (iseq data.variant 'ability')}}selected{{/if}}>{{localize 'QUESTWORLDS.Ability'}}</option>
     <option value="keyword" {{#if (iseq data.variant 'keyword')}}selected{{/if}}>{{localize 'QUESTWORLDS.Keyword'}}</option>
@@ -9,3 +10,5 @@
     <option value="magicgroup" {{#if (iseq data.variant 'magicgroup')}}selected{{/if}}>{{localize 'QUESTWORLDS.MagicGroup'}}</option>
   </optgroup>
 </select>
+</div>
+</div>
