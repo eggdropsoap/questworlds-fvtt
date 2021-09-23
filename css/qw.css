@@ -360,9 +360,12 @@
   padding: 0 8px;
 }
 
+.questworlds .columns-2 {
+  columns: 2;
+  column-fill: auto;
+}
 .questworlds.actor .character .sheet-body .main .abilities {
   padding-bottom: 48px;
-  columns: 2;
 }
 .questworlds.item .sheet-body .abilities {
   margin-top: 0.6em;
@@ -371,7 +374,7 @@
 .questworlds .sheet-body .abilities ol>li.item {
   padding-left: 2px;
 }
-.questworlds .sheet-body .abilities ol>li.items-header {
+.questworlds .sheet-body .abilities ol li.items-header {
   padding-left: 0;
 }
 
@@ -380,6 +383,10 @@
 }
 .questworlds .character .sheet-body .abilities #abilities-header {
   column-span: all;
+}
+
+.questworlds .character .sheet-body .abilities .flaws-list {
+  min-height: 61px;
 }
 
 /* .questworlds.sheet.actor .item .description, */
