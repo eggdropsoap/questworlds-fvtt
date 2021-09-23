@@ -4,7 +4,7 @@
   <header class="sheet-header">
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <div style="font-variant: small-caps; font-weight:bold;">{{localize 'QUESTWORLDS.Keyword'}}</div>
+      <div class="ability-variant">{{localize 'QUESTWORLDS.Keyword'}}</div>
       <h3 class="charname">
         {{#if settings.useRunes}}{{rune data.rune}}{{/if}}
         {{item.name}} {{fullRating data}}
@@ -44,8 +44,9 @@
           <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
         </div>
       </div>
+      
       {{!-- list of breakouts --}}
-      <div style="margin-top: 0.6em;">
+      <div class="abilities">
         <ol class="items-list breakouts-list">
           <li class="item flexrow items-header">
             <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>

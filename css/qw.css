@@ -9,7 +9,8 @@
   font-family: "Roboto", sans-serif;
 }
 
-.rollable:hover, .rollable:focus {
+.rollable:hover,
+.rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -289,6 +290,12 @@
   flex: 1;
 }
 
+.questworlds.sheet.item .header-fields .ability-variant {
+  text-transform: capitalize;
+  font-variant: small-caps;
+  font-weight:bold;
+}
+
 .questworlds .sheet-header h1.charname {
   /* height: 50px; */
   padding: 0px;
@@ -387,8 +394,8 @@
 .questworlds .character .sheet-body .abilities ol.items-list>li.item {
   break-inside: avoid;
 }
-.questworlds .character .sheet-body .abilities ol>li.items-header {
-  
+.questworlds .character .sheet-body .abilities #abilities-header {
+  column-span: all;
 }
 
 /* .questworlds.sheet.actor .item .description, */
@@ -458,7 +465,8 @@
   display: flex;
 }
 
-.questworlds .items-list, .questworlds .breakouts-list {
+.questworlds .items-list,
+.questworlds .breakouts-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -467,13 +475,15 @@
   color: #444;
 }
 
-.questworlds .items-list .item-list, .questworlds .breakouts-list .breakout-list {
+.questworlds .items-list .item-list,
+.questworlds .breakouts-list .breakout-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.questworlds .items-list .item-name, .questworlds .breakouts-list .breakout-name {
+.questworlds .items-list .item-name,
+.questworlds .breakouts-list .breakout-name {
   -webkit-box-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -490,6 +500,7 @@
 }
 
 .questworlds.sheet.item ol.breakouts-list {
+  margin-top: 0.6em;
   padding-bottom: 1em;
 }
 .questworlds.sheet.item ol.breakouts-list ol {
@@ -512,8 +523,10 @@
   border-bottom: 1px;
 }
 
-.questworlds .items-list .item-name h3, .questworlds .items-list .item-name h4,
-.questworlds .breakouts-list .breakout-name h3, .questworlds .breakouts-list .breakout-name h4 {
+.questworlds .items-list .item-name h3,
+.questworlds .items-list .item-name h4,
+.questworlds .breakouts-list .breakout-name h3,
+.questworlds .breakouts-list .breakout-name h4 {
   margin: 0;
   margin-top: 7px;
   margin-bottom: 7px;
@@ -526,7 +539,8 @@
   margin-top: 0;
 }
 
-.questworlds .items-list .item-controls, .questworlds .breakouts-list .breakout-controls {
+.questworlds .items-list .item-controls,
+.questworlds .breakouts-list .breakout-controls {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -538,7 +552,8 @@
   justify-content: flex-end;
 }
 
-.questworlds .items-list .item-controls a, .questworlds .breakouts-list .breakout-controls a {
+.questworlds .items-list .item-controls a,
+.questworlds .breakouts-list .breakout-controls a {
   font-size: 12px;
   text-align: center;
   margin: 0 4px;
@@ -550,7 +565,8 @@
 }
 
 
-.questworlds .items-list .item, .questworlds .breakouts-list .breakout {
+.questworlds .items-list .item,
+.questworlds .breakouts-list .breakout {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -558,15 +574,18 @@
   border-bottom: 1px solid #c9c7b8;
 }
 
-.questworlds .breakouts-list .item, .questworlds .breakouts-list .breakout {
+.questworlds .breakouts-list .item,
+.questworlds .breakouts-list .breakout {
   border-bottom: none;
 }
 
-.questworlds .items-list .item:last-child, .questworlds .breakouts-list .breakout:last-child {
+.questworlds .items-list .item:last-child,
+.questworlds .breakouts-list .breakout:last-child {
   border-bottom: none;
 }
 
-.questworlds .items-list .item .item-name, .questworlds .breakouts-list .breakout .breakout-name {
+.questworlds .items-list .item .item-name,
+.questworlds .breakouts-list .breakout .breakout-name {
   color: #191813;
 }
 
