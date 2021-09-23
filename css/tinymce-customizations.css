@@ -1,0 +1,23 @@
+/** TinyMCE editors isolate themselves from the surrounding page, so page CSS is ignored.
+  * This CSS file is imported directly, but doesn't have access to the dynamically-generated
+  * rune fonts stylesheet.
+  */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+/* make rune-formatted characters more obvious in active editors */
+.rune-token,
+.rune-font0,
+.rune-font1,
+.rune-font2,
+.rune-font3,
+.rune-font4,
+.rune-font5,
+.rune-font6,
+.rune-font7,
+.rune-font8,
+.rune-font9 {
+    font-family: "Roboto Mono", monospace;
+    color: darkslateblue;
+    background-color: lightgrey;
+}

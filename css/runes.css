@@ -11,20 +11,3 @@
     color: darkslategrey;
     /* background-color: lightgrey; */
   }
-
-/* mark runes during editing in TinyMCE */
-.tox .rune-token,
-.tox .rune-font0,
-.tox .rune-font1,
-.tox .rune-font2,
-.tox .rune-font3,
-.tox .rune-font4,
-.tox .rune-font5,
-.tox .rune-font6,
-.tox .rune-font7,
-.tox .rune-font8,
-.tox .rune-font9 {
-    font-family: "Roboto Mono", monospace;
-    color: darkslategrey;
-    /* background-color: lightgrey; */
-}

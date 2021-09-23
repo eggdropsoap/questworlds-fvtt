@@ -1,3 +1,5 @@
+import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -34,6 +36,9 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
+    // Prepare rune token replacement in editors
+    this._prepareRunesInEditors(context.data,['description']);
+
     return context;
   }
 
@@ -57,7 +62,15 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
    */
   _prepareItems(context) {
 
-   }
+  }
+
+  _prepareRunesInEditors(data,fields) {
+    if (!game.settings.get('questworlds','useRunes')) return;
+
+    for (let field of fields) {
+      data[field] = tokenMarkupToHTML(data[field]);
+    }
+  }
 
   /* -------------------------------------------- */
 

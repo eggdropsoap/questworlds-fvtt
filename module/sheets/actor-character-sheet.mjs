@@ -1,6 +1,6 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
-import { BreakoutsSheetHelper } from "../helpers/breakouts.mjs";
 import { EmbedsEvents } from "../helpers/event-handlers.mjs";
+import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -67,6 +67,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
+    // Prepare rune replacements on description, biography, notes
+    this._prepareRunesInEditors(context.data,['biography', 'description', 'notes']);
+
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
@@ -127,7 +130,15 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     context.abilities = abilities;
     context.flaws = flaws;
     context.benefits = benefits;
-   }
+  }
+
+  _prepareRunesInEditors(data,fields) {
+    if (!game.settings.get('questworlds','useRunes')) return;
+
+    for (let field of fields) {
+      data[field] = tokenMarkupToHTML(data[field]);
+    }
+  }
 
   /* -------------------------------------------- */
 

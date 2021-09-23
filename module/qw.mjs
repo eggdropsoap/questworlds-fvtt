@@ -242,22 +242,30 @@ function rollItemMacro(itemName) {
 /* -------------------------------------------- */
 /*  TinyMCE Customizations                      */
 /* -------------------------------------------- */
+Hooks.on("ready", async () => {
 
-/**
- * Add a Runes option to TinyMCE's Custom formats menu
- */
+  // Make TinyMCE allow saving at all times (allows closing unchanged editors)
+  CONFIG.TinyMCE.save_enablewhendirty = false;
 
- Hooks.on("ready", async () => {
+  // Make TinyMCE display the new formatting live
   if ( game.settings.get("questworlds","useRunes") ) {
-    // Make TinyMCE display the new formatting live
-    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/runes.css");
+    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
+    console.log(CONFIG.TinyMCE.content_css);
 
-    // Add menu option (inside Paragraph > Custom)
+    /* 
+    // get a list of rune fonts suitable for the formats menu list below
+    const runeFormats = Object.values(game.settings.get('questworlds','runeFontSettings').fonts)
+      .map( (e,i) => {
+        return {
+          title: e.name,
+          inline: 'span',
+          classes: `rune-font${i}`,
+        }
+      });
+
+    // Add list to menu option (inside Paragraph > Custom)
     const formats = CONFIG.TinyMCE.style_formats.find(n => n.title === "Custom");
-    formats.items.push({
-            title: "Runes",
-            inline: "span",
-            classes: "runes"
-        });
+    formats.items = formats.items.concat(runeFormats);
+    */
   }
 });
