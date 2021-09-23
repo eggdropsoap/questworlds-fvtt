@@ -11,6 +11,7 @@ import { QUESTWORLDS } from "./helpers/config.mjs";
 // Import system settings
 import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
+import { tokenMarkupToHTML } from "./helpers/rune-helpers.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -105,7 +106,7 @@ Handlebars.registerHelper('fullRating', function(context) {
   const useRunes = game.settings.get("questworlds","useRunes");
 
   if (useRunes) {
-    mastery_symbol = '<span class="runes">W</span>';
+    mastery_symbol = tokenMarkupToHTML('[[mastery]]');
   }
 
   const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
