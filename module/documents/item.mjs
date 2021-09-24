@@ -1,3 +1,5 @@
+import { gsap, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3 } from "/scripts/greensock/esm/all.js";
+
 const legalEmbedTypes = [
   'ability',
   'breakout',
@@ -180,9 +182,28 @@ export class QuestWorldsItem extends Item {
      * animate the removal, then
      * update the item after animation ends (or fails)
      */
-    $(breakout_id).slideUp(150).promise().always(
-      () => {console.log(`Slideup promise on ${breakout_id}`); item.update({'data.embeds': prunedAbility.embeds}) }
-    );
+    // $(breakout_id).slideUp(150).promise().always(
+    //   () => {console.log(`Slideup promise on ${breakout_id}`); item.update({'data.embeds': prunedAbility.embeds}) }
+    // );
+
+    const breakout = `#${breakout_id}`;
+    _doItemTween(breakout,gsap.to, () => { item.update({'data.embeds': prunedAbility.embeds}) });
+
+    // const duration1 = 0.2;
+    // const duration2 = duration1 * 0.8;
+    // gsap.to(breakout,{
+    //   opacity: 0,
+    //   duration: duration2,
+    //   ease: Expo.easeOut,
+    // });
+    // gsap.to(breakout,{
+    //   // delay: 0.1,
+    //   height: 0,
+    //   duration: duration1,
+    //   // ease: Power4.easeInOut,
+    //   ease: Power2.easeOut,
+    //   onComplete: () => { item.update({'data.embeds': prunedAbility.embeds}) }
+    // });
 
   } // deleteEmbed()
 
@@ -279,4 +300,22 @@ export class QuestWorldsItem extends Item {
     return list[i];
   }
 
+}
+
+function _doItemTween(target, fn=gsap.from, callback=null) {
+  const duration1 = 0.2;
+  const duration2 = duration1 * 0.8;
+  fn(target,{
+    opacity: 0,
+    duration: duration2,
+    ease: Expo.easeOut,
+  });
+  fn(target,{
+    // delay: 0.1,
+    height: 0,
+    duration: duration1,
+    // ease: Power4.easeInOut,
+    ease: Power2.easeOut,
+    onComplete: callback,
+  });
 }
