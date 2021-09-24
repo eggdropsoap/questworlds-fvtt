@@ -288,6 +288,14 @@
   flex: 1;
 }
 
+.questworlds.item .sheet-header .header-fields h1 {
+  font-size: 1.2em;
+  margin-top: 4px;
+  margin-bottom: 0;
+  border: 0;
+}
+
+
 /* BEGIN ability variant display and select control */
 .questworlds.sheet.item .ability-variant {
   text-transform: capitalize;

@@ -3,11 +3,11 @@
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
-      <h3 class="charname">
-        {{#if settings.useRunes}}{{rune data.rune}}{{/if}}
+      <h1>
+        {{#if settings.useRunes}}{{rune data.rune}} {{/if~}}
         {{item.name}} {{fullRating data}}
-        {{#if data.description}}({{data.description}}){{/if}}
-      </h3>
+        {{#if data.description}}({{data.description}}){{/if~}}
+      </h1>
     </div>
   </header>
 

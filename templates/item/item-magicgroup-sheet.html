@@ -3,7 +3,9 @@
     <img class="" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
-      <h3 class="charname"><strong>{{item.name}}</strong> {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
+      <h1>
+        {{item.name}}{{#if data.description}} ({{data.description}}){{/if}}
+      </h1>
     </div>
   </header>
 

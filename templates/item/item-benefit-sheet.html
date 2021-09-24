@@ -9,7 +9,9 @@
           {{localize 'QUESTWORLDS.Consequence'}}
         {{/if}}
       </div>
-      <h3 class="charname">{{item.name}} {{fullRating data}} {{#if data.description}}({{/if}}{{data.description}}{{#if data.description}}){{/if}}</h3>
+      <h1>
+        {{item.name}} {{fullRating data}}{{#if data.description}} ({{data.description}}){{/if}}
+      </h1>
     </div>
   </header>
 
