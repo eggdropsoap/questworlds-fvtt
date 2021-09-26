@@ -202,8 +202,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
         duration: 0.1,
       });
     }
-    html.on("contextmenu",".item>.flexrow",activateMenu);
-    html.on("contextmenu",".breakout>.flexrow",activateMenu);
+    html.on("contextmenu",".item>.item-body",activateMenu);
+    html.on("contextmenu",".breakout>.breakout-body",activateMenu);
     html.on('mouseleave click',".menu.active", (event) => {
       $(event.currentTarget).removeClass('active');
     });
