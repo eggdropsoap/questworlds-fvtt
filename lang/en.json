@@ -55,12 +55,42 @@
         "Add": "Add",
         "Edit": "Edit",
         "Delete": "Delete",
+
         "AddAbility": "Add Ability",
-        "AddBenefitOrConsequence": "Add Benefit or Consequence",
-        "AddFlaw": "Add Flaw",
+        "EditAbility": "Edit Ability",
+        "DeleteAbility": "Delete Ability",
+        
         "AddKeyword": "Add Keyword",
+        "EditKeyword": "Edit Keyword",
+        "DeleteKeyword": "Delete Keyword",
+        
+        "AddSidekick": "Add Sidekick",
+        "EditSidekick": "Edit Sidekick",
+        "DeleteSidekick": "Delete Sidekick",
+        
+        "AddCompanion": "Add Companion",
+        "EditCompanion": "Edit Companion",
+        "DeleteCompanion": "Delete Companion",
+        
+        "AddMagicGroup": "Add Magic Group",
+        "EditMagicGroup": "Edit Magic Group",
+        "DeleteMagicGroup": "Delete Magic Group",
+        
+        "AddBenefitOrConsequence": "Add Benefit or Consequence",
+        "EditBenefitOrConsequence": "Edit Benefit or Consequence",
+        "DeleteBenefitOrConsequence": "Delete Benefit or Consequence",
+        
+        "AddFlaw": "Add Flaw",
+        "EditFlaw": "Edit Flaw",
+        "DeleteFlaw": "Delete Flaw",
+        
         "AddBreakoutAbility": "Add Breakout Ability",
+        "EditBreakoutAbility": "Edit Breakout Ability",
+        "DeleteBreakoutAbility": "Delete Breakout Ability",
+        
         "AddInfo": "Add Info Line",
+        "EditInfo": "Edit Info Line",
+        "DeleteInfo": "Delete Info Line",
 
         "Rune": "Rune",
 
