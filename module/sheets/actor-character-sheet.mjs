@@ -2,6 +2,7 @@ import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/ef
 import { EmbedsEvents } from "../helpers/event-handlers.mjs";
 import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
 import { doItemTween } from "../documents/item.mjs";
+import { gsap, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3 } from "/scripts/greensock/esm/all.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -179,7 +180,24 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
 
-    // Context menu TODO: Move actor sheet item controls to context menu
+    // Move item controls into context menu
+    const activateMenu = (event) => {
+      const menu = $(event.currentTarget).find('.menu');
+      menu.addClass('active');
+      const buttonHeight = menu.find('a').css('height').replace('px','');
+      menu.css("top",event.clientY - buttonHeight); // position menu so pointer is between 1st & 2nd controls
+      menu.css("left",event.clientX-4);   // pointer on left margin
+      gsap.to('.menu.active',{
+        // height: '40px',
+        opacity: 0.95,
+        duration: 0.1,
+      });
+    }
+    html.on("contextmenu",".item>.flexrow",activateMenu);
+    html.on("contextmenu",".breakout>.flexrow",activateMenu);
+    html.on('mouseleave click',".menu.active", (event) => {
+      $(event.currentTarget).removeClass('active');
+    });
 
     
     // Rollable abilities.

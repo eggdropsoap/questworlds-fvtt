@@ -13,6 +13,7 @@ import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
 import { tokenMarkupToHTML } from "./helpers/rune-helpers.mjs";
 
+
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
