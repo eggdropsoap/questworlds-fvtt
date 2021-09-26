@@ -158,17 +158,26 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
+    
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
     html.find('.item-delete').click(async (ev) => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      doItemTween(`#item-${item.data._id}`,'remove',() => {
-        item.delete();
-      });
+      Dialog.confirm({
+          title: ev.currentTarget.title,
+          content: "<p><strong>" + game.i18n.localize('AreYouSure') + "</strong></p>",
+          yes: () => {
+            const li = $(ev.currentTarget).parents(".item");
+            const item = this.actor.items.get(li.data("itemId"));
+            doItemTween(`#item-${item.data._id}`,'remove',() => {
+              item.delete();
+            });      
+          },
+          no: () => {},
+          defaultYes: false
+        });
     });
 
     // Active Effect management

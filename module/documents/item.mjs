@@ -186,24 +186,19 @@ export class QuestWorldsItem extends Item {
     //   () => {console.log(`Slideup promise on ${breakout_id}`); item.update({'data.embeds': prunedAbility.embeds}) }
     // );
 
-    const breakout = `#${breakout_id}`;
-    doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });
+    Dialog.confirm({
+      title: event.currentTarget.title,
+      content: "<p><strong>" + game.i18n.localize('AreYouSure') + "</strong></p>",
+      yes: () => {
+        const breakout = `#${breakout_id}`;
+        doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });    
+      },
+      no: () => {},
+      defaultYes: false
+    });
 
-    // const duration1 = 0.2;
-    // const duration2 = duration1 * 0.8;
-    // gsap.to(breakout,{
-    //   opacity: 0,
-    //   duration: duration2,
-    //   ease: Expo.easeOut,
-    // });
-    // gsap.to(breakout,{
-    //   // delay: 0.1,
-    //   height: 0,
-    //   duration: duration1,
-    //   // ease: Power4.easeInOut,
-    //   ease: Power2.easeOut,
-    //   onComplete: () => { item.update({'data.embeds': prunedAbility.embeds}) }
-    // });
+    // const breakout = `#${breakout_id}`;
+    // doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });
 
   } // deleteEmbed()
 
