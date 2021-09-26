@@ -6,7 +6,7 @@
     </div>
   </li>
   {{#each flaws as |item id|}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" id="item-{{item._id}}" data-item-id="{{item._id}}">
       <div class="item-name">
         <h4>{{item.name}} {{fullRating item.data}}</h4>
       </div>

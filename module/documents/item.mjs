@@ -187,7 +187,7 @@ export class QuestWorldsItem extends Item {
     // );
 
     const breakout = `#${breakout_id}`;
-    _doItemTween(breakout,gsap.to, () => { item.update({'data.embeds': prunedAbility.embeds}) });
+    doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });
 
     // const duration1 = 0.2;
     // const duration2 = duration1 * 0.8;
@@ -302,9 +302,11 @@ export class QuestWorldsItem extends Item {
 
 }
 
-function _doItemTween(target, fn=gsap.from, callback=null) {
+export function doItemTween(target, action='remove', callback=null) {
   const duration1 = 0.2;
   const duration2 = duration1 * 0.8;
+  let fn = gsap.to;
+  if (action == 'add') fn = gsap.from;
   fn(target,{
     opacity: 0,
     duration: duration2,

@@ -1,6 +1,7 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
 import { EmbedsEvents } from "../helpers/event-handlers.mjs";
 import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
+import { doItemTween } from "../documents/item.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -161,11 +162,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
+    html.find('.item-delete').click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
+      doItemTween(`#item-${item.data._id}`,'remove',() => {
+        item.delete();
+      });
     });
 
     // Active Effect management
@@ -175,6 +177,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     html.find(".item-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
     // Remove, or edit embedded ability
     html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
+
+
+    // Context menu TODO: Move actor sheet item controls to context menu
 
     
     // Rollable abilities.

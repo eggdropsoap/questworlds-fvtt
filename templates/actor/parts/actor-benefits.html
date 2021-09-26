@@ -5,8 +5,8 @@
       <a class="item-control item-create" data-type="benefit" title="{{localize 'QUESTWORLDS.AddBenefitOrConsequence'}}"><i class="fas fa-plus"></i></a>
     </div>
   </li>
-  {{#each benefits as |item id|}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
+  {{#each benefits as | item |}}
+    <li class="item flexrow" id="item-{{item._id}}" data-item-id="{{item._id}}">
       <div class="item-name">
         <h4>{{item.name}} {{fullRating item.data}}</h4>
       </div>
