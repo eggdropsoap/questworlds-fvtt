@@ -1,4 +1,4 @@
-import { EmbedsEvents } from "../helpers/event-handlers.mjs";
+import { EmbedsEvents, ContextMenus } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -84,6 +84,12 @@ export class QuestWorldsItemSheet extends ItemSheet {
 
     // Add, remove, or edit breakout ability
     html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
+
+
+    // TODO: Cleanup item controls, possible move some into pop-up menus
+    // html.on("contextmenu",".item>.item-body",ContextMenus.ItemMenu.activate);
+    html.on("contextmenu",".breakout>.breakout-body",ContextMenus.ItemMenu.activate);
+    html.on('mouseleave click',".menu.active",ContextMenus.ItemMenu.deactivate);
 
   }
 }

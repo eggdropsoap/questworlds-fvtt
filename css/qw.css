@@ -13,7 +13,7 @@
 .rollable:hover,
 .rollable:focus {
   color: #000;
-  text-shadow: 0 0 10px red;
+  text-shadow: 0 0 3px rgba(255, 0, 0, 0.45);
   cursor: pointer;
 }
 
@@ -701,12 +701,16 @@
 }
 
 
-.questworlds.sheet.actor .menu {
+.questworlds.sheet.item .breakout-body:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+  
+.questworlds.sheet .menu {
   display: none;
   opacity: 0;
 }
 
-.questworlds.sheet.actor .menu.active {
+.questworlds.sheet .menu.active {
   display: block;
   position: fixed;
   top: 0;   /* fallback position */
@@ -720,7 +724,7 @@
   border-radius: 0 6px 6px 6px;
   z-index: 1000;
 }
-.questworlds.sheet.actor .menu.active a {
+.questworlds.sheet .menu.active a {
   display: block;
   /* border: 1px solid lightgreen; */
   border-bottom: 1px solid rgb(201,199,184);
@@ -729,20 +733,20 @@
   /* font-weight: bold; */
   font-size: 0.9em;
 }
-.questworlds.sheet.actor .menu.active a:last-child {
+.questworlds.sheet .menu.active a:last-child {
   border-bottom: none;
 }
-.questworlds.sheet.actor .menu.active a:hover {
+.questworlds.sheet .menu.active a:hover {
   /* text-shadow: 0 0 8px black; */
   text-shadow: none;
 }
-.questworlds.sheet.actor .menu.active a>i {
+.questworlds.sheet .menu.active a>i {
   margin-right: 0.5rem;
   /* border: 1px solid red; */
   width: 1.3em;
   text-align: center;
 }
-.questworlds.sheet.actor .menu.active a::after {
+.questworlds.sheet .menu.active a::after {
   content: attr(title);
   /* display: flex; */
 }

@@ -1,5 +1,7 @@
 import { QuestWorldsItem } from "../documents/item.mjs";
 import { QuestWorldsItemSheet } from "../sheets/item-sheet.mjs";
+import { gsap/*, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3*/ } from "/scripts/greensock/esm/all.js";
+
 
 export class ContentEditableHelper {
 
@@ -65,3 +67,28 @@ export class EmbedsEvents {
     }
   }
 }
+
+export class ContextMenus {
+
+
+  static ItemMenu = {
+    activate: (event) => {
+      const menu = $(event.currentTarget).find('.menu');
+      menu.addClass('active');
+      const buttonHeight = menu.find('a').css('height').replace('px','');
+      menu.css("top",event.clientY - buttonHeight); // position menu so pointer is between 1st & 2nd controls
+      menu.css("left",event.clientX-4);   // pointer on left margin
+      gsap.to('.menu.active',{
+        // height: '40px',
+        opacity: 0.95,
+        duration: 0.1,
+      });
+    },
+
+    deactivate: (event) => {
+      $(event.currentTarget).removeClass('active');
+    },
+  };  // ItemMenu
+
+}
+  
