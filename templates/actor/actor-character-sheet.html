@@ -2,7 +2,6 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header flexrow">
-    {{!-- <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/> --}}
     <div class="header-fields">
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
@@ -92,7 +91,6 @@
 
     {{!-- Notes Tab --}}
     <div class="tab player-notes" data-group="primary" data-tab="notes">
-      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
       {{editor content=data.notes target="data.notes" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
