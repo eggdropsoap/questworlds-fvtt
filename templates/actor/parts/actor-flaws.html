@@ -9,7 +9,7 @@
     <li class="item" id="item-{{item._id}}" data-item-id="{{item._id}}">
       <div class="item-body flexrow">
         <div class="item-name">
-          <h4>{{item.name}} {{fullRating item.data}}</h4>
+          <h4>{{item.name}} {{fullRating item.data}} {{#if data.description}}({{data.description}}){{/if}}</h4>
         </div>
         <div class="item-controls menu">
           <a class="item-control item-edit" title="{{localize 'QUESTWORLDS.EditFlaw'}}"><i class="fas fa-edit"></i></a>
