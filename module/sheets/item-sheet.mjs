@@ -1,4 +1,4 @@
-import { EmbedsEvents, ContextMenus } from "../helpers/event-handlers.mjs";
+import { EmbedsEvents, ContextMenus, FieldHelpers } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -90,6 +90,23 @@ export class QuestWorldsItemSheet extends ItemSheet {
     // html.on("contextmenu",".item>.item-body",ContextMenus.ItemMenu.activate);
     html.on("contextmenu",".breakout>.breakout-body",ContextMenus.ItemMenu.activate);
     html.on('mouseleave click',".menu.active",ContextMenus.ItemMenu.deactivate);
+
+
+    // adjust size of header field [input]s according to content
+    html.on('keypress keyup',".header-fields h1 input", FieldHelpers.AdjustSizeToContent);
+    $('.header-fields h1 input').trigger('keyup');
+    // FieldHelpers.AdjustSizeToContent
+
+    // html.on('keyup',".header-fields h1 input", e => {
+    //   const targetName = e.currentTarget.name;
+    //   const target = $(`input[name="${targetName}"`)
+    //   const sizer = $('span[data-target="' + targetName + '"]')[0];
+    //   // sizer.val(e.currentTarget.val());
+    //   sizer.innerHTML = target[0].value;
+    //   const width =  sizer.getBoundingClientRect().width;
+    //   target.css('width',width + 'px');
+    // });
+
 
   }
 }

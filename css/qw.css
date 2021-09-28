@@ -294,6 +294,12 @@
   margin-bottom: 0;
   border: 0;
 }
+.questworlds.item .sheet-header {
+  overflow-x: auto;
+}
+.questworlds.item .placeholder {
+  color: rgb(181, 179, 164);
+}
 
 
 /* BEGIN ability variant display and select control */
@@ -379,6 +385,21 @@
   height: 100%;
   margin: 0;
 }
+
+.questworlds.item .sheet-header h1 {
+  font-size: inherit;   /* TODO */
+}
+.questworlds.item .sheet-header h1 span,
+.questworlds.item .sheet-header h1 input {
+  height: 1.4em;
+}
+.questworlds.item .sheet-header h1 input {
+  margin: 0;
+  /* width: auto; */
+  padding: 0;
+}
+/* .questworlds.item .sheet-header h1 input.description {
+} */
 
 .questworlds .sheet-tabs {
   -webkit-box-flex: 0;
@@ -749,4 +770,15 @@
 .questworlds.sheet .menu.active a::after {
   content: attr(title);
   /* display: flex; */
+}
+
+/* for the javascript input sizer in FieldHelpers.AdjustSizeToContent() */
+.questworlds.item.sheet .hidden-sizer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1px;
+  visibility: hidden;
+  z-index: -1000;
+  pointer-events: none;
 }

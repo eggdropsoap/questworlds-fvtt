@@ -70,7 +70,6 @@ export class EmbedsEvents {
 
 export class ContextMenus {
 
-
   static ItemMenu = {
     activate: (event) => {
       const menu = $(event.currentTarget).find('.menu');
@@ -92,3 +91,26 @@ export class ContextMenus {
 
 }
   
+export class FieldHelpers {
+  
+  static AdjustSizeToContent(event) {
+    const etype = event.type;
+    const ekey = event.key;
+    // if (ekey == "Enter" || ekey == "Return") {
+    //   $(this).next('input').focus();
+    //   return;
+    // }
+    let adjust = etype == 'keypress' ? ekey : '';
+    // onkeypress the key isn't part of the input.value yet, but we know the key;
+    // onkeyup the key IS part of the input.value already and doesn't need adding
+
+    if (adjust == ' ' || (etype == 'keyup' && this.value.slice(-1) == ' ')) adjust = "&nbsp;";
+    // console.log(etype, '"'+adjust+'"');
+
+    const sizer = $('span.hidden-sizer')[0];
+    sizer.innerHTML = this.value.replaceAll(' ','&nbsp;') + adjust;
+    const width =  sizer.getBoundingClientRect().width;
+    $(this).css('width',width + 'px');
+  }
+
+}

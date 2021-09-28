@@ -4,7 +4,12 @@
     <div class="header-fields">
       {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
       <h1>
-        {{item.name}}{{#if data.description}} ({{data.description}}){{/if}}
+        <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+        {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
+        <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+        {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+
+        <span class="hidden-sizer"></span>
       </h1>
     </div>
   </header>
@@ -21,10 +26,6 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="details">
-      <label class="resource-label">Name</label>
-      <input name="name" type="text" value="{{item.name}}" placeholder=""/>
-      <label class="resource-label">Description</label>
-      <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
       <label class="resource-label">Linked Ability</label>
       <input name="data.linkedAbility" type="text" value="{{data.linkedAbility}}" data-dtype="String"/>
 
