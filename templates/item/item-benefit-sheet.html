@@ -33,10 +33,7 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="details">
-      <label class="resource-label">Rating</label>
-      <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number"/>
-      <label class="resource-label">Masteries</label>
-      <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
+      {{>"systems/questworlds/templates/item/parts/item-rating-inputs.html"}}
     </div>
 
     {{!-- Attributes Tab --}}

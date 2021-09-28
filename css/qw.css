@@ -398,8 +398,46 @@
   /* width: auto; */
   padding: 0;
 }
-/* .questworlds.item .sheet-header h1 input.description {
-} */
+
+
+/* item sheet rating inputs section */
+.questworlds.item.sheet .rating-inputs {
+  margin-top: 1em;
+  margin-bottom: 1ex;
+  position: relative;
+}
+.questworlds.sheet.item .rating-inputs label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0,-75%);
+}
+.questworlds.item.sheet .rating-inputs .flexrow {
+  align-items: center;
+  display: flex;
+  font-size: 3em;
+}
+.questworlds.sheet.item .rating-inputs span {
+  flex: 0;
+}
+.questworlds.sheet.item .rating-inputs span:first-child {
+  margin-left: auto;
+}
+.questworlds.sheet.item .rating-inputs span:last-child {
+  margin-right: auto;
+}
+.questworlds.sheet.item .rating-inputs .mastery-symbol {
+  width: fit-content;
+  padding: 0 0.5ex;
+}
+.questworlds.sheet.item .rating-inputs input {
+  width: 3ch;
+  height: 2.5ch;
+  margin: 0;
+  background-color: rgba(255,255,255,0.1);
+  text-align: center;
+}
+/**/
 
 .questworlds .sheet-tabs {
   -webkit-box-flex: 0;

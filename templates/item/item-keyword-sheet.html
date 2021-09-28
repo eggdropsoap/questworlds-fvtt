@@ -28,21 +28,14 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="details">
-      {{#if settings.useRunes}}
-      <label class="resource-label">Rune</label>
-      {{!-- <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/> --}}
-      {{> "systems/questworlds/templates/item/parts/item-rune-picker.html" }}
-      {{/if}}
-      <div class="flexrow">
-        <div>
-          <label class="resource-label">Rating</label>
-          <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number"/>
-        </div>
-        <div>
-          <label class="resource-label">Masteries</label>
-          <input name="data.masteries" type="text" value="{{data.masteries}}" data-dtype="Number"/>
-        </div>
+      <div>
+        {{#if settings.useRunes}}
+        <label class="resource-label">Rune</label>
+        {{!-- <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/> --}}
+        {{> "systems/questworlds/templates/item/parts/item-rune-picker.html" }}
+        {{/if}}
       </div>
+      {{>"systems/questworlds/templates/item/parts/item-rating-inputs.html"}}
 
       {{!-- list of breakouts --}}
       <div class="abilities">

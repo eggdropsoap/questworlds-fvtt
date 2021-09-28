@@ -156,6 +156,12 @@ Handlebars.registerHelper('runes', function(tokens) {
   else return new Handlebars.SafeString(tokenMarkupToHTML(tokens));
 });
 
+Handlebars.registerHelper('masterySymbol', () => {
+  let useRunes = game.settings.get('questworlds','useRunes');
+  if (useRunes) return new Handlebars.SafeString(tokenMarkupToHTML('[[mastery]]'));
+  else return 'M';
+});
+
 Handlebars.registerHelper('rune', function(token) {
   let useRunes = game.settings.get('questworlds','useRunes');
 
