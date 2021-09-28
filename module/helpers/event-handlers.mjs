@@ -96,10 +96,10 @@ export class FieldHelpers {
   static AdjustSizeToContent(event) {
     const etype = event.type;
     const ekey = event.key;
-    // if (ekey == "Enter" || ekey == "Return") {
-    //   $(this).next('input').focus();
-    //   return;
-    // }
+    if (ekey == "Enter" || ekey == "Return") {
+      // $(this).next('input').focus();
+      return;
+    }
     let adjust = etype == 'keypress' ? ekey : '';
     // onkeypress the key isn't part of the input.value yet, but we know the key;
     // onkeyup the key IS part of the input.value already and doesn't need adding
