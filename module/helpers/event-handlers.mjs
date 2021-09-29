@@ -76,17 +76,19 @@ export class ContextMenus {
       menu.addClass('active');
       const buttonHeight = menu.find('a').css('height').replace('px','');
       let top = event.clientY - buttonHeight; // pointer between 1st & 2nd controls
-      let left = event.clientX - 4; // pointer on left margin
+      let left = event.clientX - 4; // pointer on left padding
       switch (event.data?.position) {
         case 'left':
-          // pointer on right margin
+          // pointer on right padding
           left = event.clientX - $(menu)[0].getBoundingClientRect().width + 4;
           break;
-        case 'top':
+        case 'above':
+          // pointer on bottom middle padding
           top = event.clientY - $(menu)[0].getBoundingClientRect().height + 4 ;
           left = event.clientX - ( $(menu)[0].getBoundingClientRect().width / 2 );
           break;
-        case 'bottom':
+        case 'below':
+          // pointer on top middle padding
           top = event.clientY + 4 ;
           left = event.clientX - ( $(menu)[0].getBoundingClientRect().width / 2 );
           break;
@@ -115,7 +117,7 @@ export class ContextMenus {
     div.append(`<a class="breakout-control" title="${game.i18n.localize('QUESTWORLDS.Add')}"><i class="fas fa-plus"></i></a>`);
 
     // ... but make the whole div the menu-activate click handler
-    div.on('click',null,{position:'top'},this.ItemMenu.activate);
+    div.on('click',null,{position:'above'},this.ItemMenu.activate);
 
   }; // ConvertToMenu()
 
