@@ -9,7 +9,7 @@
         </span>
         <span class="nowrap">
           {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
-          <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+          <input name="data.description" type="text" class="resizing" value="{{data.description}}" data-dtype="String"/>
           {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
         </span>
 

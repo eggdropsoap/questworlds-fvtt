@@ -141,6 +141,7 @@ export class FieldHelpers {
     // console.log(etype, '"'+adjust+'"');
 
     const sizer = $('span.hidden-sizer')[0];
+    if (!sizer) return;
     sizer.innerHTML = this.value.replaceAll(' ','&nbsp;') + adjust;
     const width =  sizer.getBoundingClientRect().width;
     $(this).css('width',width + 'px');

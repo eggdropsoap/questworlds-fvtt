@@ -231,7 +231,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Grab any data associated with this control.
     const data = duplicate(header.dataset);
     // Initialize a default name.
-    const itemType = header.dataset.variant ? header.dataset.variant : type;
+    const itemType = header.dataset?.variant == 'sidekick' ?
+      game.settings.get('questworlds',"sidekickName") :
+      header.dataset.variant ? header.dataset.variant : type;
     const name = game.i18n.localize(`QUESTWORLDS.New${itemType.capitalize()}`);
     // Prepare the item object.
     const itemData = {

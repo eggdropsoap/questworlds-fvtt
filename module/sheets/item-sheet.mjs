@@ -97,8 +97,8 @@ export class QuestWorldsItemSheet extends ItemSheet {
     }
 
     // adjust size of header field [input]s according to content
-    html.on('keypress keyup',".header-fields h1 input", FieldHelpers.AdjustSizeToContent);
-    $('.header-fields h1 input').trigger('keyup');
+    html.on('keypress keyup',".header-fields h1 input.resizing", FieldHelpers.AdjustSizeToContent);
+    $('.header-fields h1 input.resizing').trigger('keyup');
 
 
   }

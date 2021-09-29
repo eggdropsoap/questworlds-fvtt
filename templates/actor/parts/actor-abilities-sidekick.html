@@ -1,21 +1,23 @@
-<div class="item-body flexrow">
-    <div class="item-name">
-        <h4>
-            {{!-- <a class="rollable" data-roll-type="item"> --}}
-            {{localize (concat 'QUESTWORLDS.' settings.sidekickName)}}: <strong>{{item.name}}</strong>
-            {{!-- </a> --}}
-        </h4>
+<div class="item-body">
+    <div class="flexrow">
+        <div class="item-name">
+            <h4>
+                {{localize (concat 'QUESTWORLDS.' settings.sidekickName)}}: <strong>{{item.name}}</strong>
+            </h4>
+        </div>
+        <div class="item-controls menu">
+            <a class="item-control item-edit" title="{{localize (concat 'QUESTWORLDS.Edit' settings.sidekickName)}}"><i class="fas fa-edit"></i></a>
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
+            <a class="item-control item-delete" title="{{localize (concat 'QUESTWORLDS.Delete' settings.sidekickName)}}"><i class="fas fa-trash"></i></a>
+        </div>
+        
     </div>
-    <div class="item-controls menu">
-        <a class="item-control item-edit" title="{{localize (concat 'QUESTWORLDS.Edit' settings.sidekickName)}}"><i class="fas fa-edit"></i></a>
-        <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
-        <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
-        <a class="item-control item-delete" title="{{localize (concat 'QUESTWORLDS.Delete' settings.sidekickName)}}"><i class="fas fa-trash"></i></a>
+    {{#if data.description}}
+    <div class="flexrow item-name description">
+        <h4>({{item.data.description}})</h4>
     </div>
-    
-</div>
-<div class="flexrow item-name description">
-    <h4>({{item.data.description}})</h4>
+    {{/if}}
 </div>
 {{#if item.data.embeds}}
 <ol class="breakouts-list">
