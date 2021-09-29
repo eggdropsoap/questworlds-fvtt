@@ -54,6 +54,7 @@
 
         "AbilityType": "Ability Type",
 
+        "New": "New",
         "Add": "Add",
         "Edit": "Edit",
         "Delete": "Delete",
@@ -61,38 +62,49 @@
         "AddAbility": "Add Ability",
         "EditAbility": "Edit Ability",
         "DeleteAbility": "Delete Ability",
+        "NewAbility": "New Ability",
         
         "AddKeyword": "Add Keyword",
         "EditKeyword": "Edit Keyword",
         "DeleteKeyword": "Delete Keyword",
+        "NewKeyword": "New Keyword",
         
         "AddSidekick": "Add Sidekick",
         "EditSidekick": "Edit Sidekick",
         "DeleteSidekick": "Delete Sidekick",
+        "NewSidekick": "New Sidekick",
         
         "AddCompanion": "Add Companion",
         "EditCompanion": "Edit Companion",
         "DeleteCompanion": "Delete Companion",
+        "NewCompanion": "New Companion",
         
         "AddMagicGroup": "Add Magic Group",
         "EditMagicGroup": "Edit Magic Group",
         "DeleteMagicGroup": "Delete Magic Group",
+        "NewMagicGroup": "New Magic Group",
+        "NewMagicgroup": "New Magic Group",
         
         "AddBenefitOrConsequence": "Add Benefit or Consequence",
         "EditBenefitOrConsequence": "Edit Benefit or Consequence",
         "DeleteBenefitOrConsequence": "Delete Benefit or Consequence",
+        "NewBenefit": "New Benefit",
+        "NewConsequence": "New Consequence",
         
         "AddFlaw": "Add Flaw",
         "EditFlaw": "Edit Flaw",
         "DeleteFlaw": "Delete Flaw",
+        "NewFlaw": "New Flaw",
         
         "AddBreakoutAbility": "Add Breakout Ability",
         "EditBreakoutAbility": "Edit Breakout Ability",
         "DeleteBreakoutAbility": "Delete Breakout Ability",
+        "NewBreakoutAbility": "New Breakout Ability",
         
         "AddInfo": "Add Info Line",
         "EditInfo": "Edit Info Line",
         "DeleteInfo": "Delete Info Line",
+        "NewInfo": "New Info Line",
 
         "Rune": "Rune",
 

@@ -193,7 +193,17 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     html.on("contextmenu",".breakout>.breakout-body",ContextMenus.ItemMenu.activate);
     html.on('mouseleave click',".menu.active",ContextMenus.ItemMenu.deactivate);
 
-    
+    // Move item list header controls into button-click menu
+    const controls = html.find('.items-header .item-controls');
+    for (let control of controls) {
+      console.log("Control", $(control));
+      if ($(control)[0]?.childElementCount > 1) {
+        console.log($(control));
+        ContextMenus.ConvertToMenu($(control));
+      }  
+    }
+
+
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
@@ -221,7 +231,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Grab any data associated with this control.
     const data = duplicate(header.dataset);
     // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
+    const itemType = header.dataset.variant ? header.dataset.variant : type;
+    const name = game.i18n.localize(`QUESTWORLDS.New${itemType.capitalize()}`);
     // Prepare the item object.
     const itemData = {
       name: name,
