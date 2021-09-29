@@ -20,6 +20,7 @@
     "systems/questworlds/templates/item/parts/item-ability-settings.html",
     "systems/questworlds/templates/item/parts/item-rune-picker.html",
     "systems/questworlds/templates/item/parts/item-rating-inputs.html",
+    "systems/questworlds/templates/item/parts/item-breakouts-header.html",
 
     // Shared embed partials
     "systems/questworlds/templates/embeds/embed.html",

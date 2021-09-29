@@ -37,14 +37,14 @@
     {{!-- list of breakouts --}}
     <div class="abilities">
       <ol class="items-list breakouts-list">
-        <li class="item flexrow items-header">
-          <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
-          <div class="breakout-controls">
-            <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
-            <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
-          </div>
-        </li>
+
+        {{#> "systems/questworlds/templates/item/parts/item-breakouts-header.html"
+          name='QUESTWORLDS.BreakoutAbilities'}}
+          <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
+          <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
+        {{/"systems/questworlds/templates/item/parts/item-breakouts-header.html"}}
+
         {{#each data.embeds as | breakout |}}
         {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}

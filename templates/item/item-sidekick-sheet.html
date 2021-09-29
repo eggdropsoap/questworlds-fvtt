@@ -25,15 +25,15 @@
     {{!-- list of abilities --}}
     <div class="abilities">
       <ol class="items-list breakouts-list">
-        <li class="item flexrow items-header abilities-header">
-          <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
-          <div class="breakout-controls">
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
-          </div>
-        </li>
+
+        {{#> "systems/questworlds/templates/item/parts/item-breakouts-header.html"
+          name='QUESTWORLDS.KeywordsAndAbilities'}}
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
+        {{/"systems/questworlds/templates/item/parts/item-breakouts-header.html"}}
+
         {{#each data.embeds as |breakout index|}}
           {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
