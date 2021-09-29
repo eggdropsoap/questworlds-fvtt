@@ -75,8 +75,24 @@ export class ContextMenus {
       const menu = $(event.currentTarget).find('.menu');
       menu.addClass('active');
       const buttonHeight = menu.find('a').css('height').replace('px','');
-      menu.css("top",event.clientY - buttonHeight); // position menu so pointer is between 1st & 2nd controls
-      menu.css("left",event.clientX-4);   // pointer on left margin
+      let top = event.clientY - buttonHeight; // pointer between 1st & 2nd controls
+      let left = event.clientX - 4; // pointer on left margin
+      switch (event.data?.position) {
+        case 'left':
+          // pointer on right margin
+          left = event.clientX - $(menu)[0].getBoundingClientRect().width + 4;
+          break;
+        case 'top':
+          top = event.clientY - $(menu)[0].getBoundingClientRect().height + 4 ;
+          left = event.clientX - ( $(menu)[0].getBoundingClientRect().width / 2 );
+          break;
+        case 'bottom':
+          top = event.clientY + 4 ;
+          left = event.clientX - ( $(menu)[0].getBoundingClientRect().width / 2 );
+          break;
+      }
+      menu.css("top",top); 
+      menu.css('left',left);
       gsap.to('.menu.active',{
         // height: '40px',
         opacity: 0.95,
@@ -88,6 +104,20 @@ export class ContextMenus {
       $(event.currentTarget).removeClass('active');
     },
   };  // ItemMenu
+
+  static ConvertToMenu(div) {
+    // pack child controls into a new div
+    const newMenu = $('<div class="breakout-controls menu"></div>');
+    div.find('a.breakout-control').appendTo(newMenu);
+    div.append(newMenu);
+
+    // re-add a child link and attach click handler to it to activate menu
+    div.append(`<a class="breakout-control" title="${game.i18n.localize('QUESTWORLDS.Add')}"><i class="fas fa-plus"></i></a>`);
+
+    // make the whole div a menu-activate click handler
+    div.on('click',null,{position:'top'},this.ItemMenu.activate);
+
+  }; // ConvertToMenu()
 
 }
   

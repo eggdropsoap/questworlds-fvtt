@@ -790,13 +790,14 @@
   z-index: 1000;
 }
 .questworlds.sheet .menu.active a {
+  font-weight: normal;
   display: block;
   /* border: 1px solid lightgreen; */
   border-bottom: 1px solid rgb(201,199,184);
   text-align: left;
   padding: 0.5rem 0;
   /* font-weight: bold; */
-  font-size: 0.9em;
+  font-size: 0.8rem;
 }
 .questworlds.sheet .menu.active a:last-child {
   border-bottom: none;
