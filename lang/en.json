@@ -40,6 +40,8 @@
         "Sidekick": "Sidekick",
         "Companion": "Companion",
         "Breakout": "Breakout",
+        "BreakoutAbility": "Breakout Ability",
+        "Info": "Info Line",
         "Flaw": "Flaw",
         "Benefit": "Benefit",
         "Benefit_L": "Benefit of Victory",

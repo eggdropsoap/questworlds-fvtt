@@ -40,9 +40,8 @@
 
         {{#> "systems/questworlds/templates/item/parts/item-breakouts-header.html"
           name='QUESTWORLDS.BreakoutAbilities'}}
-          <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
-          <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
-          <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
+          <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-share fa-flip-vertical"></i></a>
+          <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.Info'}}"><i class="fas fa-info-circle"></i></a>
         {{/"systems/questworlds/templates/item/parts/item-breakouts-header.html"}}
 
         {{#each data.embeds as | breakout |}}

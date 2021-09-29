@@ -32,10 +32,10 @@
 
         {{#> "systems/questworlds/templates/item/parts/item-breakouts-header.html"
           name='QUESTWORLDS.KeywordsAndAbilities'}}
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
-            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.Breakout'}}" data-action="create" data-type="breakout"><i class="fas fa-share fa-flip-vertical"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.Ability'}}" data-action="create" data-type="ability"><i class="far fa-star"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.Keyword'}}" data-action="create" data-type="keyword"><i class="fas fa-star"></i></a>
+          <a class="breakout-control" title="{{localize 'QUESTWORLDS.Info'}}" data-action="create" data-type="info"><i class="fas fa-info-circle"></i></a>
         {{/"systems/questworlds/templates/item/parts/item-breakouts-header.html"}}
 
         {{#each data.embeds as |breakout index|}}
