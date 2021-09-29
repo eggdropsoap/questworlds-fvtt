@@ -111,10 +111,10 @@ export class ContextMenus {
     div.find('a.breakout-control').appendTo(newMenu);
     div.append(newMenu);
 
-    // re-add a child link and attach click handler to it to activate menu
+    // add a child link as visual target for menu activation...
     div.append(`<a class="breakout-control" title="${game.i18n.localize('QUESTWORLDS.Add')}"><i class="fas fa-plus"></i></a>`);
 
-    // make the whole div a menu-activate click handler
+    // ... but make the whole div the menu-activate click handler
     div.on('click',null,{position:'top'},this.ItemMenu.activate);
 
   }; // ConvertToMenu()
