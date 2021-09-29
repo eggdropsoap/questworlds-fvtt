@@ -4,59 +4,52 @@
     <div class="header-fields">
       {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
       <h1>
-        {{#if settings.useRunes}}{{rune data.rune}}{{/if}}
-        <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
-        {{fullRating data}}
-        {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
-        <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
-        {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+        <span class="nowrap">
+          {{#if settings.useRunes}}{{rune data.rune}}{{/if}}
+          <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+          {{fullRating data}}
+        </span>
+        <span class="nowrap">
+          {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
+          <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+          {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+        </span>
 
         <span class="hidden-sizer"></span>
       </h1>
     </div>
   </header>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="details">Details</a>
-    <a class="item" data-tab="settings">Settings</a>
-  </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
 
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="details">
-      <div>
-        {{#if settings.useRunes}}
-        <label class="resource-label">Rune</label>
-        {{!-- <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/> --}}
-        {{> "systems/questworlds/templates/item/parts/item-rune-picker.html" }}
-        {{/if}}
-      </div>
-      {{>"systems/questworlds/templates/item/parts/item-rating-inputs.html"}}
+    <div>
+      {{#if settings.useRunes}}
+      <label class="resource-label">Rune</label>
+      {{!-- <input name="data.rune" type="text" value="{{data.rune}}" placeholder="R"/> --}}
+      {{> "systems/questworlds/templates/item/parts/item-rune-picker.html" }}
+      {{/if}}
+    </div>
+    {{>"systems/questworlds/templates/item/parts/item-rating-inputs.html"}}
 
-      {{!-- list of breakouts --}}
-      <div class="abilities">
-        <ol class="items-list breakouts-list">
-          <li class="item flexrow items-header">
-            <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
-            <div class="breakout-controls">
-              <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
-              <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
-              <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
-            </div>
-          </li>
-          {{#each data.embeds as | breakout |}}
-          {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
-          {{/each}}
-        </ol>
-      </div>
+    {{!-- list of breakouts --}}
+    <div class="abilities">
+      <ol class="items-list breakouts-list">
+        <li class="item flexrow items-header">
+          <div class="item-name">{{localize 'QUESTWORLDS.BreakoutAbilities'}}</div>
+          <div class="breakout-controls">
+            <a class="breakout-control breakout-create" data-action="create" data-type="breakout" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}"><i class="fas fa-plus"></i></a>
+            <a class="breakout-control breakout-create" data-action="create" data-type="info" data-parent-id="{{breakout.id}}" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
+            <a class="context-menu"><i class="fas fa-ellipsis-h"></i></a>
+          </div>
+        </li>
+        {{#each data.embeds as | breakout |}}
+        {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+        {{/each}}
+      </ol>
     </div>
 
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="settings">
-    </div>
   </section>
 </form>

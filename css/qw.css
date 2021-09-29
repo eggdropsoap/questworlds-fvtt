@@ -296,6 +296,12 @@
 }
 .questworlds.item .sheet-header {
   overflow-x: auto;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgb(181, 179, 164);
+  min-height: 64px;
+}
+.questworlds.item .sheet-header .nowrap {
+  white-space: nowrap;
 }
 .questworlds.item .placeholder {
   color: rgb(181, 179, 164);

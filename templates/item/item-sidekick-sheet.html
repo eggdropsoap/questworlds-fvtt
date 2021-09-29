@@ -4,52 +4,41 @@
     <div class="header-fields">
       {{> "systems/questworlds/templates/item/parts/item-ability-settings.html"}}
       <h1>
-        <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
-        {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
-        <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
-        {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+        <span class="nowrap">
+          <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+        </span>
+        <span class="nowrap">
+          {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
+          <input name="data.description" type="text" value="{{data.description}}" data-dtype="String"/>
+          {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+        </span>
 
         <span class="hidden-sizer"></span>
       </h1>
     </div>
   </header>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="details">Details</a>
-    <a class="item" data-tab="settings">Settings</a>
-  </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
-
-    {{!-- Description Tab --}}
-    <div class="tab main" data-group="primary" data-tab="details">
-
-      {{!-- list of abilities --}}
-      <div class="abilities">
-        <ol class="items-list breakouts-list">
-          <li class="item flexrow items-header abilities-header">
-            <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
-            <div class="breakout-controls">
-              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
-              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
-              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
-              <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
-            </div>
-          </li>
-          {{#each data.embeds as |breakout index|}}
-            {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
-          {{/each}}
-        </ol>
-      </div>
-
+    {{!-- list of abilities --}}
+    <div class="abilities">
+      <ol class="items-list breakouts-list">
+        <li class="item flexrow items-header abilities-header">
+          <div class="item-name ability-name">{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}</div>
+          <div class="breakout-controls">
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddAbility'}}" data-action="create" data-type="ability"><i class="fas fa-plus"></i></a>
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddKeyword'}}" data-action="create" data-type="keyword"><i class="fas fa-plus"></i></a>
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddInfo'}}" data-action="create" data-type="info"><i class="fas fa-plus"></i></a>
+            <a class="breakout-control" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-plus"></i></a>
+          </div>
+        </li>
+        {{#each data.embeds as |breakout index|}}
+          {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+        {{/each}}
+      </ol>
     </div>
 
-
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="settings">
-    </div>
   </section>
 </form>
