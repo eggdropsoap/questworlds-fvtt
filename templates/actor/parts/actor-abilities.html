@@ -13,8 +13,6 @@
 </div>
 <ol class="items-list abilities-list">
   {{#each abilities as | item |}}
-  <li class="item" id="item-{{item._id}}" data-item-id="{{item._id}}">
     {{> (whichItemPartial item.type item.data.variant) item=item settings=../settings}}
-  </li>
   {{/each}}
 </ol>

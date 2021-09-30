@@ -1,24 +1,26 @@
-<div class="item-body flexrow">
-    <div class="item-name">
-        <h4>
-            <a class="rollable" data-roll-type="item">
-                {{~#if settings.useRunes}}{{rune item.data.rune}} {{/if~}}
-                {{item.name}} {{fullRating item.data}}
-                {{#if item.data.description}}({{item.data.description}}){{/if}}
-            </a>
-        </h4>
+<li class="item ability" id="item-{{item._id}}" data-item-id="{{item._id}}">
+    <div class="item-body flexrow">
+        <div class="item-name">
+            <h4>
+                <a class="rollable" data-roll-type="item">
+                    {{~#if settings.useRunes}}{{rune item.data.rune}} {{/if~}}
+                    {{item.name}} {{fullRating item.data}}
+                    {{#if item.data.description}}({{item.data.description}}){{/if}}
+                </a>
+            </h4>
+        </div>
+        <div class="item-controls menu">
+            <a class="item-control item-edit" title="{{localize 'QUESTWORLDS.EditAbility'}}"><i class="fas fa-edit"></i></a>
+            <a class="breakout-control" data-action="create" data-type="info" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
+            <a class="item-control item-delete" title="{{localize 'QUESTWORLDS.DeleteAbility'}}"><i class="fas fa-trash"></i></a>
+        </div>
     </div>
-    <div class="item-controls menu">
-        <a class="item-control item-edit" title="{{localize 'QUESTWORLDS.EditAbility'}}"><i class="fas fa-edit"></i></a>
-        <a class="breakout-control" data-action="create" data-type="info" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
-        <a class="item-control item-delete" title="{{localize 'QUESTWORLDS.DeleteAbility'}}"><i class="fas fa-trash"></i></a>
-    </div>
-</div>
 
-{{#if item.data.embeds}}
-<ol class="breakouts-list">
-    {{#each item.data.embeds as | breakout |}}
-        {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
-    {{/each}}
-</ol>
-{{/if}}
+    {{#if item.data.embeds}}
+    <ol class="breakouts-list">
+        {{#each item.data.embeds as | breakout |}}
+            {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
+        {{/each}}
+    </ol>
+    {{/if}}
+</li>

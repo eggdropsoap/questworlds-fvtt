@@ -495,7 +495,7 @@
   column-fill: auto;
 }
 .questworlds.actor .character .sheet-body .main .abilities {
-  padding-bottom: 48px;
+  padding-bottom: 40px;
 }
 .questworlds.item .sheet-body .abilities {
   margin-top: 0.6em;
@@ -524,7 +524,7 @@
   min-height: 61px;
 }
 
-/* .questworlds.sheet.actor .item .description, */
+/* indent nested lists in the abilities view... */
 .questworlds .sheet-body .abilities ol ol,
 .questworlds .sheet-body .abilities ol ol ol,
 .questworlds .sheet-body .abilities ol ol ol ol,
@@ -532,6 +532,11 @@
 .questworlds .sheet-body .abilities ol ol ol ol ol ol {
   padding-left: 1em;
 }
+/* ... except for the first list level under a Magic Group */
+.questworlds .sheet-body .abilities ol li.magic-group > ol {
+  padding-left: 0;
+}
+
 
 .questworlds .resources.footer {
   border-top-style: solid;
