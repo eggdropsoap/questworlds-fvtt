@@ -501,6 +501,11 @@
   margin-top: 0.6em;
 }
 
+.questworlds .sheet-body .abilities ol {
+  /* prevent scrollbar flash during GSAP "slideup" animations */
+  overflow: visible;
+}
+
 .questworlds .sheet-body .abilities ol>li.item {
   padding-left: 2px;
 }
