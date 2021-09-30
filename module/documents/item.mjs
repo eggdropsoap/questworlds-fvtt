@@ -219,7 +219,6 @@ export class QuestWorldsItem extends Item {
     
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
     // TODO: dialogs per breakout type
-    // TODO: Handle multiple runes input
 
     new Dialog({
       title: "Editing Breakout",

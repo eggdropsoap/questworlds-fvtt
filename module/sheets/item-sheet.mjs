@@ -86,7 +86,6 @@ export class QuestWorldsItemSheet extends ItemSheet {
     html.find(".breakout-controls").on("click", ".breakout-control", EmbedsEvents.onClickEmbedControl.bind(this));
 
 
-    // TODO: Cleanup item controls, possible move some into pop-up menus
     // html.on("contextmenu",".item>.item-body",ContextMenus.ItemMenu.activate);
     html.on("contextmenu",".breakout>.breakout-body",ContextMenus.ItemMenu.activate);
     html.on('mouseleave click',".menu.active",ContextMenus.ItemMenu.deactivate);
