@@ -4,7 +4,13 @@
             <h4>
                 <a class="rollable" data-roll-type="item">
                     <strong>{{item.name}} {{fullRating item.data}}</strong>
-                    {{#if data.description}}({{data.description}}){{/if}}
+                    {{#if item.data.description}}(
+                        {{~#if settings.useRunes~}}
+                        {{~runes data.description~}}
+                        {{~else~}}
+                        {{~data.description~}}
+                        {{~/if~}}
+                    ){{/if}}
                 </a>
             </h4>
             </div>

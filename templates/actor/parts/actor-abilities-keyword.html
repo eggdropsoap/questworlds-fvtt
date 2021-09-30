@@ -5,7 +5,13 @@
                 <a class="rollable" data-roll-type="item">
                     {{~#if settings.useRunes}}{{rune item.data.rune}} {{/if~}}
                     <strong>{{item.name}} {{fullRating item.data}}</strong>
-                    {{#if item.data.description}}({{data.description}}){{/if}}
+                    {{#if item.data.description}}(
+                        {{~#if settings.useRunes~}}
+                        {{~runes data.description~}}
+                        {{~else~}}
+                        {{~data.description~}}
+                        {{~/if~}}
+                    ){{/if}}
                 </a>
             </h4>
             </div>

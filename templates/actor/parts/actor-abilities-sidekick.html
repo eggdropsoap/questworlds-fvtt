@@ -16,7 +16,13 @@
         </div>
         {{#if data.description}}
         <div class="flexrow item-name description">
-            <h4>({{item.data.description}})</h4>
+            <h4>(
+                {{~#if settings.useRunes~}}
+                {{~runes data.description~}}
+                {{~else~}}
+                {{~data.description~}}
+                {{~/if~}} 
+            )</h4>
         </div>
         {{/if}}
     </div>
