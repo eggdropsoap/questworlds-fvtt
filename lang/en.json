@@ -4,7 +4,8 @@
         "Npc": "NPC",
 
         "BasicCharacterSheet": "QuestWorlds Core Character Sheet",
-        "BasicNpcSheet": "Questworlds Core NPC Sheet",
+        "BasicNpcSheet": "QuestWorlds Core NPC Sheet",
+        "CoreItemSheet": "QuestWorlds Core Item Sheet",
 
         "Biography": "Biography",
         "Concept": "Concept",

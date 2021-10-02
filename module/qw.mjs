@@ -64,7 +64,10 @@ Hooks.once('init', async function() {
   });
 
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("questworlds", QuestWorldsItemSheet, { makeDefault: true });
+  Items.registerSheet("questworlds", QuestWorldsItemSheet, {
+    makeDefault: true,
+    label: "QUESTWORLDS.CoreItemSheet"
+  });
 
   // initialize dynamic stylesheet for runes, conditional on useRunes
   if (game.settings.get("questworlds","useRunes")) {
