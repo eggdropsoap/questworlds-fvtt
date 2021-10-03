@@ -1,4 +1,6 @@
 import { gsap, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3 } from "/scripts/greensock/esm/all.js";
+import { tokenNameToHTML,tokenMarkupToHTML } from "../helpers/rune-helpers.mjs"; 
+import { RatingHelper } from "../helpers/rating-helpers.mjs";
 
 const legalEmbedTypes = [
   'ability',
@@ -14,11 +16,13 @@ const legalEmbedTypes = [
  */
 class EmbeddedAbility {
 
-  constructor(type, name, rating, masteries, rune) {
+  constructor(type, parentId, name, rating, masteries, rune) {
     // one id schema for all embeds, since they can switch type later
     this.id = "embed-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     this.type = legalEmbedTypes.includes(type) ? type : 'info';
+
+    this.parentId = parentId || null;
 
     // STUB: name should be localized in the switch statement
     this.name = name || "New " + this.type.charAt(0).toUpperCase() + this.type.slice(1);
@@ -80,6 +84,8 @@ export class QuestWorldsItem extends Item {
     if ( !this.actor ) return null;
     const rollData = this.actor.getRollData();
     rollData.item = foundry.utils.deepClone(this.data.data);
+    rollData.item.name = this.name;
+    rollData.item.type = this.type;
 
     return rollData;
   }
@@ -89,16 +95,32 @@ export class QuestWorldsItem extends Item {
    * @param {Event} event   The originating click event
    * @private
    */
-  async roll() {
+  async roll(embedId=null) {
     const item = this.data;
 
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const rollMode = game.settings.get('core', 'rollMode');
-    const label = `[${item.type}] ${item.name}`;
+    const itemType = item.data?.variant || item.type;
+    let rating = item.data.rating;
+    let masteries = item.data.masteries;
+    let fullRating = RatingHelper.format(rating,masteries);
 
-    // If there's no roll data, send a chat message.
-    if (!this.data.data.formula) {
+    console.log(RatingHelper.format(1,0));
+    console.log(RatingHelper.format(1,1));
+    console.log(RatingHelper.format(-1,0));
+    console.log(RatingHelper.format(0,-1));
+    console.log(RatingHelper.format(0,-1,true));
+    console.log(RatingHelper.format(1,0,true));
+    console.log(RatingHelper.format(1,2,true));
+
+    let rune = item.data.rune ? tokenNameToHTML(item.data.rune) + ' ' : '';
+    let name = item.name;
+
+    let label = `Tactic: ${rune}${name} ${fullRating}`;
+
+    // If it can't be rolled, send an info card message to chat
+    if (!item.type == 'benefit') {
       ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
@@ -110,16 +132,77 @@ export class QuestWorldsItem extends Item {
     else {
       // Retrieve roll data.
       const rollData = this.getRollData();
+      // console.log(rollData);
 
-      // Invoke the roll and submit it to chat.
-      const roll = new Roll(rollData.item.formula, rollData).roll();
-      roll.toMessage({
+      // prepare context data
+      const benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
+
+      // if (item.type = 'breakout')
+      // let rating, masteries;
+
+      if (embedId) {
+        const embed = QuestWorldsItem.getEmbedById(this.data.data.embeds,embedId);
+        // console.log("embed", embed);
+        rating = embed.rating;
+        masteries = embed.masteries;
+        name = embed.name;
+        rune = embed.runes ? tokenMarkupToHTML(embed.runes) + ' ' : '';
+        if (embed.type == 'breakout') {
+          // rating is just a bonus, so add to the parent (assumed a keyword)
+          let parent = QuestWorldsItem.getEmbedById(this.data.data.embeds,embed.parentId);
+          if(!parent) parent = item.data; // it's a breakout directly from an Item, not embed
+          [rating, masteries] = RatingHelper.add(rating,masteries,parent?.rating,parent?.masteries);
+          console.log(RatingHelper.format(rating,masteries,true));
+        }
+        fullRating = RatingHelper.format(rating,masteries);
+      } else {
+        rating = rollData.item.rating;
+        masteries = rollData.item.masteries;  
+      }
+      // console.log(rating,masteries);
+
+      // create the message first since we need the ID for the context
+      const msg = await ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
-        flavor: label,
+        flavor: `Tactic: ${rune}${name} ${fullRating}`,
       });
-      return roll;
+
+      const context = {
+        chatId: msg.id,
+        cssClasses: "hello-world",
+        benefits: benefits,
+        rating: rating,
+        masteries: masteries,
+        // item: rollData.item,
+        hp: rollData.points.hero,
+      }
+
+      msg.setFlag('questworlds','context',context);
+
+      // console.log(msg);
+
+      const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",context);
+      // const content = "<div>hello?</div>";
+
+      await msg.update({'content': content});
+      ui.chat.scrollBottom();
+
     }
+
+    // else {
+    //   // Retrieve roll data.
+    //   const rollData = this.getRollData();
+
+    //   // Invoke the roll and submit it to chat.
+    //   const roll = new Roll("1d20", rollData).roll();
+    //   roll.toMessage({
+    //     speaker: speaker,
+    //     rollMode: rollMode,
+    //     flavor: label,
+    //   });
+    //   return roll;
+    // }
   }
 
   /**
@@ -134,7 +217,7 @@ export class QuestWorldsItem extends Item {
     const embeds = item.data.data.embeds;
     const newEmbedType = a.dataset.type;
 
-    const newBreakout = new EmbeddedAbility(newEmbedType);
+    const newBreakout = new EmbeddedAbility(newEmbedType,parentId);
     
     if (parentId) {
       // find the sub-ability to embed the new ability inside
@@ -269,7 +352,6 @@ export class QuestWorldsItem extends Item {
    * Returns null if not found.
    * @param {Array} embeds        // the Item
    * @param {String} id           // the id to find
-   * @param {Function} callback   // An optional callback to process the found entry directly
    */
   static getEmbedById(embeds, id) {
 

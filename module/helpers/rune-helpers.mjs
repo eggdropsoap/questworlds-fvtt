@@ -5,6 +5,10 @@ export function tokenMarkupToHTML(str) {
     if (str) return str.replace(regex,_tokenToHTML);
 }
 
+export function tokenNameToHTML(str) {
+    return _tokenToHTML(str);
+}
+
 function _tokenToHTML(match) {
     const token = match.replace('[[','').replace(']]','');
     const runeList = game.settings.get('questworlds','runeFontSettings').runes;

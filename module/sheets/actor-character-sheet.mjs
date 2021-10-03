@@ -196,9 +196,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Move item list header controls into button-click menu
     const controls = html.find('.items-header .item-controls');
     for (let control of controls) {
-      console.log("Control", $(control));
       if ($(control)[0]?.childElementCount > 1) {
-        console.log($(control));
         ContextMenus.ConvertToMenu($(control));
       }  
     }
@@ -260,10 +258,29 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
 
     // Handle item rolls.
     if (dataset.rollType) {
-      if (dataset.rollType == 'item') {
+      if (dataset.rollType == 'item') { // direct item rolls
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
+      }
+      else {  // embedded abilities rolls
+        const itemId = element.closest('.item').dataset.itemId;
+        const item = this.actor.items.get(itemId);
+        const embedId = element.closest('.breakout').dataset.breakoutId;
+        const embedData = {
+          id: embedId,
+          rating: dataset.masteries,
+          masteries: dataset.masteries,
+        }
+        if (dataset.rollType == 'breakout') {
+          const keyword = element.closest('.keyword');
+          const keywordDataset = $(keyword).find('.rollable').dataset;
+          if (keywordDataset) {
+            const keywordRating = keywordDataset.rollRating;
+            const keywordMasteries = keywordDataset.rollMasteries;
+          }
+        }
+        item.roll(embedId);
       }
     }
 

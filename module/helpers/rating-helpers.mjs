@@ -1,4 +1,4 @@
-import { tokenNameToHTML } from "./rune-helpers.mjs";
+import { tokenNameToHTML,tokenMarkupToHTML } from "./rune-helpers.mjs";
 
 export class RatingHelper {
 
@@ -103,9 +103,50 @@ export class RatingHelper {
      * @param {Number} rating       // rating (the x in xMy)
      * @param {Number} masteries    // masteries (the y in xMy)
      * @param {Boolean} is_modifier // is this a bonus/malus?
-     * @returns 
+     * @returns {String}
      */
     static format(rating,masteries,is_modifier) {
+        const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
+
+        let outStr = '';
+        let mastery_symbol = 'M';
+        
+        const useRunes = game.settings.get("questworlds","useRunes");
+      
+        if (useRunes) {
+          mastery_symbol = tokenMarkupToHTML('[[mastery]]');
+        }
+      
+        // if either portion is negative, put the negative on the front
+        if (rating < 0 || masteries < 0) {
+          outStr += minusChar;
+        }
+        // output basic rating part if it's non-zero
+        if (Math.abs(rating) > 0) {
+          // if it's positive and a modifier, prefix '+' first
+          if (rating > 0 && is_modifier) {
+            outStr += "+";
+          }
+          // positive rating
+          outStr += Math.abs(rating);
+        }
+        // when rating is zero and there are positive Ms, add a + for "+M"
+        if (rating == 0 && masteries > 0) {
+          outStr += "+";
+        }
+      
+        // Master symbol with no number if 1, with number if > 1
+        if (Math.abs(masteries) > 0) {
+          outStr += mastery_symbol;
+        }
+        if (Math.abs(masteries) > 1) {
+          outStr += Math.abs(masteries);
+        }
+
+        return outStr;
+    }
+
+    static format2(rating,masteries,is_modifier) {
         const minusSymbol = '\u2212'; // unicode minus symbol (wider than hyphen, matches '+' width)
         let mastery_symbol = 'M';
         if (game.settings.get('questworlds','useRunes')) {
@@ -115,7 +156,10 @@ export class RatingHelper {
         const sign = (r < 0 || m < 0) ?
             minusSymbol :
             is_modifier ? '+' : '';
-        r = Math.abs(r);    // after sign determined, get sign-less r
+        r = Math.abs(r);    // after sign determined, get sign-less r,
+        m = Math.abs(m);    // and sign-less m
+        mastery_symbol = m > 0 ? mastery_symbol : ''; // drop mastery symbol if no masteries
+        m = m > 1 ? m : ''; // drop the masteries number if it's not at least 2
         return(`${sign}${r}${mastery_symbol}${m}`);
     }
 
