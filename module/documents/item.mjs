@@ -112,13 +112,16 @@ export class QuestWorldsItem extends Item {
 
     // Benefits/consequences can't be rolled, send an info card message to chat
     if (itemType == 'benefit') {
-      let variant = item.data.rating > 0 ? "Benefit" : "Consequence";
+      let variant = item.data.rating >= 0 ? "Benefit" : "Consequence";
+      fullRating = RatingHelper.format(rating,masteries,true);
+      label = `${rune}${name} ${fullRating}`;
       ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
         flavor: game.i18n.localize(`QUESTWORLDS.${variant}`) + ": " + label,
         content: item.data.description ?? ''
       });
+      return;
     }
     // Otherwise, create a roll and send a chat message from it.
     else {
