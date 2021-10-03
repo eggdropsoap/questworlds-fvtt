@@ -109,7 +109,7 @@ export class ContextMenus {
 
   static ConvertToMenu(div) {
     // pack child controls into a new div
-    console.log("ConvertToMenu()",div);
+    // console.log("ConvertToMenu()",div);
     const newMenu = $('<div class="breakout-controls menu"></div>');
     div.find('a').appendTo(newMenu);
     div.append(newMenu);
