@@ -1,3 +1,4 @@
+import { RatingHelper } from "./rating-helpers.mjs";
 import { tokenMarkupToHTML } from "./rune-helpers.mjs";
 
 
@@ -6,6 +7,7 @@ import { tokenMarkupToHTML } from "./rune-helpers.mjs";
 /* -------------------------------------------- */
 
 export function registerHandlebarsHelpers() {
+    
     // If you need to add Handlebars helpers, here are a few useful examples:
     Handlebars.registerHelper('concat', function() {
         var outStr = '';
@@ -31,48 +33,15 @@ export function registerHandlebarsHelpers() {
     });
     
     Handlebars.registerHelper('fullRating', function(context) {
-        let outStr = '';
-        let mastery_symbol = 'M';
     
         const rating = context.rating;
         const masteries = context.masteries;
         const abilityType = context.itemType || context.type;
-        
-        const useRunes = game.settings.get("questworlds","useRunes");
+        const is_modifier = (abilityType == 'benefit' || abilityType == 'breakout');
     
-        if (useRunes) {
-        mastery_symbol = tokenMarkupToHTML('[[mastery]]');
-        }
-    
-        const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
-    
-        // if either portion is negative, put the negative on the front
-        if (rating < 0 || masteries < 0) {
-        outStr += minusChar;
-        }
-        // output basic rating part if it's non-zero
-        if (Math.abs(rating) > 0) {
-        // if it's positive and a benefit/consequence or breakout, prefix '+' first
-        if (rating > 0 && (abilityType == 'benefit' || abilityType == 'breakout')) {
-            outStr += "+";
-        }
-        // positive rating
-        outStr += Math.abs(rating);
-        }
-        // when rating is zero and there are positive Ms, add a + for "+M"
-        if (rating == 0 && masteries > 0) {
-        outStr += "+";
-        }
-    
-        // Master symbol with no number if 1, with number if > 1
-        if (Math.abs(masteries) > 0) {
-        outStr += mastery_symbol;
-        }
-        if (Math.abs(masteries) > 1) {
-        outStr += Math.abs(masteries);
-        }
-    
-        return new Handlebars.SafeString(outStr);
+        return new Handlebars.SafeString(
+            RatingHelper.format(rating,masteries,is_modifier)
+            );
     });
     
     Handlebars.registerHelper('runes', function(tokens) {
