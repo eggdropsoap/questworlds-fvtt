@@ -286,21 +286,24 @@ export class QuestWorldsItem extends Item {
     breakoutData.settings = {
       useRunes: game.settings.get('questworlds','useRunes'),
     }
+    breakoutData.cssClass = 'edit-ability';
+
     
+    const dialogTitle = 'QUESTWORLDS.dialog.Editing' + breakoutData.type.capitalize();
     const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
     // TODO: dialogs per breakout type
 
     new Dialog({
-      title: "Editing Breakout",
+      title: game.i18n.localize(dialogTitle),
       content: dialogContent,
       buttons: {
         saveButton: {
-          label: "Save",
+          label: game.i18n.localize('QUESTWORLDS.dialog.Save'),
           icon: `<i class="fas fa-save"></i>`,
           callback: (html) => updateBreakout(html),
         },
         cancelButton: {
-          label: "Cancel",
+          label: game.i18n.localize('QUESTWORLDS.dialog.Cancel'),
           icon: `<i class="fas fa-times"></i>`
         },
       },
@@ -311,9 +314,11 @@ export class QuestWorldsItem extends Item {
       // get new info from the dialog
       const newRunes = html.find('input[name="runes"]').val();
       const newName = html.find('input[name="name"]').val();
-      const newRating = Number.parseInt(html.find('input[name="rating"]').val());
-      const newMasteries = Number.parseInt(html.find('input[name="masteries"]').val());
+      let newRating = Number.parseInt(html.find('input[name="rating"]').val()) || 0;
+      let newMasteries = Number.parseInt(html.find('input[name="masteries"]').val()) || 0;
 
+      // rationalize the rating and masteries
+      [newRating,newMasteries] = RatingHelper.rationalize(newRating,newMasteries);
 
       // extract a reference to the right breakout
       const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
@@ -323,9 +328,6 @@ export class QuestWorldsItem extends Item {
       targetEmbed.name = newName;
       targetEmbed.rating = newRating;
       targetEmbed.masteries = newMasteries;
-
-      // console.log(targetEmbed);
-      // console.log(embeds);
 
       //update the item data with copy contents
       item.update({'data.embeds': embeds});

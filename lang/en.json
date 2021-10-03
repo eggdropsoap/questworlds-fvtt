@@ -108,6 +108,7 @@
         "NewInfo": "New Info Line",
 
         "Rune": "Rune",
+        "Runes": "Runes",
 
         "runes": {
             "air": "Air",
@@ -164,6 +165,17 @@
             "yinkin": "Yinkin"
         },
 
+        "dialog": {
+            "Save": "Save",
+            "Cancel": "Cancel",
+            "EditingAbility": "Editing Ability",
+            "EditingBreakout": "Editing Breakout",
+            "EditingInfo": "Editing Info Line",
+            "EditingKeyword": "Editing Keyword",
+            "rating": "Rating",
+            "runeOrRunes": "Runes(s)",
+            "runesL": "Enter one or more rune tokens, e.g. [[moon]][[air]]."
+        },
 
 
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",

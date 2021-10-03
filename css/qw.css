@@ -837,3 +837,63 @@
   z-index: -1000;
   pointer-events: none;
 }
+
+
+.questworlds .help,
+.system-questworlds .help {
+  /* text-decoration: underline dotted black ; */
+  vertical-align: super;
+  font-weight: normal;
+  font-size: 0.8em;
+  margin: 0 0.1em;
+  cursor: help;
+}
+
+
+/* ability editing dialogs */
+.system-questworlds .dialog-content .edit-ability {
+  margin-bottom: 10px;
+}
+.system-questworlds .dialog-content .edit-ability h2 input {
+  border: 0;
+  background-color: inherit;
+}
+.system-questworlds .dialog-content .edit-ability h2 input:hover {
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.system-questworlds .dialog-content .edit-ability h2 input:focus {
+  box-shadow: none;
+  outline: slategrey solid 1px; /* keep a focus outline for accessibility */
+}
+.system-questworlds .dialog-content .edit-ability .resource-label {
+  font-weight: bold;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs {
+  font-size: 1.4rem;
+  text-align: center;
+}
+.system-questworlds .dialog-content .edit-ability .rating label {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs>span {
+  width: 2ch;
+  margin: 0 4px;
+  flex: 0;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs>span>span {
+  height: 100%;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs input {
+  width: 3.6ch;
+  min-width: 3.6ch;
+  flex: 0;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs input:first-child {
+  margin-left: auto;
+}
+.system-questworlds .dialog-content .edit-ability .rating-inputs input:last-child {
+  margin-right: auto;
+}

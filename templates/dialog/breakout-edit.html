@@ -1,22 +1,27 @@
-<div class="flexrow" style="margin-bottom: 12px;">
-    {{#if settings.useRunes}}
-    <div style="flex-basis: min-content; flex-grow: 1; flex-shrink: 1;">
-        <label class="resource-label">Rune</label>
+<div class="flexcol {{cssClass}}" autocomplete="off"> {{log this}}
+    <header class="sheet-header">
+        <h2>
+            <input name="name" id="breakout-name" type="text" value="{{name}}"/>
+        </h2>
+    </header>
+    <div class="flexrow">
+        {{#if settings.useRunes}}
+        <div>
+            <label class="resource-label">{{localize 'QUESTWORLDS.dialog.runeOrRunes'}}<span class="fas fa-question-circle help" title="{{localize 'QUESTWORLDS.dialog.runesL'}}"></span></label>
+            {{/if}}
+            <input name="runes" type="{{#if settings.useRunes}}text{{else}}hidden{{/if}}" value="{{this.runes}}"/>
+        {{#if settings.useRunes}}
+        </div>
         {{/if}}
-        <input name="runes" type="{{#if settings.useRunes}}text{{else}}hidden{{/if}}" value="{{this.runes}}"/>
-    {{#if settings.useRunes}}
-    </div>
-    {{/if}}
-    <div style="flex-basis: min-content; flex-grow: 1; flex-shrink: 1;">
-        <label class="resource-label">Name</label>
-        <input name="name" id="breakout-name" type="text" value="{{name}}"/>
-    </div>
-    <div style="flex-basis: min-content; flex-grow: 0; flex-shrink: 0; margin-left: 8px;">
-        <label class="resource-label">Bonus</label>
-        <input name="rating" id="breakout-rating" type="text" value="{{rating}}" data-dtype="Number"/>
-    </div>
-    <div style="flex-basis: min-content; flex-grow: 0; flex-shrink: 0; margin-left: 8px;">
-        <label class="resource-label">{{mastery}}</label>
-        <input name="masteries" type="text" value="{{masteries}}" data-dtype="Number"/>
+        <div class="flexrow">
+            <div class="flexcol rating">
+                <label class="resource-label">{{localize 'QUESTWORLDS.dialog.rating'}}</label>
+                <div class="flexrow rating-inputs">
+                    <input name="rating" id="breakout-rating" type="text" value="{{rating}}" data-dtype="Number"/>
+                    <span>{{mastery}}</span>
+                    <input name="masteries" type="text" value="{{masteries}}" data-dtype="Number"/>    
+                </div>
+            </div>
+        </div>
     </div>
 </div>
