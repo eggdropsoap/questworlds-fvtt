@@ -146,23 +146,6 @@ export class RatingHelper {
         return outStr;
     }
 
-    static formatOld(rating,masteries,is_modifier) {
-        const minusSymbol = '\u2212'; // unicode minus symbol (wider than hyphen, matches '+' width)
-        let mastery_symbol = 'M';
-        if (game.settings.get('questworlds','useRunes')) {
-            mastery_symbol = tokenNameToHTML('mastery');
-        }
-        let [r,m] = this.rationalize(rating,masteries,is_modifier);
-        const sign = (r < 0 || m < 0) ?
-            minusSymbol :
-            is_modifier ? '+' : '';
-        r = Math.abs(r);    // after sign determined, get sign-less r,
-        m = Math.abs(m);    // and sign-less m
-        mastery_symbol = m > 0 ? mastery_symbol : ''; // drop mastery symbol if no masteries
-        m = m > 1 ? m : ''; // drop the masteries number if it's not at least 2
-        return(`${sign}${r}${mastery_symbol}${m}`);
-    }
-
     static legalEmbedTypes = [
       'ability',
       'breakout',
