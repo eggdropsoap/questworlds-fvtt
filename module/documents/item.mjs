@@ -50,9 +50,6 @@ export class QuestWorldsItem extends Item {
         super.prepareData();
     }
 
-
-    // TODO: input validation, mostly rating rectification
-
     /**
      * Prepare a data object which is passed to any Roll formulas which are created related to this Item
      * @private
