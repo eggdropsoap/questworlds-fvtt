@@ -102,6 +102,11 @@
         "DeleteBreakoutAbility": "Delete Breakout Ability",
         "NewBreakoutAbility": "New Breakout Ability",
         
+        "AddBreakout": "Add Breakout",
+        "EditBreakout": "Edit Breakout",
+        "DeleteBreakout": "Delete Breakout",
+        "NewBreakout": "New Breakout",
+
         "AddInfo": "Add Info Line",
         "EditInfo": "Edit Info Line",
         "DeleteInfo": "Delete Info Line",

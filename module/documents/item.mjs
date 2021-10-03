@@ -19,8 +19,7 @@ class EmbeddedAbility {
 
         this.parentId = parentId || null;
 
-        // STUB: name should be localized in the switch statement
-        this.name = name || "New " + this.type.charAt(0).toUpperCase() + this.type.slice(1);
+        this.name = name ||  game.i18n.localize('QUESTWORLDS.New' + this.type.capitalize());
 
         this.rating = rating || RatingHelper.defaultRating(this.type);
 
