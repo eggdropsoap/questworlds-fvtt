@@ -117,14 +117,14 @@ export class RatingHelper {
           mastery_symbol = tokenMarkupToHTML('[[mastery]]');
         }
       
-        // if either portion is negative, put the negative on the front
-        if (rating < 0 || masteries < 0) {
+        // if negative, put the minus on the front
+        if (this.merge(rating,masteries) < 0) {
           outStr += minusChar;
         }
         // output basic rating part if it's non-zero
         if (Math.abs(rating) > 0) {
           // if it's positive and a modifier, prefix '+' first
-          if (rating > 0 && is_modifier) {
+          if (this.merge(rating,masteries) > 0 && is_modifier) {
             outStr += "+";
           }
           // positive rating
