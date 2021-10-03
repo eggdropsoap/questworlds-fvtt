@@ -105,26 +105,18 @@ export class QuestWorldsItem extends Item {
     let rating = item.data.rating;
     let masteries = item.data.masteries;
     let fullRating = RatingHelper.format(rating,masteries);
-
-    console.log(RatingHelper.format(1,0));
-    console.log(RatingHelper.format(1,1));
-    console.log(RatingHelper.format(-1,0));
-    console.log(RatingHelper.format(0,-1));
-    console.log(RatingHelper.format(0,-1,true));
-    console.log(RatingHelper.format(1,0,true));
-    console.log(RatingHelper.format(1,2,true));
-
     let rune = item.data.rune ? tokenNameToHTML(item.data.rune) + ' ' : '';
     let name = item.name;
 
-    let label = `Tactic: ${rune}${name} ${fullRating}`;
+    let label = `${rune}${name} ${fullRating}`;
 
-    // If it can't be rolled, send an info card message to chat
-    if (!item.type == 'benefit') {
+    // Benefits/consequences can't be rolled, send an info card message to chat
+    if (itemType == 'benefit') {
+      let variant = item.data.rating > 0 ? "Benefit" : "Consequence";
       ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
-        flavor: label,
+        flavor: game.i18n.localize(`QUESTWORLDS.${variant}`) + ": " + label,
         content: item.data.description ?? ''
       });
     }
@@ -137,12 +129,24 @@ export class QuestWorldsItem extends Item {
       // prepare context data
       const benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
 
-      // if (item.type = 'breakout')
-      // let rating, masteries;
-
       if (embedId) {
         const embed = QuestWorldsItem.getEmbedById(this.data.data.embeds,embedId);
         // console.log("embed", embed);
+
+        // if it's an info line, send an info card to chat
+        if (embed.type == 'info') {
+          const info = game.i18n.localize('QUESTWORLDS.Info');
+          ChatMessage.create({
+            speaker: speaker,
+            rollMode: rollMode,
+            flavor: `[${info}] ${embed.name}`,
+            content: embed.description ?? ''
+          });
+          return;
+        }
+    
+
+
         rating = embed.rating;
         masteries = embed.masteries;
         name = embed.name;
@@ -155,9 +159,11 @@ export class QuestWorldsItem extends Item {
           console.log(RatingHelper.format(rating,masteries,true));
         }
         fullRating = RatingHelper.format(rating,masteries);
+
+        label = `${rune}${name} ${fullRating}`;
       } else {
         rating = rollData.item.rating;
-        masteries = rollData.item.masteries;  
+        masteries = rollData.item.masteries;
       }
       // console.log(rating,masteries);
 
@@ -165,7 +171,7 @@ export class QuestWorldsItem extends Item {
       const msg = await ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
-        flavor: `Tactic: ${rune}${name} ${fullRating}`,
+        flavor: "Tactic: " + label,
       });
 
       const context = {
