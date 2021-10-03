@@ -2,12 +2,7 @@ import { gsap, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3 } from "/sc
 import { tokenNameToHTML,tokenMarkupToHTML } from "../helpers/rune-helpers.mjs"; 
 import { RatingHelper } from "../helpers/rating-helpers.mjs";
 
-const legalEmbedTypes = [
-  'ability',
-  'breakout',
-  'keyword',
-  'info'
-];
+const legalEmbedTypes = RatingHelper.legalEmbedTypes;
 
 /**
  * set up the embeds class
@@ -27,26 +22,7 @@ class EmbeddedAbility {
     // STUB: name should be localized in the switch statement
     this.name = name || "New " + this.type.charAt(0).toUpperCase() + this.type.slice(1);
 
-    switch(type) {
-      case 'ability':
-        // new abilities default to 13M0
-        this.rating = rating || 13;
-        break;
-      case 'breakout':
-        // new breakouts default to +1
-        this.rating = rating || 1;
-        break;
-      case 'keyword':
-        // new keywords default to 13
-        this.rating = rating || 13;
-        break;
-      case 'info':
-        // info doesn't need a rating
-        this.rating = rating || 0;
-        break;
-      default:
-        this.rating = rating || 0;  // should never happen since not in legalEmbedTypes
-    }
+    this.rating = rating || RatingHelper.defaultRating(this.type);
 
     // nothing defaults to having a mastery
     this.masteries = masteries || 0;
@@ -74,6 +50,8 @@ export class QuestWorldsItem extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
+
+  // TODO: input validation, mostly rating rectification
 
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item

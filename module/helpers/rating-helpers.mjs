@@ -146,7 +146,7 @@ export class RatingHelper {
         return outStr;
     }
 
-    static format2(rating,masteries,is_modifier) {
+    static formatOld(rating,masteries,is_modifier) {
         const minusSymbol = '\u2212'; // unicode minus symbol (wider than hyphen, matches '+' width)
         let mastery_symbol = 'M';
         if (game.settings.get('questworlds','useRunes')) {
@@ -163,4 +163,33 @@ export class RatingHelper {
         return(`${sign}${r}${mastery_symbol}${m}`);
     }
 
+    static legalEmbedTypes = [
+      'ability',
+      'breakout',
+      'keyword',
+      'info'
+    ];
+    
+    static defaultRating(type) {
+      // TODO: replace this with a lookup table (TODO: that can be changed by config options)
+      switch(type) {
+        case 'ability':
+        case 'keyword':
+          // new abilities and keywords default to 15M0
+          return 15;
+          break;
+        case 'benefit':
+        case 'breakout':
+          // new breakouts and benefits default to +5
+          return 5;
+          break;
+        case 'info':
+          // info doesn't need a rating
+          return 0;
+          break;
+        default:
+          return 0;  // should never happen since not in legalEmbedTypes or template.json items
+      }
+  
+    }
 }
