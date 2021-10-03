@@ -46,14 +46,15 @@ export class EmbedsEvents {
      *      this should be an actor object,
      *      so get the item by id from the actor's embedded items,
      *      using data from the parent li.item tag
-     *      (in an ugly one-liner, sorry)
-     * 
-     * TODO: instead use an anonymous function that returns the right object,
-     *       for readability and maintainability
      */
-    const theItem = this instanceof QuestWorldsItemSheet ? this.object : this.object.getEmbeddedDocument("Item",$(event.currentTarget).parents("li.item")[0].dataset.itemId);
+    const theItem = this instanceof QuestWorldsItemSheet ?
+      this.object :
+      this.object.getEmbeddedDocument(
+        "Item",
+        $(event.currentTarget).parents("li.item")[0].dataset.itemId
+      );
 
-    // Perform create and delete actions.
+    // Perform create, edit, and delete actions.
     switch ( action ) {
       case "create":
         QuestWorldsItem.createEmbed(event, theItem);
@@ -105,6 +106,7 @@ export class ContextMenus {
     deactivate: (event) => {
       $(event.currentTarget).removeClass('active');
     },
+
   };  // ItemMenu
 
   static ConvertToMenu(div) {
@@ -138,7 +140,6 @@ export class FieldHelpers {
     // onkeyup the key IS part of the input.value already and doesn't need adding
 
     if (adjust == ' ' || (etype == 'keyup' && this.value.slice(-1) == ' ')) adjust = "&nbsp;";
-    // console.log(etype, '"'+adjust+'"');
 
     const sizer = $('span.hidden-sizer')[0];
     if (!sizer) return;
