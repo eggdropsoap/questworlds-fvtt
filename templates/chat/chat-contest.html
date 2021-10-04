@@ -8,7 +8,7 @@
     </div>
     <div>
         <label>Benefits or Consequences</label>
-        <input name="benefits" placeholder="replace me">
+        <input name="benefit" placeholder="replace me" value="{{data.benefit}}">
         <ol>
         {{#each benefits}}
             <li>{{name}} {{data.rating}} {{data.masteries}}</li>
@@ -16,6 +16,8 @@
         </ol>
     </div>
     <div>
-        <button disabled name="ready">Ready?</button>
+        <button name="over">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
+        <button name="approve">{{localize 'QUESTWORLDS.chatcontest.ApproveRoll'}}</button>
+        <button name="roll">{{localize 'QUESTWORLDS.chatcontest.Roll'}}</button>
     </div>
 </form>

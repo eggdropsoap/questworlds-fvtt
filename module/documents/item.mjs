@@ -104,7 +104,7 @@ export class QuestWorldsItem extends Item {
         const rollData = this.getRollData();
         // console.log(rollData);
 
-        // prepare context data
+        // prepare some form data
         const benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
 
         if (embedId) {
@@ -134,7 +134,7 @@ export class QuestWorldsItem extends Item {
             let parent = QuestWorldsItem.getEmbedById(this.data.data.embeds,embed.parentId);
             if(!parent) parent = item.data; // it's a breakout directly from an Item, not embed
             [rating, masteries] = RatingHelper.add(rating,masteries,parent?.rating,parent?.masteries);
-            console.log(RatingHelper.format(rating,masteries,true));
+            // console.log(RatingHelper.format(rating,masteries,true));
             }
             fullRating = RatingHelper.format(rating,masteries);
 
@@ -145,16 +145,18 @@ export class QuestWorldsItem extends Item {
         }
         // console.log(rating,masteries);
 
-        // create the message first since we need the ID for the context
+        // create the message first since we need the ID for the form
         const msg = await ChatMessage.create({
             speaker: speaker,
             rollMode: rollMode,
             flavor: "Tactic: " + label,
         });
 
-        const context = {
+        const formData = {
             chatId: msg.id,
             cssClasses: "hello-world",
+            waitingForPlayer: true,
+            readyToRoll: false,
             benefits: benefits,
             rating: rating,
             masteries: masteries,
@@ -162,11 +164,11 @@ export class QuestWorldsItem extends Item {
             hp: rollData.points.hero,
         }
 
-        msg.setFlag('questworlds','context',context);
+        msg.setFlag('questworlds','formData',formData);
 
         // console.log(msg);
 
-        const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",context);
+        const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
         // const content = "<div>hello?</div>";
 
         await msg.update({'content': content});

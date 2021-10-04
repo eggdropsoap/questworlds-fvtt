@@ -12,6 +12,7 @@ import { registerHandlebarsHelpers } from "./helpers/handlebars-helpers.mjs";
 // Import system settings
 import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
+import { ChatContest } from "./documents/chat-contest.mjs";
 
 
 /* -------------------------------------------- */
@@ -91,6 +92,15 @@ Hooks.once("ready", async function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
+
+/* -------------------------------------------- */
+/*  Chat cards hooks                            */
+/* -------------------------------------------- */
+
+Hooks.on('renderChatLog', (app, html, data) => ChatContest.HookListeners.renderChatLog(app, html, data));
+Hooks.on('renderChatMessage', (app, html, data) => ChatContest.HookListeners.renderChatMessage(app, html, data));
+Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => ChatContest.HookListeners.updateChatMessage(chatMessage, chatData, diff, speaker));
+
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

@@ -182,6 +182,14 @@
             "runesL": "Enter one or more rune tokens, e.g. [[moon]][[air]]."
         },
 
+        "chatcontest" : {
+            "Ready": "Ready?",
+            "WaitingForGM": "Waiting for GM…",
+            "WaitingForPlayer": "Waiting for player…",
+            "ApproveRoll": "Approve Roll",
+            "Roll": "Roll"
+        },
+
 
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",
         "keywordPackageOptionName": "Package (Stand-alone Abilities)"
