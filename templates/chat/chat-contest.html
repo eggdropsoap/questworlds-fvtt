@@ -1,14 +1,17 @@
-<form class="chat-contest {{cssClasses}}" autocomplete="off">
+<form class="chat-contest {{cssClasses}}" autocomplete="off"> {{log this}}
+    {{#unless closed}}
     <div>
         {{name}} {{type}}
     </div>
     <div>
         Rating: {{rating}},
         Masteries: {{masteries}}
+        <input name="rating" type="hidden" value="{{rating}}" data-dtype="Number">
+        <input name="masteries" type="hidden" value="{{masteries}}" data-dtype="Number">
     </div>
     <div>
         <label>Benefits or Consequences</label>
-        <input name="benefit" placeholder="replace me" value="{{data.benefit}}">
+        <input type="text" name="benefitSelected" placeholder="replace me" value="{{benefitSelected}}">
         <ol>
         {{#each benefits}}
             <li>{{name}} {{data.rating}} {{data.masteries}}</li>
@@ -16,8 +19,80 @@
         </ol>
     </div>
     <div>
-        <button name="over">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
-        <button name="approve">{{localize 'QUESTWORLDS.chatcontest.ApproveRoll'}}</button>
-        <button name="roll">{{localize 'QUESTWORLDS.chatcontest.Roll'}}</button>
+        <label>Situational Modifier</label>
+        <input name="situationalModifiers" type="number" value="{{situationalModifiers}}" data-dtype="Number">
     </div>
+    <div>
+        <label>Resistance</label>
+        <label>Rating</label>
+        <input name="resistanceRating" type="number" min="-20" max="20" value="{{resistanceRating}}" data-dtype="Number">
+        <label>Masteries</label>
+        <input name="resistanceMasteries" type="number" min="0" value="{{resistanceMasteries}}" data-dtype="Number">
+    </div>
+    <div>
+        <strong>
+            {{formatRating totalRating totalMasteries}} vs {{formatRating resistanceRating resistanceMasteries}}
+        </strong>
+        <input name="totalRating" type="hidden" value="{{totalRating}}" data-dtype="Number">
+        <input name="totalMasteries" type="hidden" value="{{totalMasteries}}" data-dtype="Number">
+    </div>
+    {{/unless}}
+    <div>
+        <button name="over" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
+        <button name="approve" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.ApproveRoll'}}</button>
+        <button name="roll" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Roll'}}</button>
+    </div>
+    {{#if closed}}
+    <div class="dice-results">
+        <div class="ratings-faceoff flexrow">
+            <span class="rating">
+                {{localize 'QUESTWORLDS.chatcontest.Tactic'}}
+                <strong>
+                    {{formatRating totalRating totalMasteries}}
+                </strong>
+            </span>
+            <span class="divider"><span class="vs"></span></span>
+            <span class="rating">
+                {{localize 'QUESTWORLDS.chatcontest.Difficulty'}}
+                <strong>
+                    {{formatRating resistanceRating resistanceMasteries}}
+                </strong>
+            </span>
+        </div>
+        <div class="dice-faceoff flexrow">
+            <span class="contestant flexcol">
+                <div class="roll
+                    {{~#if (eq pcResult totalRating)}} crit{{/if~}}
+                    {{~#if (gt pcResult totalRating)}} miss{{/if~}}
+                    ">
+                    {{~pcResult~}}
+                </div>
+                <div class="successes">
+                    <div>
+                        {{~pcSuccesses}}  {{plural pcSuccesses 'Success' 'Successes'~}}
+                    </div>
+                </div>
+            </span>
+            <span class="divider">
+                <span class="vs">VS</span>
+            </span>
+            <span class="contestant flexcol">
+                <div class="roll
+                {{~#if (eq resResult resistanceRating)}} crit{{/if~}}
+                {{~#if (gt resResult resistanceRating)}} miss{{/if~}}
+                ">
+                    {{~resResult~}}
+                </div>
+                <div class="successes">
+                    <div>
+                        {{~resSuccesses}} {{plural resSuccesses 'Success' 'Successes'~}}
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="outcome {{outcome.cssClass}}">
+            {{outcome.text}}
+        </div>
+    </div>
+    {{/if}}
 </form>

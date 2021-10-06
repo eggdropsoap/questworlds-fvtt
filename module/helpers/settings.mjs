@@ -52,7 +52,18 @@ export const registerSystemSettings = function() {
     } */
   });
 
-
+  /**
+   * Whether to enable suport for runes
+   */
+   game.settings.register("questworlds", "useClassicOutcomes", {
+    name: "SETTINGS.useClassicOutcomesN",
+    hint: "SETTINGS.useClassicOutcomesL",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+  
 
   /** ** ** ** ** ** ** ** ** ** ** ** **
    *   Rune fonts configuration menu    *

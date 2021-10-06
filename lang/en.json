@@ -183,11 +183,28 @@
         },
 
         "chatcontest" : {
+            "Tactic": "Tactic",
+            "Difficulty": "Difficulty",
             "Ready": "Ready?",
             "WaitingForGM": "Waiting for GM…",
             "WaitingForPlayer": "Waiting for player…",
             "ApproveRoll": "Approve Roll",
-            "Roll": "Roll"
+            "RollApproved": "Roll approved, waiting…",
+            "Roll": "Roll",
+
+            "outcomes": {
+                "Tie": "Tie",
+                "DegreesOfVictory": "Degrees of Victory",
+                "DegreesOfDefeat": "Degrees of Defeat",
+                "CompleteDefeat": "Complete Defeat",
+                "MajorDefeat": "Major Defeat",
+                "MinorDefeat": "Minor Defeat",
+                "MarginalDefeat": "Marginal Defeat",
+                "MarginalVictory": "Marginal Victory",
+                "MinorVictory": "Minor Victory",
+                "MajorVictory": "Major Victory",
+                "CompleteVictory": "Complete Victory"
+            }
         },
 
 

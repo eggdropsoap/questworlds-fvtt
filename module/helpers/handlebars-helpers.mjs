@@ -41,7 +41,20 @@ export function registerHandlebarsHelpers() {
     
         return new Handlebars.SafeString(
             RatingHelper.format(rating,masteries,is_modifier)
-            );
+        );
+    });
+
+    Handlebars.registerHelper('formatRating', function(rating, masteries, options) {
+        let is_modifier = options ? options.hash.modifier ? options.hash.modifier : null : null;
+        is_modifier = is_modifier == 'true' || is_modifier == '1';
+        return new Handlebars.SafeString(
+            RatingHelper.format(rating,masteries,is_modifier)
+        );
+    });
+
+    Handlebars.registerHelper('plural', function(num, singular, plural) {
+        let numnum = window['Number'](num);
+        return window['Number'](num) == 1 ? singular : plural
     });
     
     Handlebars.registerHelper('runes', function(tokens) {

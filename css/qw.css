@@ -897,3 +897,132 @@
 .system-questworlds .dialog-content .edit-ability .rating-inputs input:last-child {
   margin-right: auto;
 }
+
+
+/* contest chat cards */
+/* .system-questworlds #chat-log .chat-contest {
+
+} */
+.system-questworlds #chat-log .chat-contest .dice-results {
+  /* border: 1px solid black; */
+  margin-top: 1em;
+  /* padding-top: 1ex; */
+  /* border-top: 1px solid rgb(181, 179, 164); */
+}
+.system-questworlds #chat-log .chat-contest .dice-results .ratings-faceoff {
+  /* flex: 1; */
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .ratings-faceoff .rating {
+  margin: 0 auto;
+  flex: 0;
+  white-space: nowrap;
+  position: relative;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff {
+  /* border: inherit; */
+  /* width: 100%; */
+  flex: 1;
+  background-color: inherit;
+  /* border: inherit; */
+  /* padding: 10px 0; */
+  margin-bottom: 1ex;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .contestant {
+  border: 2px groove rgb(154, 99, 99);
+  padding: 0 10px 10px;
+  background-color: burlywood;
+  /* background-color: rgb(100, 68, 42) */
+  background-color: rgba(248, 170, 105, 0.15);
+  background: radial-gradient(circle, rgb(233, 209, 190, 0.3) 0%, 70%, rgb(136, 102, 74, 0.3) 95%, rgb(100, 68, 42, 0.3) 90%);
+  border-radius: 6px;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .roll {
+  /* border: inherit; */
+  /* position: relative; */
+  width: 48px;
+  line-height: 48px;
+  /* height: 24px; */
+  /* float: left; */
+  margin-right: 1px;
+  background-image: url(/icons/svg/d20-grey.svg);
+  background-repeat: no-repeat;
+  background-size: 48px 48px;
+  font-size: 23px;
+  color: rgb(36, 36, 36);
+  font-weight: bold;
+  text-align: center;
+  margin: 0.8em auto 0.4em;
+  filter: drop-shadow(0px 0px 20px white);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .roll.crit {
+  /* color: darkgreen; */
+  color: rgb(24,82,11);
+  /* filter: sepia(0.5) hue-rotate(60deg) drop-shadow(0px 0px 20px white); */
+  filter: sepia(0.6) hue-rotate(60deg) drop-shadow(0px 0px 20px white) brightness(1.02);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .roll.miss {
+  color: rgb(81, 24, 11);
+  filter: sepia(0.6) hue-rotate(333deg) drop-shadow(0px 0px 20px white) brightness(0.98);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .successes {
+  /* border: inherit; */
+  text-align: center;
+  font-size: 1rem;
+  text-shadow: 0 0 20px white;
+  /* margin-top: 1em; */
+}
+.system-questworlds #chat-log .chat-contest .dice-results .divider {
+  /* border: inherit; */
+  flex: 0;
+  /* margin: 0 20px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0 1ex;
+  min-width: 1.6rem;
+  /* max-width: 1.6rem; */
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .divider .vs {
+  /* border: inherit; */
+  font-style: italic;
+  font-size: 1.2rem;
+  /* width: 1.8rem; */
+  /* min-width:fit-content; */
+  /* min-width: 1.2rem; */
+}
+.system-questworlds #chat-log .chat-contest .dice-results .outcome {
+  /* border: inherit; */
+  border: 2px ridge rgb(201,199,184);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 6px;
+  border-radius: 3px;
+  /* text-shadow: 0 0 5px lightgrey; */
+  /* text-shadow: 0 0 20px white; */
+  text-shadow: 0 0 20px white, 0 0 8px rgba(211,211,211,0.5);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .victory {
+  /* background-color: greenyellow; */
+  /* color: green; */
+  color: rgb(0, 82, 0);
+  /* circular background color gradient instead?? */
+  background: rgb(138,214,150);
+  background: radial-gradient(circle, rgba(138,214,150,1) 0%, rgba(62,154,70,1) 72%, rgba(58,131,48,1) 86%);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .defeat {
+  background-color: palevioletred;
+  /* color: darkred; */
+  color: rgb(70, 26, 26);
+  /* background: rgb(138,214,150); */
+  background: radial-gradient(circle, rgb(212, 150, 150) 0%, 38%, rgb(168, 84, 84) 62%, rgb(151, 57, 57) 76%, rgb(77, 33, 33) 95%);
+}
+.system-questworlds #chat-log .chat-contest .dice-results .tie {
+  /* background-color: burlywood; */
+  color: rgb(87, 72, 54);
+  background: radial-gradient(circle, rgb(214, 194, 138) 0%, rgb(182, 153, 91) 72%, rgb(173, 133, 71) 86%);
+
+}
+

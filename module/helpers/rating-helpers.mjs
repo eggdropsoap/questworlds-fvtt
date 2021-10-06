@@ -2,6 +2,12 @@ import { tokenNameToHTML,tokenMarkupToHTML } from "./rune-helpers.mjs";
 
 export class RatingHelper {
 
+
+    static add(obj1,obj2) {
+        const arr = this._add(obj1.rating,obj1.masteries,obj2.rating,obj2.masteries);
+        return { rating: arr[0], masteries: arr[1] };
+    }
+
     /**
      * Adds two xMy format ability ratings together, returning a xMy result as array[x,y].
      * The result is rationalized for a rating ±[1-20] and rollover incrementing masteries.
@@ -12,7 +18,7 @@ export class RatingHelper {
      * @param {Number} mastery2 
      * @returns {Array} [total_rating,total_masteries]
      */
-    static add(rating1, mastery1, rating2, mastery2) {
+    static _add(rating1, mastery1, rating2, mastery2) {
         console.log(rating1,'M',mastery1,'+',rating2,'M',mastery2);
 
         // let ratingInitial = rating1 + rating2;
@@ -105,74 +111,75 @@ export class RatingHelper {
      * @param {Boolean} is_modifier // is this a bonus/malus?
      * @returns {String}
      */
-    static format(rating,masteries,is_modifier) {
+    static format(rating,masteries,is_modifier=false) {
         const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
 
         let outStr = '';
         let mastery_symbol = 'M';
+        is_modifier = is_modifier ? true : false;
         
         const useRunes = game.settings.get("questworlds","useRunes");
       
         if (useRunes) {
-          mastery_symbol = tokenMarkupToHTML('[[mastery]]');
+            mastery_symbol = tokenMarkupToHTML('[[mastery]]');
         }
       
         // if negative, put the minus on the front
         if (this.merge(rating,masteries) < 0) {
-          outStr += minusChar;
+            outStr += minusChar;
         }
         // output basic rating part if it's non-zero
         if (Math.abs(rating) > 0) {
-          // if it's positive and a modifier, prefix '+' first
-          if (this.merge(rating,masteries) > 0 && is_modifier) {
-            outStr += "+";
-          }
-          // positive rating
-          outStr += Math.abs(rating);
+            // if it's positive and a modifier, prefix '+' first
+            if (this.merge(rating,masteries) > 0 && is_modifier) {
+                outStr += "+";
+            }
+            // positive rating
+            outStr += Math.abs(rating);
         }
         // when rating is zero and there are positive Ms, add a + for "+M"
         if (rating == 0 && masteries > 0) {
-          outStr += "+";
+            outStr += "+";
         }
       
         // Master symbol with no number if 1, with number if > 1
         if (Math.abs(masteries) > 0) {
-          outStr += mastery_symbol;
+            outStr += mastery_symbol;
         }
         if (Math.abs(masteries) > 1) {
-          outStr += Math.abs(masteries);
+            outStr += Math.abs(masteries);
         }
 
         return outStr;
     }
 
     static legalEmbedTypes = [
-      'ability',
-      'breakout',
-      'keyword',
-      'info'
+        'ability',
+        'breakout',
+        'keyword',
+        'info'
     ];
     
     static defaultRating(type) {
-      // TODO: replace this with a lookup table (TODO: that can be changed by config options)
-      switch(type) {
-        case 'ability':
-        case 'keyword':
-          // new abilities and keywords default to 15M0
-          return 15;
-          break;
-        case 'benefit':
-        case 'breakout':
-          // new breakouts and benefits default to +5
-          return 5;
-          break;
-        case 'info':
-          // info doesn't need a rating
-          return 0;
-          break;
-        default:
-          return 0;  // should never happen since not in legalEmbedTypes or template.json items
-      }
-  
+        // TODO: replace this with a lookup table (TODO: that can be changed by config options)
+        switch(type) {
+            case 'ability':
+            case 'keyword':
+                // new abilities and keywords default to 15M0
+                return 15;
+                break;
+            case 'benefit':
+            case 'breakout':
+                // new breakouts and benefits default to +5
+                return 5;
+                break;
+            case 'info':
+                // info doesn't need a rating
+                return 0;
+                break;
+            default:
+                return 0;  // should never happen since not in legalEmbedTypes or template.json items
+        }
+    
     }
 }

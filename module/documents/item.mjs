@@ -130,11 +130,14 @@ export class QuestWorldsItem extends Item {
             name = embed.name;
             rune = embed.runes ? tokenMarkupToHTML(embed.runes) + ' ' : '';
             if (embed.type == 'breakout') {
-            // rating is just a bonus, so add to the parent (assumed a keyword)
-            let parent = QuestWorldsItem.getEmbedById(this.data.data.embeds,embed.parentId);
-            if(!parent) parent = item.data; // it's a breakout directly from an Item, not embed
-            [rating, masteries] = RatingHelper.add(rating,masteries,parent?.rating,parent?.masteries);
-            // console.log(RatingHelper.format(rating,masteries,true));
+                // rating is just a bonus, so add to the parent (assumed a keyword)
+                let parent = QuestWorldsItem.getEmbedById(this.data.data.embeds,embed.parentId);
+                if(!parent) parent = item.data; // it's a breakout directly from an Item, not embed
+                ({rating, masteries} = RatingHelper.add(
+                    {rating: rating, masteries: masteries},
+                    {rating: parent?.rating, masteries: parent?.masteries})
+                );
+                // console.log(RatingHelper.format(rating,masteries,true));
             }
             fullRating = RatingHelper.format(rating,masteries);
 
@@ -149,7 +152,7 @@ export class QuestWorldsItem extends Item {
         const msg = await ChatMessage.create({
             speaker: speaker,
             rollMode: rollMode,
-            flavor: "Tactic: " + label,
+            flavor: game.i18n.localize('QUESTWORLDS.chatcontest.Tactic') +": " + label,
         });
 
         const formData = {
@@ -160,6 +163,10 @@ export class QuestWorldsItem extends Item {
             benefits: benefits,
             rating: rating,
             masteries: masteries,
+            totalRating: rating,
+            totalMasteries: masteries,
+            resistanceRating: 15,           //  replace with lookup
+            resistanceMasteries: 0,         //
             // item: rollData.item,
             hp: rollData.points.hero,
         }
