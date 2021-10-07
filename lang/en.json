@@ -215,13 +215,18 @@
 
     "SETTINGS": {
         "useRunesN": "Enable Runes",
-        "useRunesL": "Enables support for Glorantha runes for abilities and the Mastery symbol. Please install one or more rune fonts in the setting below.",
-        "sidekickNameN": "Sidekick Name",
+        "useRunesL": "Enables support for Glorantha runes for abilities and the Mastery symbol. Requires a supporting font: Please configure one or more rune fonts in the Rune Fonts Settings panel.",
+        "sidekickNameN": "Sidekick name",
         "sidekickNameL": "Sets what “sidekick” abilities are called on character and item sheets.",
         "keywordBreakoutN": "Keyword type",
-        "keywordBreakoutL": "Umbrella keywords have breakout abilities, while package keywords contain stand-alone abilities. (Breakouts and abilities already on character sheets will not be changed!)",
+        "keywordBreakoutL": "Umbrella keywords have breakout abilities, while package keywords contain stand-alone abilities. (Breakouts and abilities already on character sheets will not be altered.)",
         "keywordPackageOptionName": "Package (Stand-alone Abilities)",
-    
+        "useClassicOutcomesN": "Use classic names for contest outcomes",
+        "useClassicOutcomesL": "Whether contest outcomes are displayed in the QuestWorlds SRD’s terminology (e.g. “Degrees of Victory: 2”), or classic terminology (e.g. “Minor Victory”). This option is cosmetic only; the contest mechanics are the same.",
+
+        "runeFontSettingsN": "Rune Fonts Settings",
+        "runeFontSettingsL": "Configure Rune Fonts",
+        "runeFontSettingsH": "Install and configure Rune fonts.",
     
         "None": "There are no player settings."    
     }
