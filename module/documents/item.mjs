@@ -240,7 +240,7 @@ export class QuestWorldsItem extends Item {
         const breakout_id = a.dataset.breakoutId;
         const ability = item.data.data;
 
-        /** removeFromTree() is (c) Rodrigo Rodrigues, licensed CC BY-SA 4.0 at https://stackoverflow.com/a/55083533/480642 */
+        /** removeFromTree() is (c) Rodrigo Rodrigues, licensed CC BY-SA 4.0 at https://stackoverflow.com/a/55083533/ */
         function removeFromTree(node, targetId) {
         if (node.id == targetId) {
             node = undefined
@@ -351,7 +351,7 @@ export class QuestWorldsItem extends Item {
     static getEmbedById(embeds, id) {
 
         /**
-         * flatten() is (c) Thomas, licensed CC BY-SA 3.0 at https://stackoverflow.com/a/35272973/480642
+         * flatten() is (c) Thomas, licensed CC BY-SA 3.0 at https://stackoverflow.com/a/35272973/
          * Create a flattened array of an arbitrarily nested structure
          *    that does its nesting in an 'embeds' node.
          * @param {Array} into   // An array to append discovered entries onto
