@@ -45,7 +45,7 @@ export class ChatContest {
             console.log('ChatContest.renderChatMessageHook()');
 
             const context = await chatMessage.getFlag('questworlds','formData');
-            console.log('context for chatMessage ID',chatMessage.id, context);
+            // console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
             // if (context?.closed) return;    // do nothing; the template took care of disabling form
