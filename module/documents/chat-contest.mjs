@@ -28,6 +28,10 @@ export const OUTCOME_CLASSIC_TEXT = {
 
 export class ChatContest {
 
+    /* * * * * * * * * */
+    /* Hook Listeners  */
+    /* * * * * * * * * */
+
     static HookListeners = {
 
         async renderChatLog(app, html, data) {
@@ -35,19 +39,17 @@ export class ChatContest {
             // console.log(app);
             // console.log(html);
             // console.log(data);
-        },
+        },  // listener for renderChatLog hook
     
         async renderChatMessage(chatMessage, html, data) {
             console.log('ChatContest.renderChatMessageHook()');
 
             const context = await chatMessage.getFlag('questworlds','formData');
+            console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
             // if (context?.closed) return;    // do nothing; the template took care of disabling form
-
-            // console.log(chatMessage);
-            // console.log(html);
-            // console.log(data);
+            // ^^^ temporarily commented out for debugging rolls with free rerolling
 
             const user = game.user;
             const messageOwner = chatMessage.data.user;
@@ -61,8 +63,6 @@ export class ChatContest {
             const rollButton = html.find('button[name="roll"]');
             const waitingForPlayer = context?.waitingForPlayer;
             const readyToRoll = context?.readyToRoll;
-
-            // console.log("Form Data (flag)",context);
             
             overButton.on('click',e => ChatContest.Handlers.clickOverButton(e,chatMessage));
             approveButton.on('click',e => ChatContest.Handlers.clickApproveButton(e,chatMessage));
@@ -114,21 +114,17 @@ export class ChatContest {
                 _hideAllControls(html);
             }
 
-        },
+        },  // listener for renderChatMessage hook
     
         async updateChatMessage(chatMessage, chatData, diff, speaker) {
             ui.chat.scrollBottom();
-
-            // console.log('-----------------------------------')
-            // console.log('ChatContest.updateChatMessageHook()');
-            // console.log('chatMessage',chatMessage);
-            // console.log('chatData',chatData);
-            // console.log('diff',diff);
-            // console.log('speaker',speaker);
-            // console.log('-----------------------------------')
-        },
+        },  // listener for updateChatMessage hook
 
     }   // HookListeners
+
+    /* * * * * * * * * */
+    /* Event Handlers  */
+    /* * * * * * * * * */
 
     static Handlers = {
 
@@ -137,7 +133,6 @@ export class ChatContest {
             const flagDiff = {
                 waitingForPlayer: game.user.isGM
             }
-            // console.log('clickOverButton()',event,chatMessage);
             chatMessage.setFlag('questworlds','formData',flagDiff);
         },
 
@@ -152,9 +147,8 @@ export class ChatContest {
         async blurField(event,chatMessage,html) {
             event.preventDefault();
 
-            const button = event.relatedTarget;     // in case a button click triggered the blur
-            const chatMessageId = button ? chatMessage.id : null; // so we can re-access form even after a re-render
-            const buttonName = button ? button.name : null; // ditto for the button!            
+            const newFocus = event.relatedTarget;   // whatever got focus after the blurring input
+            const chatMessageId = chatMessage.id;   // to find form after the re-render
 
             // get data from form merged into stored data
             let formData = _getNewFormData(chatMessage,html);
@@ -198,6 +192,7 @@ export class ChatContest {
 
             // console.log('Updated with running totals',formData);
 
+            
 
             if (formData) {
                 formData = mergeObject(formData,{
@@ -208,11 +203,22 @@ export class ChatContest {
                 await ChatContest.refreshChatMessage(chatMessage);
             }
 
+            // console.log(typeof newFocus);
+
             // finally, if the blur was from a button click, click it manually after the rerender
-            if (chatMessageId) {
-                const newHtml = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"]`);
-                const newButton = newHtml.find(`button[name="${buttonName}"`);
-                $(newButton).trigger('click');
+            if (newFocus instanceof HTMLButtonElement) {
+                const form = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"] form`);
+                const elem = form.find(`button[name="${newFocus.name}"]`);
+                $(elem).trigger('click');
+            } else
+            if (newFocus && ['INPUT','SELECT'].includes(newFocus.tagName) ) {
+                // restore focus element's focus (in this else because, don't bother if button clicked)
+                // (code based on inspecting Foundry's own method of restoring focus)
+                if (newFocus.name) {
+                    const form = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"] form`);
+                    const elem = form.find(`[name="${newFocus.name}"]`);
+                    if (elem && (elem.focus instanceof Function)) elem.focus();
+                }
             }
 
         },
@@ -220,19 +226,10 @@ export class ChatContest {
         async clickRollButton(event,chatMessage,html) {
             event.preventDefault();
 
-            // console.log('Roll Button');
-            // console.log('event',event);
-            // console.log('chatMessage',chatMessage);
-            // console.log('html',html);            
-
-            // re-enable all form controls else the below doesn't work
-            // _enableAllControls(html);
-            // const formData = await _getCurrentFormData(html);
+            console.log("Beginning click. chatMessage:", chatMessage);
             const formData = await _getContext(chatMessage);
-            // re-disable all form controls. bonus: includes roll button!
-            // _disableAllFields(html);
 
-            // console.log('formData',formData);
+            
             const pcTN = formData.totalRating;
             const pcMasteries = formData.totalMasteries;
             const resTN = formData.resistanceRating;
@@ -299,20 +296,19 @@ export class ChatContest {
                     text: outcomeText,
                     cssClass: cssClass,
                 },
-                closed: true,
+                closed: true,       // close the card
             });
             ChatContest.refreshChatMessage(chatMessage);
-            // const html_resRoll = resRoll.render();
-            // console.log("PC roll HTML:",HTML_pcRoll);
 
-            const testStr = `PC rolled ${pcRoll.total} (${pcSuccesses} successes) vs Resistance rolled ${resRoll.total} (${resSuccesses} successes)`;
-            // ui.notifications.info(testStr);
-            // console.log(testStr);
-
-            // close the card
         },
 
     }   // Handlers
+
+
+    /* * * * * * * * * * * */
+    /*  Utility functions  */
+    /* * * * * * * * * * * */
+
 
     static async refreshChatMessage(chatMessage) {
         const formData = await chatMessage.getFlag('questworlds','formData');
@@ -352,18 +348,10 @@ function _getContext(chatMessage) {
 }
 
 function _getCurrentFormData(html) {
-    // const fields = $(html).find('form').find('input, select');
-    // const newData = {};
-    // fields.each(function() {
-    //     let value = _fixedDataTypeValue(this);
-    //     newData[this.name] = value;
-    // });
-
     const form = $(html).find('form')[0];
     const theForm = new FormDataExtended(form);
     const formContents = theForm.toObject();
 
-    // console.log("_getCurrentFormDat",formContents);
     return formContents;
 }
 
@@ -374,9 +362,7 @@ function _getNewFormData(chatMessage,html) {
     const addedData = _getCurrentFormData(html);
 
     const mergedData = mergeObject(oldFormData,addedData);
-    // console.log('merged data', mergedData);
     return mergedData;
-    // return mergeObject(oldFormData,addedData);
 }
 
 function countSuccesses(tn,rollTotal,masteries) {
@@ -385,3 +371,8 @@ function countSuccesses(tn,rollTotal,masteries) {
     count += rollTotal == tn ? 1 : 0;
     return count;
 }
+
+
+// TODO: figure out why benefits only render properly on second pass
+// TODO: fix losing focus on next input (from tab, click) in onblur. See Foundry code for a method?
+// TODO: put benefits/consequences in a categorized select control's options
