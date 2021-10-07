@@ -19,20 +19,6 @@ export class RatingHelper {
      * @returns {Array} [total_rating,total_masteries]
      */
     static _add(rating1, mastery1, rating2, mastery2) {
-        console.log(rating1,'M',mastery1,'+',rating2,'M',mastery2);
-
-        // let ratingInitial = rating1 + rating2;
-        // let ratingFinal = ratingInitial % 20 || 20;
-        // let extraMastery = ratingInitial/20 > 1 ? Math.floor((ratingInitial - 1) /20) : 0;
-        // console.log('rating',ratingInitial);
-        // console.log('extraMastery', extraMastery);
-        // // console.log('masteries',mastery1,mastery2);
-        // let masteryFinal = mastery1 + mastery2 + extraMastery;
-    
-        // console.log(this.format(ratingFinal,masteryFinal));
-
-        // return [ratingFinal,masteryFinal];
-
         if ( [rating1,mastery1,rating2,mastery2]
             .some(e => { return e === undefined || e === NaN || e === null })
         ) //return [null, null];
