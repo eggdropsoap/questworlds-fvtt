@@ -70,13 +70,13 @@ export const registerSystemSettings = function() {
    ** ** ** ** ** ** ** ** ** ** ** ** **/
 
   game.settings.registerMenu("questworlds", "RuneFontSettingsMenu", {
-    name: "Rune Fonts Settings",
-    label: "Configure Rune Fonts",      // The text label used in the button
-    hint: "Upload and configure rune fonts.",
+    name: "SETTINGS.runeFontSettingsN",
+    label: "SETTINGS.runeFontSettingsL", // The text label used in the button
+    hint: "SETTINGS.runeFontSettingsH",
     icon: "fas fa-font",               // A Font Awesome icon used in the submenu button
     type: RuneFontsSettingsMenuClass,   // A FormApplication subclass
     restricted: true,                   // Restrict this submenu to gamemaster only?
-    width: 620,           // initial width
+    width: 620,           // initial width (doesn't work?)
   });
   
   
