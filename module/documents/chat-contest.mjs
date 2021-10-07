@@ -69,17 +69,7 @@ export class ChatContest {
             rollButton.on('click',e => ChatContest.Handlers.clickRollButton(e,chatMessage,html));
             html.on('blur','input, select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
 
-
-            // if (!readyToRoll) {
-            //     rollButton.hide();
-            // } else {
-            //     _disableAllControls(html);
-            //     overButton.hide();
-            //     if (! user.isGM ) approveButton.hide();
-            //     if (user.id == messageOwner) _enableControl(rollButton);
-            //     return;
-            // }
-
+            // set up form state from datastore
             if (user.isGM) {
                 rollButton.hide();  // never for GM
 
@@ -110,6 +100,7 @@ export class ChatContest {
                 } 
             } else { // we're a different player
                 // console.log("You're not the right player!");
+                // TODO: replace this with initial private-to-GM chat type + a make-public after roll
                 _disableAllControls(html);
                 _hideAllControls(html);
             }
@@ -134,7 +125,7 @@ export class ChatContest {
                 waitingForPlayer: game.user.isGM
             }
             chatMessage.setFlag('questworlds','formData',flagDiff);
-        },
+        },  // clickOverButton
 
         async clickApproveButton(event,chatMessage) {
             event.preventDefault();
@@ -142,7 +133,7 @@ export class ChatContest {
                 readyToRoll: true,
             }
             chatMessage.setFlag('questworlds','formData',flagDiff);
-        },
+        },  // clickApproveButton
 
         async blurField(event,chatMessage,html) {
             event.preventDefault();
@@ -152,12 +143,6 @@ export class ChatContest {
 
             // get data from form merged into stored data
             let formData = _getNewFormData(chatMessage,html);
-
-            // update the total ratings and masteries
-            // let [runningTotalR, runningTotalM] = [
-            //     formData.rating || 0,
-            //     formData.masteries || 0
-            // ];
             
             // get the starting rating of the tactic
             const tactic = {
@@ -170,30 +155,11 @@ export class ChatContest {
                 rating: formData.situationalModifiers || 0,
                 masteries: 0,
             }
-
             let runningTotal = RatingHelper.add(
                 {rating: tactic.rating, masteries: tactic.masteries},
                 {rating: sitMods.rating, masteries: sitMods.masteries});
             
-            // runningTotalR += formData.situationalModifiers || 0;
-
-
-            // for each selected benefit/consequence
-            // get the benefit's rating
-            // add to running totals
-
-            // rationalize the running total
-            // console.log('Running totals', runningTotalR, runningTotalM);
-            // [runningTotalR, runningTotalM] = RatingHelper.rationalize(runningTotalR, runningTotalM);
-
-            // update formData
-            // formData['totalRating'] = runningTotalR;
-            // formData['totalMasteries'] = runningTotalM
-
-            // console.log('Updated with running totals',formData);
-
-            
-
+            // update datastore then re-render
             if (formData) {
                 formData = mergeObject(formData,{
                     totalRating: runningTotal.rating,
@@ -203,16 +169,14 @@ export class ChatContest {
                 await ChatContest.refreshChatMessage(chatMessage);
             }
 
-            // console.log(typeof newFocus);
-
             // finally, if the blur was from a button click, click it manually after the rerender
             if (newFocus instanceof HTMLButtonElement) {
                 const form = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"] form`);
                 const elem = form.find(`button[name="${newFocus.name}"]`);
                 $(elem).trigger('click');
-            } else
+            } else  // blur was a tab or click elsewhere: restore focus
             if (newFocus && ['INPUT','SELECT'].includes(newFocus.tagName) ) {
-                // restore focus element's focus (in this else because, don't bother if button clicked)
+                // restore focus element's focus
                 // (code based on inspecting Foundry's own method of restoring focus)
                 if (newFocus.name) {
                     const form = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"] form`);
@@ -221,7 +185,7 @@ export class ChatContest {
                 }
             }
 
-        },
+        },  // blurField()
 
         async clickRollButton(event,chatMessage,html) {
             event.preventDefault();
@@ -300,7 +264,7 @@ export class ChatContest {
             });
             ChatContest.refreshChatMessage(chatMessage);
 
-        },
+        },  // clickRollButton()
 
     }   // Handlers
 
