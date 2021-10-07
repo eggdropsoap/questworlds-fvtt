@@ -105,7 +105,8 @@ export class QuestWorldsItem extends Item {
         // console.log(rollData);
 
         // prepare some form data
-        const benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
+        let benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
+        benefits = JSON.parse(JSON.stringify(benefits));    // TODO: there's a better way to do this, right?
 
         if (embedId) {
             const embed = QuestWorldsItem.getEmbedById(this.data.data.embeds,embedId);
@@ -161,14 +162,47 @@ export class QuestWorldsItem extends Item {
             waitingForPlayer: true,
             readyToRoll: false,
             benefits: benefits,
+            benefitsList: ( () => {
+                let result = {" ": " "};     // start with default "none" option
+                for (const index of Object.keys(benefits) ) {
+                    const name = benefits[index].name;
+                    const id = benefits[index]._id;
+                    const rating = benefits[index].data.rating;
+                    const masteries = benefits[index].data.masteries;
+                    const mod = RatingHelper.format(rating,masteries,true,false);
+                    const label = `${name} ${mod}`;
+                    result[id] = label;
+                }
+                return result; 
+            })(),// benefits,
             rating: rating,
             masteries: masteries,
             totalRating: rating,
             totalMasteries: masteries,
+            total: {rating: rating, masteries: masteries},
             resistanceRating: 15,           //  replace with lookup
             resistanceMasteries: 0,         //
+            resistance: RatingHelper.getDifficulty(),
             // item: rollData.item,
             hp: rollData.points.hero,
+            difficultyLevel: RatingHelper.DIFFICULTY_BASE,
+            settings: {
+                difficultyLevels: ( () => {
+                    let result = {};
+                    let list = RatingHelper.DIFFICULTY_LEVELS;
+                    for (const key of Object.keys(list)) {
+                        const name = list[key].name;
+                        let mod = RatingHelper.format(list[key].modifier, 0,true,false);
+                        mod = mod ? mod : '+0';
+                        // const rating = RatingHelper.rationalize(list[key].modifier, 0,true);
+                        const label = `${name} (${mod})`;
+                        result[key] = label;
+                    }
+                    // console.log('Result',result);
+                    return result;
+                })(),
+                // RatingHelper.DIFFICULTY_LEVELS,
+            }
         }
 
         msg.setFlag('questworlds','formData',formData);

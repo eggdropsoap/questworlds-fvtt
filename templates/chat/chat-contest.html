@@ -11,10 +11,9 @@
     </div>
     <div>
         <label>Benefits or Consequences</label>
-        <input type="text" name="benefitSelected" placeholder="replace me" value="{{benefitSelected}}">
         <ol>
         {{#each benefits}}
-            <li>{{name}} {{data.rating}} {{data.masteries}}</li>
+            <li><input type="checkbox" name="benefitsSelected.{{_id}}" {{checked benefitsSelected._id}}> {{name}} {{formatRating data.rating data.masteries}}</li>
         {{/each}}
         </ol>
     </div>
@@ -22,7 +21,12 @@
         <label>Situational Modifier</label>
         <input name="situationalModifiers" type="number" value="{{situationalModifiers}}" data-dtype="Number">
     </div>
-    <div>
+    <div class="difficulty">
+        <label>Difficulty</label>
+        <select name="difficultyLevel">
+            {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}} <!-- ~localize~ -->
+        </select>
+
         <label>Resistance</label>
         <label>Rating</label>
         <input name="resistanceRating" type="number" min="-20" max="20" value="{{resistanceRating}}" data-dtype="Number">

@@ -338,5 +338,5 @@ function countSuccesses(tn,rollTotal,masteries) {
 
 
 // TODO: figure out why benefits only render properly on second pass
-// TODO: fix losing focus on next input (from tab, click) in onblur. See Foundry code for a method?
 // TODO: put benefits/consequences in a categorized select control's options
+// TODO: make difficulty a select control

@@ -2,7 +2,12 @@ import { tokenNameToHTML,tokenMarkupToHTML } from "./rune-helpers.mjs";
 
 export class RatingHelper {
 
-
+    /**
+     * Sums two simple ratings objects
+     * @param {Object} obj1     First {rating,masteries} object to add
+     * @param {Object} obj2     Second {rating,masteries} object to add
+     * @returns {Object}        Sum of 1st and 2nd objects, rationalized
+     */
     static add(obj1,obj2) {
         const arr = this._add(obj1.rating,obj1.masteries,obj2.rating,obj2.masteries);
         return { rating: arr[0], masteries: arr[1] };
@@ -97,14 +102,16 @@ export class RatingHelper {
      * @param {Boolean} is_modifier // is this a bonus/malus?
      * @returns {String}
      */
-    static format(rating,masteries,is_modifier=false) {
+    static format(rating,masteries,is_modifier=false,useRunes=null) {
         const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
+
+        [rating,masteries] = RatingHelper.rationalize(rating,masteries,is_modifier);
 
         let outStr = '';
         let mastery_symbol = 'M';
         is_modifier = is_modifier ? true : false;
         
-        const useRunes = game.settings.get("questworlds","useRunes");
+        useRunes = useRunes != null ? useRunes : game.settings.get("questworlds","useRunes");
       
         if (useRunes) {
             mastery_symbol = tokenMarkupToHTML('[[mastery]]');
@@ -147,7 +154,7 @@ export class RatingHelper {
     ];
     
     static defaultRating(type) {
-        // TODO: replace this with a lookup table (TODO: that can be changed by config options)
+        // TODO: replace this with a lookup table (TODO: which can be changed by config options)
         switch(type) {
             case 'ability':
             case 'keyword':
@@ -167,5 +174,26 @@ export class RatingHelper {
                 return 0;  // should never happen since not in legalEmbedTypes or template.json items
         }
     
+    }
+
+    static DIFFICULTY_LEVELS =      // TODO: get this from a settings table
+    {
+        'nearly_impossible': {name: 'Nearly Impossible', modifier: 40 },
+        'very_high': {name: 'Very High', modifier: 20 },
+        'high': {name: 'High', modifier: 6 },
+        'moderate': {name: 'Moderate', modifier: 0 },
+        'low': {name: 'Low', modifier: -6 },
+        'very_low': {name: 'Very Low', modifier: -20, min: 6 },
+    }
+    static DIFFICULTY_BASE = 'moderate';
+
+    static BASE_RATING = {rating: 10, masteries: 0};
+
+    static getDifficulty(level='moderate') {
+        const baseRating = this.BASE_RATING; // TODO: get this from a UI control (itself set by setting?)
+        const ratingsTable = this.DIFFICULTY_LEVELS;
+        const rating = ratingsTable.hasOwnProperty(level) ?
+            RatingHelper.add(baseRating,{rating: ratingsTable[level].modifier, masteries: 0}) : baseRating;
+        return rating;
     }
 }
