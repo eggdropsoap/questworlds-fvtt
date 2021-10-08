@@ -13,7 +13,7 @@
         <label>Benefits or Consequences</label>
         <ol>
         {{#each benefits}}
-            <li><input type="checkbox" name="benefitsSelected.{{_id}}" {{checked benefitsSelected._id}}> {{name}} {{formatRating data.rating data.masteries}}</li>
+            <li><input type="checkbox" name="benefitsSelected.{{_id}}" {{checked benefitsSelected._id}}> {{name}} {{formatRating data.rating data.masteries modifier="true"}}</li>
         {{/each}}
         </ol>
     </div>
