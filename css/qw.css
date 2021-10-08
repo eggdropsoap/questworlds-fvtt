@@ -903,11 +903,45 @@
 /* .system-questworlds #chat-log .chat-contest {
 
 } */
+.system-questworlds #chat-log .chat-contest .header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  /* border-bottom: 2px groove rgba(39, 39, 39, 0.2); */
+  border-bottom: 1px solid rgba(39, 39, 39, 0.2);
+  margin-bottom: 4px;
+  padding-bottom: 2px;
+}
+.system-questworlds #chat-log .chat-contest .header .title {
+  text-transform: capitalize;
+  font-variant: small-caps;
+  /* font-style: italic; */
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.8);
+  display: block;
+}
+.system-questworlds #chat-log .chat-contest .header .vs {
+  font-size: 0.8em;
+  font-style: italic;
+  font-weight: normal;
+  color:rgba(39, 39, 39, 0.5);
+}
+.system-questworlds #chat-log .chat-contest .header .vs::before,
+.system-questworlds #chat-log .chat-contest .header .vs::after {
+  content: ' — ';
+}
+.system-questworlds #chat-log .chat-contest .tactic .options div,
+.system-questworlds #chat-log .chat-contest .difficulty .options div {
+  margin-bottom: 5px;
+}
 .system-questworlds #chat-log .chat-contest .dice-results {
   /* border: 1px solid black; */
   margin-top: 1em;
   /* padding-top: 1ex; */
   /* border-top: 1px solid rgb(181, 179, 164); */
+}
+.system-questworlds #chat-log .chat-contest .dice-results div {
+  margin-top: 5px;
 }
 .system-questworlds #chat-log .chat-contest .dice-results .ratings-faceoff {
   /* flex: 1; */
