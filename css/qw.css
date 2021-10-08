@@ -1023,6 +1023,12 @@
   /* background-color: burlywood; */
   color: rgb(87, 72, 54);
   background: radial-gradient(circle, rgb(214, 194, 138) 0%, rgb(182, 153, 91) 72%, rgb(173, 133, 71) 86%);
-
 }
-
+.system-questworlds #chat-log .chat-contest .dice-results .outcome-degrees {
+  text-align: center;
+  color: rgba(0,0,0,0.4);
+  font-style: italic;
+  font-size: 0.85em;
+  margin-top: 5px;
+  /* margin: 1ex; */
+}

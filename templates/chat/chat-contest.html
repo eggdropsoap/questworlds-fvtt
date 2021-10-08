@@ -37,7 +37,7 @@
         <input name="total.masteries" type="hidden" value="{{total.masteries}}" data-dtype="Number">
     </div>
     {{/unless}}
-    <div>
+    <div class="buttons">
         <button name="over" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
         <button name="approve" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.ApproveRoll'}}</button>
         <button name="roll" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Roll'}}</button>
@@ -93,6 +93,15 @@
         <div class="outcome {{outcome.cssClass}}">
             {{outcome.text}}
         </div>
+        {{#if settings.useClassicOutcomes}}
+        <div class="outcome-degrees">
+            {{#if outcome.tie~}}
+            ⁓
+            {{~else~}}
+            {{outcome.degreesText}}
+            {{~/if}}
+        </div>
+        {{/if}}
     </div>
     {{/if}}
 </form>

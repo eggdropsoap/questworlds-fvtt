@@ -243,7 +243,7 @@ export class ChatContest {
             const resSuccesses = countSuccesses(resTN,resRoll.total,resMasteries);
 
             const degrees = pcSuccesses - resSuccesses;
-            let outcome, victory=false, tie=false, defeat=false, outcomeText, cssClass;
+            let outcome, victory=false, tie=false, defeat=false, outcomeText, srdText, cssClass;
             if (degrees == 0) {         // tie or marginal outcome
                 if (pcRoll.total == resRoll.total) {
                     outcome = OUTCOMES.TIE;
@@ -265,23 +265,25 @@ export class ChatContest {
                 outcome = degrees - 1;
             }
 
-            const useClassicOutcomes = game.settings.get('questworlds','useClassicOutcomes');
-            if (useClassicOutcomes) {
-                outcomeText = game.i18n.localize(OUTCOME_CLASSIC_TEXT[outcome]);    
-            }
-
             if (victory) {
                 cssClass = 'victory';
-                outcomeText = outcomeText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfVictory') + `: ${degrees}`;
+                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfVictory') + `: ${degrees}`;
             }                    
             if (tie) {
                 cssClass = 'tie';
-                outcomeText = outcomeText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.Tie');    
+                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.Tie');    
             }                    
             if (defeat) {
                 cssClass = 'defeat';
-                outcomeText = outcomeText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfDefeat') + `: ${Math.abs(degrees)}`;
+                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfDefeat') + `: ${Math.abs(degrees)}`;
             }                    
+
+            const useClassicOutcomes = game.settings.get('questworlds','useClassicOutcomes');
+            if (useClassicOutcomes) {
+                outcomeText = game.i18n.localize(OUTCOME_CLASSIC_TEXT[outcome]);    
+            } else {
+                outcomeText = srdText;
+            }
 
             // update the data store with the roll results
             await chatMessage.setFlag('questworlds','formData',{
@@ -297,6 +299,10 @@ export class ChatContest {
                     kind: outcome,
                     text: outcomeText,
                     cssClass: cssClass,
+                    degreesText: srdText,
+                },
+                settings: {
+                    useClassicOutcomes: useClassicOutcomes,
                 },
                 closed: true,       // close the card
             });
