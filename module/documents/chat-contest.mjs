@@ -135,19 +135,28 @@ export class ChatContest {
             chatMessage.setFlag('questworlds','formData',flagDiff);
         },  // clickApproveButton
 
+        /**
+         * blurField() is where most form data is processed, similarly to an
+         * actor sheet's _onUpdate override. Except, this is also where the
+         * stored data is force-updated and the chat message content replaced
+         * with a fresh render.
+         * @param event 
+         * @param chatMessage 
+         * @param html 
+         */
         async blurField(event,chatMessage,html) {
             event.preventDefault();
 
             const newFocus = event.relatedTarget;   // whatever got focus after the blurring input
-            const chatMessageId = chatMessage.id;   // to find form after the re-render
+            const chatMessageId = chatMessage.id;   // to find form after the re-render replaces it
 
-            // get data from form merged into stored data
+            // get merged stored data + new form data
             let formData = _getNewFormData(chatMessage,html);
             
             // get the starting rating of the tactic
             const tactic = {
-                rating: formData.rating || 0,
-                masteries: formData.masteries || 0,
+                rating: formData.tactic.rating || 0,
+                masteries: formData.tactic.masteries || 0,
             };
             
             // add the situational modifiers
@@ -162,8 +171,10 @@ export class ChatContest {
             // update datastore then re-render
             if (formData) {
                 formData = mergeObject(formData,{
-                    totalRating: runningTotal.rating,
-                    totalMasteries: runningTotal.masteries,
+                    // totalRating: runningTotal.rating,
+                    // totalMasteries: runningTotal.masteries,
+                    total: runningTotal,
+                    tactic: tactic,
                 })
                 await chatMessage.setFlag('questworlds','formData',formData);
                 await ChatContest.refreshChatMessage(chatMessage);
@@ -194,10 +205,10 @@ export class ChatContest {
             const formData = await _getContext(chatMessage);
 
             
-            const pcTN = formData.totalRating;
-            const pcMasteries = formData.totalMasteries;
-            const resTN = formData.resistanceRating;
-            const resMasteries = formData.resistanceMasteries;
+            const pcTN = formData.total.rating;
+            const pcMasteries = formData.total.masteries;
+            const resTN = formData.resistance.rating;
+            const resMasteries = formData.resistance.masteries;
 
             // make two new rolls: the character and the resistance
             const pcRoll = new Roll('1d20').roll({async:false});
@@ -245,7 +256,8 @@ export class ChatContest {
                 cssClass = 'defeat';
                 outcomeText = outcomeText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfDefeat') + `: ${Math.abs(degrees)}`;
             }                    
-                        
+
+            // update the data store with the roll results
             await chatMessage.setFlag('questworlds','formData',{
                 pcResult: pcRoll.total,
                 pcSuccesses: pcSuccesses,
@@ -337,6 +349,5 @@ function countSuccesses(tn,rollTotal,masteries) {
 }
 
 
-// TODO: figure out why benefits only render properly on second pass
 // TODO: put benefits/consequences in a categorized select control's options
 // TODO: make difficulty a select control

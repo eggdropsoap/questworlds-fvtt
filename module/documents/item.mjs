@@ -158,7 +158,7 @@ export class QuestWorldsItem extends Item {
 
         const formData = {
             chatId: msg.id,
-            cssClasses: "hello-world",
+            cssClass: "hello-world",
             waitingForPlayer: true,
             readyToRoll: false,
             benefits: benefits,
@@ -175,13 +175,14 @@ export class QuestWorldsItem extends Item {
                 }
                 return result; 
             })(),// benefits,
-            rating: rating,
-            masteries: masteries,
-            totalRating: rating,
-            totalMasteries: masteries,
+            // rating: rating,
+            // masteries: masteries,
+            // totalRating: rating,
+            // totalMasteries: masteries,
+            tactic: {rating: rating, masteries: masteries},
             total: {rating: rating, masteries: masteries},
-            resistanceRating: 15,           //  replace with lookup
-            resistanceMasteries: 0,         //
+            // resistanceRating: 15,           //  replace with lookup
+            // resistanceMasteries: 0,         //
             resistance: RatingHelper.getDifficulty(),
             // item: rollData.item,
             hp: rollData.points.hero,

@@ -1,13 +1,13 @@
-<form class="chat-contest {{cssClasses}}" autocomplete="off"> {{log this}}
+<form class="chat-contest {{cssClass}}" autocomplete="off"> {{log this}}
     {{#unless closed}}
     <div>
         {{name}} {{type}}
     </div>
     <div>
-        Rating: {{rating}},
-        Masteries: {{masteries}}
-        <input name="rating" type="hidden" value="{{rating}}" data-dtype="Number">
-        <input name="masteries" type="hidden" value="{{masteries}}" data-dtype="Number">
+        Rating: {{tactic.rating}},
+        Masteries: {{tactic.masteries}}
+        <!-- <input name="tactic.rating" type="hidden" value="{{tactic.rating}}" data-dtype="Number"> -->
+        <!-- <input name="tactic.masteries" type="hidden" value="{{tactic.masteries}}" data-dtype="Number"> -->
     </div>
     <div>
         <label>Benefits or Consequences</label>
@@ -29,16 +29,16 @@
 
         <label>Resistance</label>
         <label>Rating</label>
-        <input name="resistanceRating" type="number" min="-20" max="20" value="{{resistanceRating}}" data-dtype="Number">
+        <input name="resistance.rating" type="number" min="-20" max="20" value="{{resistance.rating}}" data-dtype="Number">
         <label>Masteries</label>
-        <input name="resistanceMasteries" type="number" min="0" value="{{resistanceMasteries}}" data-dtype="Number">
+        <input name="resistance.masteries" type="number" min="0" value="{{resistance.masteries}}" data-dtype="Number">
     </div>
     <div>
         <strong>
-            {{formatRating totalRating totalMasteries}} vs {{formatRating resistanceRating resistanceMasteries}}
+            {{formatRating total.rating total.masteries}} vs {{formatRating resistance.rating resistance.masteries}}
         </strong>
-        <input name="totalRating" type="hidden" value="{{totalRating}}" data-dtype="Number">
-        <input name="totalMasteries" type="hidden" value="{{totalMasteries}}" data-dtype="Number">
+        <input name="total.rating" type="hidden" value="{{total.rating}}" data-dtype="Number">
+        <input name="total.masteries" type="hidden" value="{{total.masteries}}" data-dtype="Number">
     </div>
     {{/unless}}
     <div>
@@ -52,22 +52,22 @@
             <span class="rating">
                 {{localize 'QUESTWORLDS.chatcontest.Tactic'}}
                 <strong>
-                    {{formatRating totalRating totalMasteries}}
+                    {{formatRating total.rating total.masteries}}
                 </strong>
             </span>
             <span class="divider"><span class="vs"></span></span>
             <span class="rating">
                 {{localize 'QUESTWORLDS.chatcontest.Difficulty'}}
                 <strong>
-                    {{formatRating resistanceRating resistanceMasteries}}
+                    {{formatRating resistance.rating resistance.masteries}}
                 </strong>
             </span>
         </div>
         <div class="dice-faceoff flexrow">
             <span class="contestant flexcol">
                 <div class="roll
-                    {{~#if (eq pcResult totalRating)}} crit{{/if~}}
-                    {{~#if (gt pcResult totalRating)}} miss{{/if~}}
+                    {{~#if (eq pcResult total.rating)}} crit{{/if~}}
+                    {{~#if (gt pcResult total.rating)}} miss{{/if~}}
                     ">
                     {{~pcResult~}}
                 </div>
@@ -82,8 +82,8 @@
             </span>
             <span class="contestant flexcol">
                 <div class="roll
-                {{~#if (eq resResult resistanceRating)}} crit{{/if~}}
-                {{~#if (gt resResult resistanceRating)}} miss{{/if~}}
+                {{~#if (eq resResult resistance.rating)}} crit{{/if~}}
+                {{~#if (gt resResult resistance.rating)}} miss{{/if~}}
                 ">
                     {{~resResult~}}
                 </div>
