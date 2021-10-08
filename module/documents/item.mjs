@@ -206,9 +206,9 @@ export class QuestWorldsItem extends Item {
             }
         }
 
-        msg.setFlag('questworlds','formData',formData);
+        await msg.setFlag('questworlds','formData',formData);
 
-        // console.log(msg);
+        // console.log('Initial flags',msg);
 
         const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
         // const content = "<div>hello?</div>";

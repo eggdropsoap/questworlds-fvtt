@@ -35,17 +35,31 @@ export class ChatContest {
     static HookListeners = {
 
         async renderChatLog(app, html, data) {
-            // console.log('ChatContest.renderChatLogHook()');
+            console.log('ChatContest.renderChatLogHook()');
             // console.log(app);
             // console.log(html);
             // console.log(data);
         },  // listener for renderChatLog hook
     
+        /* make sure the game is ready before trying to get flags &c */
         async renderChatMessage(chatMessage, html, data) {
-            console.log('ChatContest.renderChatMessageHook()');
+            // console.log('ChatContest.renderChatMessage() …');
+            if (game.ready) {
+                // console.log("Game ready!");
+                this._renderChatMessage(chatMessage,html,data);
+            } else {
+                // console.log("Game not ready, waiting…");
+                setTimeout(() => {
+                    this.renderChatMessage(chatMessage,html,data);    
+                }, 50);
+            }
+        },
+
+        async _renderChatMessage(chatMessage, html, data) {
+            console.log('ChatContest._renderChatMessageHook()');
 
             const context = await chatMessage.getFlag('questworlds','formData');
-            // console.log('context for chatMessage ID',chatMessage.id, context);
+            console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
             // if (context?.closed) return;    // do nothing; the template took care of disabling form
@@ -67,7 +81,9 @@ export class ChatContest {
             overButton.on('click',e => ChatContest.Handlers.clickOverButton(e,chatMessage));
             approveButton.on('click',e => ChatContest.Handlers.clickApproveButton(e,chatMessage));
             rollButton.on('click',e => ChatContest.Handlers.clickRollButton(e,chatMessage,html));
-            html.on('blur','input, select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
+            // html.on('blur','input, select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
+            html.on('blur','input',e => ChatContest.Handlers.blurField(e,chatMessage,html));
+            html.on('change','select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
 
             // set up form state from datastore
             if (user.isGM) {
@@ -153,6 +169,8 @@ export class ChatContest {
             // get merged stored data + new form data
             let formData = _getNewFormData(chatMessage,html);
             
+            /* calculate modified tactic rating */
+
             // get the starting rating of the tactic
             const tactic = {
                 rating: formData.tactic.rating || 0,
@@ -167,7 +185,14 @@ export class ChatContest {
             let runningTotal = RatingHelper.add(
                 {rating: tactic.rating, masteries: tactic.masteries},
                 {rating: sitMods.rating, masteries: sitMods.masteries});
+
+            // TODO: add selected benefits / consequences to the runningTotal
             
+            /* calculate modified resistance rating */
+            const resistance = RatingHelper.getDifficulty(formData.difficultyLevel);
+
+            /* update form */
+
             // update datastore then re-render
             if (formData) {
                 formData = mergeObject(formData,{
@@ -175,6 +200,7 @@ export class ChatContest {
                     // totalMasteries: runningTotal.masteries,
                     total: runningTotal,
                     tactic: tactic,
+                    resistance: resistance,
                 })
                 await chatMessage.setFlag('questworlds','formData',formData);
                 await ChatContest.refreshChatMessage(chatMessage);
@@ -185,7 +211,7 @@ export class ChatContest {
                 const form = $(document).find(`#chat-log li.chat-message[data-message-id="${chatMessageId}"] form`);
                 const elem = form.find(`button[name="${newFocus.name}"]`);
                 $(elem).trigger('click');
-            } else  // blur was a tab or click elsewhere: restore focus
+            } else  // or if blur was from tabbing or clicking a control: restore focus on new control
             if (newFocus && ['INPUT','SELECT'].includes(newFocus.tagName) ) {
                 // restore focus element's focus
                 // (code based on inspecting Foundry's own method of restoring focus)
