@@ -376,4 +376,3 @@ function countSuccesses(tn,rollTotal,masteries) {
 
 
 // TODO: put benefits/consequences in a categorized select control's options
-// TODO: make difficulty a select control

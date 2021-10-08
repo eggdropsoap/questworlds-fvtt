@@ -46,9 +46,14 @@ export function registerHandlebarsHelpers() {
 
     Handlebars.registerHelper('formatRating', function(rating, masteries, options) {
         let is_modifier = options ? options.hash.modifier ? options.hash.modifier : null : null;
-        is_modifier = is_modifier == 'true' || is_modifier == '1';
+        is_modifier = is_modifier == 'true' || is_modifier == '1';  // convert from string
+
+        let useRunes = options ? options.hash.useRunes ? options.hash.useRunes : null : null;
+        if (useRunes) useRunes = useRunes == 'true' || useRunes == '1';   // convert from string
+        else useRunes = game.settings.get('questworlds','useRunes');
+
         return new Handlebars.SafeString(
-            RatingHelper.format(rating,masteries,is_modifier)
+            RatingHelper.format(rating,masteries,is_modifier,useRunes)
         );
     });
 

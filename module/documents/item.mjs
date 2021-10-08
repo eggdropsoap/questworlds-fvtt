@@ -184,6 +184,7 @@ export class QuestWorldsItem extends Item {
             // resistanceRating: 15,           //  replace with lookup
             // resistanceMasteries: 0,         //
             resistance: RatingHelper.getDifficulty(),
+            baseDifficulty: RatingHelper.getDifficulty(),
             // item: rollData.item,
             hp: rollData.points.hero,
             difficultyLevel: RatingHelper.DIFFICULTY_BASE,
