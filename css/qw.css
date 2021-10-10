@@ -1175,3 +1175,49 @@
   margin-top: 5px;
   /* margin: 1ex; */
 }
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost {
+  border-top: 1px solid grey;
+  border-top: 1px solid rgb(201,199,184);
+  border-top: 1px solid rgb(39,39,39,0.4);
+  margin-top: 1ex;
+  padding-top: 5px;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .flex0,
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .flex1 {
+  margin-top: 0;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .alert {
+  /* position: relative; */
+  border: 1px solid rgb(39,39,39,0.6);
+  border-radius: 50% 3px 3px 50%;
+  background-color: white;
+  width: 23px;
+  min-width: 23px;
+  height: 23px;
+  padding: 2px;
+  text-align: center;
+  margin-right: 5px;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .alert .icon {
+  /* position: relative; */
+  /* height: 100%; */
+  font-size: 17px;
+  color: cornflowerblue;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .title {
+  font-weight: bold;
+  /* font-style: italic; */
+  /* font-variant: small-caps; */
+  /* font-size: 1.1em; */
+  color: rgb(42, 42, 42);
+  display: block;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .title::after {
+  content: ':'
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .lost-benefit::after {
+  content: ' •';
+}
+.system-questworlds #chat-log .chat-contest .dice-results .benefits-lost .lost-benefit:last-child:after {
+  content: '';
+}

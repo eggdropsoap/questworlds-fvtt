@@ -420,5 +420,4 @@ function countSuccesses(tn,rollTotal,masteries) {
     return count;
 }
 
-
-// TODO: put benefits/consequences in a categorized select control's options
+// TODO: link benefits to their source ability, and mark them lost regardless of checked state

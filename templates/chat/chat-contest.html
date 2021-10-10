@@ -127,6 +127,21 @@
             {{~/if}}
         </div>
         {{/if}}
+        {{#if outcome.defeat}}
+        <div class="benefits-lost flexrow">
+            <div class="flex0 alert">
+                <i class="icon fas fa-exclamation-circle"></i>
+            </div>
+            <div class="flex1">
+                <span class="title">Benefits Lost</span>
+                {{#each benefits as |benefit|}}
+                    {{#if (and benefit.checked (eq benefit.variant 'benefit') ) }}
+                        <span class="lost-benefit">{{benefit.name}}</span>
+                    {{/if}}
+                {{/each}}    
+            </div>
+        </div>
+        {{/if}}
     </div>
     {{/if}}
 </form>
