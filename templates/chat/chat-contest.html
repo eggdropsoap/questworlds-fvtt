@@ -17,17 +17,24 @@
         <div class="options">
             <!-- <hr> -->
             {{#if benefits}}
-            <div>
+            <div class="benefits">
                 <label>Benefits or Consequences</label>
                 <ol>
                 {{#each benefits}}
-                    <li><input type="checkbox" name="benefitsSelected.{{_id}}" {{checked benefitsSelected._id}}> {{name}} {{formatRating data.rating data.masteries modifier="true"}}</li>
+                    <li class="{{variant}} {{#if checked}}active{{/if}}">
+                        <i class="{{#if checked}}fas fa-check-circle{{else}}far fa-circle{{/if}}"></i>
+                        <label for="msg-{{../chatId}}-benefit-{{id}}">
+                            {{name}} <strong></strong>{{formatRating data.rating data.masteries modifier="true"}}</strong>
+                        </label>
+                        <input id="msg-{{../chatId}}-benefit-{{id}}" type="checkbox" name="benefits.{{@key}}.checked" data-dtype="Boolean" {{checked checked}}>
+                        
+                    </li>
                 {{/each}}
                 </ol>
             </div>
             {{/if}}
-            <div>
-                <label>Situational Modifiers</label>
+            <div class="flexrow situational-modifiers">
+                <label class="flex0 nowrap">Situational Modifiers</label>
                 <input name="situationalModifiers" type="number" value="{{situationalModifiers}}" data-dtype="Number">
             </div>
         </div>    

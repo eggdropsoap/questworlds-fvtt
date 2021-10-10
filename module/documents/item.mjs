@@ -161,7 +161,24 @@ export class QuestWorldsItem extends Item {
             cssClass: "hello-world",
             waitingForPlayer: true,
             readyToRoll: false,
-            benefits: benefits,
+            benefits: ( () => {
+                let remap = {};
+                for (const key of Object.keys(benefits)) {
+                    remap[key] = {};
+                    let simpleRating = RatingHelper.merge(
+                        benefits[key].data.rating, benefits[key].data.masteries);
+                    remap[key].id = benefits[key]._id;
+                    remap[key].name = benefits[key].name;
+                    remap[key].variant = simpleRating > 0 ? simpleRating == 0 ? 'none' : 'benefit' : 'consequence' ;
+                    remap[key].data = {
+                        rating: benefits[key].data.rating,
+                        masteries: benefits[key].data.masteries,
+                    }
+                    remap[key].checked = false;
+                }
+                return remap;
+            }
+            )(),
             benefitsList: ( () => {
                 let result = {" ": " "};     // start with default "none" option
                 for (const index of Object.keys(benefits) ) {

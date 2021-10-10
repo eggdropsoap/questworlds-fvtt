@@ -62,7 +62,7 @@ export class ChatContest {
             console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
-            // if (context?.closed) return;    // do nothing; the template took care of disabling form
+            // if (context?.closed) return;    // do nothing; the template took care of disabling the form
             // ^^^ temporarily commented out for debugging rolls with free rerolling
 
             const user = game.user;
@@ -82,8 +82,9 @@ export class ChatContest {
             approveButton.on('click',e => ChatContest.Handlers.clickApproveButton(e,chatMessage));
             rollButton.on('click',e => ChatContest.Handlers.clickRollButton(e,chatMessage,html));
             // html.on('blur','input, select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
-            html.on('blur','input',e => ChatContest.Handlers.blurField(e,chatMessage,html));
+            html.on('blur','input[type="text"], input[type="number"]',e => ChatContest.Handlers.blurField(e,chatMessage,html));
             html.on('change','select',e => ChatContest.Handlers.blurField(e,chatMessage,html));
+            html.on('click','input[type="checkbox"]',e => ChatContest.Handlers.clickTag(e,chatMessage,html));
 
             // set up form state from datastore
             if (user.isGM) {
@@ -152,6 +153,18 @@ export class ChatContest {
         },  // clickApproveButton
 
         /**
+         * 
+         * @param event 
+         * @param chatMessage 
+         * @param html 
+         */
+        async clickTag(event,chatMessage,html) {
+            event.preventDefault();
+            let formData = _getNewFormData(chatMessage,html);
+            _updateChatMessage(chatMessage,formData);
+        },
+
+        /**
          * blurField() is where most form data is processed, similarly to an
          * actor sheet's _onUpdate override. Except, this is also where the
          * stored data is force-updated and the chat message content replaced
@@ -169,42 +182,8 @@ export class ChatContest {
             // get merged stored data + new form data
             let formData = _getNewFormData(chatMessage,html);
             
-            /* calculate modified tactic rating */
-
-            // get the starting rating of the tactic
-            const tactic = {
-                rating: formData.tactic.rating || 0,
-                masteries: formData.tactic.masteries || 0,
-            };
-            
-            // add the situational modifiers
-            const sitMods = {
-                rating: formData.situationalModifiers || 0,
-                masteries: 0,
-            }
-            let runningTotal = RatingHelper.add(
-                {rating: tactic.rating, masteries: tactic.masteries},
-                {rating: sitMods.rating, masteries: sitMods.masteries});
-
-            // TODO: add selected benefits / consequences to the runningTotal
-            
-            /* calculate modified resistance rating */
-            const resistance = RatingHelper.getDifficulty(formData.difficultyLevel);
-
-            /* update form */
-
             // update datastore then re-render
-            if (formData) {
-                formData = mergeObject(formData,{
-                    // totalRating: runningTotal.rating,
-                    // totalMasteries: runningTotal.masteries,
-                    total: runningTotal,
-                    tactic: tactic,
-                    resistance: resistance,
-                })
-                await chatMessage.setFlag('questworlds','formData',formData);
-                await ChatContest.refreshChatMessage(chatMessage);
-            }
+            _updateChatMessage(chatMessage,formData);
 
             // finally, if the blur was from a button click, click it manually after the rerender
             if (newFocus instanceof HTMLButtonElement) {
@@ -322,6 +301,67 @@ export class ChatContest {
         const formData = await chatMessage.getFlag('questworlds','formData');
         const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
         await chatMessage.update({'content': content});
+    }
+}
+
+/* * * * * * * * * * * * * * */
+/* private utility functions */
+/* * * * * * * * * * * * * * */
+
+/**
+ * 
+ * @param formData 
+ * @returns {Object}    The formdata with added derived data
+ */
+function _processFormData(formData) {
+    /* calculate modified tactic rating */
+
+    // get the starting rating of the tactic
+    const tactic = {
+        rating: formData.tactic.rating || 0,
+        masteries: formData.tactic.masteries || 0,
+    };
+    
+    // add the situational modifiers
+    const sitMods = {
+        rating: formData.situationalModifiers || 0,
+        masteries: 0,
+    }
+    let runningTotal = RatingHelper.add(
+        {rating: tactic.rating, masteries: tactic.masteries},
+        {rating: sitMods.rating, masteries: sitMods.masteries});
+
+    // TODO: add selected benefits / consequences to the runningTotal
+    let beneMods = {rating: 0, masteries: 0};
+    for (let key of Object.keys(formData.benefits)) {
+        const bene = formData.benefits[key];
+        if (bene.checked) beneMods = RatingHelper.add(beneMods,bene.data);
+    }
+    runningTotal = RatingHelper.add(runningTotal,beneMods);
+    
+    /* calculate modified resistance rating */
+    const resistance = RatingHelper.getDifficulty(formData.difficultyLevel);
+
+    formData = mergeObject(formData,{
+        total: runningTotal,
+        tactic: tactic,
+        resistance: resistance,
+    })
+
+    return formData;
+};
+
+function _updateChatMessage(chatMessage,formData) {
+    if (formData) {
+        // process derived data from form options
+        formData = _processFormData(formData);
+        if (formData) {
+            chatMessage.setFlag('questworlds','formData',formData).then( () => {
+                ChatContest.refreshChatMessage(chatMessage)
+            });
+            // await chatMessage.setFlag('questworlds','formData',formData);
+            // await ChatContest.refreshChatMessage(chatMessage);    
+        }
     }
 }
 
