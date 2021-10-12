@@ -421,3 +421,6 @@ function countSuccesses(tn,rollTotal,masteries) {
 }
 
 // TODO: link benefits to their source ability, and mark them lost regardless of checked state
+// TODO: style GM's view of benefits as "disabled" somehow
+// TODO: spending hero points / story points on rolls
+// TODO: sheets: limited-permission views

@@ -52,7 +52,7 @@
         <div class="options">
             <!-- <hr> -->
             <div class="difficulty-level">
-                <label>Difficulty Level</label>
+                <label>Difficulty Level (Base {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
                 <select name="difficultyLevel">
                     <optgroup label="Base difficulty: {{formatRating baseDifficulty.rating baseDifficulty.masteries useRunes="false"}}">
                         {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}} <!-- ~localize~ -->

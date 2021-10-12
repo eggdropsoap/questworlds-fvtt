@@ -165,8 +165,7 @@ export class QuestWorldsItem extends Item {
                 let remap = {};
                 for (const key of Object.keys(benefits)) {
                     remap[key] = {};
-                    let simpleRating = RatingHelper.merge(
-                        benefits[key].data.rating, benefits[key].data.masteries);
+                    let simpleRating = RatingHelper.merge(benefits[key].data);
                     remap[key].id = benefits[key]._id;
                     remap[key].name = benefits[key].name;
                     remap[key].variant = simpleRating > 0 ? simpleRating == 0 ? 'none' : 'benefit' : 'consequence' ;
@@ -213,8 +212,9 @@ export class QuestWorldsItem extends Item {
                         const name = list[key].name;
                         let mod = RatingHelper.format(list[key].modifier, 0,true,false);
                         mod = mod ? mod : '+0';
+                        const min = list[key]?.min ? list[key].min : null;
                         // const rating = RatingHelper.rationalize(list[key].modifier, 0,true);
-                        const label = `${name} (${mod})`;
+                        const label = min ? `${name} (${mod} or ${min})` : `${name} (${mod})`;
                         result[key] = label;
                     }
                     // console.log('Result',result);

@@ -29,9 +29,9 @@ export class RatingHelper {
         ) //return [null, null];
         throw new Error(`Can't add ${rating1}M${mastery1} and ${rating2}M${mastery2}`); 
 
-        const a = this.merge(rating1,mastery1);
+        const a = this.merge({rating: rating1,masteries: mastery1});
         // console.log('a',a);
-        const b = this.merge(rating2,mastery2);
+        const b = this.merge({rating: rating2,masteries: mastery2});
         // console.log('b',b);
         // console.log('a + b', a + b);
         return this.split(a+b);
@@ -69,7 +69,9 @@ export class RatingHelper {
      * @param {Number} m masteries portion
      * @returns {Number} result
      */
-    static merge(r,m/*,preserveZero=false*/) {
+    static merge(rating/*,preserveZero=false*/) {
+        const r = rating.rating;
+        const m = rating.masteries;
         const sign = r < 0 || m < 0 ? -1 : 1;
         // console.log('sign', sign);
         // console.log('merge',(Math.abs(r) + Math.abs(m*20)) * sign);
@@ -89,7 +91,7 @@ export class RatingHelper {
      * @returns array [rating,mastery] rationalized
      */
     static rationalize(r,m,is_modifier=false) {
-        return this.split(this.merge(r,m),is_modifier);
+        return this.split(this.merge({rating:r,masteries:m}),is_modifier);
     }
   
     /**
@@ -118,13 +120,13 @@ export class RatingHelper {
         }
       
         // if negative, put the minus on the front
-        if (this.merge(rating,masteries) < 0) {
+        if (this.merge({rating:rating,masteries:masteries}) < 0) {
             outStr += minusChar;
         }
         // output basic rating part if it's non-zero
         if (Math.abs(rating) > 0) {
             // if it's positive and a modifier, prefix '+' first
-            if (this.merge(rating,masteries) > 0 && is_modifier) {
+            if (this.merge({rating:rating,masteries:masteries}) > 0 && is_modifier) {
                 outStr += "+";
             }
             // positive rating
@@ -176,7 +178,7 @@ export class RatingHelper {
     
     }
 
-    static DIFFICULTY_LEVELS =      // TODO: get this from a settings table
+    static DIFFICULTY_LEVELS =      // TODO: get this from a settings table // this is the HQG table
     {
         'nearly_impossible': {name: 'Nearly Impossible', modifier: 40 },
         'very_high': {name: 'Very High', modifier: 20 },
@@ -187,13 +189,24 @@ export class RatingHelper {
     }
     static DIFFICULTY_BASE = 'moderate';
 
-    static BASE_RATING = {rating: 10, masteries: 0};
+    static BASE_RATING = {rating: 13, masteries: 0};    // HQG base difficulty
 
     static getDifficulty(level='moderate') {
         const baseRating = this.BASE_RATING; // TODO: get this from a UI control (itself set by setting?)
         const ratingsTable = this.DIFFICULTY_LEVELS;
-        const rating = ratingsTable.hasOwnProperty(level) ?
-            RatingHelper.add(baseRating,{rating: ratingsTable[level].modifier, masteries: 0}) : baseRating;
+        let rating;
+        if (ratingsTable.hasOwnProperty(level)) {
+            // rating is base difficulty plus modifier...
+            rating = RatingHelper.add(baseRating,{rating: ratingsTable[level].modifier, masteries: 0})
+            if (ratingsTable[level].hasOwnProperty('min')) {
+                // ... unless there's a minimum and the mod made it too low
+                const min = ratingsTable[level].min;
+                rating = RatingHelper.merge(rating) > min ? rating : {rating: min,masteries: 0};
+            }
+        } else {
+            // ... unless no difficulty level is specified at all
+            rating = baseRating;
+        }
         return rating;
     }
 }
