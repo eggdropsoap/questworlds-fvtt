@@ -17,7 +17,7 @@
     <a class="item" data-tab="main">{{localize 'QUESTWORLDS.NavMain'}}</a>
     <a class="item" data-tab="biography">{{localize 'QUESTWORLDS.NavBiography'}}</a>
     <a class="item" data-tab="art">{{localize 'QUESTWORLDS.NavArt'}}</a>
-    <a class="item" data-tab="notes">{{localize 'QUESTWORLDS.NavNotes'}}</a>
+    {{#if editable}}<a class="item" data-tab="notes">{{localize 'QUESTWORLDS.NavNotes'}}</a>{{/if}}
   </nav>
 
 
@@ -87,9 +87,11 @@
     </div>
 
     {{!-- Notes Tab --}}
+    {{#if editable}}
     <div class="tab player-notes" data-group="primary" data-tab="notes">
       {{editor content=data.notes target="data.notes" rollData=rollData button=true owner=owner editable=editable}}
     </div>
+    {{/if}}
 
   </section>
 

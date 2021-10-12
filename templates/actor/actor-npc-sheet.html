@@ -19,10 +19,10 @@
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-
+    {{#if editable}}
     <h2>{{localize 'QUESTWORLDS.Description'}}</h2>
     {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
-
+    {{/if}}
   </section>
 </form>
 

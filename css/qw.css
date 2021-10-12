@@ -10,11 +10,26 @@
   font-family: "Roboto", sans-serif;
 }
 
-.rollable:hover,
-.rollable:focus {
+.editable .rollable:hover,
+.editable .rollable:focus {
   color: #000;
   text-shadow: 0 0 3px rgba(255, 0, 0, 0.45);
   cursor: pointer;
+}
+
+.locked .rollable,
+.locked .rollable:hover,
+.locked .rollable:focus,
+.locked a.rollable:hover,
+.locked a.rollable:focus {
+  text-shadow: none;
+  cursor: default;
+}
+.questworlds .locked .items-list .item-controls {
+  display: none;
+}
+.questworlds .locked .sheet-header input:hover {
+  background-color: inherit;
 }
 
 .grid,
