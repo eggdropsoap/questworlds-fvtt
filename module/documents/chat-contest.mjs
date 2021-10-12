@@ -35,20 +35,15 @@ export class ChatContest {
     static HookListeners = {
 
         async renderChatLog(app, html, data) {
-            console.log('ChatContest.renderChatLogHook()');
-            // console.log(app);
-            // console.log(html);
-            // console.log(data);
+            // console.log('ChatContest.renderChatLogHook()');
         },  // listener for renderChatLog hook
     
         /* make sure the game is ready before trying to get flags &c */
         async renderChatMessage(chatMessage, html, data) {
-            // console.log('ChatContest.renderChatMessage() …');
             if (game.ready) {
-                // console.log("Game ready!");
                 this._renderChatMessage(chatMessage,html,data);
             } else {
-                // console.log("Game not ready, waiting…");
+                // try again later
                 setTimeout(() => {
                     this.renderChatMessage(chatMessage,html,data);    
                 }, 50);
@@ -56,10 +51,10 @@ export class ChatContest {
         },
 
         async _renderChatMessage(chatMessage, html, data) {
-            console.log('ChatContest._renderChatMessageHook()');
+            // console.log('ChatContest._renderChatMessageHook()');
 
             const context = await chatMessage.getFlag('questworlds','formData');
-            console.log('context for chatMessage ID',chatMessage.id, context);
+            // console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
             // if (context?.closed) return;    // do nothing; the template took care of disabling the form
@@ -206,7 +201,7 @@ export class ChatContest {
         async clickRollButton(event,chatMessage,html) {
             event.preventDefault();
 
-            console.log("Beginning click. chatMessage:", chatMessage);
+            // console.log("Beginning click. chatMessage:", chatMessage);
             const formData = await _getContext(chatMessage);
 
             
