@@ -333,9 +333,13 @@ function _processFormData(formData) {
 
     // TODO: add selected benefits / consequences to the runningTotal
     let beneMods = {rating: 0, masteries: 0};
+    let benefitsRisked = 0;
     for (let key of Object.keys(formData.benefits)) {
         const bene = formData.benefits[key];
-        if (bene.checked) beneMods = RatingHelper.add(beneMods,bene.data);
+        if (bene.checked) {
+            beneMods = RatingHelper.add(beneMods,bene.data);
+            benefitsRisked += (bene.variant == 'benefit') ? 1 : 0;
+        }
     }
     runningTotal = RatingHelper.add(runningTotal,beneMods);
     
@@ -346,6 +350,7 @@ function _processFormData(formData) {
         total: runningTotal,
         tactic: tactic,
         resistance: resistance,
+        benefitsRisked: benefitsRisked,
     })
 
     return formData;
