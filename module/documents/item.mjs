@@ -249,7 +249,6 @@ export class QuestWorldsItem extends Item {
                         let mod = RatingHelper.format(list[key].modifier, 0,true,false);
                         mod = mod ? mod : '+0';
                         const min = list[key]?.min ? list[key].min : null;
-                        // const rating = RatingHelper.rationalize(list[key].modifier, 0,true);
                         const label = min ? `${name} (${mod} or ${min})` : `${name} (${mod})`;
                         result[key] = label;
                     }
@@ -409,11 +408,11 @@ export class QuestWorldsItem extends Item {
         // get new info from the dialog
         const newRunes = html.find('input[name="runes"]').val();
         const newName = html.find('input[name="name"]').val();
-        let newRating = Number.parseInt(html.find('input[name="rating"]').val()) || 0;
-        let newMasteries = Number.parseInt(html.find('input[name="masteries"]').val()) || 0;
-
         // rationalize the rating and masteries
-        [newRating,newMasteries] = RatingHelper.rationalize(newRating,newMasteries);
+        const newRating = RatingHelper.rationalize({
+            rating: Number.parseInt(html.find('input[name="rating"]').val()) || 0,
+            masteries: Number.parseInt(html.find('input[name="masteries"]').val()) || 0,
+        });
 
         // extract a reference to the right breakout
         const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
@@ -421,8 +420,8 @@ export class QuestWorldsItem extends Item {
         // update data in embeds via the reference
         targetEmbed.runes = newRunes;
         targetEmbed.name = newName;
-        targetEmbed.rating = newRating;
-        targetEmbed.masteries = newMasteries;
+        targetEmbed.rating = newRating.rating;
+        targetEmbed.masteries = newRating.masteries;
 
         //update the item data with copy contents
         item.update({'data.embeds': embeds});

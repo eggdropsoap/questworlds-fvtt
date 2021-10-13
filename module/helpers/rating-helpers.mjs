@@ -9,8 +9,8 @@ export class RatingHelper {
      * @returns {Object}        Sum of 1st and 2nd objects, rationalized
      */
     static add(obj1,obj2) {
-        const arr = this._add(obj1.rating,obj1.masteries,obj2.rating,obj2.masteries);
-        return { rating: arr[0], masteries: arr[1] };
+        const rating = this._add(obj1.rating,obj1.masteries,obj2.rating,obj2.masteries);
+        return rating;
     }
 
     /**
@@ -21,7 +21,7 @@ export class RatingHelper {
      * @param {Number} mastery1 
      * @param {Number} rating2 
      * @param {Number} mastery2 
-     * @returns {Array} [total_rating,total_masteries]
+     * @returns {Object} {rating,masteries}
      */
     static _add(rating1, mastery1, rating2, mastery2) {
         if ( [rating1,mastery1,rating2,mastery2]
@@ -42,24 +42,30 @@ export class RatingHelper {
      * Sign is preserved. Returned sign is on the rating (x), unless
      * preserveZero true & rating is zero, then sign is on the mastery (y).
      * @param {Number} total 
-     * @param {Boolean} preserveZero // Preserve zero ratings? e.g. +/-20 => +/-(0)M1
-     * @returns {Array} // [rating,mastery]
+     * @param {Boolean} preserveZero    Preserve zero ratings? e.g. +/-20 => +/-(0)M1
+     * @returns {Object}                {rating,masteries}
      */
     static split(total,preserveZero=false) {
         const sign = total < 0 ? -1 : 1;
         const t = Math.abs(total);
         if (t==0)                   // avoids returning [20,0]
-            return [0,0];
+            return {rating:0,masteries:0};
         else if (preserveZero) {    // rolls over only on exactly t/20 (rescues bare +My/-My modifiers)
             const r = (t % 20);
             const m = Math.floor(t /20);
-            return r == 0 ? [r, m*sign] : [r*sign, m];
+            return r == 0 ? {
+                rating: r,
+                masteries: m*sign
+            } : {
+                rating: r*sign,
+                masteries: m
+            };
         }
         else                        // the most typical cases
-            return [                
-                (t % 20 || 20) * sign,
-                Math.floor((t - 1) /20)
-            ];
+            return {
+                rating: (t % 20 || 20) * sign,
+                masteries: Math.floor((t - 1) /20)
+            };
     }
 
     /**
@@ -83,13 +89,12 @@ export class RatingHelper {
      * If is_modifier is true, rebalances so x is [0-19], allowing for returning -M, +M2, etc.
      * Sign result is negative if either portion is negative. Sign is on the returend rating,
      * unless is_modifer true & rating is zero, then sign is on the returned mastery.
-     * @param r rating portion
-     * @param m mastery portion
-     * @param is_modifier Is this a modifier?
-     * @returns array [rating,mastery] rationalized
+     * @param {Object} ratingObj        {rating,masteries} Object to rationalize
+     * @param {Boolean} is_modifier     Is this a modifier?
+     * @returns {Object}                {rating,mastery} rationalized
      */
-    static rationalize(r,m,is_modifier=false) {
-        return this.split(this.merge({rating:r,masteries:m}),is_modifier);
+    static rationalize(ratingObj={rating,masteries},is_modifier=false) {
+        return this.split(this.merge(ratingObj),is_modifier);
     }
   
     /**
@@ -105,7 +110,7 @@ export class RatingHelper {
     static format(rating,masteries,is_modifier=false,useRunes=null) {
         const minusChar = "\u2212"; // unicode minus symbol (wider than hyphen to match '+' width)
 
-        [rating,masteries] = RatingHelper.rationalize(rating,masteries,is_modifier);
+        ({rating,masteries} = RatingHelper.rationalize({rating:rating,masteries:masteries},is_modifier));
 
         let outStr = '';
         let mastery_symbol = 'M';
