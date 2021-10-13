@@ -4,6 +4,16 @@ import { RatingHelper } from "../helpers/rating-helpers.mjs";
 
 const legalEmbedTypes = RatingHelper.legalEmbedTypes;
 
+const DEFAULT_ICONS = {
+    ability: 'systems/questworlds/assets/ability.svg',
+    keyword: 'systems/questworlds/assets/keyword.svg',
+    sidekick: 'systems/questworlds/assets/sidekick.svg',
+    magicgroup: 'systems/questworlds/assets/magic-group.svg',
+    flaw: 'systems/questworlds/assets/flaw.svg',
+    benefit: 'systems/questworlds/assets/benefit.svg',
+    consequence: 'systems/questworlds/assets/consequence.svg',
+}
+
 /**
  * set up the embeds class
  * @param {String} type   // ability, breakout, keyword, info
@@ -41,6 +51,19 @@ class EmbeddedAbility {
  * @extends {Item}
  */
 export class QuestWorldsItem extends Item {
+    /**
+     * @override
+     * Set the default Item icon per type and variant
+     */
+     async _preCreate(data, options, userId) {
+        await super._preCreate(data, options, userId);
+        if (data.img === undefined) {
+            const img = DEFAULT_ICONS[data?.data?.variant] || DEFAULT_ICONS[data.type];
+            if (img) await this.data.update({ img: img });
+            console.log('Item type:',data.type,'Variant:',data?.data?.variant,'IMG:',img);
+        }
+    }
+
     /**
      * Augment the basic Item data model with additional dynamic data.
      */
