@@ -216,6 +216,19 @@ export class ChatContest {
             const resRoll = new Roll('1d20').roll({async:false});
             const resSuccesses = countSuccesses(resTN,resRoll.total,resMasteries);
 
+            // Dice So Nice integration
+            if (game.dice3d) {
+                // player roll
+                game.dice3d.showForRoll(pcRoll, game.user, true);
+                // GM / resistance roll after a short delay
+                const firstGM = game.users.find(user => {return user.isGM});                
+                setTimeout(() => {
+                    game.dice3d.showForRoll(resRoll, firstGM, true);    
+                }, 500);
+                
+            }
+
+            // calculate outcome
             const degrees = pcSuccesses - resSuccesses;
             let outcome, victory=false, tie=false, defeat=false, outcomeText, srdText, cssClass;
             if (degrees == 0) {         // tie or marginal outcome
@@ -239,6 +252,7 @@ export class ChatContest {
                 outcome = degrees - 1;
             }
 
+            // outcome-dependent variables
             if (victory) {
                 cssClass = 'victory';
                 srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfVictory') + `: ${degrees}`;
