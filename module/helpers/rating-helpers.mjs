@@ -70,10 +70,10 @@ export class RatingHelper {
      * @param {Object} rating   {rating,masteries} object
      * @returns {Number}        The result
      */
-    static merge(rating/*,preserveZero=false*/) {
-        if (rating.rating === undefined && rating.masteries === undefined) return undefined;
-        const r = rating.rating || 0;
-        const m = rating.masteries || 0;
+    static merge({rating,masteries}/*,preserveZero=false*/) {
+        if (rating === undefined && masteries === undefined) return undefined;
+        const r = rating || 0;
+        const m = masteries || 0;
         const sign = r < 0 || m < 0 ? -1 : 1;
         return (Math.abs(r) + Math.abs(m*20)) * sign;
     }
