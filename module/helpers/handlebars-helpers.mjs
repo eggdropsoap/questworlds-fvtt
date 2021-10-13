@@ -18,6 +18,10 @@ export function registerHandlebarsHelpers() {
         }
         return outStr;
     });
+
+    Handlebars.registerHelper('capitalize', function(str) {
+        return str.capitalize();
+    });
     
     Handlebars.registerHelper('toLowerCase', function(str) {
         return str.toLowerCase();
