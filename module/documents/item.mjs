@@ -4,7 +4,7 @@ import { RatingHelper } from "../helpers/rating-helpers.mjs";
 
 const legalEmbedTypes = RatingHelper.legalEmbedTypes;
 
-const DEFAULT_ICONS = {
+export const DEFAULT_ICONS = {
     ability: 'systems/questworlds/assets/ability.svg',
     keyword: 'systems/questworlds/assets/keyword.svg',
     sidekick: 'systems/questworlds/assets/sidekick.svg',

@@ -1,4 +1,6 @@
+import { DEFAULT_ICONS } from "../documents/item.mjs";
 import { EmbedsEvents, ContextMenus, FieldHelpers } from "../helpers/event-handlers.mjs";
+import { RatingHelper } from "../helpers/rating-helpers.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -105,5 +107,40 @@ export class QuestWorldsItemSheet extends ItemSheet {
         $('.header-fields h1 input.resizing').trigger('keyup');
 
 
+    }
+
+    /** @override */
+    async _updateObject(event, formData) {
+        const item = this.object;
+
+        // update default icon if it's still a default
+        if (item.type == 'benefit') {
+            // get variant of NEW data
+            const newVariant = RatingHelper.merge({
+                rating: formData['data.rating'],
+                masteries: formData['data.masteries']
+            }) >= 0 ? 'benefit' : 'consequence';
+            updateDefaultImage(newVariant);
+        } else
+        if (this.object.type == 'ability') {
+            const newVariant = formData['data.variant'];
+            updateDefaultImage(newVariant);
+        }
+
+        /**
+         * IF the current icon matches the current variant default icon
+         * AND the variant is changing,
+         * THEN change to new variant's default icon.
+         * Otherwise leave it alone.
+         * @param {String} newVariant   The variant-to-be based on new form data
+         */
+        function updateDefaultImage(newVariant) {
+            const img = item.data.img;
+            if (img == DEFAULT_ICONS[item.variant] && item.variant != newVariant) {
+                formData.img = DEFAULT_ICONS[newVariant];
+            }
+        }
+
+        return super._updateObject(event, formData);
     }
 }
