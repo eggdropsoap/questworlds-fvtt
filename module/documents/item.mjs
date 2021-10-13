@@ -60,7 +60,18 @@ export class QuestWorldsItem extends Item {
         if (data.img === undefined) {
             const img = DEFAULT_ICONS[data?.data?.variant] || DEFAULT_ICONS[data.type];
             if (img) await this.data.update({ img: img });
-            console.log('Item type:',data.type,'Variant:',data?.data?.variant,'IMG:',img);
+        }
+    }
+
+    get variant() {
+        switch (this.type) {
+            case 'benefit':
+                return RatingHelper.merge({
+                    rating: this.data.data.rating,
+                    masteries: this.data.data.masteries
+                }) >= 0 ? 'benefit' : 'consequence';
+            default:
+                return this.data?.data?.variant || this.type || undefined;
         }
     }
 
@@ -99,7 +110,7 @@ export class QuestWorldsItem extends Item {
         // Initialize chat data.
         const speaker = ChatMessage.getSpeaker({ actor: this.actor });
         const rollMode = game.settings.get('core', 'rollMode');
-        const itemType = item.data?.variant || item.type;
+        const itemType = this.variant;
         let rating = item.data.rating;
         let masteries = item.data.masteries;
         let fullRating = RatingHelper.format(rating,masteries);
@@ -108,18 +119,18 @@ export class QuestWorldsItem extends Item {
 
         let label = `${rune}${name} ${fullRating}`;
 
+        console.log(itemType);
         // Benefits/consequences can't be rolled, send an info card message to chat
-        if (itemType == 'benefit') {
-        let variant = item.data.rating >= 0 ? "Benefit" : "Consequence";
-        fullRating = RatingHelper.format(rating,masteries,true);
-        label = `${rune}${name} ${fullRating}`;
-        ChatMessage.create({
-            speaker: speaker,
-            rollMode: rollMode,
-            flavor: game.i18n.localize(`QUESTWORLDS.${variant}`) + ": " + label,
-            content: item.data.description ?? ''
-        });
-        return;
+        if (itemType == 'benefit' || itemType == 'consequence') {
+            fullRating = RatingHelper.format(rating,masteries,true);
+            label = `${rune}${name} ${fullRating}`;
+            ChatMessage.create({
+                speaker: speaker,
+                rollMode: rollMode,
+                flavor: game.i18n.localize(`QUESTWORLDS.${itemType.capitalize()}`) + ": " + label,
+                content: item.data.description ?? ''
+            });
+            return;
         }
         // Otherwise, create a roll and send a chat message from it.
         else {
@@ -128,8 +139,11 @@ export class QuestWorldsItem extends Item {
         // console.log(rollData);
 
         // prepare some form data
-        let benefits = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
-        benefits = JSON.parse(JSON.stringify(benefits));    // TODO: there's a better way to do this, right?
+        const benefitsItems = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
+        const benefits = JSON.parse(JSON.stringify(benefitsItems));    // TODO: there's a better way to do this, right?
+        for (const key of Object.keys(benefitsItems)) {
+            benefits[key]['variant'] = benefitsItems[key].variant;
+        }
 
         if (embedId) {
             const embed = QuestWorldsItem.getEmbedById(this.data.data.embeds,embedId);
@@ -188,10 +202,9 @@ export class QuestWorldsItem extends Item {
                 let remap = {};
                 for (const key of Object.keys(benefits)) {
                     remap[key] = {};
-                    let simpleRating = RatingHelper.merge(benefits[key].data);
                     remap[key].id = benefits[key]._id;
                     remap[key].name = benefits[key].name;
-                    remap[key].variant = simpleRating > 0 ? simpleRating == 0 ? 'none' : 'benefit' : 'consequence' ;
+                    remap[key].variant = benefits[key].variant;
                     remap[key].data = {
                         rating: benefits[key].data.rating,
                         masteries: benefits[key].data.masteries,

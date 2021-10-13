@@ -63,20 +63,18 @@ export class RatingHelper {
     }
 
     /**
-     * Takes a rating and masteries and merges them into a single-number equivalent.
+     * Takes a rating object merges the .rating and .masteries into a single-number equivalent.
      * Sign of result is negative if either portion is negative.
-     * @param {Number} r rating portion
-     * @param {Number} m masteries portion
-     * @returns {Number} result
+     * Accepts partial objects by assuming the other is 0.
+     * If neither property is defined, returns undefined.
+     * @param {Object} rating   {rating,masteries} object
+     * @returns {Number}        The result
      */
     static merge(rating/*,preserveZero=false*/) {
-        const r = rating.rating;
-        const m = rating.masteries;
+        if (rating.rating === undefined && rating.masteries === undefined) return undefined;
+        const r = rating.rating || 0;
+        const m = rating.masteries || 0;
         const sign = r < 0 || m < 0 ? -1 : 1;
-        // console.log('sign', sign);
-        // console.log('merge',(Math.abs(r) + Math.abs(m*20)) * sign);
-        // if (preserveZero && r == 0) return Math.abs(m*20) * sign;
-        // else
         return (Math.abs(r) + Math.abs(m*20)) * sign;
     }
 
