@@ -75,11 +75,6 @@ export class QuestWorldsItemSheet extends ItemSheet {
 
     /* -------------------------------------------- */
 
-    // TODO: input validation, mostly rating rectification
-    // _updateObject()
-
-    /* -------------------------------------------- */
-
     /** @override */
     activateListeners(html) {
         super.activateListeners(html);
@@ -108,6 +103,8 @@ export class QuestWorldsItemSheet extends ItemSheet {
 
 
     }
+
+    /* -------------------------------------------- */
 
     /** @override */
     async _updateObject(event, formData) {

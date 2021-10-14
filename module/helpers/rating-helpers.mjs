@@ -26,14 +26,10 @@ export class RatingHelper {
     static _add(rating1, mastery1, rating2, mastery2) {
         if ( [rating1,mastery1,rating2,mastery2]
             .some(e => { return e === undefined || e === NaN || e === null })
-        ) //return [null, null];
-        throw new Error(`Can't add ${rating1}M${mastery1} and ${rating2}M${mastery2}`); 
+        ) throw new Error(`Can't add ${rating1}M${mastery1} and ${rating2}M${mastery2}`); 
 
         const a = this.merge({rating: rating1,masteries: mastery1});
-        // console.log('a',a);
         const b = this.merge({rating: rating2,masteries: mastery2});
-        // console.log('b',b);
-        // console.log('a + b', a + b);
         return this.split(a+b);
     }
 
