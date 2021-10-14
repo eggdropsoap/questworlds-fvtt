@@ -141,6 +141,26 @@ export class QuestWorldsItemSheet extends ItemSheet {
             }
         }
 
+        // rationalize ratings
+        const isModifier = (item.type == 'benefit');
+        let fixedRating = RatingHelper.rationalize({
+            rating: formData['data.rating'],
+            masteries: formData['data.masteries']
+        },isModifier);
+
+        // make sure benefits are always non-zero
+        if (this.object.type == 'benefit') {
+            if (RatingHelper.merge(fixedRating) == 0)
+                fixedRating.rating = RatingHelper.defaultRating('benefit');
+        } else {
+            // ... and that non-benefits are always positive
+            fixedRating = RatingHelper.abs(fixedRating);
+        }
+
+
+        formData['data.rating'] = fixedRating.rating;
+        formData['data.masteries'] = fixedRating.masteries;
+
         return super._updateObject(event, formData);
     }
 }

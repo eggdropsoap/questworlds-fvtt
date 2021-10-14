@@ -96,6 +96,16 @@ export class RatingHelper {
     static rationalize(ratingObj={rating,masteries},is_modifier=false) {
         return this.split(this.merge(ratingObj),is_modifier);
     }
+
+    static abs(ratingObj={rating,masteries}) {
+        if (this.merge(ratingObj) > 0) return ratingObj;
+        else {
+            return {
+                rating: Math.abs(ratingObj.rating),
+                masteries: Math.abs(ratingObj.masteries)
+            }
+        }
+    }
   
     /**
      * Return HTML of formatted xMy ability rating.
