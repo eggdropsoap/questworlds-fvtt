@@ -168,25 +168,28 @@ export class RatingHelper {
         'info'
     ];
     
+    /**
+     * 
+     * @param {String} type     Item or variant type 
+     * @returns 
+     */
     static defaultRating(type) {
         // TODO: replace this with a lookup table (TODO: which can be changed by config options)
         switch(type) {
             case 'ability':
             case 'keyword':
-                // new abilities and keywords default to 15M0
+            case 'flaw':
+                // new abilities keywords, and flaws default to 15M0
                 return 15;
-                break;
             case 'benefit':
             case 'breakout':
                 // new breakouts and benefits default to +5
                 return 5;
-                break;
             case 'info':
                 // info doesn't need a rating
                 return 0;
-                break;
             default:
-                return 0;  // should never happen since not in legalEmbedTypes or template.json items
+                return 0;  // for sidekicks and magicgroups and other things, if this is ever called for them
         }
     
     }

@@ -51,16 +51,29 @@ class EmbeddedAbility {
  * @extends {Item}
  */
 export class QuestWorldsItem extends Item {
-    /**
-     * @override
-     * Set the default Item icon per type and variant
-     */
+    
+    /** @override */
      async _preCreate(data, options, userId) {
         await super._preCreate(data, options, userId);
+
+        // set default Item icon per type and variant
         if (data.img === undefined) {
             const img = DEFAULT_ICONS[data?.data?.variant] || DEFAULT_ICONS[data.type];
             if (img) await this.data.update({ img: img });
         }
+
+        // set default rating
+        const itemType = this.data.data?.variant || this.type;
+        let defaultRating;
+        switch (itemType) {
+            case 'ability':
+            case 'keyword':
+            case 'flaw':
+            case 'benefit':
+                defaultRating = RatingHelper.defaultRating(itemType);
+            default:
+        }
+        if (defaultRating) await this.data.update({ data: {rating: defaultRating} });
     }
 
     get variant() {
