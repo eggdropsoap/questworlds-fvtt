@@ -77,15 +77,12 @@ export class QuestWorldsItem extends Item {
     }
 
     get variant() {
-        switch (this.type) {
-            case 'benefit':
-                return RatingHelper.merge({
-                    rating: this.data.data.rating,
-                    masteries: this.data.data.masteries
-                }) >= 0 ? 'benefit' : 'consequence';
-            default:
-                return this.data?.data?.variant || this.type || undefined;
-        }
+        if (this.type == 'benefit')
+            return RatingHelper.merge({
+                rating: this.data.data.rating,
+                masteries: this.data.data.masteries
+            }) >= 0 ? 'benefit' : 'consequence';
+        else return this.data?.data?.variant || this.type || undefined;
     }
 
     /**
