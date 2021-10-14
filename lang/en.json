@@ -227,6 +227,12 @@
         "runeFontSettingsN": "Rune Fonts Settings",
         "runeFontSettingsL": "Configure Rune Fonts",
         "runeFontSettingsH": "Install and configure Rune fonts.",
+
+        "difficultyTableN": "Difficulty Levels Table",
+        "difficultyTableH": "Set which set of modifiers are available during contests to modify the base resistance. Changing this will reset the Base Difficulty setting to match.",
+        "baseDifficultyN": "Base Difficulty",
+        "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
+
     
         "None": "There are no player settings."    
     }

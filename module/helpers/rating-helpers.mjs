@@ -203,6 +203,54 @@ export class RatingHelper {
 
     static BASE_RATING = {rating: 13, masteries: 0};    // HQG base difficulty
 
+
+    static DIFFICULTY_TABLES = {    // key picked by game.settings 'difficultyTable'
+        srd: {
+            LEVELS: {
+                'exceptional': {name: 'Exceptional', modifier: 20 },
+                'punishing': {name: 'Punishing', modifier: 15 },
+                'hard': {name: 'Hard', modifier: 10 },
+                'challenging': {name: 'Challenging', modifier: 5 },
+                'base': {name: 'Base', modifier: 0 },
+                'straightforward': {name: 'Straightforward', modifier: -5, min: 0 },
+                'routine': {name: 'Routine', modifier: -10, min: 0 },
+                'easy': {name: 'Easy', modifier: -15, min: 0 },
+                'simple': {name: 'Simple', modifier: -20, min: 0 },
+            },
+            BASE_LEVEL: 'base',
+            BASE_DIFFICULTY: {rating: 10, masteries: 0},
+        },
+        hqg: {
+            LEVELS: {
+                'nearly_impossible': {name: 'Nearly Impossible', modifier: 40 },
+                'very_high': {name: 'Very High', modifier: 20 },
+                'high': {name: 'High', modifier: 6 },
+                'moderate': {name: 'Moderate', modifier: 0 },
+                'low': {name: 'Low', modifier: -6 },
+                'very_low': {name: 'Very Low', modifier: -20, min: 6 },
+            },
+            BASE_LEVEL: 'moderate',
+            BASE_DIFFICULTY: {rating: 14, masteries: 0},
+        },
+        hq2: {
+            LEVELS: {
+                'nearly_impossible': {name: 'Nearly Impossible', modifier: 40 },
+                'very_high': {name: 'Very High', modifier: 9 },
+                'high': {name: 'High', modifier: 6 },
+                'moderate': {name: 'Moderate', modifier: 0 },
+                'low': {name: 'Low', modifier: -6 },
+                'very_low': {name: 'Very Low', modifier: -20, min: 6 },
+            },
+            BASE_LEVEL: 'moderate',
+            BASE_DIFFICULTY: {rating: 14, masteries: 0},
+        },
+    }
+
+    // TODO: figure out how to handle Augment difficulty
+
+
+    // TODO?: make min always zero in getDifficulty() ? or just flag negatives in the UI? also flag?
+
     static getDifficulty(level='moderate') {
         const baseRating = this.BASE_RATING; // TODO: get this from a UI control (itself set by setting?)
         const ratingsTable = this.DIFFICULTY_LEVELS;
