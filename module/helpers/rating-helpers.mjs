@@ -246,14 +246,29 @@ export class RatingHelper {
         },
     }
 
+    static getDifficultyTable() {
+        return this.DIFFICULTY_TABLES[game.settings.get('questworlds','difficultyTable')].LEVELS;
+    }
+    static getBaseDifficultyLevel() {
+        return this.DIFFICULTY_TABLES[game.settings.get('questworlds','difficultyTable')].BASE_LEVEL;
+    }
+
     // TODO: figure out how to handle Augment difficulty
 
 
     // TODO?: make min always zero in getDifficulty() ? or just flag negatives in the UI? also flag?
 
-    static getDifficulty(level='moderate') {
-        const baseRating = this.BASE_RATING; // TODO: get this from a UI control (itself set by setting?)
-        const ratingsTable = this.DIFFICULTY_LEVELS;
+    static getDifficulty(level) {
+        const tableKey = game.settings.get('questworlds','difficultyTable');
+        const baseRating = RatingHelper.rationalize({
+            rating: game.settings.get('questworlds','baseDifficulty'),
+            masteries: 0,
+        });
+        const ratingsTable = this.DIFFICULTY_TABLES[tableKey].LEVELS;
+        level = level ? level : this.DIFFICULTY_TABLES[tableKey].BASE_LEVEL;
+        
+        // const baseRating = this.BASE_RATING; // TODO: get this from a UI control (itself set by setting?)
+        // const ratingsTable = this.DIFFICULTY_LEVELS;
         let rating;
         if (ratingsTable.hasOwnProperty(level)) {
             // rating is base difficulty plus modifier...

@@ -249,11 +249,11 @@ export class QuestWorldsItem extends Item {
             baseDifficulty: RatingHelper.getDifficulty(),
             // item: rollData.item,
             hp: rollData.points.hero,
-            difficultyLevel: RatingHelper.DIFFICULTY_BASE,
+            difficultyLevel: RatingHelper.getBaseDifficultyLevel(),
             settings: {
                 difficultyLevels: ( () => {
                     let result = {};
-                    let list = RatingHelper.DIFFICULTY_LEVELS;
+                    let list = RatingHelper.getDifficultyTable();
                     for (const key of Object.keys(list)) {
                         const name = list[key].name;
                         let mod = RatingHelper.format(list[key].modifier, 0,true,false);
