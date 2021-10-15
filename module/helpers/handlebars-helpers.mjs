@@ -48,6 +48,13 @@ export function registerHandlebarsHelpers() {
         );
     });
 
+    Handlebars.registerHelper('zeroRating', function(context) {
+        return RatingHelper.merge({
+            rating: context.rating,
+            masteries: context.masteries
+        }) == 0;
+    });
+
     Handlebars.registerHelper('formatRating', function(rating, masteries, options) {
         let is_modifier = options ? options.hash.modifier ? options.hash.modifier : null : null;
         is_modifier = is_modifier == 'true' || is_modifier == '1';  // convert from string
