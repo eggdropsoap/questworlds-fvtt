@@ -195,20 +195,6 @@ export class RatingHelper {
     
     }
 
-    static DIFFICULTY_LEVELS =      // TODO: get this from a settings table // this is the HQG table
-    {
-        'nearly_impossible': {name: 'Nearly Impossible', modifier: 40 },
-        'very_high': {name: 'Very High', modifier: 20 },
-        'high': {name: 'High', modifier: 6 },
-        'moderate': {name: 'Moderate', modifier: 0 },
-        'low': {name: 'Low', modifier: -6 },
-        'very_low': {name: 'Very Low', modifier: -20, min: 6 },
-    }
-    static DIFFICULTY_BASE = 'moderate';
-
-    static BASE_RATING = {rating: 13, masteries: 0};    // HQG base difficulty
-
-
     static DIFFICULTY_TABLES = {    // key picked by game.settings 'difficultyTable'
         srd: {
             LEVELS: {
