@@ -224,19 +224,20 @@ export class QuestWorldsItem extends Item {
                 return remap;
             }
             )(),
-            benefitsList: ( () => {
-                let result = {" ": " "};     // start with default "none" option
-                for (const index of Object.keys(benefits) ) {
-                    const name = benefits[index].name;
-                    const id = benefits[index]._id;
-                    const rating = benefits[index].data.rating;
-                    const masteries = benefits[index].data.masteries;
-                    const mod = RatingHelper.format(rating,masteries,true,false);
-                    const label = `${name} ${mod}`;
-                    result[id] = label;
-                }
-                return result; 
-            })(),// benefits,
+            benefitsCount: benefits.length,
+            // benefitsList: ( () => {
+            //     let result = {" ": " "};     // start with default "none" option
+            //     for (const index of Object.keys(benefits) ) {
+            //         const name = benefits[index].name;
+            //         const id = benefits[index]._id;
+            //         const rating = benefits[index].data.rating;
+            //         const masteries = benefits[index].data.masteries;
+            //         const mod = RatingHelper.format(rating,masteries,true,false);
+            //         const label = `${name} ${mod}`;
+            //         result[id] = label;
+            //     }
+            //     return result; 
+            // })(),// benefits,
             // rating: rating,
             // masteries: masteries,
             // totalRating: rating,
@@ -395,7 +396,6 @@ export class QuestWorldsItem extends Item {
         
         const dialogTitle = 'QUESTWORLDS.dialog.Editing' + breakoutData.type.capitalize();
         const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
-        // TODO: dialogs per breakout type
 
         new Dialog({
         title: game.i18n.localize(dialogTitle),
