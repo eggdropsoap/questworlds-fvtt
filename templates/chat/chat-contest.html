@@ -61,12 +61,12 @@
         {{/if}}
     </div>
     {{/if}}
-    {{/unless}}
     <div class="buttons">
         <button name="over" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
         <button name="approve" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.ApproveRoll'}}</button>
         <button name="roll" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Roll'}}</button>
     </div>
+    {{/unless}}
     {{#if closed}}
     <div class="dice-results">
         {{#unless assured}}

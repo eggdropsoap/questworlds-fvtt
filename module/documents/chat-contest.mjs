@@ -57,8 +57,7 @@ export class ChatContest {
             // console.log('context for chatMessage ID',chatMessage.id, context);
 
             if (!(context)) return; // not a contest chat card
-            // if (context?.closed) return;    // do nothing; the template took care of disabling the form
-            // ^^^ temporarily commented out for debugging rolls with free rerolling
+            if (context?.closed) return;    // do nothing; the template took care of disabling the form
 
             const user = game.user;
             const messageOwner = chatMessage.data.user;
