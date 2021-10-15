@@ -225,30 +225,10 @@ export class QuestWorldsItem extends Item {
             }
             )(),
             benefitsCount: benefits.length,
-            // benefitsList: ( () => {
-            //     let result = {" ": " "};     // start with default "none" option
-            //     for (const index of Object.keys(benefits) ) {
-            //         const name = benefits[index].name;
-            //         const id = benefits[index]._id;
-            //         const rating = benefits[index].data.rating;
-            //         const masteries = benefits[index].data.masteries;
-            //         const mod = RatingHelper.format(rating,masteries,true,false);
-            //         const label = `${name} ${mod}`;
-            //         result[id] = label;
-            //     }
-            //     return result; 
-            // })(),// benefits,
-            // rating: rating,
-            // masteries: masteries,
-            // totalRating: rating,
-            // totalMasteries: masteries,
             tactic: {rating: rating, masteries: masteries},
             total: {rating: rating, masteries: masteries},
-            // resistanceRating: 15,           //  replace with lookup
-            // resistanceMasteries: 0,         //
             resistance: RatingHelper.getDifficulty(),
             baseDifficulty: RatingHelper.getDifficulty(),
-            // item: rollData.item,
             hp: rollData.points.hero,
             difficultyLevel: RatingHelper.getBaseDifficultyLevel(),
             settings: {
@@ -263,10 +243,8 @@ export class QuestWorldsItem extends Item {
                         const label = min ? `${name} (${mod} or ${min})` : `${name} (${mod})`;
                         result[key] = label;
                     }
-                    // console.log('Result',result);
                     return result;
                 })(),
-                // RatingHelper.DIFFICULTY_LEVELS,
             }
         }
 
