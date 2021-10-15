@@ -366,7 +366,7 @@ function _processFormData(formData) {
         {rating: tactic.rating, masteries: tactic.masteries},
         {rating: sitMods.rating, masteries: sitMods.masteries});
 
-    // TODO: add selected benefits / consequences to the runningTotal
+    // add selected benefits / consequences to the runningTotal
     let beneMods = {rating: 0, masteries: 0};
     let benefitsRisked = 0;
     for (let key of Object.keys(formData.benefits)) {
@@ -468,6 +468,6 @@ function countSuccesses(tn,rollTotal,masteries) {
     return count;
 }
 
-// TODO: link benefits to their source ability, and mark them lost regardless of checked state
+// TODO: link benefits to their source ability, and mark them risked/lost regardless of checked state
 // TODO: style GM's view of benefits as "disabled" somehow
 // TODO: spending hero points / story points on rolls

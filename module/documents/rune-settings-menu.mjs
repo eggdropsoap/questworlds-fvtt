@@ -195,7 +195,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 this.filepickers.push(fp);
 
                 fp.browse();
-                setFontUpdates();    // TODO: make this respect the fp's cancel button
+                setFontUpdates();    // TODO: make this respect the fp's cancel button?
             };
         }
 

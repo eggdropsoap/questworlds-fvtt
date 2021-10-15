@@ -19,12 +19,11 @@ export class BreakoutsSheetHelper {
      *      this should be an actor object,
      *      so get the item by id from the actor's embedded items,
      *      using data from the parent li.item tag
-     *      (in an ugly one-liner, sorry)
-     * 
-     * TODO: instead use an anonymous function that returns the right object,
-     *       for readability and maintainability
      */
-    const theItem = this instanceof QuestWorldsItemSheet ? this.object : this.object.getEmbeddedDocument("Item",$(event.currentTarget).parents("li.item")[0].dataset.itemId);
+    const theItem = this instanceof QuestWorldsItemSheet ?
+      this.object :
+      this.object.getEmbeddedDocument("Item",$(event.currentTarget)
+        .parents("li.item")[0].dataset.itemId);
 
     // Perform create and delete actions.
     switch ( action ) {
