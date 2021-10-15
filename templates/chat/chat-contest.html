@@ -53,6 +53,14 @@
             </div>
         </div>
     </div>
+    {{#if assured}}
+    <div class="assured-notice">
+        {{#if assuredDefeat}}{{localize 'QUESTWORLDS.chatcontest.outcomes.AssuredDefeat'}}
+        {{else}}
+        {{#if assuredVictory}}{{localize 'QUESTWORLDS.chatcontest.outcomes.AssuredVictory'}}{{/if}}
+        {{/if}}
+    </div>
+    {{/if}}
     {{/unless}}
     <div class="buttons">
         <button name="over" tabindex="-1">{{localize 'QUESTWORLDS.chatcontest.Ready'}}</button>
@@ -61,6 +69,7 @@
     </div>
     {{#if closed}}
     <div class="dice-results">
+        {{#unless assured}}
         <div class="ratings-faceoff flexrow">
             <span class="rating">
                 {{localize 'QUESTWORLDS.chatcontest.Tactic'}}
@@ -107,9 +116,11 @@
                 </div>
             </span>
         </div>
+        {{/unless}}
         <div class="outcome {{outcome.cssClass}}">
             {{outcome.text}}
         </div>
+        {{#unless assured}}
         {{#if settings.useClassicOutcomes}}
         <div class="outcome-degrees">
             {{#if outcome.tie~}}
@@ -119,6 +130,7 @@
             {{~/if}}
         </div>
         {{/if}}
+        {{/unless}}
         {{#if (and outcome.defeat benefitsRisked)}}
         <div class="benefits-lost flexrow">
             <div class="flex0 alert">

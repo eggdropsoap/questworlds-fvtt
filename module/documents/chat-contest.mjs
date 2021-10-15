@@ -273,6 +273,11 @@ export class ChatContest {
                 outcomeText = srdText;
             }
 
+            if (formData.assured) {
+                if (formData.assuredDefeat) outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredDefeat');
+                else outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredVictory');
+            }
+
             // update the data store with the roll results
             await chatMessage.setFlag('questworlds','formData',{
                 pcResult: pcRoll.total,
@@ -355,11 +360,19 @@ function _processFormData(formData) {
     /* calculate modified resistance rating */
     const resistance = RatingHelper.getDifficulty(formData.difficultyLevel);
 
+    /* check for assured contests */
+    const assuredVictory = RatingHelper.merge(resistance) <= 0;
+    const assuredDefeat = RatingHelper.merge(runningTotal) <= 0;
+
+    /* merge and return */
     formData = mergeObject(formData,{
         total: runningTotal,
         tactic: tactic,
         resistance: resistance,
         benefitsRisked: benefitsRisked,
+        assured: assuredDefeat || assuredVictory,
+        assuredVictory: assuredVictory,
+        assuredDefeat: assuredDefeat,
     })
 
     return formData;
