@@ -204,101 +204,123 @@ export class ChatContest {
             // console.log("Beginning click. chatMessage:", chatMessage);
             const formData = await _getContext(chatMessage);
 
-            
-            const pcTN = formData.total.rating;
-            const pcMasteries = formData.total.masteries;
-            const resTN = formData.resistance.rating;
-            const resMasteries = formData.resistance.masteries;
-
-            // make two new rolls: the character and the resistance
-            const pcRoll = new Roll('1d20').roll({async:false});
-            const pcSuccesses = countSuccesses(pcTN,pcRoll.total,pcMasteries);
-            const resRoll = new Roll('1d20').roll({async:false});
-            const resSuccesses = countSuccesses(resTN,resRoll.total,resMasteries);
-
-            // Dice So Nice integration
-            if (game.dice3d) {
-                // player roll
-                game.dice3d.showForRoll(pcRoll, game.user, true);
-                // GM / resistance roll after a short delay
-                const firstGM = game.users.find(user => {return user.isGM});                
-                setTimeout(() => {
-                    game.dice3d.showForRoll(resRoll, firstGM, true);    
-                }, 500);
-                
-            }
-
-            // calculate outcome
-            const degrees = pcSuccesses - resSuccesses;
-            let outcome, victory=false, tie=false, defeat=false, outcomeText, srdText, cssClass;
-            if (degrees == 0) {         // tie or marginal outcome
-                if (pcRoll.total == resRoll.total) {
-                    outcome = OUTCOMES.TIE;
-                    tie = true;
+            if (!formData.assured) {
+                const pcTN = formData.total.rating;
+                const pcMasteries = formData.total.masteries;
+                const resTN = formData.resistance.rating;
+                const resMasteries = formData.resistance.masteries;
+    
+                // make two new rolls: the character and the resistance
+                const pcRoll = new Roll('1d20').roll({async:false});
+                const pcSuccesses = countSuccesses(pcTN,pcRoll.total,pcMasteries);
+                const resRoll = new Roll('1d20').roll({async:false});
+                const resSuccesses = countSuccesses(resTN,resRoll.total,resMasteries);
+    
+                // Dice So Nice integration
+                if (game.dice3d) {
+                    // player roll
+                    game.dice3d.showForRoll(pcRoll, game.user, true);
+                    // GM / resistance roll after a short delay
+                    const firstGM = game.users.find(user => {return user.isGM});
+                    setTimeout(() => {
+                        game.dice3d.showForRoll(resRoll, firstGM, true);
+                    }, 500);
                 }
-                else if (pcRoll.total > resRoll.total) {
-                    outcome = OUTCOMES.MARGINAL_VICTORY;
+    
+                // calculate outcome
+                const degrees = pcSuccesses - resSuccesses;
+                let outcome, victory=false, tie=false, defeat=false, outcomeText, srdText, cssClass;
+                if (degrees == 0) {         // tie or marginal outcome
+                    if (pcRoll.total == resRoll.total) {
+                        outcome = OUTCOMES.TIE;
+                        tie = true;
+                    }
+                    else if (pcRoll.total > resRoll.total) {
+                        outcome = OUTCOMES.MARGINAL_VICTORY;
+                        victory = true;
+                    }
+                    else {
+                        outcome = OUTCOMES.MARGINAL_DEFEAT;
+                        defeat = true;
+                    }
+                } else if (degrees > 0) {   // clear success
                     victory = true;
-                }
-                else {
-                    outcome = OUTCOMES.MARGINAL_DEFEAT;
+                    outcome = degrees + 1;
+                } else {                    // clear defeat
                     defeat = true;
+                    outcome = degrees - 1;
                 }
-            } else if (degrees > 0) {   // clear success
-                victory = true;
-                outcome = degrees + 1;
-            } else {                    // clear defeat
-                defeat = true;
-                outcome = degrees - 1;
+    
+                // outcome-dependent variables
+                if (victory) {
+                    cssClass = 'victory';
+                    srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfVictory') + `: ${degrees}`;
+                }
+                if (tie) {
+                    cssClass = 'tie';
+                    srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.Tie');
+                }
+                if (defeat) {
+                    cssClass = 'defeat';
+                    srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfDefeat') + `: ${Math.abs(degrees)}`;
+                }
+    
+                const useClassicOutcomes = game.settings.get('questworlds','useClassicOutcomes');
+                if (useClassicOutcomes) {
+                    outcomeText = game.i18n.localize(OUTCOME_CLASSIC_TEXT[outcome]);
+                } else {
+                    outcomeText = srdText;
+                }
+    
+                // update the data store with the roll results
+                await chatMessage.setFlag('questworlds','formData',{
+                    pcResult: pcRoll.total,
+                    pcSuccesses: pcSuccesses,
+                    resResult: resRoll.total,
+                    resSuccesses: resSuccesses,
+                    outcome: {
+                        victory: victory,
+                        defeat: defeat,
+                        tie: tie,
+                        degrees: Math.abs(degrees),
+                        kind: outcome,
+                        text: outcomeText,
+                        cssClass: cssClass,
+                        degreesText: srdText,
+                    },
+                    settings: {
+                        useClassicOutcomes: useClassicOutcomes,
+                    },
+                    closed: true,       // close the card
+                });
+
+            }   // if !assured
+            else {  // it's an assured contest
+                let victory,defeat,cssClass,outcomeText;
+                if (formData.assuredDefeat) {
+                    outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredDefeat');
+                    defeat = true;
+                    cssClass = 'defeat';
+                }               
+                else {
+                    outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredVictory');
+                    victory = true;
+                    cssClass = 'victory';
+                }
+
+                // minimal update of the data store
+                await chatMessage.setFlag('questworlds','formData',{
+                    outcome: {
+                        victory: victory,
+                        defeat: defeat,
+                        text: outcomeText,
+                        cssClass: cssClass,
+                    },
+                    closed: true,       // close the card
+                });
+
             }
 
-            // outcome-dependent variables
-            if (victory) {
-                cssClass = 'victory';
-                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfVictory') + `: ${degrees}`;
-            }                    
-            if (tie) {
-                cssClass = 'tie';
-                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.Tie');    
-            }                    
-            if (defeat) {
-                cssClass = 'defeat';
-                srdText = srdText || game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.DegreesOfDefeat') + `: ${Math.abs(degrees)}`;
-            }                    
-
-            const useClassicOutcomes = game.settings.get('questworlds','useClassicOutcomes');
-            if (useClassicOutcomes) {
-                outcomeText = game.i18n.localize(OUTCOME_CLASSIC_TEXT[outcome]);    
-            } else {
-                outcomeText = srdText;
-            }
-
-            if (formData.assured) {
-                if (formData.assuredDefeat) outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredDefeat');
-                else outcomeText = game.i18n.localize('QUESTWORLDS.chatcontest.outcomes.AssuredVictory');
-            }
-
-            // update the data store with the roll results
-            await chatMessage.setFlag('questworlds','formData',{
-                pcResult: pcRoll.total,
-                pcSuccesses: pcSuccesses,
-                resResult: resRoll.total,
-                resSuccesses: resSuccesses,
-                outcome: {
-                    victory: victory,
-                    defeat: defeat,
-                    tie: tie,
-                    degrees: Math.abs(degrees),
-                    kind: outcome,
-                    text: outcomeText,
-                    cssClass: cssClass,
-                    degreesText: srdText,
-                },
-                settings: {
-                    useClassicOutcomes: useClassicOutcomes,
-                },
-                closed: true,       // close the card
-            });
             ChatContest.refreshChatMessage(chatMessage);
 
         },  // clickRollButton()
@@ -314,7 +336,7 @@ export class ChatContest {
     static async refreshChatMessage(chatMessage) {
         const formData = await chatMessage.getFlag('questworlds','formData');
         const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
-        await chatMessage.update({'content': content});
+        chatMessage.update({'content': content});
     }
 }
 
