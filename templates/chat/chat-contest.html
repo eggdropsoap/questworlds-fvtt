@@ -1,24 +1,16 @@
 <form class="chat-contest {{cssClass}}" autocomplete="off">
     {{#unless closed}}
-    <!-- <div> -->
-        <!-- {{name}} {{type}} -->
-    <!-- </div> -->
     <div class="tactic">
         <div class="header">
             <span class="title">
-                Rating
+                ~Rating~
             </span>
             {{formatRating total.rating total.masteries}}
-            <!-- Rating: {{tactic.rating}}, -->
-            <!-- Masteries: {{tactic.masteries}} -->
-            <!-- <input name="tactic.rating" type="hidden" value="{{tactic.rating}}" data-dtype="Number"> -->
-            <!-- <input name="tactic.masteries" type="hidden" value="{{tactic.masteries}}" data-dtype="Number"> -->
         </div>
         <div class="options">
-            <!-- <hr> -->
             {{#if benefits}}
             <div class="benefits">
-                <label>Benefits or Consequences</label>
+                <label>~Benefits or Consequences~</label>
                 <ol>
                 {{#each benefits}}
                     <li class="{{variant}} {{#if checked}}active{{/if}}">
@@ -34,7 +26,7 @@
             </div>
             {{/if}}
             <div class="flexrow situational-modifiers">
-                <label class="flex0 nowrap">Situational Modifiers</label>
+                <label class="flex0 nowrap">~Situational Modifiers~</label>
                 <input name="situationalModifiers" type="number" value="{{situationalModifiers}}" data-dtype="Number">
             </div>
         </div>    
@@ -44,7 +36,7 @@
             <div class="vs">vs</div>
             <div>
                 <span class="title">
-                    Difficulty
+                    ~Difficulty~
                 </span>
                 {{formatRating resistance.rating resistance.masteries}}
             </div>
@@ -52,7 +44,7 @@
         <div class="options">
             <!-- <hr> -->
             <div class="difficulty-level">
-                <label>Difficulty Level (Base {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
+                <label>~Difficulty Level~ (~Base~ {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
                 <select name="difficultyLevel">
                     <optgroup label="Base difficulty: {{formatRating baseDifficulty.rating baseDifficulty.masteries useRunes="false"}}">
                         {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}} <!-- ~localize~ -->
@@ -94,7 +86,7 @@
                 </div>
                 <div class="successes">
                     <div>
-                        {{~pcSuccesses}}  {{plural pcSuccesses 'Success' 'Successes'~}}
+                        {{~pcSuccesses}}  {{plural pcSuccesses '~Success~' '~Successes~'}}
                     </div>
                 </div>
             </span>
@@ -110,7 +102,7 @@
                 </div>
                 <div class="successes">
                     <div>
-                        {{~resSuccesses}} {{plural resSuccesses 'Success' 'Successes'~}}
+                        {{~resSuccesses}} {{plural resSuccesses '~Success~' '~Successes~'}}
                     </div>
                 </div>
             </span>
@@ -133,7 +125,7 @@
                 <i class="icon fas fa-exclamation-circle"></i>
             </div>
             <div class="flex1">
-                <span class="title">Benefits Lost ({{benefitsRisked}})</span>
+                <span class="title">~Benefits Lost~ ({{benefitsRisked}})</span>
                 {{#each benefits as |benefit|}}
                     {{#if (and benefit.checked (eq benefit.variant 'benefit') ) }}
                         <span class="lost-benefit">{{benefit.name}}</span>
