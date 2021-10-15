@@ -110,8 +110,6 @@ export class ChatContest {
                     rollButton.hide();
                 } 
             } else { // we're a different player
-                // console.log("You're not the right player!");
-                // TODO: replace this with initial private-to-GM chat type + a make-public after roll
                 _disableAllControls(html);
                 _hideAllControls(html);
             }
@@ -321,6 +319,7 @@ export class ChatContest {
             }
 
             ChatContest.refreshChatMessage(chatMessage);
+            chatMessage.update({whisper: [], blind: false});    // reveal to everyone
 
         },  // clickRollButton()
 
@@ -471,3 +470,5 @@ function countSuccesses(tn,rollTotal,masteries) {
 // TODO: link benefits to their source ability, and mark them risked/lost regardless of checked state
 // TODO: style GM's view of benefits as "disabled" somehow
 // TODO: spending hero points / story points on rolls
+// TODO: make assured contests resolve on GM approval
+// TODO: change delete animation target from id to data-id

@@ -194,12 +194,12 @@ export class QuestWorldsItem extends Item {
             rating = rollData.item.rating;
             masteries = rollData.item.masteries;
         }
-        // console.log(rating,masteries);
 
         // create the message first since we need the ID for the form
         const msg = await ChatMessage.create({
             speaker: speaker,
-            rollMode: rollMode,
+            // rollMode: 'gmroll',     // this is bugged in FVTT 0.8.x, reminder here for 0.9
+            whisper: ChatMessage.getWhisperRecipients('gm'),    // current workaround
             flavor: game.i18n.localize('QUESTWORLDS.chatcontest.Tactic') +": " + label,
         });
 
