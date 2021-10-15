@@ -184,7 +184,16 @@
 
         "chatcontest" : {
             "Tactic": "Tactic",
+            "Rating": "Rating",
+            "BenefitsOrConsequences": "Benefits or Consequences",
+            "SituationalAndOtherModifiers": "Situational and Other Modifiers",
             "Difficulty": "Difficulty",
+            "DifficultyLevel": "Difficulty Level",
+            "Base": "Base",
+            "Success": "Success",
+            "Successes": "Successes",
+            "BenefitsLost": "Benefits Lost",
+
             "Ready": "Ready?",
             "WaitingForGM": "Waiting for GM…",
             "WaitingForPlayer": "Waiting for player…",
@@ -194,8 +203,12 @@
 
             "outcomes": {
                 "Tie": "Tie",
+                "AssuredDefeat": "Assured Defeat",
+                "AssuredVictory": "Assured Victory",
+
                 "DegreesOfVictory": "Degrees of Victory",
                 "DegreesOfDefeat": "Degrees of Defeat",
+
                 "CompleteDefeat": "Complete Defeat",
                 "MajorDefeat": "Major Defeat",
                 "MinorDefeat": "Minor Defeat",

@@ -3,14 +3,14 @@
     <div class="tactic">
         <div class="header">
             <span class="title">
-                ~Rating~
+                {{localize 'QUESTWORLDS.chatcontest.Rating'}}
             </span>
             {{formatRating total.rating total.masteries}}
         </div>
         <div class="options">
             {{#if benefits}}
             <div class="benefits">
-                <label>~Benefits or Consequences~</label>
+                <label>{{localize 'QUESTWORLDS.chatcontest.BenefitsOrConsequences'}}</label>
                 <ol>
                 {{#each benefits}}
                     <li class="{{variant}} {{#if checked}}active{{/if}}">
@@ -26,7 +26,7 @@
             </div>
             {{/if}}
             <div class="flexrow situational-modifiers">
-                <label class="flex0 nowrap">~Situational Modifiers~</label>
+                <label class="flex0 nowrap">{{localize 'QUESTWORLDS.chatcontest.SituationalAndOtherModifiers'}}</label>
                 <input name="situationalModifiers" type="number" value="{{situationalModifiers}}" data-dtype="Number">
             </div>
         </div>    
@@ -36,7 +36,7 @@
             <div class="vs">vs</div>
             <div>
                 <span class="title">
-                    ~Difficulty~
+                    {{localize 'QUESTWORLDS.chatcontest.Difficulty'}}
                 </span>
                 {{formatRating resistance.rating resistance.masteries}}
             </div>
@@ -44,7 +44,7 @@
         <div class="options">
             <!-- <hr> -->
             <div class="difficulty-level">
-                <label>~Difficulty Level~ (~Base~ {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
+                <label>{{localize 'QUESTWORLDS.chatcontest.DifficultyLevel'}} ({{localize 'QUESTWORLDS.chatcontest.Base'}} {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
                 <select name="difficultyLevel">
                     <optgroup label="Base difficulty: {{formatRating baseDifficulty.rating baseDifficulty.masteries useRunes="false"}}">
                         {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}} <!-- ~localize~ -->
@@ -95,7 +95,7 @@
                 </div>
                 <div class="successes">
                     <div>
-                        {{~pcSuccesses}}  {{plural pcSuccesses '~Success~' '~Successes~'}}
+                        {{~pcSuccesses}}  {{plural pcSuccesses (localize 'QUESTWORLDS.chatcontest.Success') (localize 'QUESTWORLDS.chatcontest.Successes')}}
                     </div>
                 </div>
             </span>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="successes">
                     <div>
-                        {{~resSuccesses}} {{plural resSuccesses '~Success~' '~Successes~'}}
+                        {{~resSuccesses}} {{plural resSuccesses (localize 'QUESTWORLDS.chatcontest.Success') (localize 'QUESTWORLDS.chatcontest.Successes')}}
                     </div>
                 </div>
             </span>
@@ -137,7 +137,7 @@
                 <i class="icon fas fa-exclamation-circle"></i>
             </div>
             <div class="flex1">
-                <span class="title">~Benefits Lost~ ({{benefitsRisked}})</span>
+                <span class="title">{{localize 'QUESTWORLDS.chatcontest.BenefitsLost'}} ({{benefitsRisked}})</span>
                 {{#each benefits as |benefit|}}
                     {{#if (and benefit.checked (eq benefit.variant 'benefit') ) }}
                         <span class="lost-benefit">{{benefit.name}}</span>
