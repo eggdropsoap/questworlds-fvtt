@@ -154,6 +154,11 @@ export class RatingHelper {
             outStr += Math.abs(masteries);
         }
 
+        // finally, if it's a straight zero, output zero
+        if (rating == 0 && masteries == 0) {
+            outStr += '0';
+        }
+
         return outStr;
     }
 

@@ -13,7 +13,7 @@
             {{#if item.data.rating}}
             <a class="rollable" data-roll-type="item">
             {{/if}}
-              {{item.name}} {{fullRating item.data}} {{#if data.description}}({{data.description}}){{/if}}</h4>
+              {{item.name}} {{#if (eq 0 (fullRating item.data))}}{{fullRating item.data}}{{/if}} {{#if data.description}}({{data.description}}){{/if}}</h4>
             {{#if item.data.rating}}
             </a>
             {{/if}}
