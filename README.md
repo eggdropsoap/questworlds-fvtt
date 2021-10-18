@@ -2,7 +2,7 @@ QuestWorlds-FVTT is a system module for Foundry VTT to support playing QuestWorl
 
 # Installation
 
-This system module is still in a pre-release state. I consider this an alpha release, suitable for developers but not actual play. As such it's not yet possible to install QuestWorls-FVTT through the Foundry UI. To alpha-test or contribute fixes to the pre-release codebase, git clone into your Data folders and proceed from there. (Only those who understood that incomplete instruction should attempt to install QW-FVTT at the moment!)
+This system module is still in a pre-release state. I consider this an alpha release, suitable for developers but not actual play. As such it's not yet possible to install QuestWorlds-FVTT through the Foundry UI. To alpha-test or contribute fixes to the pre-release codebase, git clone into your Data folders and proceed from there. (Only those who understood that incomplete instruction should attempt to install QW-FVTT at the moment!)
 
 QuestWorlds-FVTT is nearing a first beta release, which will coincide with installation being possible via copying and pasting a manifest file link into Foundry. With luck, a full release and installation by searching in Foundry will follow soon after.
 
