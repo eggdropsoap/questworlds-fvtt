@@ -180,8 +180,8 @@ export class RatingHelper {
             case 'ability':
             case 'keyword':
             case 'flaw':
-                // new abilities keywords, and flaws default to 15M0
-                return 15;
+                // new abilities keywords, and flaws default to 10M0
+                return 10;
             case 'benefit':
             case 'breakout':
                 // new breakouts and benefits default to +5
