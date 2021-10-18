@@ -1,0 +1,1 @@
+- v0.0.10 (2021-10-18): Alpha pre-release. Most core features in place. Foundry v0.8.8.
