@@ -1,4 +1,4 @@
-QuestWorlds-FVTT is a system module for Foundry VTT to support playing QuestWorlds, the narrative RPG system from Chaosium.
+QuestWorlds-FVTT is a system module for Foundry VTT to support playing [_QuestWorlds_][qwsrd], the narrative RPG system from [Chaosium][chaosium].
 
 # Installation
 
@@ -41,3 +41,4 @@ Finally, a profound and heartfelt thanks to Ian Cooper and everyone backing the 
 
 
   [qwsrd]: https://questworlds.chaosium.com
+  [chaosium]: https://www.chaosium.com
