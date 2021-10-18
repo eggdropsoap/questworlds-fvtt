@@ -18,7 +18,7 @@ While I would love to automate a lot of the paperwork and logic of QuestWorlds, 
 
 As an unexpected side effect, this simplicity also makes QuestWorlds-FVTT somewhat useful for playing earlier editions of HQ and HW that use slightly different logic, modifier scales, and contest rules. Some easy optional support for older games is provided.
 
-Opportunities for automation remain. Things I would like to see later include in no particular order:
+Opportunities for automation remain. Things I would like to see later include, in no particular order:
 
 - guided character creation
 - automation of advancements
