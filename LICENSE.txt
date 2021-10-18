@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 eggdropsoap
+Copyright (c) 2021 eggdropsoap except as noted
 The Boilerplate system Copyright (c) 2020 Asacolips Projects / Foundry Mods
 Simple World-Building system Copyright (c) 2020 Foundry Network
 
@@ -21,3 +21,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Limited portions of the software provided by others are licensed CC BY-SA, as
+marked, and should be replaced or removed if the software is to be used in a
+non-attributive or closed-source context, or if this note is to be removed.
+None of the algorithms or art assets so marked are irreplaceable and don't
+constitute an unreasonable impairment of this software or this license.
