@@ -474,8 +474,3 @@ function countSuccesses(tn,rollTotal,masteries) {
     count += rollTotal == tn ? 1 : 0;
     return count;
 }
-
-// TODO: link benefits to their source ability, and mark them risked/lost regardless of checked state
-// TODO: spending hero points / story points on rolls
-// TODO: style GM's view of benefits as "disabled" somehow
-// TODO: change delete animation target from id to data-id

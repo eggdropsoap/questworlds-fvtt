@@ -150,7 +150,7 @@ export class QuestWorldsItem extends Item {
 
         // prepare some form data
         const benefitsItems = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
-        const benefits = JSON.parse(JSON.stringify(benefitsItems));    // TODO: there's a better way to do this, right?
+        const benefits = JSON.parse(JSON.stringify(benefitsItems));
         for (const key of Object.keys(benefitsItems)) {
             benefits[key]['variant'] = benefitsItems[key].variant;
         }
