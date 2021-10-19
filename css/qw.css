@@ -466,18 +466,26 @@
   flex: 0;
 }
 
-.questworlds.actor .sheet-body {
-  height: 450px;
-}
 .questworlds.actor .sheet-body .tab,
 .questworlds.actor .sheet-body .tab.biography .grid,
 .questworlds.actor .sheet-body .tab.biography .grid section,
-.questworlds.actor .sheet-body .tab .editor,
-.questworlds.actor .sheet-body .tab .editor-content,
-.questworlds.actor .sheet-body .editor {
+.questworlds.actor .sheet-body .tab .editor-content {
   height: 100%;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+
+.questworlds.actor .npc .sheet-body .public,
+.questworlds.actor .npc .sheet-body .private {
+  height: 100%;
+}
+.questworlds.actor .npc .sheet-body .public h2,
+.questworlds.actor .npc .sheet-body .private h2 {
+  flex: 0;
+}
+.questworlds.actor .sheet-body .editor {
+  min-height: 32px;
 }
 
 .questworlds.actor .sheet-body .tab.biography .grid {
@@ -485,8 +493,8 @@
   margin-bottom: 0;
 }
 
-.questworlds.actor .sheet-body .tab.biography .editor {
-  height: 93%;
+.questworlds.actor .sheet-body .tab.biography h2 {
+  flex: 0;
 }
 
 
