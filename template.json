@@ -4,13 +4,14 @@
       "templates": {
         "base": {
             "concept": "",
-            "description": ""
+            "description": "",
+            "notes": ""
         }
       },
       "character": {
         "templates": ["base"],
         "biography": "",
-        "notes": "",
+        "gallery": [],
         "points": {
             "asyougo": 20,
             "hero": 0,
@@ -19,7 +20,8 @@
         }
       },
       "npc": {
-        "templates": ["base"]
+        "templates": ["base"],
+        "reputation": ""
       }
     },
     "Item": {
