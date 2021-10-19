@@ -11,13 +11,14 @@
         "Concept": "Concept",
         "CharacterConcept": "Character Concept",
         "Description": "Description",
+        "PhysicalDescription": "Physical Description",
         "HeroPoints": "Hero Points",
         "UnspentXP": "Unspent XP",
         "EarnedXP": "Earned XP",
         "AsYouGoPoints": "Creation Points",
         
         "NavMain": "Character",
-        "NavBiography": "Biography",
+        "NavBackground": "Background",
         "NavArt": "Art",
         "NavNotes": "Notes",
 
