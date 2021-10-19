@@ -37,7 +37,7 @@ The QuestWorlds-FVTT system module is based on the rules described in the [Quest
 
 Although QuestWorlds-FVTT provides technical support for playing QuestWorlds online in Foundry VTT, it does not teach how to play. Users of the system module must consult the QuestWorlds SRD or one of Chaosium's many fine, earlier games based on the same system design, in order to make meaningful use of this system module.
 
-Finally, a profound and heartfelt thanks to Ian Cooper and everyone backing the QuestWorlds SRD project at Chaosium, and its many community contributors. Although QuestWorlds-FVTT could still exist without the SRD, the generosity of Chaosium publishing their acclaimed narrative game under an open license is what excited my imagination again enough to embark on the daunting project of developing a system module for Foundry VTT. You are heroes. If the QuestWorlds SRD is a call to gather the tribes, this is my raising the banner to heed the call.
+Finally, a profound and heartfelt thanks to Ian Cooper and everyone backing the QuestWorlds SRD project at Chaosium, and its many community contributors. Although QuestWorlds-FVTT could still exist without the SRD, the generosity of Chaosium publishing their acclaimed narrative game under an open license is what excited my imagination again enough to embark on the daunting project of developing a system module for Foundry VTT. You are heroes. If the QuestWorlds SRD is a call to gather the clans, this is my raising the banner to heed the call.
 
 
   [qwsrd]: https://questworlds.chaosium.com
