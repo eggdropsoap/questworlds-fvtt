@@ -1,7 +1,7 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header">
+  <header class="sheet-header flex0">
       <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
       <div class="header-fields">
         <h1 class="charname">
@@ -16,12 +16,19 @@
       </div>
   </header>
 
-
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
+  <section class="sheet-body flex1{{#if editable}} grid grid-2col{{/if}}">
+    <div class="public flexcol">
+      <h2>{{localize 'QUESTWORLDS.PhysicalDescription'}}</h2>
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+      <h2>{{localize 'QUESTWORLDS.NPC.PublicKnowledge'}}</h2>
+      {{editor content=data.reputation target="data.reputation" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
     {{#if editable}}
-    <h2>{{localize 'QUESTWORLDS.PhysicalDescription'}}</h2>
-    {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+    <div class="private flexcol">
+      <h2>{{localize 'QUESTWORLDS.NPC.GMSecrets'}}</h2>
+      {{editor content=data.notes target="data.notes" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
     {{/if}}
   </section>
 </form>

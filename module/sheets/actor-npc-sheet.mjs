@@ -12,7 +12,7 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
       classes: ["questworlds", "sheet", "actor", "npc"],
       template: "systems/questworlds/templates/actor/actor-npc-sheet.html",
       width: 500,
-      height: 350
+      height: 450
     });
   }
 

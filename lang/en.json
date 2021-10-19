@@ -16,6 +16,11 @@
         "UnspentXP": "Unspent XP",
         "EarnedXP": "Earned XP",
         "AsYouGoPoints": "Creation Points",
+
+        "NPC": {
+            "PublicKnowledge": "Common Knowledge",
+            "GMSecrets": "GM-Only Notes"
+        },
         
         "NavMain": "Character",
         "NavBackground": "Background",
