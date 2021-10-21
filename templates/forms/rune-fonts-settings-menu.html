@@ -1,26 +1,16 @@
 <form id="rune-settings" class="flexcol" autocomplete="off">
 
-    <h2>Configure Fonts for Built-in Runes</h2>
+    <h2>{{localize 'SETTINGS.RuneMenu.Builtins.Header'}}</h2>
 
     <p class="notes">
-        A number of fonts offering support for Gloranthan Runes can be found online.
-        These fonts use different letters for each Rune,
-        and have a different selection of Runes.
+        {{localize 'SETTINGS.RuneMenu.Builtins.Hint1Instructions'}}
     </p>
     <p class="notes">
-        Upload font files here then choose which font and letter to use for each Rune.
-        Leave a letter blank to use the next font for that Rune.
-        Fonts are ordered left to right.
-        Drag fonts to change their order.
+        {{localize 'SETTINGS.RuneMenu.Builtins.Hint2LinkA'}}
+        <a href="https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/">Glorantha Core Rune Font</a>
+        {{localize 'SETTINGS.RuneMenu.Builtins.Hint2LinkB'}}
     </p>
-    <p class="notes">
-        The official Glorantha Core Runes font can be found at
-        <a href="https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/">
-            Glorantha Core Rune Font 
-        </a>
-        on the The Well of Daliath.
-    </p>
-    <p class="notes">Number of installed fonts: {{fontCount}}.</p>
+    <p class="notes">{{localize 'SETTINGS.RuneMenu.Fonts.NumberInstalled'}}: {{fontCount}}.</p>
     {{!--
     <p>
         <a class="test" style="border: 1px solid black; padding: 1ex; margin: 1ex;"><i class="fas fa-test"></i> Test Button</a>
@@ -34,7 +24,7 @@
             <label>
                 <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
                     <i class="fas fa-file-import fa-fw"></i>
-                    ~Add Font~
+                    {{localize 'SETTINGS.RuneMenu.Fonts.AddFont'}}
                 </button>
                 <input type="hidden" name="newfont.url" data-dtype="String"/>
                 <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
@@ -93,6 +83,7 @@
         </ul>
     </div>
 
+    {{!--
     <h2>Custom Runes</h2>
     <p class="notes">
         Add custom runes here. Each rune needs a display name, a token to refer to it, and a image file.
@@ -114,5 +105,6 @@
     <div style="border-top: 1px solid darkgrey;">
         Footer
     </div>
+    --}}
 
 </form>

@@ -261,7 +261,20 @@
         "baseDifficultyN": "Base Difficulty",
         "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
 
-    
-        "None": "There are no player settings."    
+        "RuneMenu": {
+            "Builtins": {
+                "Header": "Configure Fonts for Built-in Runes",
+                "Hint1Instructions": "Upload one or more Rune fonts and enter the letters matching each Rune. Leave a blank to use a later font for that Rune. Fonts are ordered left to right. You can drag to reorder fonts.",
+                "Hint2LinkA": "The official Glorantha Core Runes font can be found at",
+                "Hint2LinkB": "on the The Well of Daliath."
+            },
+            "Fonts": {
+                "AddFont": "Add Font",
+                "NumberInstalled": "Number of installed fonts"
+            }
+
+        },
+
+        "None": "There are no player settings."
     }
 }

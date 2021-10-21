@@ -1,9 +1,5 @@
 import { defaultRunes } from "../helpers/default-runes.mjs";
 
-/**
- * For more information about FormApplications, see:
- * https://foundryvtt.wiki/en/development/guides/understanding-form-applications
- */
 export class RuneFontsSettingsMenuClass extends FormApplication {
     constructor(object, options = {}) {
         super(object, options);
