@@ -16,7 +16,7 @@ While the QuestWorlds SRD is still in a state of flux, this implementation of a 
 
 While I would love to automate a lot of the paperwork and logic of QuestWorlds, accomplishing the first two core goals is enough to support the majority of in-session activities for the majority of QuestWorlds groups. GMs and players can handle sequences manually, using the support for contests plus journal notes for APs, scores, or whatnot from their sequence style of choice.
 
-As an unexpected side effect, this simplicity also makes QuestWorlds-FVTT somewhat useful for playing earlier editions of HQ and HW that use slightly different logic, modifier scales, and contest rules. Some easy optional support for older games is provided.
+As an unexpected side effect, this simplicity also makes QuestWorlds-FVTT somewhat useful for playing earlier editions that use slightly different logic, modifier scales, and contest rules. Some easy optional support for ealier editions is provided.
 
 Opportunities for automation remain. Things I would like to see later include, in no particular order:
 
