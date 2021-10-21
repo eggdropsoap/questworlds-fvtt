@@ -25,6 +25,28 @@ export class ContentEditableHelper {
     static async onBlurEditableElement(event) {
         await this.submit();
     }
+
+    /**
+     * Hide a div or whatnot while revealing the associated input.
+     * Target input's name must be in data-target-input of fake click receiver.
+     * Swap work best visually when fake element's box layout matches real input's.
+     * @param event 
+     */
+    static async onClickFakeInput(event) {
+      const fake = event.currentTarget;
+      const target = fake.dataset?.targetInput;
+      const real = $(fake).siblings(`[name="${target}"]`)[0];
+      if (real) {
+        // hide the fake input
+        $(fake).hide();
+        //reveal and focus the real input
+        real.setAttribute('type','text');
+        real.removeAttribute('placeholder');
+        real.focus();
+      }
+
+      let donothing;
+    }
 }
 
 export class EmbedsEvents {
@@ -146,6 +168,131 @@ export class FieldHelpers {
     sizer.innerHTML = this.value.replaceAll(' ','&nbsp;') + adjust;
     const width =  sizer.getBoundingClientRect().width;
     $(this).css('width',width + 'px');
+  }
+
+}
+
+export class GalleryControls {
+
+  static onClickAdd(event) {
+    event.preventDefault()
+    // ui.notifications.info('Add art button clicked');
+
+    const e = event.currentTarget;
+    const targetId = e.dataset.targetId;
+    const target = $(e).parent().find(`[data-id="${targetId}"]`)[0];
+    const options = {
+      field: target,
+      callback: () => {
+        this.submit()
+          .then( () => {
+            this.render()
+          })
+      }
+    }
+    const fp = new FilePicker(options);
+    this.filepickers.push(fp);
+
+    fp.browse();
+  }
+
+  static onClickDelete(event) {
+    event.preventDefault()
+    // ui.notifications.info('Delete art button clicked');
+
+    // gate entire operation behind an Are You Sure? dialog
+    Dialog.confirm({
+      title: game.i18n.localize('QUESTWORLDS.dialog.RemoveGalleryImage'),
+      content: '<p><strong>' + 
+        game.i18n.localize('QUESTWORLDS.dialog.RemoveGalleryImageL1') +
+        '</strong></p><p>' +
+        game.i18n.localize('QUESTWORLDS.dialog.RemoveGalleryImageL2') +
+        '</p>',
+      yes: () => _doDelete.bind(this)(),
+      no: () => {},
+      defaultYes: false
+    });
+
+    function _doDelete() {
+      const target = event.currentTarget.dataset.target;
+      const actor = this.object;
+      
+      const galleryArray = Object.values(actor.data.data.gallery); // get gallery, convert to array
+      galleryArray.splice(target,1);  // remove target index
+      const newGalleryObj = Object.assign({},galleryArray); // back to object with sequential indices
+  
+      actor.update({'data.gallery': newGalleryObj},{render: false});  // store without re-render...
+      // The last update *merged* new with old gallery, leaving last entry duplicated.
+      // Delete last item to remove duplciation, this time with re-render
+      // (TODO: see if there is a single-operation way to do this.)
+      const lastIndex = galleryArray.length;
+      actor.update({'data.gallery': {[`-=${lastIndex}`]: null}});
+    }
+
+  }
+
+  static onClickView(event) {
+    event.preventDefault()
+    // ui.notifications.info('View art button clicked');
+
+    const path = event.currentTarget.dataset?.path;
+    const caption = $(event.currentTarget).parents('li.art').find('input').val();
+    const character = this.actor.data.name;
+    const title = caption ? `“${caption}”` : game.i18n.localize('QUESTWORLDS.untitled');
+    if (path) {
+      const ip = new ImagePopout(path, {
+        title: `${character}: ${title}`,
+        shareable: true,
+        // entity: game.actors.getName("My Hero")
+      });
+      // Display the image popout
+      ip.render(true);
+    }
+  }
+
+  static onDrag(event) {
+    const mode = event.type;
+
+    if (mode == 'dragstart') {
+      event.dataTransfer.effectAllowed = "move";
+      const index = event.currentTarget.dataset.index;
+      const path = event.currentTarget.dataset.path;
+      event.dataTransfer.clearData();
+      event.dataTransfer.setData("text/gallery-index",index); // custom type to check to allow drops
+      event.dataTransfer.setData("text/local-path",path);
+      event.dataTransfer.setData("text/plain",path);
+  
+    } else
+    if (mode == 'dragover') {
+      event.preventDefault(); // cancelling both this and dragenter allows drop
+    } else
+    if (mode == 'dragenter') {
+      const isGalleryIndex = event.dataTransfer.types.includes("text/gallery-index");
+      if (isGalleryIndex) {
+        event.preventDefault(); // allow drop only if custom type is right
+      }
+    } else
+    if (mode == 'drop') {
+      // get drop target index
+      const targetIndex = event.currentTarget.dataset?.index;
+      if (!targetIndex) return; // no drop possible
+      const sourceIndex = event.dataTransfer.getData("text/gallery-index");
+      if (!sourceIndex) return; // no drop possible
+
+      const actor = this.object;
+      // get gallery, convert to array
+      const galleryArray = Object.values(actor.data.data.gallery);
+      // insert ahead of target
+      const entry = galleryArray[sourceIndex];
+      galleryArray.splice(sourceIndex,1);
+      galleryArray.splice(targetIndex,0,entry);
+      // reserialize as an object
+      const galleryObj = Object.assign({},galleryArray);
+
+      // update with rearranged gallery
+      actor.update({'data.gallery': galleryObj});
+    }
+
   }
 
 }

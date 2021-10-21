@@ -11,7 +11,7 @@
       "character": {
         "templates": ["base"],
         "biography": "",
-        "gallery": [],
+        "gallery": {},
         "points": {
             "asyougo": 20,
             "hero": 0,

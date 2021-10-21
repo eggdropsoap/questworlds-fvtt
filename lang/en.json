@@ -27,6 +27,9 @@
         "NavArt": "Art",
         "NavNotes": "Notes",
 
+        "PC": {
+            "profile-img-caption": "{name}’s avatar"
+        },
 
         "KeywordsAndAbilities": "Keywords & Abilities",
         "Flaws": "Flaws",
@@ -121,6 +124,8 @@
         "Rune": "Rune",
         "Runes": "Runes",
 
+        "untitled": "untitled",
+
         "runes": {
             "air": "Air",
             "barntar": "Barntar",
@@ -185,7 +190,11 @@
             "EditingKeyword": "Editing Keyword",
             "rating": "Rating",
             "runeOrRunes": "Runes(s)",
-            "runesL": "Enter one or more rune tokens, e.g. [[moon]][[air]]."
+            "runesL": "Enter one or more rune tokens, e.g. [[moon]][[air]].",
+
+            "RemoveGalleryImage": "Remove Gallery Image",
+            "RemoveGalleryImageL1": "Remove this image from the gallery?",
+            "RemoveGalleryImageL2": "(The image file will not be deleted.)"
         },
 
         "chatcontest" : {

@@ -83,7 +83,41 @@
 
     {{!-- Art Tab --}}
     <div class="tab art" data-group="primary" data-tab="art">
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
+      <ol class="gallery">
+        <li class="avatar">
+          <figure>
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
+            <figcaption>
+              <div class="nice">
+                {{localize 'QUESTWORLDS.PC.profile-img-caption' name=actor.name}}
+              </div>
+            </figcaption>
+          </figure>
+        </li>
+        {{#each data.gallery as |art|}}
+        <li class="art">
+          <figure>
+            <img class="" src="{{art.img}}" width="200" data-index="{{@key}}" data-path="{{art.img}}">
+            <figcaption>
+              <div class="nice fake-input {{#unless art.caption}}placeholder{{/unless}}" data-target-input="data.gallery.{{@key}}.caption">
+                {{~#if art.caption}}{{art.caption}}{{else}}{{localize 'QUESTWORLDS.untitled'}}{{/if~}}
+              </div>
+              <input type="hidden" name="data.gallery.{{@key}}.caption" value="{{art.caption}}" placeholder="{{localize 'QUESTWORLDS.untitled'}}">
+            </figcaption>
+          </figure>
+          <ol class="controls">
+            {{#if ../editable}}<li><a class="button" data-action="delete" data-target="{{@key}}"><i class="fas fa-trash fa-fw"></i></a></li>{{/if}}
+            <li><a class="button" data-action="view" data-path="{{art.img}}"><i class="fas fa-expand fa-fw"></i></a></li>
+          </ol>
+        </li>
+        {{/each}}
+        {{#if editable}}
+        <li class="control add">
+          <a class="button" data-action="add" data-target-id="new-file"><i class="fas fa-plus fa-fw"></i></a>
+          <input type="hidden" name="newart" data-id="new-file">
+        </li>
+        {{/if}}
+      </ol>
     </div>
 
     {{!-- Notes Tab --}}
