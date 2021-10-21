@@ -652,13 +652,6 @@
   display: flex;
 }
 
-.questworlds.sheet.item ol.breakouts-list {
-  margin-top: 0.6em;
-  padding-bottom: 1em;
-}
-.questworlds.sheet.item ol.breakouts-list ol {
-  padding-bottom: 0;
-}
 
 .questworlds.sheet.actor .breakouts-list .breakout-name,
 .questworlds.sheet.actor .item .description {
