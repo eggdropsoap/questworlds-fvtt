@@ -2,6 +2,8 @@ import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/ef
 import { EmbedsEvents, ContextMenus } from "../helpers/event-handlers.mjs";
 import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
 import { doItemTween } from "../documents/item.mjs";
+import { GalleryControls } from "../helpers/event-handlers.mjs";
+import { ContentEditableHelper } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -154,6 +156,10 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
       item.sheet.render(true);
     });
 
+    // Art gallery lightbox for limited-permission users
+    html.find('.tab.art .gallery').on('click','a[data-action="view"]',GalleryControls.onClickView.bind(this));
+
+
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
@@ -201,6 +207,19 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
       }  
     }
 
+    // Art gallery controls
+    html.find('.tab.art .gallery')
+      .on('click','a[data-action="add"]',GalleryControls.onClickAdd.bind(this))
+      .on('click','a[data-action="delete"]',GalleryControls.onClickDelete.bind(this))
+      .on('click','div.fake-input',ContentEditableHelper.onClickFakeInput)
+      .find('li.art img').each((i,img) => {
+        img.setAttribute("draggable", true);
+        img.addEventListener('dragstart', GalleryControls.onDrag.bind(this), false);
+        img.addEventListener('dragover', GalleryControls.onDrag.bind(this), false);
+        img.addEventListener('dragenter', GalleryControls.onDrag.bind(this), false);
+        img.addEventListener('drop', GalleryControls.onDrag.bind(this), false);
+      });
+
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
@@ -244,6 +263,20 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
 
     // Finally, create the item!
     return await Item.create(itemData, {parent: this.actor});
+  }
+
+  _updateObject(event, formData) {
+
+    if (formData.newart) {
+      const filepath = formData.newart;
+      const nextIndex = Object.keys(this.object.data.data.gallery).length;
+      formData[`data.gallery.${nextIndex}`] = {
+        img: filepath,
+        caption: "",
+      };
+    }
+
+    super._updateObject(event,formData);
   }
 
   /**

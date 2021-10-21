@@ -1,2 +1,8 @@
-- v0.0.11 (2021-10-19): [Data model changes] [More public NPC info fields]
-- v0.0.10 (2021-10-18): Alpha pre-release. Most core features in place. Foundry v0.8.8.
+v0.0.12 (2021-10-??, more changes in progress):
+  
+  - NPC sheets have two text fields for public info (physical description and common knowledge about the NPC), and one GM-only text field for the non-public information, notes, and other details
+  - The Art tab on PC sheets features a gallery of images with captions, which can be reordered by drag and drop. Gallery images can be enlarged in a standard Foundry lightbox and enables GMs to share the image with players.
+
+v0.0.10 (2021-10-18):
+
+    - Alpha pre-release. Most core features in place. Foundry v0.8.8.
