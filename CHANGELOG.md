@@ -5,4 +5,4 @@ v0.0.12 (2021-10-??, more changes in progress):
 
 v0.0.10 (2021-10-18):
 
-    - Alpha pre-release. Most core features in place. Foundry v0.8.8.
+  - Alpha pre-release. Most core features in place. Foundry v0.8.8.
