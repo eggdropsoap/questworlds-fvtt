@@ -204,10 +204,12 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 "<p><strong>" + 
                 game.i18n.localize('AreYouSure') +
                 "</strong></p>" + 
-                "<p>~All rune mappings for this font will be forgotten.~</p>";
+                "<p>" +
+                game.i18n.localize('SETTINGS.RuneMenu.dialog.TrashWarning') +
+                "</p>";
 
             Dialog.confirm({
-                title: "~Remove Font~",
+                title: game.i18n.localize('SETTINGS.RuneMenu.dialog.RemoveFont'),
                 content: dialogHTML,
                 yes: () => {
                     // blank the target input & trigger submit
@@ -234,6 +236,15 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
 /* FilePicker with support for font file extensions */
 class FontFilePicker extends FilePicker {
     constructor(options={}) {
+
+        // Localization for custom title
+        if (!game.i18n.translations.FILES.TitleFont) {
+            game.i18n.translations.FILES.TitleFont = game.i18n.localize('QUESTWORLDS.FontBrowser');
+        }
+        options['type'] = 'font';   // induces attempt to use TitleFont key
+
+        options['activeSource'] = 'data';
+
         super(options);
         const FONT_FILE_EXTENSIONS = [
             "ttf",

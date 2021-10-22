@@ -237,7 +237,9 @@
 
 
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",
-        "keywordPackageOptionName": "Package (Stand-alone Abilities)"
+        "keywordPackageOptionName": "Package (Stand-alone Abilities)",
+
+        "FontBrowser": "Font Browser"
     
     },
 
@@ -271,6 +273,11 @@
             "Fonts": {
                 "AddFont": "Add Font",
                 "NumberInstalled": "Number of installed fonts"
+            },
+
+            "dialog": {
+                "TrashWarning": "All configurations for this font will be forgotten.",
+                "RemoveFont": "Remove Font"
             }
 
         },
