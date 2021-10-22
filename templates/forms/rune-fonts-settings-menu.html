@@ -17,55 +17,64 @@
     </p>
     --}}
 
-    <div id="built-in-runes">
-        <input type="checkbox" name="fontupdate" style="display: none">
-        <!-- font button -->
-        <div class="table-controls">
-            <label>
-                <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
-                    <i class="fas fa-file-import fa-fw"></i>
-                    {{localize 'SETTINGS.RuneMenu.Fonts.AddFont'}}
-                </button>
-                <input type="hidden" name="newfont.url" data-dtype="String"/>
-                <!-- <button class="file-picker" name="hello.file"><i class="fas fa-plus"></i> Add Font</button> -->
-                <!-- (No fonts installed) [<i class="fas fa-plus"></i> Add Font Button?] -->
-            </label>
-        </div>
-        <!-- header -->
-        <header class="table-header"> <!-- flexrow? -->
-            <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
-            <!-- List of fonts -->
-            {{# each fonts as | font |}}
-            <label>
-                <div class="font-name">{{font.name}}</div>
-                <div>
-                    <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
-                </div>
-                <div class="font-controls">
-                    <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="~Delete Font~">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                    <input type="hidden" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
-                </div>
-            </label>
-            {{/each}}
-        </header>
-        <ul style="padding-left: 0;">
-            <!-- List of Runes -->
+    {{!-- add font button --}}
+    <div class="table-controls">
+        <label>
+            <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
+                <i class="fas fa-file-import fa-fw"></i>
+                {{localize 'SETTINGS.RuneMenu.Fonts.AddFont'}}
+            </button>
+            <input type="hidden" name="newfont.url" data-dtype="String"/>
+        </label>
+    </div>
+
+    {{!-- Hidden update control --}}
+    <input type="checkbox" name="fontupdate" style="display: none">
+
+    {{!-- List of built-in runes --}}
+
+    <table id="built-in-runes">
+        {{!-- header --}}
+        <thead>
+            <tr>
+                <th>{{localize 'QUESTWORLDS.Rune'}}</th>
+                {{!-- List of fonts --}}
+                {{# each fonts as | font |}}
+                <th>
+                    <div class="font-name">{{font.name}}</div>
+                    <div>
+                        <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
+                    </div>
+                    <div class="font-controls">
+                        <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="~Delete Font~">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        <input type="hidden" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
+                    </div>
+                </th>
+                {{/each}}    
+            </tr>
+        </thead>
+        {{!-- List of Runes --}}
+        <tbody>
             {{#each runes as | rune |}}
-            <li class="form-group">
-                <label class="index" for="{{rune.token}}" class="resource-label">
-                    {{#if (ne rune.render.class 'rune-token')}}
-                    <span class="{{rune.render.class}}">{{rune.render.text}}</span>
-                    {{/if}}
-                    {{localize rune.name}}
+            <tr>
+                <td class="rune-name">
+                    <div>
+                        {{#if (ne rune.render.class 'rune-token')~}}
+                        <span class="{{rune.render.class}}">{{rune.render.text}}</span>
+                        {{~/if}}
+                        <span class="name">{{localize rune.name}}</span>
+                    </div>
                     <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
                     <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
-                    <p class="hint rune-token" style="font-family: 'Courier New'; background-color: lightgrey;">[[{{rune.token}}]]</p>
-                </label>
+                    <div>
+                        <span class="token">[[{{rune.token}}]]</span>
+                    </div>
+                </td>
                 {{#each rune.fonts as | symbol |}}
                 {{#if (lt @key ../../fontCount)}}
-                <div class="form-fields">
+                <td class="rune-symbol">
                     <input type="
                         {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
                         " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
@@ -75,13 +84,13 @@
                     {{#if (eq ../../fontCount 0)}}
                     <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
                     {{/if}}
-                </div>
+                </td>
                 {{/if}}
                 {{/each}}
-            </li>
+            </tr>
             {{/each}}
-        </ul>
-    </div>
+        </tbody>
+    </table>
 
     {{!--
     <h2>Custom Runes</h2>
