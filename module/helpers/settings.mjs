@@ -7,8 +7,8 @@ export const registerSystemSettings = function() {
      * Whether to enable suport for runes
      */
     game.settings.register("questworlds", "useRunes", {
-        name: "SETTINGS.useRunesN",
-        hint: "SETTINGS.useRunesL",
+        name: "QUESTWORLDS.SETTINGS.useRunesN",
+        hint: "QUESTWORLDS.SETTINGS.useRunesL",
         scope: "world",
         config: true,
         type: Boolean,
@@ -19,8 +19,8 @@ export const registerSystemSettings = function() {
      * What to call a "Sidekick" in the UI / sheets
      */
     game.settings.register("questworlds", "sidekickName", {
-        name: "SETTINGS.sidekickNameN",
-        hint: "SETTINGS.sidekickNameL",
+        name: "QUESTWORLDS.SETTINGS.sidekickNameN",
+        hint: "QUESTWORLDS.SETTINGS.sidekickNameL",
         scope: "world",
         config: true,
         type: String,
@@ -38,8 +38,8 @@ export const registerSystemSettings = function() {
      * Whether Keywords have breakouts or sub-abilities
      */
     game.settings.register("questworlds", "keywordBreakout", {
-        name: "SETTINGS.keywordBreakoutN",
-        hint: "SETTINGS.keywordBreakoutL",
+        name: "QUESTWORLDS.SETTINGS.keywordBreakoutN",
+        hint: "QUESTWORLDS.SETTINGS.keywordBreakoutL",
         scope: "world",
         config: true,
         type: String,
@@ -57,8 +57,8 @@ export const registerSystemSettings = function() {
      * Whether to enable suport for runes
      */
     game.settings.register("questworlds", "useClassicOutcomes", {
-        name: "SETTINGS.useClassicOutcomesN",
-        hint: "SETTINGS.useClassicOutcomesL",
+        name: "QUESTWORLDS.SETTINGS.useClassicOutcomesN",
+        hint: "QUESTWORLDS.SETTINGS.useClassicOutcomesL",
         scope: "world",
         config: true,
         type: Boolean,
@@ -69,8 +69,8 @@ export const registerSystemSettings = function() {
      * Current base difficulty. Starts at value set by difficultyTable.
      */
      game.settings.register("questworlds", "baseDifficulty", {
-        name: "SETTINGS.baseDifficultyN",
-        hint: "SETTINGS.baseDifficultyH",
+        name: "QUESTWORLDS.SETTINGS.baseDifficultyN",
+        hint: "QUESTWORLDS.SETTINGS.baseDifficultyH",
         scope: "world",
         config: true,
         type: Number,
@@ -81,8 +81,8 @@ export const registerSystemSettings = function() {
      * What difficulty table to use. Also (re)sets the baseDifficulty setting!
      */
      game.settings.register("questworlds", "difficultyTable", {
-        name: "SETTINGS.difficultyTableN",
-        hint: "SETTINGS.difficultyTableH",
+        name: "QUESTWORLDS.SETTINGS.difficultyTableN",
+        hint: "QUESTWORLDS.SETTINGS.difficultyTableH",
         scope: "world",
         config: true,
         type: String,
@@ -106,9 +106,9 @@ export const registerSystemSettings = function() {
      ** ** ** ** ** ** ** ** ** ** ** ** **/
 
     game.settings.registerMenu("questworlds", "RuneFontSettingsMenu", {
-        name: "SETTINGS.runeFontSettingsN",
-        label: "SETTINGS.runeFontSettingsL", // The text label used in the button
-        hint: "SETTINGS.runeFontSettingsH",
+        name: "QUESTWORLDS.SETTINGS.runeFontSettingsN",
+        label: "QUESTWORLDS.SETTINGS.runeFontSettingsL", // The text label used in the button
+        hint: "QUESTWORLDS.SETTINGS.runeFontSettingsH",
         icon: "fas fa-font",               // A Font Awesome icon used in the submenu button
         type: RuneFontsSettingsMenuClass,   // A FormApplication subclass
         restricted: true,                   // Restrict this submenu to gamemaster only?

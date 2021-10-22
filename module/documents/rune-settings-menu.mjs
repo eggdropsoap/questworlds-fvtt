@@ -205,11 +205,11 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 game.i18n.localize('AreYouSure') +
                 "</strong></p>" + 
                 "<p>" +
-                game.i18n.localize('SETTINGS.RuneMenu.dialog.TrashWarning') +
+                game.i18n.localize('QUESTWORLDS.SETTINGS.RuneMenu.dialog.TrashWarning') +
                 "</p>";
 
             Dialog.confirm({
-                title: game.i18n.localize('SETTINGS.RuneMenu.dialog.RemoveFont'),
+                title: game.i18n.localize('QUESTWORLDS.SETTINGS.RuneMenu.dialog.RemoveFont'),
                 content: dialogHTML,
                 yes: () => {
                     // blank the target input & trigger submit

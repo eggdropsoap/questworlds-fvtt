@@ -12,10 +12,11 @@
         "CharacterConcept": "Character Concept",
         "Description": "Description",
         "PhysicalDescription": "Physical Description",
+        "StoryPoints": "Story Points",
         "HeroPoints": "Hero Points",
         "UnspentXP": "Unspent XP",
         "EarnedXP": "Earned XP",
-        "AsYouGoPoints": "Creation Points",
+        "AsYouGoPoints": "Improvement Points",
 
         "NPC": {
             "PublicKnowledge": "Common Knowledge",
@@ -239,49 +240,48 @@
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",
         "keywordPackageOptionName": "Package (Stand-alone Abilities)",
 
-        "FontBrowser": "Font Browser"
+        "FontBrowser": "Font Browser",
     
-    },
-
-    "SETTINGS": {
-        "useRunesN": "Enable Runes",
-        "useRunesL": "Enables support for Glorantha runes for abilities and the Mastery symbol. Requires a supporting font: Please configure one or more rune fonts in the Rune Fonts Settings panel.",
-        "sidekickNameN": "Sidekick name",
-        "sidekickNameL": "Sets what “sidekick” abilities are called on character and item sheets.",
-        "keywordBreakoutN": "Keyword type",
-        "keywordBreakoutL": "Umbrella keywords have breakout abilities, while package keywords contain stand-alone abilities. (Breakouts and abilities already on character sheets will not be altered.)",
-        "keywordPackageOptionName": "Package (Stand-alone Abilities)",
-        "useClassicOutcomesN": "Use classic names for contest outcomes",
-        "useClassicOutcomesL": "Whether contest outcomes are displayed in the QuestWorlds SRD’s terminology (e.g. “Degrees of Victory: 2”), or classic terminology (e.g. “Minor Victory”). This option is cosmetic only; the contest mechanics are the same.",
-
-        "runeFontSettingsN": "Rune Fonts Settings",
-        "runeFontSettingsL": "Configure Rune Fonts",
-        "runeFontSettingsH": "Install and configure Rune fonts.",
-
-        "difficultyTableN": "Difficulty Levels Table",
-        "difficultyTableH": "Set which set of modifiers are available during contests to modify the base resistance. Changing this will reset the Base Difficulty setting to match.",
-        "baseDifficultyN": "Base Difficulty",
-        "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
-
-        "RuneMenu": {
-            "Builtins": {
-                "Header": "Configure Fonts for Built-in Runes",
-                "Hint1Instructions": "Upload one or more Rune fonts and enter the letters matching each Rune. Leave a blank to use a later font for that Rune. Fonts are ordered left to right. You can drag to reorder fonts.",
-                "Hint2LinkA": "The official Glorantha Core Runes font can be found at",
-                "Hint2LinkB": "on the The Well of Daliath."
+        "SETTINGS": {
+            "useRunesN": "Enable Runes",
+            "useRunesL": "Enables support for Glorantha runes for abilities and the Mastery symbol. Requires a supporting font: Please configure one or more rune fonts in the Rune Fonts Settings panel.",
+            "sidekickNameN": "Sidekick name",
+            "sidekickNameL": "Sets what “sidekick” abilities are called on character and item sheets.",
+            "keywordBreakoutN": "Keyword type",
+            "keywordBreakoutL": "Umbrella keywords have breakout abilities, while package keywords contain stand-alone abilities. (Breakouts and abilities already on character sheets will not be altered.)",
+            "keywordPackageOptionName": "Package (Stand-alone Abilities)",
+            "useClassicOutcomesN": "Use classic names for contest outcomes",
+            "useClassicOutcomesL": "Whether contest outcomes are displayed in the QuestWorlds SRD’s terminology (e.g. “Degrees of Victory: 2”), or classic terminology (e.g. “Minor Victory”). This option is cosmetic only; the contest mechanics are the same.",
+    
+            "runeFontSettingsN": "Rune Fonts Settings",
+            "runeFontSettingsL": "Configure Rune Fonts",
+            "runeFontSettingsH": "Install and configure Rune fonts.",
+    
+            "difficultyTableN": "Difficulty Levels Table",
+            "difficultyTableH": "Set which set of modifiers are available during contests to modify the base resistance. Changing this will reset the Base Difficulty setting to match.",
+            "baseDifficultyN": "Base Difficulty",
+            "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
+    
+            "RuneMenu": {
+                "Builtins": {
+                    "Header": "Configure Fonts for Built-in Runes",
+                    "Hint1Instructions": "Upload one or more Rune fonts and enter the letters matching each Rune. Leave a blank to use a later font for that Rune. Fonts are ordered left to right. You can drag the headers to reorder fonts.",
+                    "Hint2LinkA": "The official Glorantha Core Runes font can be found at",
+                    "Hint2LinkB": "on the The Well of Daliath."
+                },
+                "Fonts": {
+                    "AddFont": "Add Font",
+                    "NumberInstalled": "Number of installed fonts"
+                },
+    
+                "dialog": {
+                    "TrashWarning": "All configurations for this font will be forgotten.",
+                    "RemoveFont": "Remove Font"
+                }
+    
             },
-            "Fonts": {
-                "AddFont": "Add Font",
-                "NumberInstalled": "Number of installed fonts"
-            },
-
-            "dialog": {
-                "TrashWarning": "All configurations for this font will be forgotten.",
-                "RemoveFont": "Remove Font"
-            }
-
-        },
-
-        "None": "There are no player settings."
+    
+            "None": "There are no player settings."
+        }
     }
 }
