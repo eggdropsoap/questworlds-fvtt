@@ -27,6 +27,9 @@ div#rune-fonts-settings-menu {
 #rune-settings table#built-in-runes tbody td.rune-name {
     margin-left: 2px;
 }
+#rune-settings table#built-in-runes tbody td.rune-name > div:first-child {
+    white-space: nowrap;
+}
 #rune-settings table#built-in-runes tbody td.rune-name .name {
     font-weight: bold;
 }
