@@ -40,18 +40,28 @@ div#rune-fonts-settings-menu {
 }
 
 #rune-settings table#built-in-runes thead th[draggable="true"] {
-    position: relative;
     cursor: grab;
 }
 #rune-settings table#built-in-runes thead th[draggable="true"]:active {
     cursor: grabbing;
     box-shadow: inset 0 0 0 1px #f0f0e0;
-} 
-#rune-settings table#built-in-runes thead th:active:hover .font-controls {
-    /* visibility: hidden; */
-    display: none;
-} 
+}
+#rune-settings table#built-in-runes thead th[draggable="true"].dropzone {
+    background: #f0f0e0;
+    color: rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px lightgrey;
+}
 
+#rune-settings table#built-in-runes thead th:active:hover .font-controls {
+    display: none;
+}
+#rune-settings table#built-in-runes thead th:active:hover .font-controls:hover {
+    display: block;
+}
+
+#rune-settings table#built-in-runes thead th {
+    position: relative;
+}
 #rune-settings table#built-in-runes thead th .font-controls {
     visibility: hidden;
     position: absolute;

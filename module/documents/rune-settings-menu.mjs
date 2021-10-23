@@ -1,4 +1,5 @@
 import { defaultRunes } from "../helpers/default-runes.mjs";
+import { moveIndex } from "../utils.mjs";
 
 export class RuneFontsSettingsMenuClass extends FormApplication {
     constructor(object, options = {}) {
@@ -96,34 +97,17 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         // iterate the built-in runes to
         // - convert dictionary to array
         // - remove entries for fonts that have also be removed
-        // then
         // - add calculated rendering properties for font & char
-        for (var runeKey in data.runes) {
-            let rune = data.runes[runeKey];
-            
+        for (const rune of Object.values(data.runes)) {
             // if no font data in the rune (maybe was wiped), create the property
             if (!rune.hasOwnProperty('fonts')) rune.fonts = [];
 
+            // convert dictionary to array
             rune.fonts = Object.values(rune.fonts);
             // remove entries for removed fonts
             rune.fonts = rune.fonts.filter((e, i) => { return data.fonts[i].url } );
-
             // create the render properties
-            let fontclass;
-            let charvalue;
-            for (let fontIdx = 0; fontIdx < rune.fonts.length; fontIdx++) {
-                let char = rune.fonts[fontIdx];
-                if (char) {
-                    fontclass = `rune-font${fontIdx}`;
-                    charvalue = char;
-                    break;  // we only want the first hit
-                }
-            }
-            // add the properties (or defaults) to each 'runeFontSettings'.runes[entry]
-            rune.render = {
-                class: fontclass || "rune-token",
-                text: charvalue || `(${rune.token.replace('_',' ')})`,
-            }
+            rune.render = calculateRuneRenderObj(rune);
         }
 
         // remove any blanked entries from the font list
@@ -141,21 +125,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         }
 
         if (data.fontupdate) {
-            // set the CSS rules for font support
-            let rules = [];
-            for ( const [index,v] of Object.entries(data.fonts) ) {
-                let fallback = '"Roboto", sans-serif';
-                let name = v.name;
-                let url = v.url;
-                let ext = url.split('.').pop().toUpperCase();
-                let format = {
-                    "TTF": "truetype",
-                    "OTF": "opentype",
-                }[ext];
-                rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("${format}"); }`);
-                rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
-            }
-
+            const rules = generateRuneFontCSSRules(data.fonts);
             data.cssRules = rules;
             setRuneCSSRules(rules);
         } else {
@@ -223,38 +193,97 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
               });
         });
 
-        // // test button
-        // html.find('.test')[0].onclick = event => {
-        //     let newRules = ["div { color: red; }", "div { background-color: greenyellow;"];
-        //     setRuneCSSRules(newRules);
-        // };
+        // hook drag operations
+        html.find('#built-in-runes th[draggable="true"]').each((i,header) => {
+            header.addEventListener('dragstart', _onDrag, false);
+            header.addEventListener('dragleave', _onDrag, {capture: true});
+            header.addEventListener('dragover', _onDrag, false);
+            header.addEventListener('dragenter', _onDrag, false);
+            header.addEventListener('drop', _onDrag.bind(this), false);
+        });
+
+        async function _onDrag(event) {
+            const mode = event.type;
+
+            if (mode == 'dragstart') {
+                // set up drag data
+                event.dataTransfer.effectAllowed = "move";
+                const index = event.currentTarget.dataset.fontIndex;
+                event.dataTransfer.clearData();
+                event.dataTransfer.setData("text/font-index",index); // custom type to check to allow drops
+                event.dataTransfer.setData("text/plain",index);
+            } else
+            if (mode == 'dragover') {
+                let target = $(event.currentTarget);
+                if (!(target.is(':active'))) {
+                    target.addClass('dropzone');
+                    event.preventDefault();
+                }
+            } else
+            if (mode == 'dragenter') {
+                if (!($(event.currentTarget).is(':active'))) {
+                    event.preventDefault();
+                }
+            } else
+            if (mode == 'dragleave') {
+                $(event.currentTarget).removeClass('dropzone');
+            } else
+            if (mode == 'drop') {
+                const target = event.currentTarget;
+                $(target).removeClass('dropzone');
+            
+                // check mimetype & indices good, and indices different
+                const landing = target.dataset?.fontIndex;
+                if (!landing) return;
+                const incoming = event.dataTransfer.getData("text/font-index");
+                if (!incoming) return;
+                if (landing == incoming) return;
+
+                const runeSettings = game.settings.get('questworlds','runeFontSettings');
+
+                // insert the font into the new index for...
+                // ... 1. font list
+                moveIndex(runeSettings.fonts,incoming,landing);
+                // ... 2. every single damn rune entry
+                for (const rune of Object.values(runeSettings.runes)) {
+                    moveIndex(rune.fonts,incoming,landing);     // reorder the rune's fonts
+                    rune.render = calculateRuneRenderObj(rune);    // calc and set the new render props
+                }
+
+                // update and store the new CSS rules
+                const rules = generateRuneFontCSSRules(runeSettings.fonts);
+                runeSettings.cssRules = rules;
+                // store all the changed settings
+                await game.settings.set('questworlds','runeFontSettings',runeSettings);
+                // change the live dynamic CSS at last minute
+                setRuneCSSRules(rules);
+                //  and re-render the form to enjoy all this changed data
+                this.render();
+            }
+            // end big if-else statement on event.type
+
+        }   // onDrag
+
     }
 
 }
 
-
-/* FilePicker with support for font file extensions */
-class FontFilePicker extends FilePicker {
-    constructor(options={}) {
-
-        // Localization for custom title
-        if (!game.i18n.translations.FILES.TitleFont) {
-            game.i18n.translations.FILES.TitleFont = game.i18n.localize('QUESTWORLDS.FontBrowser');
+/** */
+function calculateRuneRenderObj({fonts,token}) {
+    // create the render properties
+    let fontclass, charvalue;
+    for (let i = 0; i < fonts.length; i++) {
+        let char = fonts[i];
+        if (char) {
+            fontclass = `rune-font${i}`;
+            charvalue = char;
+            break;  // we only want the first hit
         }
-        options['type'] = 'font';   // induces attempt to use TitleFont key
-
-        options['activeSource'] = 'data';
-
-        super(options);
-        const FONT_FILE_EXTENSIONS = [
-            "ttf",
-            "otf",
-        ]
-        this.extensions = FONT_FILE_EXTENSIONS.reduce((arr, t) => {
-            arr.push(`.${t}`);
-            arr.push(`.${t.toUpperCase()}`);
-            return arr;
-        }, []);
+    }
+    // return the render properties (or defaults) for the rune
+    return {
+        class: fontclass || "rune-token",
+        text: charvalue || `(${token.replace('_',' ')})`,
     }
 }
 
@@ -272,6 +301,23 @@ function fontUrlToName(str) {
     result = result.replace(/([a-z])([A-Z0-9])/g, "$1 $2");
 
     return result;
+}
+
+function generateRuneFontCSSRules(fonts) {
+    let rules = [];
+    for ( const [index,v] of Object.entries(fonts) ) {
+        let fallback = '"Roboto", sans-serif';
+        let name = v.name;
+        let url = v.url;
+        let ext = url.split('.').pop().toUpperCase();
+        let format = {
+            "TTF": "truetype",
+            "OTF": "opentype",
+        }[ext];
+        rules.push(`@font-face { font-family: "${name}"; src: url("${url}") format("${format}"); }`);
+        rules.push(`.rune-font${index} { font-family: "${name}", ${fallback}; }`);
+    }
+    return rules;
 }
 
 export function setRuneCSSRules(rules=[]) {
@@ -312,4 +358,29 @@ export function setRuneCSSRules(rules=[]) {
 /* mark the form as having font changes to handle */
 function setFontUpdates() {
     $('input[name="fontupdate"]').prop('checked', true);
+}
+
+/* FilePicker with support for font file extensions */
+class FontFilePicker extends FilePicker {
+    constructor(options={}) {
+
+        // Localization for custom title
+        if (!game.i18n.translations.FILES.TitleFont) {
+            game.i18n.translations.FILES.TitleFont = game.i18n.localize('QUESTWORLDS.FontBrowser');
+        }
+        options['type'] = 'font';   // induces attempt to use TitleFont key
+
+        options['activeSource'] = 'data';
+
+        super(options);
+        const FONT_FILE_EXTENSIONS = [
+            "ttf",
+            "otf",
+        ]
+        this.extensions = FONT_FILE_EXTENSIONS.reduce((arr, t) => {
+            arr.push(`.${t}`);
+            arr.push(`.${t.toUpperCase()}`);
+            return arr;
+        }, []);
+    }
 }
