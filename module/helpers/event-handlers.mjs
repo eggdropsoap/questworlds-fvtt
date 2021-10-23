@@ -1,5 +1,6 @@
 import { QuestWorldsItem } from "../documents/item.mjs";
 import { QuestWorldsItemSheet } from "../sheets/item-sheet.mjs";
+import { moveIndex } from "../utils.mjs";
 import { gsap/*, CSSPlugin, Power4, Back, Expo, Power1, Power2, Power3*/ } from "/scripts/greensock/esm/all.js";
 
 
@@ -283,9 +284,7 @@ export class GalleryControls {
       // get gallery, convert to array
       const galleryArray = Object.values(actor.data.data.gallery);
       // insert ahead of target
-      const entry = galleryArray[sourceIndex];
-      galleryArray.splice(sourceIndex,1);
-      galleryArray.splice(targetIndex,0,entry);
+      moveIndex(galleryArray,sourceIndex,targetIndex);
       // reserialize as an object
       const galleryObj = Object.assign({},galleryArray);
 
