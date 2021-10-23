@@ -39,9 +39,19 @@ div#rune-fonts-settings-menu {
     color: rgba(0,0,0,70%);
 }
 
-#rune-settings table#built-in-runes thead th {
+#rune-settings table#built-in-runes thead th[draggable="true"] {
     position: relative;
+    cursor: grab;
 }
+#rune-settings table#built-in-runes thead th[draggable="true"]:active {
+    cursor: grabbing;
+    box-shadow: inset 0 0 0 1px #f0f0e0;
+} 
+#rune-settings table#built-in-runes thead th:active:hover .font-controls {
+    /* visibility: hidden; */
+    display: none;
+} 
+
 #rune-settings table#built-in-runes thead th .font-controls {
     visibility: hidden;
     position: absolute;

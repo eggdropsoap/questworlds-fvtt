@@ -40,7 +40,7 @@
                 <th>{{localize 'QUESTWORLDS.Rune'}}</th>
                 {{!-- List of fonts --}}
                 {{# each fonts as | font |}}
-                <th>
+                <th draggable="true">
                     <div class="font-name">{{font.name}}</div>
                     <div>
                         <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
