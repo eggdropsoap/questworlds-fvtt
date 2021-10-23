@@ -271,12 +271,12 @@
                 },
                 "Fonts": {
                     "AddFont": "Add Font",
+                    "RemoveFont": "Remove Font",
                     "NumberInstalled": "Number of installed fonts"
                 },
     
                 "dialog": {
-                    "TrashWarning": "All configurations for this font will be forgotten.",
-                    "RemoveFont": "Remove Font"
+                    "TrashWarning": "All configurations for this font will be forgotten."
                 }
     
             },
