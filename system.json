@@ -9,6 +9,7 @@
 	"changelog": "CHANGELOG.md",
 	"bugs": "",
 	"minimumCoreVersion": "0.8.8",
+	"compatibleCoreVersion": "0.8.8",
 	"esmodules": [
 		"module/qw.mjs",
 		"../scripts/greensock/esm/gsap-core.js"
