@@ -14,9 +14,14 @@
         "PhysicalDescription": "Physical Description",
         "StoryPoints": "Story Points",
         "HeroPoints": "Hero Points",
-        "UnspentXP": "Unspent XP",
-        "EarnedXP": "Earned XP",
-        "AsYouGoPoints": "Improvement Points",
+        "XP": "XP",
+        "ExperiencePoints": "Experience Points",
+        "CareerXP": "Career XP",
+        "AbilitySlots": "Ability Slots",
+        "ImprovementPoints": "Improvement Points",
+        "Any": "Any",
+        "Advance": "Advance",
+        "Advances": "Advances",
 
         "NPC": {
             "PublicKnowledge": "Common Knowledge",
