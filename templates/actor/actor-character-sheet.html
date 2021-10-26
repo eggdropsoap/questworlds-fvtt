@@ -57,9 +57,10 @@
 
         <div class="resource flex-group-center">
           <label for="data.points.xp" class="resource-label">{{localize 'QUESTWORLDS.XP'}}</label>
-          <input type="text" name="data.points.advances" value="{{data.points.advances}}" data-dtype="Number"/>
+          {{>"systems/questworlds/templates/actor/parts/actor-xp-bar.html"}}
           <input type="text" name="data.points.xp" value="{{data.points.xp}}" data-dtype="Number"/>
           <input type="text" name="data.points.careerXp" value="{{data.points.careerXp}}" data-dtype="Number"/>
+          <input type="text" name="data.points.advances" value="{{data.points.advances}}" data-dtype="Number"/>
         </div>
 
         <div class="resource flex-group-center">

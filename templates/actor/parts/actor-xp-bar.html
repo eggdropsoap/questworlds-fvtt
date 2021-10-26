@@ -1,0 +1,8 @@
+{{log this}}
+<div class="xp-bar-wrapper flexcol">
+    <div class="xp-bar-meter grid grid-{{settings.advanceXP}}col">
+        {{#repeat settings.advanceXP}}
+        <div class="tick {{#if (lt @index data.points.xp)}}filled{{else}}empty{{/if}}"></div>
+        {{/repeat}}
+    </div>
+</div>

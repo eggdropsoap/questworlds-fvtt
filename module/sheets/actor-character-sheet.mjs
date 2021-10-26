@@ -53,7 +53,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     context.settings = {
       "useRunes": game.settings.get("questworlds","useRunes"),
       "sidekickName": game.settings.get("questworlds","sidekickName"),
-      "keywordBreakout": game.settings.get("questworlds","keywordBreakout")
+      "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
+      "advanceXP": 10,  // TODO: get from a setting
     };
     
     // Prepare character data and items.
