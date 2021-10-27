@@ -982,6 +982,9 @@
 
 
 /* xp bar */
+.questworlds.actor.sheet .character .xp-bar-wrapper {
+  align-self: center;
+}
 .questworlds.actor.sheet .character .xp-bar-wrapper .xp-bar-meter,
 .questworlds.actor.sheet .character .xp-bar-wrapper .xp-bar-scale {
   gap: 0px;
@@ -1021,6 +1024,27 @@
 
 /* end xp bar */
 
+/* advances indicator */
+
+.questworlds.actor.sheet .character .advances {
+  --size: 26px;
+  width: var(--size);
+  line-height: var(--size);
+  flex-basis: var(--size);
+  /* height: 24px; */
+  /* float: left; */
+  margin-right: 1px;
+  background-image: url(/systems/questworlds/assets/levelup-empty.svg);
+  background-repeat: no-repeat;
+  background-size: var(--size) var(--size);
+  font-size: calc(var(--size) / 2);
+  color: rgb(36, 36, 36);
+  font-weight: bold;
+  text-align: center;
+  margin: 5px 5px;
+  filter: drop-shadow(0px 0px 3px white);
+}
+/* end advances indicator */
 
 
 /* ability editing dialogs */
