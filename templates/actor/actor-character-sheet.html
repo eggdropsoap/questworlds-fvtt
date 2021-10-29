@@ -59,7 +59,7 @@
           <label for="data.points.xp" class="resource-label">{{localize 'QUESTWORLDS.XP'}}</label>
           <div class="flexrow">
             {{>"systems/questworlds/templates/actor/parts/actor-xp-bar.html"}}
-            <div class="advances flex0">
+            <div class="advances flex0 {{#if data.points.advances}}available new{{/if}}">
               {{data.points.advances}}
             </div>
           </div>
