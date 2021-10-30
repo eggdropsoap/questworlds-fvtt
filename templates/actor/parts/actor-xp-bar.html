@@ -5,4 +5,9 @@
         <div class="tick {{#if (lt @index data.points.xp)}}filled{{else}}empty{{/if}}"></div>
         {{/repeat}}
     </div>
+    <div class="labels flexrow">
+        <label for="data.points.xp" class="label">{{data.points.xp}} {{localize 'QUESTWORLDS.XP'}}</label>
+        <a class="xp-control" data-action="add"><i class="fas fa-plus"></i> Add</a>
+        <label for="data.points.careerXp" class="label">{{data.points.careerXp}} {{localize 'QUESTWORLDS.CareerXP'}}</label>    
+    </div>
 </div>
