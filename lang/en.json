@@ -202,7 +202,10 @@
 
             "RemoveGalleryImage": "Remove Gallery Image",
             "RemoveGalleryImageL1": "Remove this image from the gallery?",
-            "RemoveGalleryImageL2": "(The image file will not be deleted.)"
+            "RemoveGalleryImageL2": "(The image file will not be deleted.)",
+
+            "AddXPTitle": "Add XP",
+            "AddXPMessage": "Award 1 XP to {name}?"
         },
 
         "chatcontest" : {
@@ -269,6 +272,11 @@
             "baseDifficultyN": "Base Difficulty",
             "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
     
+            "XPtoAdvanceN": "XP Per Advance",
+            "XPtoAdvanceH": "How many XP a PC needs to earn to gain an Advance. 10 XP is the default.",
+            "NormalXP": "10 XP",
+            "HalfXP": "5 XP",
+
             "RuneMenu": {
                 "Builtins": {
                     "Header": "Configure Fonts for Built-in Runes",

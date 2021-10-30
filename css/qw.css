@@ -1122,8 +1122,7 @@
   min-width: 50px;
   height: 15px;
   flex: 0;
-  /* font-size: 0.5rem; */
-  /* border: 1px solid black; */
+  display: none;
 }
 .questworlds.actor.sheet .character .xp-bar-wrapper .labels a.xp-control:hover {
   color: rgb(36,36,36);

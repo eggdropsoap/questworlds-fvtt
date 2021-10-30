@@ -173,10 +173,51 @@ export class FieldHelpers {
 
 }
 
+export class XPControls {
+
+  static onClickAddXP(event) {
+    event.preventDefault();
+    const name = this.object.data.name;
+
+    function _doAddXP(event) {
+      const requiredXP = game.settings.get('questworlds','XPtoAdvance');
+      // const e = event.currentTarget;
+      const pc = this.object;
+      const points = {
+        xp: pc.data.data.points.xp,
+        careerXp: pc.data.data.points.careerXp,
+        advances: pc.data.data.points.advances,
+      };
+      points.xp++;
+      points.careerXp++;
+      if (points.xp >= requiredXP) {
+        points.advances++;
+        points.xp = 0;
+      }
+      pc.update({'data.points': points})
+
+    }
+
+    const content = '<p>' +
+      game.i18n.format('QUESTWORLDS.dialog.AddXPMessage', {name: name}) +
+      '</p>';
+
+    Dialog.confirm({
+      title: game.i18n.localize('QUESTWORLDS.dialog.AddXPTitle'),
+      content: content,
+      yes: () => _doAddXP.bind(this)(event),
+      no: () => {},
+      defaultYes: false
+    });
+    
+  }
+
+}
+
 export class GalleryControls {
 
   static onClickAdd(event) {
-    event.preventDefault()
+    event.preventDefault();
     // ui.notifications.info('Add art button clicked');
 
     const e = event.currentTarget;

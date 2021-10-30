@@ -64,7 +64,7 @@ export const registerSystemSettings = function() {
         type: Boolean,
         default: false,
     });
-    
+
     /**
      * Current base difficulty. Starts at value set by difficultyTable.
      */
@@ -76,7 +76,7 @@ export const registerSystemSettings = function() {
         type: Number,
         default: 10,    // to initially match default choice of difficultyTable at world-creation
     });
-        
+
     /**
      * What difficulty table to use. Also (re)sets the baseDifficulty setting!
      */
@@ -100,6 +100,22 @@ export const registerSystemSettings = function() {
         },
     });
 
+    /**
+     * How many XP earns one Advance
+     */
+    game.settings.register("questworlds", "XPtoAdvance",{
+        name: "QUESTWORLDS.SETTINGS.XPtoAdvanceN",
+        hint: "QUESTWORLDS.SETTINGS.XPtoAdvanceH",
+        scope: "world",
+        config: true,
+        type: Number,
+        choices: {
+            10: "QUESTWORLDS.SETTINGS.NormalXP",
+            5: "QUESTWORLDS.SETTINGS.HalfXP"
+        },
+        default: 10,
+    });
+
 
     /** ** ** ** ** ** ** ** ** ** ** ** **
      *   Rune fonts configuration menu    *
@@ -114,7 +130,7 @@ export const registerSystemSettings = function() {
         restricted: true,                   // Restrict this submenu to gamemaster only?
         width: 620,           // initial width (doesn't work?)
     });
-    
+
     game.settings.register('questworlds', 'runeFontSettings', {
         scope: 'world',     // "world" = sync to db, "client" = local storage
         config: false,      // we will use the menu above to edit this setting
