@@ -212,6 +212,49 @@ export class XPControls {
     
   }
 
+  static async openAdvancesHistory(event) {
+    event.preventDefault();
+    ui.notifications.info('Advance History panel');
+
+    const sheetContext = this.getData();
+
+    const panelContext = {
+      advances: sheetContext.data.advanceHistory,
+      title: game.i18n.localize('QUESTWORLDS.AdvancePanels.AdvanceHistory'),
+      cssClass: "advanceHistory",
+      XPtoAdvance: game.settings.get('questworlds','XPtoAdvance'),
+    }
+
+    const content = await renderTemplate("/systems/questworlds/templates/dialog/advances-history.html", panelContext);
+
+    // const options = {
+    //   width: 200,
+    //   height: 400,
+    //   // top: 500,
+    //   // left: 500
+    // };
+
+    Dialog.prompt({
+      title: game.i18n.localize('QUESTWORLDS.Advances'),
+      content: content,
+      label: game.i18n.localize('Close'),
+      callback: () => {},
+    });//, options);
+  }
+
+  static async dismissNewAdvanceNotice(event) {
+    event.preventDefault();
+    const target = event.currentTarget;
+    $(target).removeClass('new');
+  }
+
+  static async openAdvancesPanel(event) {
+    event.preventDefault();
+    ui.notifications.info('Advance Selection panel');
+
+
+  }
+
 }
 
 export class GalleryControls {

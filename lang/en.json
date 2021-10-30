@@ -246,6 +246,23 @@
             }
         },
 
+        "AdvancePanels": {
+            "AdvanceHistory": "History of Advances"
+        },
+
+        "AdvanceOptions": {
+            "AbilityPoints": "10 ability improvement points",
+            "KeywordPoints": "5 keyword improvement points",
+            "ImproveBreakout": "Raise one breakout ability",
+            "NewBreakout": "Gain a new breakout ability",
+            "NewAbility": "Gain a new standalone ability",
+            "PromoteAbility": "Turn an ability into a keyword with a new breakout ability",
+            "BuyoffFlaw": "Buy off or convert a flaw",
+            "ReplacementSidekick": "Replace a lost supporting character",
+            "AddFlaw": "Add a new flaw",
+
+            "None": "No advances yet. Earn {xp} XP to unlock your first advance."
+        },
 
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",
         "keywordPackageOptionName": "Package (Stand-alone Abilities)",

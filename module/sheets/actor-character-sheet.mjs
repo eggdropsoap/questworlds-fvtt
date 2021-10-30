@@ -216,6 +216,11 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
         .show();
     }
 
+    // Advances control
+    html.on('click','.advances.history',XPControls.openAdvancesHistory.bind(this));
+    html.on('click','.advances.available.new',XPControls.dismissNewAdvanceNotice.bind(this));
+    html.on('click','.advances.available',XPControls.openAdvancesPanel.bind(this));
+
     // Art gallery controls
     html.find('.tab.art .gallery')
       .on('click','a[data-action="add"]',GalleryControls.onClickAdd.bind(this))
