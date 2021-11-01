@@ -4,6 +4,7 @@ import { tokenMarkupToHTML } from "../helpers/rune-helpers.mjs";
 import { doItemTween } from "../documents/item.mjs";
 import { GalleryControls } from "../helpers/event-handlers.mjs";
 import { ContentEditableHelper } from "../helpers/event-handlers.mjs";
+import { XPControls } from "../helpers/event-handlers.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -53,7 +54,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     context.settings = {
       "useRunes": game.settings.get("questworlds","useRunes"),
       "sidekickName": game.settings.get("questworlds","sidekickName"),
-      "keywordBreakout": game.settings.get("questworlds","keywordBreakout")
+      "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
+      "advanceXP": game.settings.get('questworlds','XPtoAdvance'),
     };
     
     // Prepare character data and items.
@@ -206,6 +208,18 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
         ContextMenus.ConvertToMenu($(control));
       }  
     }
+
+    // Add XP
+    if (game.user.isGM) {
+      html.find('.xp-control[data-action="add"]')
+        .on('click',XPControls.onClickAddXP.bind(this))
+        .show();
+    }
+
+    // Advances control
+    html.on('click','.advances.history',XPControls.openAdvancesHistory.bind(this));
+    html.on('click','.advances.available.new',XPControls.dismissNewAdvanceNotice.bind(this));
+    html.on('click','.advances.available',XPControls.openAdvancesPanel.bind(this));
 
     // Art gallery controls
     html.find('.tab.art .gallery')

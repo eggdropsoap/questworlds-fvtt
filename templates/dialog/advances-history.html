@@ -1,0 +1,37 @@
+<div class="flexcol {{cssClass}}" autocomplete="off">
+    <style>
+        .advanceHistory div.container {
+            margin: 1em auto;
+        }
+        .advanceHistory h2 {
+            width: max-content;
+            margin: 0 auto;
+        }
+        .advanceHistory li.none {
+            list-style: none;
+            margin-left: -1.5em;
+            text-align: center;
+            font-style: italic;
+            color: rgb(0,0,0,0.6);
+            margin-bottom: 0.6em;
+            margin-top: 0.6em;
+        }
+    </style>
+    <h2>{{title}}</h2>
+    <div class="container">
+        <ol>
+            {{#each advances as |advance|}}
+            <li>
+                <ul>
+                    {{# each advance.options as |option|}}
+                        <li>{{localize option.name}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+            {{else}}
+            <li class="none">{{localize 'QUESTWORLDS.AdvanceOptions.None' xp=XPtoAdvance}}</li>
+            <li class="none">&#x2767;</li>
+            {{/each}}
+        </ol>
+    </div>
+</div>

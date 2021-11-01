@@ -13,11 +13,18 @@
         "biography": "",
         "gallery": {},
         "points": {
-            "asyougo": 20,
+            "abilitySlots": 12,
+            "improvement": {
+              "asYouGo": 20,
+              "ability": 0,
+              "keyword": 0
+            },
             "hero": 0,
-            "unspent_xp": 0,
-            "earned_xp": 0
-        }
+            "xp": 0,
+            "careerXp": 0,
+            "advances": 0
+        },
+        "advanceHistory": {}
       },
       "npc": {
         "templates": ["base"],

@@ -103,6 +103,24 @@ export function registerHandlebarsHelpers() {
         return new Handlebars.SafeString(`<span class="${spanClass}" title="${spanTitle}">${spanText}</span>`);
         }
     });
+
+    Handlebars.registerHelper('repeat', function (number, options) {
+        const repeat = Number.parseInt(number);
+        
+        if (Number.isInteger) {
+            if (repeat < 1) return;
+
+            let outStr = "";
+            for (let i=0; i < repeat; i++) {
+                options.data.index = i;
+                outStr += options.fn(this);
+            }
+            console.log('options',options);
+            return new Handlebars.SafeString(outStr);
+        } else {
+            throw new Error("Cannot repeat block a non-integer number of times");
+        }
+    });
     
     Handlebars.registerHelper('whichItemPartial', function (itemType, variantType) {
         let template = "systems/questworlds/templates/actor/parts/actor-abilities-" + variantType + ".html";

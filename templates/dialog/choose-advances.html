@@ -1,0 +1,48 @@
+<div class="flexcol choose-advances" autocomplete="off">
+    <form>
+        <style>
+            .choose-advances ul {
+                list-style: none;
+            }
+            .choose-advances ul li {
+                margin-bottom: 0.5em;
+            }
+            .choose-advances ul li.flexrow {
+                align-items: center;
+            }
+            .choose-advances input,
+            .choose-advances select,
+            .choose-advances label {
+                cursor: pointer;
+            }
+            .choose-advances input[type="checkbox"] + label {
+                max-width: min-content;
+                white-space: nowrap;
+                padding-right: 0.6em;
+            }
+        </style>
+        <h2>{{localize 'QUESTWORLDS.AdvancePanels.BuyAdvance'}}</h2>
+        <p class="hint">{{localize 'QUESTWORLDS.AdvancePanels.BuyAdvanceH'}}</p>
+        <div class="box flexcol">
+            <ul>
+                <li>
+                    <select name="choice1" class="advance-option">
+                        {{selectOptions options selected=choice1 localize=true}}
+                    </select>        
+                </li>
+                <li>
+                    <select name="choice2" class="advance-option">
+                        {{selectOptions options selected=choice2 localize=true}}
+                    </select>        
+                </li>
+            </ul>
+        </div>
+        <p class="hint">{{localize 'QUESTWORLDS.AdvancePanels.AddFlawH'}}</p>
+        <ul>
+            <li class="flexrow">
+                <input type="checkbox" id="newflaw" name="newflaw">
+                <label for="newflaw">{{localize 'QUESTWORLDS.AdvanceOptions.AddFlaw'}}</label>        
+            </li>
+        </ul>
+    </form>
+</div>

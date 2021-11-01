@@ -14,9 +14,14 @@
         "PhysicalDescription": "Physical Description",
         "StoryPoints": "Story Points",
         "HeroPoints": "Hero Points",
-        "UnspentXP": "Unspent XP",
-        "EarnedXP": "Earned XP",
-        "AsYouGoPoints": "Improvement Points",
+        "XP": "XP",
+        "ExperiencePoints": "Experience Points",
+        "CareerXP": "Career XP",
+        "AbilitySlots": "Ability Slots",
+        "ImprovementPoints": "Improvement Points",
+        "Any": "Any",
+        "Advance": "Advance",
+        "Advances": "Advances",
 
         "NPC": {
             "PublicKnowledge": "Common Knowledge",
@@ -47,7 +52,9 @@
 
         
         "Keyword": "Keyword",
+        "Keywords": "Keywords",
         "Ability": "Ability",
+        "Abilities": "Abilities",
         "Sidekick": "Sidekick",
         "Companion": "Companion",
         "Breakout": "Breakout",
@@ -195,7 +202,10 @@
 
             "RemoveGalleryImage": "Remove Gallery Image",
             "RemoveGalleryImageL1": "Remove this image from the gallery?",
-            "RemoveGalleryImageL2": "(The image file will not be deleted.)"
+            "RemoveGalleryImageL2": "(The image file will not be deleted.)",
+
+            "AddXPTitle": "Add XP",
+            "AddXPMessage": "Award 1 XP to {name}?"
         },
 
         "chatcontest" : {
@@ -236,6 +246,27 @@
             }
         },
 
+        "AdvancePanels": {
+            "AdvanceHistory": "History of Advances",
+            "BuyAdvance": "Buy Advance",
+            "BuyAdvanceH": "Choose two options for this advance:",
+            "AddFlawH": "You may optionally add a new flaw:",
+            "ValidationWarning": "Both options must be chosen to use an Advance."
+        },
+
+        "AdvanceOptions": {
+            "AbilityPoints": "10 ability improvement points",
+            "KeywordPoints": "5 keyword improvement points",
+            "ImproveBreakout": "Raise one breakout ability",
+            "NewBreakout": "Gain a new breakout ability",
+            "NewAbility": "Gain a new standalone ability",
+            "PromoteAbility": "Turn an ability into a keyword with a new breakout ability",
+            "BuyoffFlaw": "Buy off or convert a flaw",
+            "ReplacementSidekick": "Replace a lost supporting character",
+            "AddFlaw": "Add a new flaw",
+
+            "None": "No advances yet. Earn {xp} XP to unlock your first advance."
+        },
 
         "keywordUmbrellaOptionName": "Umbrella (Breakout Abilities)",
         "keywordPackageOptionName": "Package (Stand-alone Abilities)",
@@ -262,6 +293,11 @@
             "baseDifficultyN": "Base Difficulty",
             "baseDifficultyH": "The current base difficulty used in contests. Starts at the default corresponding to the Difficulty Levels Table chosen. If using increasing base difficulty rules, increment this setting to increase the base difficulty. (Warning! Resets to default base difficulty when the Difficulty Levels Table setting is changed.)",
     
+            "XPtoAdvanceN": "XP Per Advance",
+            "XPtoAdvanceH": "How many XP a PC needs to earn to gain an Advance. 10 XP is the default.",
+            "NormalXP": "10 XP",
+            "HalfXP": "5 XP",
+
             "RuneMenu": {
                 "Builtins": {
                     "Header": "Configure Fonts for Built-in Runes",
