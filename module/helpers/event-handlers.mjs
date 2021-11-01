@@ -315,23 +315,36 @@ export class XPControls {
         },
       },
       default: "saveButton",
+      render: disableSaveButton,
     }).render(true);
+
+    function disableSaveButton(html) {
+      const saveButton = html.filter('.dialog-buttons').find('.saveButton');
+      if (saveButton.length){
+        saveButton[0].disabled = true;
+      }
+    }
 
     function _updateAdvances(html,actor) {
       const formElement = $(html).find('form')[0];
       const form = new FormDataExtended(formElement);
       const data = form.toObject();
 
+      if (data.choice1 == '' || data.choice2 == '') {
+        ui.notifications.warn(game.i18n.localize('QUESTWORLDS.AdvancePanels.ValidationWarning'));
+        return;
+      }
+
       const points = actor.data.data.points;
       const advanceHistory = actor.data.data.advanceHistory;
 
-      let newAdvanceOptions = [];
-      newAdvanceOptions.push(["0",ADVANCE_OPTIONS[data.choice1]]);
-      newAdvanceOptions.push(["1",ADVANCE_OPTIONS[data.choice2]]);
+      const newOptionsArr = [];
+      newOptionsArr.push(["0",ADVANCE_OPTIONS[data.choice1]]);
+      newOptionsArr.push(["1",ADVANCE_OPTIONS[data.choice2]]);
       if (data.newflaw) {
-        newAdvanceOptions.push(["2",ADVANCE_OPTIONS['NEW_FLAW']]);
+        newOptionsArr.push(["2",ADVANCE_OPTIONS['NEW_FLAW']]);
       }
-      newAdvanceOptions = Object.fromEntries(newAdvanceOptions);
+      const newOptionsObj = Object.fromEntries(newOptionsArr);
   
       let donothing;
     }
@@ -340,21 +353,39 @@ export class XPControls {
       const optionSelect = 'div.choose-advances form select.advance-option';
       
       $(document)
-        .on('input',optionSelect,_disableSiblingChoice);
+        .on('input',optionSelect,_onSelectInput);
 
-      function _disableSiblingChoice(event) {
-        const option = event.currentTarget.value;
-        if (!option) return;
-        const name = event.currentTarget.name;
-        const target = name == 'choice1' ? 'choice2' : 'choice1';
+      function _onSelectInput(event) {
+        const e = event.currentTarget;
+        const dialog = $(e).closest('.window-content');
+        const option = e.value;
+        const name = e.name;
+        const sibling = name == 'choice1' ? 'choice2' : 'choice1';
+        const form = $(dialog).find('div.choose-advances form');
+        const saveButton = $(dialog).find('.dialog-buttons .saveButton')[0];
 
-        // ui.notifications.info(`${name} changed`);
-
-        const form = $(document).find('div.choose-advances form');
-        form.find(`select[name="${target}"] option`)
+        // enable all options in sibling select
+        form.find(`select[name="${sibling}"] option`)
           .removeAttr('disabled');
-        form.find(`select[name="${target}"] option[value="${option}"]`)[0]
-          .disabled = true;
+
+        // if new option is the blank option, disable the Save button,
+        // else
+        //    disable the matching option in the sibling
+        //    & if both options are chosen
+        //      then enable Save button
+        if (option == '') {
+          // disable save button
+          saveButton.disabled = true;
+        } else {
+          // disable matching option in sibling select
+          form.find(`select[name="${sibling}"] option[value="${option}"]`)[0].disabled = true;
+          // are both options chosen yet?
+          const valid = form.find('select option:selected').get().reduce((a,b) => { return a && b.value != '' },true);  // reduces to true if all select non-empty
+          if (valid) {
+            // enable Save button
+            saveButton.disabled = false;
+          }
+        }
       }
     }
 
