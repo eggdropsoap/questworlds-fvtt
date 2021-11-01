@@ -207,7 +207,7 @@ export class XPControls {
       content: content,
       yes: () => _doAddXP.bind(this)(event),
       no: () => {},
-      defaultYes: false
+      defaultYes: true
     });
     
   }
