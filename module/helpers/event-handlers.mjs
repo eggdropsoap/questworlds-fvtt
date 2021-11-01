@@ -214,7 +214,6 @@ export class XPControls {
 
   static async openAdvancesHistory(event) {
     event.preventDefault();
-    ui.notifications.info('Advance History panel');
 
     const sheetContext = this.getData();
 
@@ -226,13 +225,6 @@ export class XPControls {
     }
 
     const content = await renderTemplate("/systems/questworlds/templates/dialog/advances-history.html", panelContext);
-
-    // const options = {
-    //   width: 200,
-    //   height: 400,
-    //   // top: 500,
-    //   // left: 500
-    // };
 
     Dialog.prompt({
       title: game.i18n.localize('QUESTWORLDS.Advances'),
@@ -250,8 +242,121 @@ export class XPControls {
 
   static async openAdvancesPanel(event) {
     event.preventDefault();
-    ui.notifications.info('Advance Selection panel');
 
+    _activateListeners();
+
+    const sheetContext = this.getData();
+    const actor = this.actor;
+
+    const ADVANCE_OPTIONS = {
+      ABILITY_POINTS_1: {
+        name: "QUESTWORLDS.AdvanceOptions.AbilityPoints",
+      },
+      ABILITY_POINTS_2: {
+        name: "QUESTWORLDS.AdvanceOptions.AbilityPoints",
+      },
+      KEYWORD_POINTS_1: {
+        name: "QUESTWORLDS.AdvanceOptions.KeywordPoints",
+      },
+      KEYWORD_POINTS_2: {
+        name: "QUESTWORLDS.AdvanceOptions.KeywordPoints",
+      },
+      IMPROVE_BREAKOUT: {
+        name: "QUESTWORLDS.AdvanceOptions.ImproveBreakout",
+      },
+      NEW_BREAKOUT: {
+        name: "QUESTWORLDS.AdvanceOptions.NewBreakout",
+      },
+      NEW_ABILITY: {
+        name: "QUESTWORLDS.AdvanceOptions.NewAbility",
+      },
+      PROMOTE_ABILITY: {
+        name: "QUESTWORLDS.AdvanceOptions.PromoteAbility",
+      },
+      BUYOFF_FLAW: {
+        name: "QUESTWORLDS.AdvanceOptions.BuyoffFlaw",
+      },
+      REPLACEMENT_SK: {
+        name: "QUESTWORLDS.AdvanceOptions.ReplacementSidekick",
+      },
+      NEW_FLAW: {
+        name: "QUESTWORLDS.AdvanceOptions.AddFlaw",
+      },
+    }
+
+    let selectOptions = Object.entries(ADVANCE_OPTIONS)
+      .reduce( (list, entry) => {
+        list.push([entry[0],entry[1].name]);
+        return list;
+      },[]);
+    selectOptions.unshift(['','']);   // blank top entry
+    selectOptions.pop();              // remove NEW_FLAW entry from end
+    selectOptions = Object.fromEntries(selectOptions);  // turn into indexed Object
+
+    const panelContext = {
+      advances: sheetContext.data.advanceHistory,
+      options: selectOptions,
+    }
+
+    const content = await renderTemplate("/systems/questworlds/templates/dialog/choose-advances.html", panelContext);
+
+    new Dialog({
+      title: game.i18n.localize('QUESTWORLDS.Advances'),
+      content: content,
+      buttons: {
+        saveButton: {
+          label: game.i18n.localize('QUESTWORLDS.dialog.Save'),
+          icon: `<i class="fas fa-save"></i>`,
+          callback: (html) => _updateAdvances(html,actor),
+        },
+        cancelButton: {
+          label: game.i18n.localize('QUESTWORLDS.dialog.Cancel'),
+          icon: `<i class="fas fa-times"></i>`
+        },
+      },
+      default: "saveButton",
+    }).render(true);
+
+    function _updateAdvances(html,actor) {
+      const formElement = $(html).find('form')[0];
+      const form = new FormDataExtended(formElement);
+      const data = form.toObject();
+
+      const points = actor.data.data.points;
+      const advanceHistory = actor.data.data.advanceHistory;
+
+      let newAdvanceOptions = [];
+      newAdvanceOptions.push(["0",ADVANCE_OPTIONS[data.choice1]]);
+      newAdvanceOptions.push(["1",ADVANCE_OPTIONS[data.choice2]]);
+      if (data.newflaw) {
+        newAdvanceOptions.push(["2",ADVANCE_OPTIONS['NEW_FLAW']]);
+      }
+      newAdvanceOptions = Object.fromEntries(newAdvanceOptions);
+  
+      let donothing;
+    }
+
+    function _activateListeners() {
+      const optionSelect = 'div.choose-advances form select.advance-option';
+      
+      $(document)
+        .on('input',optionSelect,_disableSiblingChoice);
+
+      function _disableSiblingChoice(event) {
+        const option = event.currentTarget.value;
+        if (!option) return;
+        const name = event.currentTarget.name;
+        const target = name == 'choice1' ? 'choice2' : 'choice1';
+
+        // ui.notifications.info(`${name} changed`);
+
+        const form = $(document).find('div.choose-advances form');
+        form.find(`select[name="${target}"] option`)
+          .removeAttr('disabled');
+        form.find(`select[name="${target}"] option[value="${option}"]`)[0]
+          .disabled = true;
+      }
+    }
 
   }
 

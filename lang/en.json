@@ -247,7 +247,10 @@
         },
 
         "AdvancePanels": {
-            "AdvanceHistory": "History of Advances"
+            "AdvanceHistory": "History of Advances",
+            "BuyAdvance": "Buy Advance",
+            "BuyAdvanceH": "Choose two options for this advance:",
+            "AddFlawH": "You may optionally add a new flaw:"
         },
 
         "AdvanceOptions": {
