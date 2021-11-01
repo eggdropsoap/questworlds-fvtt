@@ -336,7 +336,7 @@ export class XPControls {
       }
 
       const points = actor.data.data.points;
-      const advanceHistory = actor.data.data.advanceHistory;
+      const history = actor.data.data.advanceHistory;
 
       const newOptionsArr = [];
       newOptionsArr.push(["0",ADVANCE_OPTIONS[data.choice1]]);
@@ -345,7 +345,33 @@ export class XPControls {
         newOptionsArr.push(["2",ADVANCE_OPTIONS['NEW_FLAW']]);
       }
       const newOptionsObj = Object.fromEntries(newOptionsArr);
+
+      // add new advance record to the existing history
+      const newIndex = Object.entries(history).length;  // history object indices guaranteed to be sequential
+      const newEntry = {
+        [newIndex]: {
+          options: newOptionsObj
+        }
+      };
   
+      // process point-changing options
+      for (const [key,option] of Object.entries(data)) {
+        if (['ABILITY_POINTS_1','ABILITY_POINTS_2'].includes(option)) {
+          // add 10 improvement points for abilities
+          points.improvement.ability += 10;
+        } else if (['KEYWORD_POINTS_1','KEYWORD_POINTS_2'].includes(option)) {
+          // add 5 improvement points for keywords
+          points.improvement.keyword += 5;
+        }
+      }
+
+      points.advances--;
+      actor.update({
+        'data.advanceHistory': newEntry,
+        'data.points': points,
+      });
+      
+
       let donothing;
     }
 
