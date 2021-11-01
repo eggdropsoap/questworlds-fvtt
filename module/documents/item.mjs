@@ -129,7 +129,7 @@ export class QuestWorldsItem extends Item {
 
         let label = `${rune}${name} ${fullRating}`;
 
-        console.log(itemType);
+        // console.log(itemType);
         // Benefits/consequences can't be rolled, send an info card message to chat
         if (itemType == 'benefit' || itemType == 'consequence') {
             fullRating = RatingHelper.format(rating,masteries,true);

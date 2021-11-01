@@ -115,7 +115,7 @@ export function registerHandlebarsHelpers() {
                 options.data.index = i;
                 outStr += options.fn(this);
             }
-            console.log('options',options);
+
             return new Handlebars.SafeString(outStr);
         } else {
             throw new Error("Cannot repeat block a non-integer number of times");
