@@ -276,7 +276,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return Item.create(itemData, {parent: this.actor, renderSheet: true});
   }
 
   _updateObject(event, formData) {
