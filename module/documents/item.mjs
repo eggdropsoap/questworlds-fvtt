@@ -288,6 +288,7 @@ export class QuestWorldsItem extends Item {
         const newEmbedType = a.dataset.type;
 
         const newBreakout = new EmbeddedAbility(newEmbedType,parentId);
+        const breakoutId = newBreakout.id;
         
         if (parentId) {
             // find the sub-ability to embed the new ability inside
@@ -300,8 +301,11 @@ export class QuestWorldsItem extends Item {
             embeds.push(newBreakout);
         }
 
-        // update the item data
-        item.update({'data.embeds': embeds});    
+        // update the item data & then show the edit dialog
+        item.update({'data.embeds': embeds})
+            .then(() => { _breakoutDialog(item,breakoutId) });
+
+
 
     } // createEmbed()
 
@@ -355,57 +359,8 @@ export class QuestWorldsItem extends Item {
 
         const a = event.currentTarget;
         const breakout_id = a.dataset.breakoutId;
-        const embeds = item.data.data.embeds;
-        const breakoutData = this.getEmbedById(embeds, breakout_id);
-        breakoutData.settings = {
-            useRunes: game.settings.get('questworlds','useRunes'),
-        }
-        breakoutData.cssClass = 'edit-ability';
 
-        
-        const dialogTitle = 'QUESTWORLDS.dialog.Editing' + breakoutData.type.capitalize();
-        const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", breakoutData);
-
-        new Dialog({
-            title: game.i18n.localize(dialogTitle),
-            content: dialogContent,
-            buttons: {
-                saveButton: {
-                    label: game.i18n.localize('QUESTWORLDS.dialog.Save'),
-                    icon: `<i class="fas fa-save"></i>`,
-                    callback: (html) => updateBreakout(html),
-                },
-                cancelButton: {
-                    label: game.i18n.localize('QUESTWORLDS.dialog.Cancel'),
-                    icon: `<i class="fas fa-times"></i>`
-                },
-            },
-            default: "saveButton"
-        }).render(true);
-
-        function updateBreakout(html) {
-            // get new info from the dialog
-            const newRunes = html.find('input[name="runes"]').val();
-            const newName = html.find('input[name="name"]').val();
-            // rationalize the rating and masteries
-            const newRating = RatingHelper.rationalize({
-                rating: Number.parseInt(html.find('input[name="rating"]').val()) || 0,
-                masteries: Number.parseInt(html.find('input[name="masteries"]').val()) || 0,
-            });
-
-            // extract a reference to the right breakout
-            const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
-
-            // update data in embeds via the reference
-            targetEmbed.runes = newRunes;
-            targetEmbed.name = newName;
-            targetEmbed.rating = newRating.rating;
-            targetEmbed.masteries = newRating.masteries;
-
-            //update the item data with copy contents
-            item.update({'data.embeds': embeds});
-        
-        } // updateBreakout()
+        _breakoutDialog(item,breakout_id);
         
     } // editEmbed()
 
@@ -459,3 +414,65 @@ export function doItemTween(target, action='remove', callback=null) {
         onComplete: callback,
     });
 }
+
+/**
+ * 
+ * @param {QuestWorldsItem} item The item that contains the embed to edit
+ * @param {String} breakout_id The ID of the embed to edit
+ */
+async function _breakoutDialog(item,breakout_id) {
+
+    const breakoutData = QuestWorldsItem.getEmbedById(item.data.data.embeds, breakout_id);
+    const context = foundry.utils.deepClone(breakoutData);
+    context.settings = {
+        useRunes: game.settings.get('questworlds','useRunes'),
+    }
+    context.cssClass = 'edit-ability';
+    
+    const dialogTitle = 'QUESTWORLDS.dialog.Editing' + context.type.capitalize();
+    const dialogContent = await renderTemplate("systems/questworlds/templates/dialog/breakout-edit.html", context);
+
+    new Dialog({
+        title: game.i18n.localize(dialogTitle),
+        content: dialogContent,
+        buttons: {
+            saveButton: {
+                label: game.i18n.localize('QUESTWORLDS.dialog.Save'),
+                icon: `<i class="fas fa-save"></i>`,
+                callback: (html) => _updateBreakout(html,item,breakout_id),
+            },
+            cancelButton: {
+                label: game.i18n.localize('QUESTWORLDS.dialog.Cancel'),
+                icon: `<i class="fas fa-times"></i>`
+            },
+        },
+        default: "saveButton"
+    }).render(true);
+
+    function _updateBreakout(html,item,breakout_id) {
+        const embeds = item.data.data.embeds;
+    
+        // get new info from the dialog
+        const newRunes = html.find('input[name="runes"]').val();
+        const newName = html.find('input[name="name"]').val();
+        // rationalize the rating and masteries
+        const newRating = RatingHelper.rationalize({
+            rating: Number.parseInt(html.find('input[name="rating"]').val()) || 0,
+            masteries: Number.parseInt(html.find('input[name="masteries"]').val()) || 0,
+        });
+    
+        // extract a reference to the right breakout
+        const targetEmbed = QuestWorldsItem.getEmbedById(embeds, breakout_id);
+    
+        // update data in embeds via the reference
+        targetEmbed.runes = newRunes;
+        targetEmbed.name = newName;
+        targetEmbed.rating = newRating.rating;
+        targetEmbed.masteries = newRating.masteries;
+    
+        //update the item data with copy contents
+        item.update({'data.embeds': embeds});
+    
+    } // _updateBreakout()
+
+} // _breakoutDialog
