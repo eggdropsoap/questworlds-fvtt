@@ -35,7 +35,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         let settingsRunesCount = Object.keys(settingData.runes).length;
         let defaultRunesCount = defaultRunes.length;
         if (settingsRunesCount < defaultRunesCount) {
-            console.log(`defaultRunes contains ${defaultRunesCount - settingsRunesCount} new Runes. Merging…`);
+            ui.notifications.info(`defaultRunes contains ${defaultRunesCount - settingsRunesCount} new Runes. Merging…`);
             // console.log(defaultRunes);
             // construct the settings object, merging from the default runes set
             for (let value of defaultRunes ) {
