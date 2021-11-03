@@ -331,27 +331,18 @@ export class QuestWorldsItem extends Item {
         let prunedAbility = removeFromTree(ability, breakout_id);
         if (!prunedAbility) { console.error(`prunedAbility is ${typeof(prunedEmbeds)}`); return };
 
-        /**
-         * animate the removal, then
-         * update the item after animation ends (or fails)
-         */
-        // $(breakout_id).slideUp(150).promise().always(
-        //   () => {console.log(`Slideup promise on ${breakout_id}`); item.update({'data.embeds': prunedAbility.embeds}) }
-        // );
-
         Dialog.confirm({
             title: event.currentTarget.title,
             content: "<p><strong>" + game.i18n.localize('AreYouSure') + "</strong></p>",
             yes: () => {
                 const breakout = `#${breakout_id}`;
-                doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });    
+                doItemTween(breakout,'delete', () => {
+                    item.update({'data.embeds': prunedAbility.embeds})
+                });
             },
             no: () => {},
             defaultYes: false
         });
-
-        // const breakout = `#${breakout_id}`;
-        // doItemTween(breakout,'delete', () => { item.update({'data.embeds': prunedAbility.embeds}) });
 
     } // deleteEmbed()
 
