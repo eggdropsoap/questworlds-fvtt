@@ -205,7 +205,10 @@
             "RemoveGalleryImageL2": "(The image file will not be deleted.)",
 
             "AddXPTitle": "Add XP",
-            "AddXPMessage": "Award 1 XP to {name}?"
+            "AddXPMessage": "Award 1 XP to {name}?",
+
+            "StartContestTitle": "Confirm Contest Tactic",
+            "StartContestMessage": "Begin a contest with this tactic?"
         },
 
         "chatcontest" : {

@@ -1,6 +1,7 @@
-v0.0.13 (2021-10-??):
+v0.0.13 (2021-11-??):
 
 - Overhaul recording of PCs' ability slots, improvement points, Story Points, XP, and advances.
+- Sheet UI improvements
 
 v0.0.12 (2021-10-23):
   

@@ -195,6 +195,23 @@ export class QuestWorldsItem extends Item {
                 masteries = rollData.item.masteries;
             }
 
+
+            // gate starting the chat contest card behind a confirmation dialog
+            let gatecheckPassed = false;
+            const message = '<div style="text-align: center; margin: 0 0 1em;">'
+            + `<p style="font-size: 1.1em"><strong>${label}</strong></p>`
+            + "<hr>"
+            +`<p>${game.i18n.localize('QUESTWORLDS.dialog.StartContestMessage')}</p>`
+            + "</div>"
+            await Dialog.confirm({
+                title: game.i18n.localize("QUESTWORLDS.dialog.StartContestTitle"),
+                content: message,
+                yes: () => { gatecheckPassed = true },
+                no:  () => { gatecheckPassed = false },
+            });
+            if (gatecheckPassed == false) return;
+
+
             // create the message first since we need the ID for the form
             const msg = await ChatMessage.create({
                 speaker: speaker,

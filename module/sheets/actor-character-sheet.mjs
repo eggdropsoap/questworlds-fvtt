@@ -199,6 +199,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Move item controls into context menu
     html.on("contextmenu",".item>.item-body",ContextMenus.ItemMenu.activate);
     html.on("contextmenu",".breakout>.breakout-body",ContextMenus.ItemMenu.activate);
+    html.on('mouseenter','.menu.active',ContextMenus.ItemMenu.keepAlive);
     html.on('mouseleave click',".menu.active",ContextMenus.ItemMenu.deactivate);
 
     // Move item list header controls into button-click menu

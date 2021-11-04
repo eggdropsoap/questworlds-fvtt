@@ -94,8 +94,11 @@ export class EmbedsEvents {
 
 export class ContextMenus {
 
+  static fading = false;
+
   static ItemMenu = {
     activate: (event) => {
+      this.fading = false;
       const menu = $(event.currentTarget).find('.menu');
       menu.addClass('active');
       const buttonHeight = menu.find('a').css('height').replace('px','');
@@ -120,15 +123,30 @@ export class ContextMenus {
       menu.css("top",top); 
       menu.css('left',left);
       gsap.to('.menu.active',{
-        // height: '40px',
-        opacity: 0.95,
-        duration: 0.1,
+        opacity: 1,
+        duration: 0.2,
       });
     },
 
     deactivate: (event) => {
-      $(event.currentTarget).removeClass('active');
+      this.fading = true;
+      this.currentTween = gsap.to('.menu.active',{
+        opacity: 0,
+        duration: 0.2,
+        delay: 0.5,
+      }).then( () => { $(event.currentTarget).removeClass('active'); });
     },
+
+    keepAlive: (event) => {
+      if (this.fading) {
+        this.fading = false;
+        gsap.killTweensOf('.menu.active');
+        gsap.to('.menu.active',{
+          opacity: 1,
+          duration: 0.05,
+        });
+      }
+    }
 
   };  // ItemMenu
 

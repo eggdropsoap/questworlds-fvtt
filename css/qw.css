@@ -873,8 +873,17 @@
 }
 
 
+.questworlds.sheet .item-body:hover,
+.questworlds.sheet .breakout-body:hover {
+  cursor: context-menu;
+}
 .questworlds.sheet.item .breakout-body:hover {
   background-color: rgba(0,0,0,0.05);
+  transition: 0.4s;
+}
+.questworlds.sheet.item .breakout-name a {
+  text-shadow: none;
+  cursor: context-menu;
 }
 
 /* PC sheet art gallery */
@@ -997,31 +1006,46 @@
   position: fixed;
   top: 0;   /* fallback position */
   left: 0;  /* fallback position */
-  /* border: 1px solid cornflowerblue; */
+  background-color: rgba(0,0,0,0);
+  width: max-content;
+  padding: 1em; /* buffer zone for hovering */
+  z-index: 1000;
+}
+.questworlds.sheet .menu.active .bg {
+  box-shadow: 0 0 15px black; /* rgb(68, 67, 62); */
   background-image: url("/ui/parchment.jpg");
   background-color: rgba(0,0,0,1);
-  width: max-content;
-  padding: 0 0.1em;
-  box-shadow: 0 0 15px black; /* rgb(68, 67, 62); */
-  border-radius: 0 6px 6px 6px;
-  z-index: 1000;
+  border-radius: 6px;
 }
 .questworlds.sheet .menu.active a {
   font-weight: normal;
   display: block;
-  /* border: 1px solid lightgreen; */
+  border: 1px solid transparent;
   border-bottom: 1px solid rgb(201,199,184);
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.5rem;
+  margin: 0;
   /* font-weight: bold; */
   font-size: 0.8rem;
+  transition: 0.1s ease-out;
+}
+.questworlds.sheet .menu.active a:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 .questworlds.sheet .menu.active a:last-child {
-  border-bottom: none;
+  border-bottom-color: transparent;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .questworlds.sheet .menu.active a:hover {
   /* text-shadow: 0 0 8px black; */
   text-shadow: none;
+  color: #f0f0e0;
+  background-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.5);
+  text-shadow: 1px 1px #000;
+  transition: 0.1s ease-in;
 }
 .questworlds.sheet .menu.active a>i {
   margin-right: 0.5rem;
