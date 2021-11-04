@@ -102,6 +102,15 @@ Hooks.once("ready", async function() {
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+
+  // Make TinyMCE allow saving at all times (allows closing unchanged editors)
+  CONFIG.TinyMCE.save_enablewhendirty = false;
+
+  // Make TinyMCE display the new formatting live
+  if ( game.settings.get("questworlds","useRunes") ) {
+    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
+  }
+  
 });
 
 /* -------------------------------------------- */
@@ -162,17 +171,3 @@ function rollItemMacro(itemName) {
   // Trigger the item roll
   return item.roll();
 }
-
-/* -------------------------------------------- */
-/*  TinyMCE Customizations                      */
-/* -------------------------------------------- */
-Hooks.on("ready", async () => {
-
-  // Make TinyMCE allow saving at all times (allows closing unchanged editors)
-  CONFIG.TinyMCE.save_enablewhendirty = false;
-
-  // Make TinyMCE display the new formatting live
-  if ( game.settings.get("questworlds","useRunes") ) {
-    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
-  }
-});
