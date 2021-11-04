@@ -14,6 +14,9 @@
 		"module/qw.mjs",
 		"../scripts/greensock/esm/gsap-core.js"
 	],
+	"dependencies": [
+		{ "name": "socketlib", "type": "module" }
+	],
 	"styles": [ "css/qw.css" ],
 	"languages": [
 		{
