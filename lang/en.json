@@ -27,6 +27,8 @@
             "PublicKnowledge": "Common Knowledge",
             "GMSecrets": "GM-Only Notes"
         },
+
+        "socketlibError": "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.",
         
         "NavMain": "Character",
         "NavBackground": "Background",
