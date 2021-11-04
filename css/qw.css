@@ -873,8 +873,17 @@
 }
 
 
+.questworlds.sheet .item-body:hover,
+.questworlds.sheet .breakout-body:hover {
+  cursor: context-menu;
+}
 .questworlds.sheet.item .breakout-body:hover {
   background-color: rgba(0,0,0,0.05);
+  transition: 0.4s;
+}
+.questworlds.sheet.item .breakout-name a {
+  text-shadow: none;
+  cursor: context-menu;
 }
 
 /* PC sheet art gallery */
