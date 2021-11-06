@@ -144,7 +144,9 @@ export class ChatContest {
             await chatMessage.setFlag('questworlds','formData',flagDiff);
 
             // if assured contest, resolve immediately on approval
-            _resolveRoll(chatMessage);
+            const formData = await _getContext(chatMessage);
+            if (formData.assured)
+                _resolveRoll(chatMessage);
 
         },  // clickApproveButton
 
