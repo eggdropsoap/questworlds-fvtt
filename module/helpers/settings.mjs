@@ -54,7 +54,8 @@ export const registerSystemSettings = function() {
     });
 
     /**
-     * Whether to enable suport for runes
+     * Whether to use classic outcome names ("marginal victory", "major defeat", etc.)
+     * or use "Degrees of Victory: {number}" (default)
      */
     game.settings.register("questworlds", "useClassicOutcomes", {
         name: "QUESTWORLDS.SETTINGS.useClassicOutcomesN",
