@@ -1229,6 +1229,53 @@
 /* end advances indicator */
 
 
+/* player list app story points display */
+
+.app#players h3 {
+  position: relative;
+}
+.app#players h3 .story-points-header {
+  position: absolute;
+  right: 0;
+  margin: 0;
+  padding: 4px;
+  padding-right: 0;
+  top: 0;
+}
+.app#players .player .player-name {
+  text-overflow: ellipsis;
+}
+.app#players .player .user-story-points {
+  flex: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+.app#players .player .user-story-points .inner {
+  min-width: 17px;
+  text-align: center;
+}
+.app#players .player .user-story-points.me {
+  color: #c0eddb;
+}
+/* .app#players .player .user-story-points.me:hover,
+.app#players .player .user-story-points.gm:hover,
+.app#players h3 .story-points-header:hover {
+} */
+.app#players .player .user-story-points.me:hover,
+.app#players .player .user-story-points.gm:hover,
+.app#players h3 .story-points-header.gm:hover,
+.app#players h3 .story-points-header.pool:hover {
+  cursor: pointer;
+  text-shadow: 0px 0px 4px goldenrod;
+}
+/* .app#players div.theinner {
+
+} */
+
+/* end app story points */
+
+
 /* ability editing dialogs */
 .system-questworlds .dialog-content .edit-ability {
   margin-bottom: 10px;

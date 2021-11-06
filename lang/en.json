@@ -14,6 +14,8 @@
         "PhysicalDescription": "Physical Description",
         "StoryPoints": "Story Points",
         "HeroPoints": "Hero Points",
+        "StoryPointsPool": "Story Points Pool",
+        "HeroPointsPool": "Hero Points Pool",
         "XP": "XP",
         "ExperiencePoints": "Experience Points",
         "CareerXP": "Career XP",
@@ -302,6 +304,9 @@
             "XPtoAdvanceH": "How many XP a PC needs to earn to gain an Advance. 10 XP is the default.",
             "NormalXP": "10 XP",
             "HalfXP": "5 XP",
+
+            "useIndividualStoryPointsN": "Use Individual Story Points",
+            "useIndividualStoryPointsH": "Replaces the shared Story Point pool with per-character Story Points.",
 
             "RuneMenu": {
                 "Builtins": {

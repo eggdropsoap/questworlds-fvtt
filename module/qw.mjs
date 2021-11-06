@@ -13,6 +13,7 @@ import { registerHandlebarsHelpers } from "./helpers/handlebars-helpers.mjs";
 import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
 import { ChatContest } from "./documents/chat-contest.mjs";
+import { StoryPointHooks } from "./helpers/story-points.mjs";
 
 
 /* -------------------------------------------- */
@@ -121,6 +122,11 @@ Hooks.on('renderChatLog', (app, html, data) => ChatContest.HookListeners.renderC
 Hooks.on('renderChatMessage', (app, html, data) => ChatContest.HookListeners.renderChatMessage(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => ChatContest.HookListeners.updateChatMessage(chatMessage, chatData, diff, speaker));
 
+/* -------------------------------------------- */
+/*  Story Points UI hooks                       */
+/* -------------------------------------------- */
+
+Hooks.on('renderPlayerList', async (list,html,options) => StoryPointHooks.onRenderPlayerList(list,html,options));
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
