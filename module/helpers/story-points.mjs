@@ -63,7 +63,7 @@ export class StoryPoints {
                         const context = {
                             storypoints: sp,
                             userCssClass: game.user === user ? 'me' : game.user.isGM ? 'gm' : '',
-                            playerId: user.id,
+                            actorId: actor.id,
                         }
 
                         const userPointsHTML = $(await renderTemplate('/systems/questworlds/templates/playerlist/user-points.html',context));
@@ -99,13 +99,13 @@ export class StoryPoints {
                 }
             } else {    // individual story points
                 if (game.user.isGM) {
-                    const playerId = dataset.playerId;
-                    if (playerId) {     // gm clicked a player's points
-                        const player = game.users.get(playerId);
+                    const actorId = dataset.actorId;
+                    if (actorId) {     // gm clicked a player's points
+                        const character = game.actors.get(actorId);
                         // TODO: insert confirmation dialog
-                        player.character?.addStoryPoint()
+                        character.addStoryPoint()
                             .then( () => { socket.executeForEveryone('refreshPlayerList') });
-                        _pointsChat('addPoint',player.character.name);
+                        _pointsChat('addPoint',character.name);
                     } else {    // gm clicked the header
                         // refresh all players' characters' personal story points
                         const players = game.users.filter(user => { return !user.isGM });
