@@ -13,8 +13,10 @@
         "Description": "Description",
         "PhysicalDescription": "Physical Description",
         "StoryPoints": "Story Points",
-        "HeroPoints": "Hero Points",
+        "StoryPoint": "Story Point",
         "StoryPointsPool": "Story Points Pool",
+        "HeroPoints": "Hero Points",
+        "HeroPoint": "Hero Point",
         "HeroPointsPool": "Hero Points Pool",
         "XP": "XP",
         "ExperiencePoints": "Experience Points",
@@ -31,7 +33,15 @@
         },
 
         "socketlibError": "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.",
+        "NoStoryPointsWarning": "You have no {storypoints} to spend",
+        "EmptyPoolWarning": "The {storypoints} pool is empty",
+        "GMOnlySocketError": "questworlds socket error: {functionName} called outside GM context",
+        "UndefinedCharacterName": "Name of character is undefined",
         
+        "NameGainsStoryPoint": "{name} gains a {storypoint}",
+        "NameSpendsStoryPoint": "{name} spends a {storypoint}",
+        "StoryPointsRefreshed": "{storypoints} refreshed",
+
         "NavMain": "Character",
         "NavBackground": "Background",
         "NavArt": "Art",

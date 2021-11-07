@@ -13,7 +13,7 @@ import { registerHandlebarsHelpers } from "./helpers/handlebars-helpers.mjs";
 import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
 import { ChatContest } from "./documents/chat-contest.mjs";
-import { StoryPointHooks } from "./helpers/story-points.mjs";
+import { StoryPoints } from "./helpers/story-points.mjs";
 
 
 /* -------------------------------------------- */
@@ -84,6 +84,29 @@ Hooks.once('init', async function() {
   return preloadHandlebarsTemplates();
 });
 
+/* -------------------------------------------- */
+/*  Socketlib ready hook                        */
+/* -------------------------------------------- */
+
+Hooks.once("socketlib.ready", () => {
+  const socket = socketlib.registerSystem('questworlds');
+  QUESTWORLDS.socket = socket;
+  const socketFunctions = [
+    {
+      name: 'updateRuneCSS',
+      call: function() {
+        const runeFontSettings = game.settings.get("questworlds","runeFontSettings");
+        setRuneCSSRules(runeFontSettings.cssRules);
+        console.log('CSS Rules for Runes:',runeFontSettings.cssRules);
+      }
+    },
+    {
+      name: 'reducePool',
+      call: StoryPoints.reducePool
+    }
+  ]
+  for (const fn of socketFunctions) socket.register(fn.name,fn.call);
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
@@ -100,6 +123,9 @@ Hooks.once("ready", async function() {
     const error_message = game.i18n.format('QUESTWORLDS.socketlibError',buttonLabels);
     ui.notifications.error(error_message);
   }
+
+  // Register ui.players.render with socketlib now that it's ready
+  CONFIG.QUESTWORLDS.socket.register('refreshPlayerList',() => { ui.players.render() });
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
@@ -126,7 +152,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => ChatCont
 /*  Story Points UI hooks                       */
 /* -------------------------------------------- */
 
-Hooks.on('renderPlayerList', async (list,html,options) => StoryPointHooks.onRenderPlayerList(list,html,options));
+Hooks.on('renderPlayerList', async (list,html,options) => StoryPoints.Hooks.onRenderPlayerList(list,html,options));
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

@@ -29,9 +29,6 @@ export const registerSystemSettings = function() {
             "Companion": "QUESTWORLDS.Companion"
         },
         default: "sidekick",
-    /*     onChange: value => { // A callback function which triggers when the setting is changed
-            console.log(value);
-        } */
     });
 
     /**
@@ -48,9 +45,6 @@ export const registerSystemSettings = function() {
             "ability": "QUESTWORLDS.keywordPackageOptionName"
         },
         default: "breakout",
-    /*     onChange: value => { // A callback function which triggers when the setting is changed
-            console.log(value);
-        } */
     });
 
     /**
@@ -94,6 +88,22 @@ export const registerSystemSettings = function() {
         onChange: value => {
             ui.players.render();
         },
+    });
+
+    /**
+     * What to call Story Points in the UI / sheets
+     */
+    game.settings.register("questworlds", "storyPointsName", {
+        name: "QUESTWORLDS.SETTINGS.storyPointsNameN",
+        hint: "QUESTWORLDS.SETTINGS.storyPointsNameH",
+        scope: "world",
+        config: true,
+        type: String,
+        choices: {
+            "Story": "QUESTWORLDS.StoryPoints",
+            "Hero": "QUESTWORLDS.HeroPoints"
+        },
+        default: "Story",
     });
     
     /**

@@ -114,4 +114,27 @@ export class QuestWorldsActor extends Actor {
     // Process additional NPC data here.
   }
 
+  hasStoryPoints() {
+    return this.data.data.points.hero > 0;
+  }
+
+  async spendStoryPoint() {
+    if (game.settings.get('questworlds','useIndividualStoryPoints')) {
+      // spend from actor's data
+      let sp = this.data.data.points.hero;
+      sp = sp > 0 ? --sp : sp;
+      await this.update({'data.points.hero':sp});
+    }
+  }
+
+  async addStoryPoint() {
+    // add a point to the sheet
+    const sp = this.data.data.points.hero;
+    await this.update({'data.points.hero':sp+1});
+  }
+
+  async refreshStoryPoints() {
+    // set sheet points to 3
+    await this.update({'data.points.hero':3});
+  }
 }
