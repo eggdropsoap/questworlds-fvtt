@@ -5,6 +5,7 @@ import { doItemTween } from "../documents/item.mjs";
 import { GalleryControls } from "../helpers/event-handlers.mjs";
 import { ContentEditableHelper } from "../helpers/event-handlers.mjs";
 import { XPControls } from "../helpers/event-handlers.mjs";
+import { StoryPoints } from "../helpers/story-points.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -57,6 +58,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
       "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
       "advanceXP": game.settings.get('questworlds','XPtoAdvance'),
     };
+    context.storyPointsName = StoryPoints.name('plural');
     
     // Prepare character data and items.
     if (actorData.type == 'character') {
