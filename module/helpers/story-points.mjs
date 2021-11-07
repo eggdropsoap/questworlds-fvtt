@@ -41,7 +41,7 @@ export class StoryPoints {
                 const context = {
                     pool: true,
                     pointsPool: game.settings.get('questworlds','sharedStoryPointsPool'),
-                    title: 'QUESTWORLDS.StoryPointsPool',
+                    title: StoryPoints.name('pool'),
                 }
                 const sharedPointsHTML = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
 
@@ -49,7 +49,7 @@ export class StoryPoints {
                 $(html).find('h3').append(sharedPointsHTML);
             } else {
                 const context = {
-                    title: 'QUESTWORLDS.StoryPoints',
+                    title: StoryPoints.name('plural'),
                     userCssClass: game.user.isGM ? 'gm' : '',
                 }
                 const storyPointsHeader = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
