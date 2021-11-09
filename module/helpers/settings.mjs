@@ -1,4 +1,5 @@
 import { RuneFontsSettingsMenuClass } from "../documents/rune-settings-menu.mjs";
+import { QuestWorldsActorCharacterSheet } from "../sheets/actor-character-sheet.mjs";
 import { RatingHelper } from "./rating-helpers.mjs";
 
 export const registerSystemSettings = function() {
@@ -72,6 +73,7 @@ export const registerSystemSettings = function() {
         default: false,
         onChange: value => {
             ui.players.render();
+            renderOpenCharacterSheetWindows();
         },
     });
 
@@ -87,6 +89,7 @@ export const registerSystemSettings = function() {
         default: 0,
         onChange: value => {
             ui.players.render();
+            renderOpenCharacterSheetWindows();
         },
     });
 
@@ -104,6 +107,10 @@ export const registerSystemSettings = function() {
             "Hero": "QUESTWORLDS.HeroPoints"
         },
         default: "Story",
+        onChange: value => {
+            ui.players.render();
+            renderOpenCharacterSheetWindows();
+        }
     });
     
     /**
@@ -179,4 +186,14 @@ export const registerSystemSettings = function() {
         default: {},        // can be used to set up the default structure
     });
 
+}
+
+function renderOpenCharacterSheetWindows() {
+    Object.values(ui.windows).filter(window => {
+        const thingy = window instanceof QuestWorldsActorCharacterSheet;
+        return window instanceof QuestWorldsActorCharacterSheet;
+    })
+    .forEach(window => {
+        window.render();
+    });
 }
