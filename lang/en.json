@@ -316,7 +316,10 @@
             "HalfXP": "5 XP",
 
             "useIndividualStoryPointsN": "Use Individual Story Points",
-            "useIndividualStoryPointsH": "Replaces the shared Story Point pool with per-character Story Points.",
+            "useIndividualStoryPointsH": "Replaces the shared Story Points pool with per-character Story Points.",
+
+            "storyPointsNameN": "Story Points Name",
+            "storyPointsNameH": "What name will be used for Story Points on characters sheets and in the user interface.",
 
             "RuneMenu": {
                 "Builtins": {
