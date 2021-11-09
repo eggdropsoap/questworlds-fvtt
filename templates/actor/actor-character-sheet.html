@@ -83,11 +83,19 @@
           --}}
         </div>
 
-        <div class="resource-group storypoints">
-          <label for="data.points.hero" class="resource-label">{{storyPointsName}}</label>
+        <div class="resource-group storypoints {{#if usePool}}pool{{else}}personal{{/if}}">
+          <label for="data.points.hero" class="resource-label">
+            {{~#if settings.usePool}}{{storyPointsPoolName}}{{else}}{{storyPointsName}}{{/if~}}
+          </label>
+          {{#if settings.usePool}}
+          <div>
+            <span class="story-points-pool">{{poolValue}}</span>
+          </div>
+          {{else}}
           <div>
             <input type="text" name="data.points.hero" value="{{data.points.hero}}" data-dtype="Number"/>
           </div>
+          {{/if}}
         </div>
 
       </section>

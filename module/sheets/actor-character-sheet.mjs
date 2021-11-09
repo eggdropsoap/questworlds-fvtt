@@ -57,8 +57,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
       "sidekickName": game.settings.get("questworlds","sidekickName"),
       "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
       "advanceXP": game.settings.get('questworlds','XPtoAdvance'),
+      "usePool": StoryPoints.usePool(),
     };
+    // add some data based on game settings, but more directly accessible
     context.storyPointsName = StoryPoints.name('plural');
+    context.storyPointsPoolName = StoryPoints.name('pool');
+    context.poolValue = game.settings.get('questworlds','sharedStoryPointsPool');
     
     // Prepare character data and items.
     if (actorData.type == 'character') {

@@ -19,6 +19,10 @@ export class StoryPoints {
         }
     }
 
+    static usePool() {
+        return !(game.settings.get('questworlds','useIndividualStoryPoints'));
+    }
+
     static reducePool() {
         if (game.user.isGM) {
             const pool =  game.settings.get('questworlds','sharedStoryPointsPool');
