@@ -37,7 +37,7 @@ export class StoryPoints {
 
     static Handlers = {
 
-        async onRenderPlayerList(list,html, options) {
+        async onRenderPlayerList(list, html, options) {
 
             const usePool = !(game.settings.get('questworlds','useIndividualStoryPoints'));
 
@@ -77,11 +77,7 @@ export class StoryPoints {
                         $(html).find(`.player[data-user-id="${user.id}"]`).append(userPointsHTML);
                     }
                 }
-
-                let donothing;
             }
-
-            let donothing;
         },
 
         async onClickStoryPoints(event) {
@@ -150,6 +146,45 @@ export class StoryPoints {
                     }
                 }
             }
+        },
+
+        async onChatEntryContext(html, options) {
+            
+            options.unshift({
+                name: 'QUESTWORLDS.chatcontest.ImproveTactic',
+                icon: '<i class="fas fa-plus"></i>',
+                condition: relevant,
+                callback: doImproveTactic,
+            });
+
+            const storyPointMenuName = game.i18n.format("QUESTWORLDS.chatcontest.StoryPointMenu",{ storypoint: StoryPoints.name() });
+            options.unshift({
+                name: storyPointMenuName,
+                icon: '<i class="fas fa-plus"></i>',
+                condition: relevant,
+                callback: doSpendSP,
+            });
+
+            function relevant(li) {
+                const messageId = li[0].dataset.messageId;
+                const message = game.messages.get(messageId);
+                const user = game.user;
+                const isGM = user.isGM;
+                const messageOwner = game.users.get(message.data.user);
+                const isContest = (message.getFlag('questworlds','formData'))?.closed;
+
+                return (messageOwner === user && !isGM && isContest);
+            }
+
+            function doSpendSP(li) {
+                ui.notifications.warn("Not implemented yet");   // TODO: implement
+            }
+
+            function doImproveTactic(li) {
+                ui.notifications.warn("Not implemented yet");   // TODO: implement
+            }
+
+            let breakpoint;
         }
     }
 }

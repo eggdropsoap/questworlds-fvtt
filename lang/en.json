@@ -244,6 +244,9 @@
             "RollApproved": "Roll approved, waiting…",
             "Roll": "Roll",
 
+            "StoryPointMenu": "Spend {storypoint} for 1 Success",
+            "ImproveTactic": "Improve Tactic",
+
             "outcomes": {
                 "Tie": "Tie",
                 "AssuredDefeat": "Assured Defeat",
