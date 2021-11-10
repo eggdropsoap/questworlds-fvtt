@@ -152,7 +152,7 @@ Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => ChatCont
 /*  Story Points UI hooks                       */
 /* -------------------------------------------- */
 
-Hooks.on('renderPlayerList', async (list,html,options) => StoryPoints.Hooks.onRenderPlayerList(list,html,options));
+Hooks.on('renderPlayerList', async (list,html,options) => StoryPoints.Handlers.onRenderPlayerList(list,html,options));
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

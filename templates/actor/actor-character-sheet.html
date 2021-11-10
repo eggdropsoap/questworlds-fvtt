@@ -83,7 +83,7 @@
           --}}
         </div>
 
-        <div class="resource-group storypoints {{#if usePool}}pool{{else}}personal{{/if}}">
+        <div class="resource-group storypoints {{#if usePool}}pool{{else}}personal{{/if}}" data-actor-id={{actor.id}}>
           <label for="data.points.hero" class="resource-label">
             {{~#if settings.usePool}}{{storyPointsPoolName}}{{else}}{{storyPointsName}}{{/if~}}
           </label>

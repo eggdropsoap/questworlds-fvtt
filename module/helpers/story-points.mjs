@@ -35,7 +35,7 @@ export class StoryPoints {
         }  
     }
 
-    static Hooks = {
+    static Handlers = {
 
         async onRenderPlayerList(list,html, options) {
 
@@ -49,7 +49,7 @@ export class StoryPoints {
                 }
                 const sharedPointsHTML = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
 
-                sharedPointsHTML.on('click',StoryPoints.Hooks.onClickPlayerListStoryPoints);
+                sharedPointsHTML.on('click',StoryPoints.Handlers.onClickStoryPoints);
                 $(html).find('h3').append(sharedPointsHTML);
             } else {
                 const context = {
@@ -57,7 +57,7 @@ export class StoryPoints {
                     userCssClass: game.user.isGM ? 'gm' : '',
                 }
                 const storyPointsHeader = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
-                if (game.user.isGM) storyPointsHeader.on('click',StoryPoints.Hooks.onClickPlayerListStoryPoints);
+                if (game.user.isGM) storyPointsHeader.on('click',StoryPoints.Handlers.onClickStoryPoints);
                 $(html).find('h3').append(storyPointsHeader);
                 for (const user of Object.values(options.users)) {
                     if (user.character) {
@@ -72,7 +72,7 @@ export class StoryPoints {
 
                         const userPointsHTML = $(await renderTemplate('/systems/questworlds/templates/playerlist/user-points.html',context));
                         if (game.user === user || game.user.isGM) {
-                            userPointsHTML.on('click',StoryPoints.Hooks.onClickPlayerListStoryPoints);
+                            userPointsHTML.on('click',StoryPoints.Handlers.onClickStoryPoints);
                         }
                         $(html).find(`.player[data-user-id="${user.id}"]`).append(userPointsHTML);
                     }
@@ -84,7 +84,7 @@ export class StoryPoints {
             let donothing;
         },
 
-        async onClickPlayerListStoryPoints(event) {
+        async onClickStoryPoints(event) {
             event.stopPropagation();
             // event.preventDefault();
             const e = event.currentTarget;

@@ -665,10 +665,20 @@
   background-color: rgba(0,0,0,0.0);
   transition: 0.3s;
 }
-.questworlds.actor.sheet .character .resources.footer .resource-group input:hover,
-.questworlds.actor.sheet .character .resources.footer .resource-group input:focus {
+.questworlds.actor.sheet .character.editable .resources.footer .resource-group input:hover,
+.questworlds.actor.sheet .character.editable .resources.footer .resource-group input:focus {
   background-color: rgba(0,0,0,0.05);
   transition: 0.1s;
+}
+.questworlds.actor.sheet .character.editable .main .resources .storypoints,
+.questworlds.actor.sheet .character.editable .main .resources .storypoints label {
+  cursor: pointer;
+}
+.questworlds.actor.sheet .character.editable .main .resources .storypoints:hover label {
+  text-shadow: 0 0 3px rgb(255 0 0 / 45%);
+}
+.questworlds.actor.sheet .character .main .resources .storypoints .story-points-pool {
+  font-size: 0.75rem
 }
 
 
@@ -875,18 +885,18 @@
 }
 
 
-.questworlds.sheet .item-body:hover,
-.questworlds.sheet .breakout-body:hover {
+.questworlds.sheet .editable .item-body:hover,
+.questworlds.sheet .editable .breakout-body:hover {
   cursor: context-menu;
 }
-.questworlds.sheet.item .breakout-body {
+.questworlds.sheet.item .editable .breakout-body {
   transition: background-color 0.3s;
 }
-.questworlds.sheet.item .breakout-body:hover {
+.questworlds.sheet.item .editable .breakout-body:hover {
   background-color: rgba(0,0,0,0.05);
   transition: background-color 0.1s;
 }
-.questworlds.sheet.item .breakout-name a {
+.questworlds.sheet.item .editable .breakout-name a {
   text-shadow: none;
   cursor: context-menu;
 }

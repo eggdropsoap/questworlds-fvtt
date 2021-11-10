@@ -223,6 +223,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
         .show();
     }
 
+    // Manage story points
+    html.on('click','.main .resources .storypoints',StoryPoints.Handlers.onClickStoryPoints);
+
     // Advances control
     html.on('click','.advances.history',XPControls.openAdvancesHistory.bind(this));
     html.on('click','.advances.available.new',XPControls.dismissNewAdvanceNotice.bind(this));
