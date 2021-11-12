@@ -35,6 +35,65 @@ export class StoryPoints {
         }  
     }
 
+    static refreshPool() {
+        const countPlayers = game.users.filter(user => { return !user.isGM }).length;
+        const currentPool = game.settings.get('questworlds','sharedStoryPointsPool');
+        if (currentPool != countPlayers) {
+            game.settings.set('questworlds','sharedStoryPointsPool',countPlayers);
+            _pointsChat('refresh');
+        }
+    }
+
+    static addPointToCharacter(character) {
+        const socket = CONFIG.QUESTWORLDS.socket;
+        character.addStoryPoint()
+            .then( () => { socket.executeForEveryone('refreshPlayerList') });
+        _pointsChat('addPoint',character.name);    
+    }
+
+    static async refreshAllCharacterPoints() {
+        const socket = CONFIG.QUESTWORLDS.socket;
+        const players = game.users.filter(user => { return !user.isGM });
+        // refresh each player-assigned character points
+        for (const player of Object.values(players)) {
+            const character = player.character;
+            if (character) await character.refreshStoryPoints();
+        }
+        // announce overall refresh...
+        _pointsChat('refresh');                             // ... in chat
+        socket.executeForEveryone('refreshPlayerList');     // ... in playerlist app
+    }
+
+    static async spendPointFromPool() {
+        const socket = CONFIG.QUESTWORLDS.socket;
+        const result = await socket.executeAsGM("reducePool")
+            .catch(e => {
+                ui.notifications.error(`${e.name}: ${e.message}`);
+            });
+        if (result) {
+            switch (result) {
+                case StoryPoints.POOL_SPEND_RESULT.SUCCESS:
+                    _pointsChat('spendPool');
+                    break;
+                case StoryPoints.POOL_SPEND_RESULT.EMPTY:
+                    ui.notifications.warn(game.i18n.format('QUESTWORLDS.EmptyPoolWarning',{storypoints: StoryPoints.name()}));
+                    break;
+            }
+        }
+    }
+
+    static spendPointFromCharacter(character) {
+        const socket = CONFIG.QUESTWORLDS.socket;
+        if (character && character.hasStoryPoints()) {
+            character.spendStoryPoint()
+                .then(() => { socket.executeForEveryone('refreshPlayerList') });
+            _pointsChat('spendPoint');
+        } else {
+            ui.notifications.warn(game.i18n.format('QUESTWORLDS.NoStoryPointsWarning',{storypoints: StoryPoints.name('plural')}));
+        }
+
+    }
+
     static Handlers = {
 
         async onRenderPlayerList(list, html, options) {
@@ -89,60 +148,27 @@ export class StoryPoints {
             const socket = CONFIG.QUESTWORLDS.socket;
 
             if (game.user.isGM && usePool) {
-                // TODO: confirm refresh with dialog
-
-                const countPlayers = game.users.filter(user => { return !user.isGM }).length;
-                const currentPool = game.settings.get('questworlds','sharedStoryPointsPool');
-                if (currentPool != countPlayers) {
-                    game.settings.set('questworlds','sharedStoryPointsPool',countPlayers);
-                    _pointsChat('refresh');
-                }
-            } else {    // individual story points
-                if (game.user.isGM) {
+                // TODO: confirmation dialog: refresh pool
+                StoryPoints.refreshPool();
+            } else {    
+                if (game.user.isGM) { // individual story points
                     const actorId = dataset.actorId;
                     if (actorId) {     // gm clicked a player's points
+                        // TODO: confirmation dialog: award individual point
                         const character = game.actors.get(actorId);
-                        // TODO: insert confirmation dialog
-                        character.addStoryPoint()
-                            .then( () => { socket.executeForEveryone('refreshPlayerList') });
-                        _pointsChat('addPoint',character.name);
-                    } else {    // gm clicked the header
-                        // refresh all players' characters' personal story points
-                        const players = game.users.filter(user => { return !user.isGM });
-                        for (const player of Object.values(players)) {
-                            const character = player.character;
-                            if (character) await character.refreshStoryPoints();
-                        }
-                        _pointsChat('refresh');
-                        socket.executeForEveryone('refreshPlayerList');
+                        StoryPoints.addPointToCharacter(character);
+                    } else {    // gm clicked the header: refresh all individual story points
+                        // TODO: confirmation dialog: refresh all points
+                        StoryPoints.refreshAllCharacterPoints();
                     }
                 } else {    // player
-                    // TODO: insert confirmation dialog
-                    const character = game.user.character;
-
                     if (usePool) {
-                        const result = await socket.executeAsGM("reducePool")
-                            .catch(e => {
-                                ui.notifications.error(`${e.name}: ${e.message}`);
-                            });
-                        if (result) {
-                            switch (result) {
-                                case StoryPoints.POOL_SPEND_RESULT.SUCCESS:
-                                    _pointsChat('spendPool');
-                                    break;
-                                case StoryPoints.POOL_SPEND_RESULT.EMPTY:
-                                    ui.notifications.warn(game.i18n.format('QUESTWORLDS.EmptyPoolWarning',{storypoints: StoryPoints.name()}));
-                                    break;
-                            }
-                        }
+                        // TODO: confirmation dialog: spend pool point
+                        StoryPoints.spendPointFromPool();
                     } else {
-                        if (character && character.hasStoryPoints() ) {
-                            game.user.character?.spendStoryPoint()
-                                .then(() => { socket.executeForEveryone('refreshPlayerList') });
-                            _pointsChat('spendPoint');
-                        } else {
-                            ui.notifications.warn(game.i18n.format('QUESTWORLDS.NoStoryPointsWarning',{storypoints: StoryPoints.name('plural')}));
-                        }
+                        // TODO: confirmation dialog: spend own point
+                        const character = game.user.character;
+                        StoryPoints.spendPointFromCharacter(character);
                     }
                 }
             }
