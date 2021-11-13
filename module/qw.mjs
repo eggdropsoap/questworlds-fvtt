@@ -13,6 +13,7 @@ import { registerHandlebarsHelpers } from "./helpers/handlebars-helpers.mjs";
 import { registerSystemSettings } from "./helpers/settings.mjs";
 import { setRuneCSSRules } from "./documents/rune-settings-menu.mjs";
 import { ChatContest } from "./documents/chat-contest.mjs";
+import { StoryPoints } from "./helpers/story-points.mjs";
 
 
 /* -------------------------------------------- */
@@ -83,14 +84,60 @@ Hooks.once('init', async function() {
   return preloadHandlebarsTemplates();
 });
 
+/* -------------------------------------------- */
+/*  Socketlib ready hook                        */
+/* -------------------------------------------- */
+
+Hooks.once("socketlib.ready", () => {
+  const socket = socketlib.registerSystem('questworlds');
+  QUESTWORLDS.socket = socket;
+  const socketFunctions = [
+    {
+      name: 'updateRuneCSS',
+      call: function() {
+        const runeFontSettings = game.settings.get("questworlds","runeFontSettings");
+        setRuneCSSRules(runeFontSettings.cssRules);
+        console.log('CSS Rules for Runes:',runeFontSettings.cssRules);
+      }
+    },
+    {
+      name: 'reducePool',
+      call: StoryPoints.reducePool
+    }
+  ]
+  for (const fn of socketFunctions) socket.register(fn.name,fn.call);
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
 Hooks.once("ready", async function() {
+  // Warn that socketlib is required
+  if(!game.modules.get('socketlib')?.active && game.user.isGM) {
+    // const error_message = "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.";
+    const buttonLabels = {
+      settings: game.i18n.localize('SETTINGS.SettingsHeader'),
+      modules: game.i18n.localize('SETTINGS.ManageModules')
+    }
+    const error_message = game.i18n.format('QUESTWORLDS.socketlibError',buttonLabels);
+    ui.notifications.error(error_message);
+  }
+
+  // Register ui.players.render with socketlib now that it's ready
+  CONFIG.QUESTWORLDS.socket.register('refreshPlayerList',() => { ui.players.render() });
+
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+
+  // Make TinyMCE allow saving at all times (allows closing unchanged editors)
+  CONFIG.TinyMCE.save_enablewhendirty = false;
+
+  // Make TinyMCE display the new formatting live
+  if ( game.settings.get("questworlds","useRunes") ) {
+    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
+  }
+  
 });
 
 /* -------------------------------------------- */
@@ -101,6 +148,12 @@ Hooks.on('renderChatLog', (app, html, data) => ChatContest.HookListeners.renderC
 Hooks.on('renderChatMessage', (app, html, data) => ChatContest.HookListeners.renderChatMessage(app, html, data));
 Hooks.on('updateChatMessage', (chatMessage, chatData, diff, speaker) => ChatContest.HookListeners.updateChatMessage(chatMessage, chatData, diff, speaker));
 
+/* -------------------------------------------- */
+/*  Story Points UI hooks                       */
+/* -------------------------------------------- */
+
+Hooks.on('renderPlayerList', async (list,html,options) => StoryPoints.Handlers.onRenderPlayerList(list,html,options));
+Hooks.on('getChatLogEntryContext', (html, options) => StoryPoints.Handlers.onChatEntryContext(html,options));
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -151,17 +204,3 @@ function rollItemMacro(itemName) {
   // Trigger the item roll
   return item.roll();
 }
-
-/* -------------------------------------------- */
-/*  TinyMCE Customizations                      */
-/* -------------------------------------------- */
-Hooks.on("ready", async () => {
-
-  // Make TinyMCE allow saving at all times (allows closing unchanged editors)
-  CONFIG.TinyMCE.save_enablewhendirty = false;
-
-  // Make TinyMCE display the new formatting live
-  if ( game.settings.get("questworlds","useRunes") ) {
-    CONFIG.TinyMCE.content_css.push("systems/questworlds/css/tinymce-customizations.css");
-  }
-});

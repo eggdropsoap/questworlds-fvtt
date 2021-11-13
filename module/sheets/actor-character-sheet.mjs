@@ -5,6 +5,7 @@ import { doItemTween } from "../documents/item.mjs";
 import { GalleryControls } from "../helpers/event-handlers.mjs";
 import { ContentEditableHelper } from "../helpers/event-handlers.mjs";
 import { XPControls } from "../helpers/event-handlers.mjs";
+import { StoryPoints } from "../helpers/story-points.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -56,7 +57,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
       "sidekickName": game.settings.get("questworlds","sidekickName"),
       "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
       "advanceXP": game.settings.get('questworlds','XPtoAdvance'),
+      "usePool": StoryPoints.usePool(),
     };
+    // add some data based on game settings, but more directly accessible
+    context.storyPointsName = StoryPoints.name('plural');
+    context.storyPointsPoolName = StoryPoints.name('pool');
+    context.poolValue = game.settings.get('questworlds','sharedStoryPointsPool');
     
     // Prepare character data and items.
     if (actorData.type == 'character') {
@@ -216,6 +222,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
         .on('click',XPControls.onClickAddXP.bind(this))
         .show();
     }
+
+    // Manage story points
+    html.on('click','.main .resources .storypoints',StoryPoints.Handlers.onClickStoryPoints);
 
     // Advances control
     html.on('click','.advances.history',XPControls.openAdvancesHistory.bind(this));

@@ -1,4 +1,5 @@
 import { RuneFontsSettingsMenuClass } from "../documents/rune-settings-menu.mjs";
+import { QuestWorldsActorCharacterSheet } from "../sheets/actor-character-sheet.mjs";
 import { RatingHelper } from "./rating-helpers.mjs";
 
 export const registerSystemSettings = function() {
@@ -29,9 +30,6 @@ export const registerSystemSettings = function() {
             "Companion": "QUESTWORLDS.Companion"
         },
         default: "sidekick",
-    /*     onChange: value => { // A callback function which triggers when the setting is changed
-            console.log(value);
-        } */
     });
 
     /**
@@ -48,13 +46,11 @@ export const registerSystemSettings = function() {
             "ability": "QUESTWORLDS.keywordPackageOptionName"
         },
         default: "breakout",
-    /*     onChange: value => { // A callback function which triggers when the setting is changed
-            console.log(value);
-        } */
     });
 
     /**
-     * Whether to enable suport for runes
+     * Whether to use classic outcome names ("marginal victory", "major defeat", etc.)
+     * or use "Degrees of Victory: {number}" (default)
      */
     game.settings.register("questworlds", "useClassicOutcomes", {
         name: "QUESTWORLDS.SETTINGS.useClassicOutcomesN",
@@ -65,6 +61,58 @@ export const registerSystemSettings = function() {
         default: false,
     });
 
+    /**
+     * Whether to use a shared pool of story points (default) or individual story points
+     */
+    game.settings.register("questworlds", "useIndividualStoryPoints", {
+        name: "QUESTWORLDS.SETTINGS.useIndividualStoryPointsN",
+        hint: "QUESTWORLDS.SETTINGS.useIndividualStoryPointsH",
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: false,
+        onChange: value => {
+            ui.players.render();
+            renderOpenCharacterSheetWindows();
+        },
+    });
+
+    /**
+     * Hidden setting: Stores the current number of story points in the shared pool
+     */
+    game.settings.register("questworlds", "sharedStoryPointsPool", {
+        name: "QUESTWORLDS.SETTINGS.useIndividualStoryPointsN",
+        hint: "QUESTWORLDS.SETTINGS.useIndividualStoryPointsH",
+        scope: "world",
+        config: false,
+        type: Number,
+        default: 0,
+        onChange: value => {
+            ui.players.render();
+            renderOpenCharacterSheetWindows();
+        },
+    });
+
+    /**
+     * What to call Story Points in the UI / sheets
+     */
+    game.settings.register("questworlds", "storyPointsName", {
+        name: "QUESTWORLDS.SETTINGS.storyPointsNameN",
+        hint: "QUESTWORLDS.SETTINGS.storyPointsNameH",
+        scope: "world",
+        config: true,
+        type: String,
+        choices: {
+            "Story": "QUESTWORLDS.StoryPoints",
+            "Hero": "QUESTWORLDS.HeroPoints"
+        },
+        default: "Story",
+        onChange: value => {
+            ui.players.render();
+            renderOpenCharacterSheetWindows();
+        }
+    });
+    
     /**
      * Current base difficulty. Starts at value set by difficultyTable.
      */
@@ -138,4 +186,14 @@ export const registerSystemSettings = function() {
         default: {},        // can be used to set up the default structure
     });
 
+}
+
+function renderOpenCharacterSheetWindows() {
+    Object.values(ui.windows).filter(window => {
+        const thingy = window instanceof QuestWorldsActorCharacterSheet;
+        return window instanceof QuestWorldsActorCharacterSheet;
+    })
+    .forEach(window => {
+        window.render();
+    });
 }

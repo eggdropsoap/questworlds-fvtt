@@ -13,7 +13,11 @@
         "Description": "Description",
         "PhysicalDescription": "Physical Description",
         "StoryPoints": "Story Points",
+        "StoryPoint": "Story Point",
+        "StoryPointsPool": "Story Points Pool",
         "HeroPoints": "Hero Points",
+        "HeroPoint": "Hero Point",
+        "HeroPointsPool": "Hero Points Pool",
         "XP": "XP",
         "ExperiencePoints": "Experience Points",
         "CareerXP": "Career XP",
@@ -27,7 +31,17 @@
             "PublicKnowledge": "Common Knowledge",
             "GMSecrets": "GM-Only Notes"
         },
+
+        "socketlibError": "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.",
+        "NoStoryPointsWarning": "You have no {storypoints} to spend",
+        "EmptyPoolWarning": "The {storypoints} pool is empty",
+        "GMOnlySocketError": "questworlds socket error: {functionName} called outside GM context",
+        "UndefinedCharacterName": "Name of character is undefined",
         
+        "NameGainsStoryPoint": "{name} gains a {storypoint}",
+        "NameSpendsStoryPoint": "{name} spends a {storypoint}",
+        "StoryPointsRefreshed": "{storypoints} refreshed",
+
         "NavMain": "Character",
         "NavBackground": "Background",
         "NavArt": "Art",
@@ -230,6 +244,10 @@
             "RollApproved": "Roll approved, waiting…",
             "Roll": "Roll",
 
+            "StoryPointMenu": "Spend {storypoint} for 1 Success",
+            "ImproveTactic": "Improve Tactic",
+            "StoryPointTitle": "1 Success from a {storypoint}",
+
             "outcomes": {
                 "Tie": "Tie",
                 "AssuredDefeat": "Assured Defeat",
@@ -300,6 +318,12 @@
             "XPtoAdvanceH": "How many XP a PC needs to earn to gain an Advance. 10 XP is the default.",
             "NormalXP": "10 XP",
             "HalfXP": "5 XP",
+
+            "useIndividualStoryPointsN": "Use Individual Story Points",
+            "useIndividualStoryPointsH": "Replaces the shared Story Points pool with per-character Story Points.",
+
+            "storyPointsNameN": "Story Points Name",
+            "storyPointsNameH": "What name will be used for Story Points on characters sheets and in the user interface.",
 
             "RuneMenu": {
                 "Builtins": {

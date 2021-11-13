@@ -1,4 +1,5 @@
 import { RatingHelper } from "../helpers/rating-helpers.mjs";
+import { StoryPoints } from "../helpers/story-points.mjs";
 
 /* implements contest setup and rolling via dynamic chat cards */
 
@@ -144,7 +145,9 @@ export class ChatContest {
             await chatMessage.setFlag('questworlds','formData',flagDiff);
 
             // if assured contest, resolve immediately on approval
-            _resolveRoll(chatMessage);
+            const formData = await _getContext(chatMessage);
+            if (formData.assured)
+                _resolveRoll(chatMessage);
 
         },  // clickApproveButton
 
@@ -218,6 +221,18 @@ export class ChatContest {
         const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
         chatMessage.update({'content': content});
     }
+
+    static resolve(chatMessage) {
+        _resolveRoll(chatMessage);
+    }
+
+    static addStoryPoint(chatMessage) {
+        const data = _getContext(chatMessage);
+        if (!(data?.storypoint)) {
+            data.storypoint = true;
+            chatMessage.setFlag('questworlds','formData',data);    
+        }
+    }
 }
 
 /* * * * * * * * * * * * * * */
@@ -288,33 +303,46 @@ async function _resolveRoll(chatMessage) {
         const pcMasteries = formData.total.masteries;
         const resTN = formData.resistance.rating;
         const resMasteries = formData.resistance.masteries;
+        const storypoint = formData?.storypoint;
+        const storypointImage = StoryPoints.pointImage({solid: true, color: true});
+        const storypointTitle = game.i18n.format('QUESTWORLDS.chatcontest.StoryPointTitle',{storypoint: StoryPoints.name()});
 
-        // make two new rolls: the character and the resistance
-        const pcRoll = new Roll('1d20').roll({async:false});
-        const pcSuccesses = countSuccesses(pcTN,pcRoll.total,pcMasteries);
-        const resRoll = new Roll('1d20').roll({async:false});
-        const resSuccesses = countSuccesses(resTN,resRoll.total,resMasteries);
 
-        // Dice So Nice integration
-        if (game.dice3d) {
-            // player roll
-            game.dice3d.showForRoll(pcRoll, game.user, true);
-            // GM / resistance roll after a short delay
-            const firstGM = game.users.find(user => {return user.isGM});
-            setTimeout(() => {
-                game.dice3d.showForRoll(resRoll, firstGM, true);
-            }, 500);
+        let pcResult,resResult;
+        if (formData.outcome) {     // already rolled
+            ({pcResult,resResult} = formData);
+        } else {        // no roll yet
+
+            // make two new rolls: the character and the resistance
+            const pcRoll = new Roll('1d20').roll({async:false});
+            const resRoll = new Roll('1d20').roll({async:false});
+            pcResult = pcRoll.total;
+            resResult = resRoll.total;
+
+            // Dice So Nice integration
+            if (game.dice3d) {
+                // player roll
+                game.dice3d.showForRoll(pcRoll, game.user, true);
+                // GM roll, then resistance roll after a short delay
+                const firstGM = game.users.find(user => {return user.isGM});
+                setTimeout(() => {
+                    game.dice3d.showForRoll(resRoll, firstGM, true);
+                }, 500);
+            }
         }
+
+        const pcSuccesses = countSuccesses(pcTN,pcResult,pcMasteries,storypoint);
+        const resSuccesses = countSuccesses(resTN,resResult,resMasteries);
 
         // calculate outcome
         const degrees = pcSuccesses - resSuccesses;
         let outcome, victory=false, tie=false, defeat=false, outcomeText, srdText, cssClass;
         if (degrees == 0) {         // tie or marginal outcome
-            if (pcRoll.total == resRoll.total) {
+            if (pcResult == resResult) {
                 outcome = OUTCOMES.TIE;
                 tie = true;
             }
-            else if (pcRoll.total > resRoll.total) {
+            else if (pcResult > resResult) {
                 outcome = OUTCOMES.MARGINAL_VICTORY;
                 victory = true;
             }
@@ -325,9 +353,11 @@ async function _resolveRoll(chatMessage) {
         } else if (degrees > 0) {   // clear success
             victory = true;
             outcome = degrees + 1;
+            outcome = outcome <= 4 ? outcome : 4;   // clamp to maximum of 4
         } else {                    // clear defeat
             defeat = true;
             outcome = degrees - 1;
+            outcome = outcome >= -4 ? outcome : -4;   // clamp to minimum of -4
         }
 
         // outcome-dependent variables
@@ -352,10 +382,13 @@ async function _resolveRoll(chatMessage) {
         }
 
         const diff = {
-            pcResult: pcRoll.total,
+            pcResult: pcResult,
             pcSuccesses: pcSuccesses,
-            resResult: resRoll.total,
+            resResult: resResult,
             resSuccesses: resSuccesses,
+            storypoint: storypoint,
+            storypointImg: storypointImage,
+            storypointTitle: storypointTitle,
             outcome: {
                 victory: victory,
                 defeat: defeat,
@@ -468,9 +501,10 @@ function _getNewFormData(chatMessage,html) {
     return mergedData;
 }
 
-function countSuccesses(tn,rollTotal,masteries) {
+function countSuccesses(tn,rollTotal,masteries,storypoint=false) {
     let count = masteries;
     count += rollTotal <= tn ? 1 : 0;
     count += rollTotal == tn ? 1 : 0;
+    count += storypoint ? 1 : 0;
     return count;
 }

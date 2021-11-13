@@ -1,4 +1,10 @@
-v0.0.13 (2021-11-??):
+v0.0.15 (2021-11-??):
+
+- Beta release candidate
+- Controls for spending, refreshing, and (if individual option used) awarding Story Points
+- Setting option to use a shared Story Points pool or individual character Story Points
+
+v0.0.13 (2021-11-03):
 
 - Overhaul recording of PCs' ability slots, improvement points, Story Points, XP, and advances.
 - Sheet UI improvements

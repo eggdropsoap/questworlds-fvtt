@@ -1,5 +1,7 @@
 export const QUESTWORLDS = {};
 
+QUESTWORLDS.socket = null;
+
 /**
  * The set of Ability Scores used within the sytem.
  * @type {Object}

@@ -83,10 +83,12 @@
           --}}
         </div>
 
-        <div class="resource-group storypoints">
-          <label for="data.points.hero" class="resource-label">{{localize 'QUESTWORLDS.StoryPoints'}}</label>
+        <div class="resource-group storypoints {{#if usePool}}pool{{else}}personal{{/if}}" data-actor-id={{actor.id}}>
+          <label for="data.points.hero" class="resource-label">
+            {{~#if settings.usePool}}{{storyPointsPoolName}}{{else}}{{storyPointsName}}{{/if~}}
+          </label>
           <div>
-            <input type="text" name="data.points.hero" value="{{data.points.hero}}" data-dtype="Number"/>
+            <span class="story-points-pool">{{#if settings.usePool}}{{poolValue}}{{else}}{{data.points.hero}}{{/if}}</span>
           </div>
         </div>
 
