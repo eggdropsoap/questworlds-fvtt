@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="height: 512px; width: 512px;">
+<defs>
+    <linearGradient id="bronze" gradientTransform="rotate(15)">
+      <stop offset="0%"  stop-color="#804A00" />
+      <stop offset="20%" stop-color="#9C7A3C" />
+      <!-- <stop offset="50%"  stop-color="gold" /> -->
+      <stop offset="50%"  stop-color="#FFD088" />
+      <stop offset="80%" stop-color="#B08D57" />
+      <stop offset="100%" stop-color="#895E1A" />
+    </linearGradient>
+  </defs>
+<g transform="rotate(15,10,10)">
+<path d="M10,1 a 9,9 0 0 1 0,18 a 9,9 0 0 1 0,-18" fill="url(#bronze)" fill-opacity="1" stroke="#000" stroke-width="0.7"></path>
+<path d="M5,5 v10 h10 v-10 h-2 v8 h-2 v-6 h-2 v6 h-2 v-8 z" fill="#fff" fill-opacity="0.6" stroke="#000" stroke-width="0.5"></path></g></svg>

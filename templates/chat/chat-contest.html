@@ -73,20 +73,17 @@
         <div class="ratings-faceoff flexrow">
             <span class="rating">
                 {{localize 'QUESTWORLDS.chatcontest.Tactic'}}
-                <strong>
-                    {{formatRating total.rating total.masteries}}
-                </strong>
+                {{formatRating total.rating total.masteries}}
             </span>
             <span class="divider"><span class="vs"></span></span>
             <span class="rating">
                 {{localize 'QUESTWORLDS.chatcontest.Difficulty'}}
-                <strong>
-                    {{formatRating resistance.rating resistance.masteries}}
-                </strong>
+                {{formatRating resistance.rating resistance.masteries}}
             </span>
         </div>
         <div class="dice-faceoff flexrow">
             <span class="contestant flexcol">
+                {{#if storypoint}}<img class="storypoint" src="{{storypointImg}}" title="TODO LOCALIZE STORY POINT">{{/if}}
                 <div class="roll
                     {{~#if (eq pcResult total.rating)}} crit{{/if~}}
                     {{~#if (gt pcResult total.rating)}} miss{{/if~}}

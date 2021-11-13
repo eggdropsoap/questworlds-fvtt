@@ -1,3 +1,4 @@
+import { ChatContest } from "../documents/chat-contest.mjs";
 
 export class StoryPoints {
 
@@ -21,6 +22,14 @@ export class StoryPoints {
 
     static usePool() {
         return !(game.settings.get('questworlds','useIndividualStoryPoints'));
+    }
+
+    static pointImage({solid=false,color=false,black=false}) {
+        const name = game.settings.get('questworlds','storyPointsName');
+        const variant = name == 'Hero' ? 'w' : 'm';
+        const color = color ? 'color' : black ? 'black' : 'white';
+        if (solid) return `systems/questworlds/assets/story-point-${variant}-solid-${color}.svg`;
+        return `systems/questworlds/assets/story-point-${variant}-regular-${color}.svg`;
     }
 
     static reducePool() {
@@ -179,7 +188,7 @@ export class StoryPoints {
             options.unshift({
                 name: 'QUESTWORLDS.chatcontest.ImproveTactic',
                 icon: '<i class="fas fa-plus"></i>',
-                condition: relevant,
+                condition: checkImprove,
                 callback: doImproveTactic,
             });
 
@@ -187,23 +196,56 @@ export class StoryPoints {
             options.unshift({
                 name: storyPointMenuName,
                 icon: '<i class="fas fa-plus"></i>',
-                condition: relevant,
+                condition: checkSP,
                 callback: doSpendSP,
             });
 
-            function relevant(li) {
+            function _context(li) {
                 const messageId = li[0].dataset.messageId;
                 const message = game.messages.get(messageId);
-                const user = game.user;
-                const isGM = user.isGM;
-                const messageOwner = game.users.get(message.data.user);
-                const isContest = (message.getFlag('questworlds','formData'))?.closed;
+                return {
+                    messageId: messageId,
+                    message: message,
+                    user: game.user,
+                    isGM: game.user.isGM,
+                    messageOwner: game.users.get(message.data.user),
+                    isRolledContest: (message.getFlag('questworlds','formData'))?.closed,
+                    storypoint: (message.getFlag('questworlds','formData'))?.storypoint,
+                    hasPoints: game.user.character?.hasStoryPoints(),
+                    usePool: StoryPoints.usePool(),
+                    havePoolPoints: game.settings.get('questworlds','sharedStoryPointsPool') > 0,
+                }
+            }
 
-                return (messageOwner === user && !isGM && isContest);
+            function checkSP(li) {
+                let user, isGM, messageOwner, isRolledContest, storypoint, hasPoints, usePool, havePoolPoints;
+                ({user, isGM, messageOwner, isRolledContest, storypoint, hasPoints, usePool, havePoolPoints} = _context(li));
+
+                if (usePool)
+                    return (messageOwner === user && !isGM && isRolledContest && !storypoint && havePoolPoints);
+                else
+                    return (messageOwner === user && !isGM && isRolledContest && !storypoint && hasPoints);
             }
 
             function doSpendSP(li) {
-                ui.notifications.warn("Not implemented yet");   // TODO: implement
+                const message = game.messages.get(li[0].dataset.messageId);
+                const character = game.user.character;
+                const usePool = StoryPoints.usePool();
+
+                if (character) {
+                    ChatContest.addStoryPoint(message);
+                    ChatContest.resolve(message);
+                    if (usePool) StoryPoints.spendPointFromPool();
+                    else StoryPoints.spendPointFromCharacter(character);
+                }
+            }
+
+            function checkImprove(li) {
+                let messageId, message, user, isGM, messageOwner, isRolledContest;
+                ({messageId, message, user, isGM, messageOwner, isRolledContest} = _context(li));                
+
+                return false; // disable menu option: not implemented yet
+                // return (messageOwner === user && !isGM && isRolledContest);
             }
 
             function doImproveTactic(li) {

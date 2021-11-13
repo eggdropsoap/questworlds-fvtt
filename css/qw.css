@@ -1512,6 +1512,15 @@
   background-color: rgba(248, 170, 105, 0.15);
   background: radial-gradient(circle, rgb(233, 209, 190, 0.3) 0%, 70%, rgb(136, 102, 74, 0.3) 95%, rgb(100, 68, 42, 0.3) 90%);
   border-radius: 6px;
+  position: relative;
+}
+.system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .contestant .storypoint {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 25%;
+  border: none;
+  filter: drop-shadow(0px 0px 6px white);
 }
 .system-questworlds #chat-log .chat-contest .dice-results .dice-faceoff .roll {
   /* border: inherit; */

@@ -222,7 +222,6 @@ export class QuestWorldsItem extends Item {
 
             const formData = {
                 chatId: msg.id,
-                cssClass: "hello-world",
                 waitingForPlayer: true,
                 readyToRoll: false,
                 benefits: ( () => {
