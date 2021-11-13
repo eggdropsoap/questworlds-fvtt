@@ -3,6 +3,7 @@ MIT License
 Copyright (c) 2021 eggdropsoap except as noted
 The Boilerplate system Copyright (c) 2020 Asacolips Projects / Foundry Mods
 Simple World-Building system Copyright (c) 2020 Foundry Network
+FoundryVTT-Module-Template (.github/workflows/main.yml) Copyright (c) 2020 Cody Swendrowski
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +23,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Limited portions of the software provided by others are licensed CC BY-SA, as
-marked, and should be replaced or removed if the software is to be used in a
-non-attributive or closed-source context, or if this note is to be removed.
-None of the algorithms or art assets so marked are irreplaceable and don't
-constitute an unreasonable impairment of this software or this license.
+Limited portions of the Software provided by others are Creative Commons licensed,
+as marked, and should be replaced or removed if the software is to be used in a
+non-attributive (for CC BY and CC BY-SA) or closed-source (CC BY-SA) context, or
+if this note is to be removed. None of the algorithms or art assets so marked are
+irreplaceable and this does not constitute an unreasonable impairment of this
+software or this license.
