@@ -27,9 +27,9 @@ export class StoryPoints {
     static pointImage({solid=false,color=false,black=false}) {
         const name = game.settings.get('questworlds','storyPointsName');
         const variant = name == 'Hero' ? 'w' : 'm';
-        const color = color ? 'color' : black ? 'black' : 'white';
-        if (solid) return `systems/questworlds/assets/story-point-${variant}-solid-${color}.svg`;
-        return `systems/questworlds/assets/story-point-${variant}-regular-${color}.svg`;
+        const thecolor = color ? 'color' : black ? 'black' : 'white';
+        if (solid) return `systems/questworlds/assets/story-point-${variant}-solid-${thecolor}.svg`;
+        return `systems/questworlds/assets/story-point-${variant}-regular-${thecolor}.svg`;
     }
 
     static reducePool() {
