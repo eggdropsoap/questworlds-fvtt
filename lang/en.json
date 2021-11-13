@@ -246,6 +246,7 @@
 
             "StoryPointMenu": "Spend {storypoint} for 1 Success",
             "ImproveTactic": "Improve Tactic",
+            "StoryPointTitle": "1 Success from a {storypoint}",
 
             "outcomes": {
                 "Tie": "Tie",

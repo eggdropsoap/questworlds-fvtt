@@ -83,7 +83,7 @@
         </div>
         <div class="dice-faceoff flexrow">
             <span class="contestant flexcol">
-                {{#if storypoint}}<img class="storypoint" src="{{storypointImg}}" title="TODO LOCALIZE STORY POINT">{{/if}}
+                {{#if storypoint}}<img class="storypoint" src="{{storypointImg}}" title="{{storypointTitle}}">{{/if}}
                 <div class="roll
                     {{~#if (eq pcResult total.rating)}} crit{{/if~}}
                     {{~#if (gt pcResult total.rating)}} miss{{/if~}}

@@ -305,6 +305,7 @@ async function _resolveRoll(chatMessage) {
         const resMasteries = formData.resistance.masteries;
         const storypoint = formData?.storypoint;
         const storypointImage = StoryPoints.pointImage({solid: true, color: true});
+        const storypointTitle = game.i18n.format('QUESTWORLDS.chatcontest.StoryPointTitle',{storypoint: StoryPoints.name()});
 
 
         let pcResult,resResult;
@@ -387,6 +388,7 @@ async function _resolveRoll(chatMessage) {
             resSuccesses: resSuccesses,
             storypoint: storypoint,
             storypointImg: storypointImage,
+            storypointTitle: storypointTitle,
             outcome: {
                 victory: victory,
                 defeat: defeat,
