@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="height: 512px; width: 512px;">
+<g transform="rotate(195,10,10)">
+<path d="M10,1 a 9,9 0 0 1 0,18 a 9,9 0 0 1 0,-18
+M5,5 v10 h10 v-10 h-2 v8 h-2 v-6 h-2 v6 h-2 v-8 z" fill="black" fill-opacity="1" stroke="#f00" stroke-width="0"></path>
+</g></svg>
