@@ -7,11 +7,16 @@ Icons from [Game-icons.net](https://game-icons.net/):
 - keyword.svg: [“Fluffy swirl icon”](https://game-icons.net/1x1/lorc/fluffy-swirl.html) by [Lorc][lorc] under [CC BY 3.0][cc-by-3.0]
 - magic-group.svg: [“Magic swirl icon”](https://game-icons.net/1x1/lorc/magic-swirl.html) by [Lorc][lorc] under [CC BY 3.0][cc-by-3.0]
 - sidekick.svg: [“Eyepatch icon”](https://game-icons.net/1x1/delapouite/eyepatch.html) by [Delapouite][delapouite] under [CC BY 3.0][cc-by-3.0]
-- levelup.svg & levelup-empty.svg: [“Plain arrow icon”](https://game-icons.net/1x1/delapouite/plain-arrow.html) by [Delapouite][delapouite] under [CC BY 3.0][cc-by-3.0]
-- story-point.svg, story-point-bw.svg: [“Gold shell icon”](https://game-icons.net/1x1/lorc/gold-shell.html) by [Lorc][lorc] under [CC BY 3.0][cc-by-3.0]
+- levelup.svg & levelup-empty.svg: [“Plain arrow icon”](https://game-icons.net/1x1/delapouite/plain-arrow.html) by [Delapouite][delapouite] under [CC BY 3.0][cc-by-3.0], modifications by [eggdropsoap][eggdropsoap]
+
+Original icons:
+
+- story-point-m-*.svg: “Story Point” by [eggdropsoap][eggdropsoap] is licensed [CC BY 4.0][cc-by-4.0]
+- story-point-w-*.svg: “Hero Point” by [eggdropsoap][eggdropsoap] is licensed [CC BY 4.0][cc-by-4.0]
 
 
   [lorc]: https://lorcblog.blogspot.com/
   [delapouite]: https://delapouite.com/
   [cc-by-3.0]: http://creativecommons.org/licenses/by/3.0/
+  [cc-by-4.0]: https://creativecommons.org/licenses/by/4.0/
   [eggdropsoap]: https://github.com/eggdropsoap
