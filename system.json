@@ -35,7 +35,7 @@
 	"primaryTokenAttribute": null,
 	"secondaryTokenAttribute": null,
 	"url": "https://github.com/eggdropsoap/questworlds-fvtt",
-	"manifest": "",
+	"manifest": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/system.json",
 	"download": ""
 }
 
