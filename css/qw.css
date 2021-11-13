@@ -1252,6 +1252,12 @@
   padding-right: 0;
   top: 0;
 }
+.app#players h3 .story-points-header img.storypoint {
+  width: 15px;
+  border: none;
+  vertical-align: middle;
+  margin: 0 6px 3px;
+}
 .app#players .player .player-name {
   text-overflow: ellipsis;
 }
@@ -1268,10 +1274,6 @@
 .app#players .player .user-story-points.me {
   color: #c0eddb;
 }
-/* .app#players .player .user-story-points.me:hover,
-.app#players .player .user-story-points.gm:hover,
-.app#players h3 .story-points-header:hover {
-} */
 .app#players .player .user-story-points.me:hover,
 .app#players .player .user-story-points.gm:hover,
 .app#players h3 .story-points-header.gm:hover,
@@ -1279,10 +1281,10 @@
   cursor: pointer;
   text-shadow: 0px 0px 4px goldenrod;
 }
-/* .app#players div.theinner {
-
-} */
-
+.app#players h3 .story-points-header.gm:hover img.storypoint,
+.app#players h3 .story-points-header.pool:hover img.storypoint {
+  filter: drop-shadow(0px 0px 4px goldenrod);
+}
 /* end app story points */
 
 

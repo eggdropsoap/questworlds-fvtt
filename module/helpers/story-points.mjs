@@ -24,7 +24,7 @@ export class StoryPoints {
         return !(game.settings.get('questworlds','useIndividualStoryPoints'));
     }
 
-    static pointImage({solid=false,color=false,black=false}) {
+    static pointImage({solid=false,color=false,black=false}={}) {
         const name = game.settings.get('questworlds','storyPointsName');
         const variant = name == 'Hero' ? 'w' : 'm';
         const thecolor = color ? 'color' : black ? 'black' : 'white';
@@ -114,6 +114,7 @@ export class StoryPoints {
                     pool: true,
                     pointsPool: game.settings.get('questworlds','sharedStoryPointsPool'),
                     title: StoryPoints.name('pool'),
+                    storypointImg: StoryPoints.pointImage(),
                 }
                 const sharedPointsHTML = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
 
@@ -123,6 +124,7 @@ export class StoryPoints {
                 const context = {
                     title: StoryPoints.name('plural'),
                     userCssClass: game.user.isGM ? 'gm' : '',
+                    storypointImg: StoryPoints.pointImage(),
                 }
                 const storyPointsHeader = $(await renderTemplate('/systems/questworlds/templates/playerlist/points-header.html',context));
                 if (game.user.isGM) storyPointsHeader.on('click',StoryPoints.Handlers.onClickStoryPoints);
