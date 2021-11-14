@@ -4,7 +4,7 @@ QuestWorlds-FVTT is a system module for Foundry VTT to support playing [_QuestWo
 
 # Installation
 
-Go to your Game Systems tab in Foundry, click Install System, and copy this URL into the Manifest URL field and click Install: `https://github.com/eggdropsoap/questworlds-fvtt/blob/master/system.json`
+Go to your Game Systems tab in Foundry, click Install System, and copy this URL into the Manifest URL field and click Install: `https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json`
 
 QuestWorlds-FVTT is currently in a beta state. There may be bugs. There will probably be bugs! You can report bugs at the [issues page](https://github.com/eggdropsoap/questworlds-fvtt/issues) or by using the Bug Reporter module (which you can install by searching Foundry's list of modules).
 
