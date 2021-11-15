@@ -1,4 +1,4 @@
-v0.0.15 (2021-11-??):
+v0.0.15 (2021-11-13):
 
 - Beta release candidate
 - Controls for spending, refreshing, and (if individual option used) awarding Story Points
