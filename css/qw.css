@@ -6,6 +6,11 @@
 @import "rune-settings.css";
 
 /* Global styles */
+:root {
+  /* --editor-shadow: inset 0 0 4px rgba(0 0 0 / 40%); */
+  --editor-shadow: inset 0 0 20px rgb(0 0 0 / 15%), inset 1px 1px 2px rgb(0 0 0 / 25%);
+}
+
 .window-app {
   font-family: "Roboto", sans-serif;
 }
@@ -251,11 +256,23 @@
   font-family: "Roboto", sans-serif;
 }
 
+.questworlds.sheet.actor .character {
+  max-height: 100%;
+}
+
+.questworlds .sheet-body {
+  min-height: 0;    /* override a flexbox default to allow shrinking smaller than content */
+}
+
+.questworlds .sheet-body .tab.main .grid {
+  overflow-y: auto;
+}
+
 .questworlds .sheet-header {
   -webkit-box-flex: 0;
   -ms-flex: 0 auto;
   flex: 0 auto;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -471,12 +488,19 @@
 .questworlds.actor .sheet-body .tab,
 .questworlds.actor .sheet-body .tab.biography .grid,
 .questworlds.actor .sheet-body .tab.biography .grid section,
+.questworlds.actor .sheet-body .tab .editor,
 .questworlds.actor .sheet-body .tab .editor-content {
   height: 100%;
   padding-top: 0;
   padding-bottom: 0;
 }
-
+.questworlds.actor .sheet-body .tab .editor-content {
+  /* border: 1px solid #782e22; */
+  border: 1px solid rgba(120 46 34 / 65%);
+  border-radius: 6px;
+  background-color: rgba(255 255 255 / 40%);
+  box-shadow: var(--editor-shadow);
+}
 
 .questworlds.actor .npc .sheet-body .public,
 .questworlds.actor .npc .sheet-body .private {
@@ -487,7 +511,7 @@
   flex: 0;
 }
 .questworlds.actor .sheet-body .editor {
-  min-height: 32px;
+  min-height: 114px;
 }
 
 .questworlds.actor .sheet-body .tab.biography .grid {
@@ -505,7 +529,7 @@
 }
 
 .questworlds .tox .tox-editor-container {
-  background-color: rgba(255,255,255,.2);
+  background-color: rgba(255,255,255,.4);
   border-radius: 6px;
   border-style: solid;
   border-width: 1px;
@@ -514,13 +538,13 @@
 .questworlds .tox .tox-edit-area {
   padding: 0 8px;
 }
+.questworlds .character .tox .tox-edit-area {
+  box-shadow: var(--editor-shadow);
+}
 
 .questworlds .columns-2 {
   columns: 2;
   column-fill: auto;
-}
-.questworlds.actor .character .sheet-body .main .abilities {
-  padding-bottom: 40px;
 }
 .questworlds.item .sheet-body .abilities {
   margin-top: 0.6em;
@@ -531,6 +555,9 @@
   overflow: visible;
 }
 
+.questworlds .sheet-body .abilities {
+  height: 100%;
+}
 .questworlds .sheet-body .abilities ol>li.item {
   padding-left: 2px;
 }
@@ -578,10 +605,8 @@
   padding-bottom: 8px;
   padding-left: 15px;
   padding-right: 29px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex: 0;
+  margin: 0 -8px -8px;
 }
 .questworlds.actor.sheet .character .resources.footer {
   justify-content: space-between;
@@ -678,7 +703,7 @@
   text-shadow: 0 0 3px rgb(255 0 0 / 45%);
 }
 .questworlds.actor.sheet .character .main .resources .storypoints .story-points-pool {
-  font-size: 0.75rem
+  font-size: 0.75rem;
 }
 
 
