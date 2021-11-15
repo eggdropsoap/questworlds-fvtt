@@ -392,11 +392,11 @@
   background-color: inherit;
   border-width: 0;
   border-style: none;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 .questworlds .sheet-header input:hover {
   background-color: rgba(0,0,0,0.05);   /* show Foundry's default form field shading on hover */
-  transition: 0.1s;
+  transition: background-color 0.1s;
 }
 .questworlds .sheet-header input:focus {
   box-shadow: none; /* get rid of red shadow */
@@ -663,12 +663,12 @@
   /* border-bottom: thin solid rgb(0, 0, 0, 0.5); */
   /* padding-bottom: 0; */
   background-color: rgba(0,0,0,0.0);
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 .questworlds.actor.sheet .character.editable .resources.footer .resource-group input:hover,
 .questworlds.actor.sheet .character.editable .resources.footer .resource-group input:focus {
   background-color: rgba(0,0,0,0.05);
-  transition: 0.1s;
+  transition: background-color 0.1s;
 }
 .questworlds.actor.sheet .character.editable .main .resources .storypoints,
 .questworlds.actor.sheet .character.editable .main .resources .storypoints label {
