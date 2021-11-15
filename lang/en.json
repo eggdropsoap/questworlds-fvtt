@@ -326,6 +326,7 @@
             "storyPointsNameH": "What name will be used for Story Points on characters sheets and in the user interface.",
 
             "RuneMenu": {
+                "RuneSupportNotEnabled": "Rune support not enabled. To enable rune support, return to System Settings, check Enable Runes, and then cick Save Changes.",
                 "Builtins": {
                     "Header": "Configure Fonts for Built-in Runes",
                     "Hint1Instructions": "Upload one or more Rune fonts and enter the letters matching each Rune. Leave a blank to use a later font for that Rune. Fonts are ordered left to right. You can drag the headers to reorder fonts.",

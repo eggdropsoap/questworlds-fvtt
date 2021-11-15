@@ -26,6 +26,11 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         const settingData = game.settings.get('questworlds', 'runeFontSettings');
         // const settingData = {};   // DEBUG: Clear settings. If paired with .set(), wipes stored settings too!
         
+        const useRunes = game.settings.get('questworlds','useRunes');
+        settingData.useRunes = useRunes;
+
+        if (!useRunes) return settingData;  // return early since we're only showing an error message
+
         /* set defaults in case of no settings data, or new defaults */
 
         if (!settingData.hasOwnProperty('customrunes')) settingData.customrunes = {};
@@ -60,7 +65,7 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
 
         // iterate over settingData.runes to pad out the individual runes' .fonts arrays to
         // match the number of fonts known in settingData.fonts
-        const masterFontCount = settingData.fonts.length || 0; // behave well even if .fonts undefined
+        const masterFontCount = settingData?.fonts.length || 0; // behave well even if .fonts undefined
         if (masterFontCount > 0) {
             for (var runeProp in settingData.runes) {
                 let rune = settingData.runes[runeProp];
@@ -77,14 +82,17 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         // add convenience data to the context
         settingData.fontCount = masterFontCount;
 
-        // console.log(settingData);   // DEBUG: for inspecting data structure sent to form
         return settingData;
     }
 
     _updateObject(event, formData) {
         // console.log("_updateObject() fired")
+
+        // bail early if rune support not enabled
+        const useRunes = game.settings.get('questworlds','useRunes');
+        if (!useRunes) return;
+
         const data = expandObject(formData);
-        // console.log(data);
 
         /* handle fonts inputs */
 

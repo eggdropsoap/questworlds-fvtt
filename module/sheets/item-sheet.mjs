@@ -52,19 +52,25 @@ export class QuestWorldsItemSheet extends ItemSheet {
         // Add item type to the data.
         context.data.itemType = context.item.type;
 
+        // set up runes data
+
+        const useRunes = game.settings.get("questworlds","useRunes");
         // create a flat token:name object for the set of runes, sorted
-        const runeSettingList = Object.entries(game.settings.get('questworlds','runeFontSettings').runes).sort();
-        let runeSet = runeSettingList.reduce((set,e) => {
-            let [key, name] = [ e[0], e[1].name ];
-            set.push([key,name]);
-            return set; 
-        },[]);
-        runeSet.unshift(['','']);   // we need a "none" or blank option at the top
-        runeSet = Object.fromEntries(runeSet);  // convert array of entries to dictionary
-    
+        let runeSet;
+        let runeSettingList = game.settings.get('questworlds','runeFontSettings')?.runes;
+        if (useRunes && runeSettingList) {
+            runeSettingList = Object.entries(runeSettingList).sort();
+            runeSet = runeSettingList.reduce((set,e) => {
+                let [key, name] = [ e[0], e[1].name ];
+                set.push([key,name]);
+                return set; 
+            },[]);
+            runeSet.unshift(['','']);   // we need a "none" or blank option at the top
+            runeSet = Object.fromEntries(runeSet);  // convert array of entries to dictionary
+        }    
         // Add some game settings to the context
         context.settings = {
-            "useRunes": game.settings.get("questworlds","useRunes"),
+            "useRunes": useRunes,
             "sidekickName": game.settings.get("questworlds","sidekickName"),
             "keywordBreakout": game.settings.get("questworlds","keywordBreakout"),
             "runeSet": runeSet,
