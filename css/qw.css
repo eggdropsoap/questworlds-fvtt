@@ -537,6 +537,8 @@
 
 .questworlds .tox .tox-edit-area {
   padding: 0 8px;
+}
+.questworlds .character .tox .tox-edit-area {
   box-shadow: var(--editor-shadow);
 }
 
