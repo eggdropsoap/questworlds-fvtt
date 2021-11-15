@@ -540,6 +540,9 @@
   overflow: visible;
 }
 
+.questworlds .sheet-body .abilities {
+  height: 100%;
+}
 .questworlds .sheet-body .abilities ol>li.item {
   padding-left: 2px;
 }
