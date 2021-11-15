@@ -222,7 +222,16 @@
             "AddXPMessage": "Award 1 XP to {name}?",
 
             "StartContestTitle": "Confirm Contest Tactic",
-            "StartContestMessage": "Begin a contest with this tactic?"
+            "StartContestMessage": "Begin a contest with this tactic?",
+
+            "RefreshPointsTitle": "Refresh {storypoints}?",
+            "RefreshPointsMessage": "Refresh all characters’ {storypoints}?",
+            "RefreshPoolMessage": "Refresh the {pool}?",
+            "AwardPointTitle": "Award {storypoint}?",
+            "AwardPointMessage": "Award a {storypoint} to {name}?",
+            "SpendPointTitle": "Spend a {storypoint}?",
+            "SpendPointMessage": "Spend a {storypoint}?",
+            "SpendPoolPointMessage": "Spend a {storypoint} from the {pool}?"
         },
 
         "chatcontest" : {
