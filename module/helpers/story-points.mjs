@@ -159,27 +159,53 @@ export class StoryPoints {
             const socket = CONFIG.QUESTWORLDS.socket;
 
             if (game.user.isGM && usePool) {
-                // TODO: confirmation dialog: refresh pool
-                StoryPoints.refreshPool();
+                Dialog.confirm({
+                    title: game.i18n.format('QUESTWORLDS.dialog.RefreshPointsTitle',{storypoints:StoryPoints.name('plural')}),
+                    content: "<p>" + game.i18n.format('QUESTWORLDS.dialog.RefreshPoolMessage',{pool: StoryPoints.name('pool')}) + "</p>",
+                    yes: () => { StoryPoints.refreshPool() },
+                    no: () => {},
+                });
             } else {    
                 if (game.user.isGM) { // individual story points
                     const actorId = dataset.actorId;
                     if (actorId) {     // gm clicked a player's points
-                        // TODO: confirmation dialog: award individual point
                         const character = game.actors.get(actorId);
-                        StoryPoints.addPointToCharacter(character);
+                        Dialog.confirm({
+                            title: game.i18n.format('QUESTWORLDS.dialog.AwardPointTitle',{storypoint: StoryPoints.name()}),
+                            content: "<p>" + game.i18n.format('QUESTWORLDS.dialog.AwardPointMessage',{
+                                name: character.name,
+                                storypoint: StoryPoints.name()
+                            }) + "</p>",
+                            yes: () => { StoryPoints.addPointToCharacter(character) },
+                            no: () => {},
+                        });
                     } else {    // gm clicked the header: refresh all individual story points
-                        // TODO: confirmation dialog: refresh all points
-                        StoryPoints.refreshAllCharacterPoints();
+                        Dialog.confirm({
+                            title: game.i18n.format('QUESTWORLDS.dialog.RefreshPointsTitle',{storypoints:StoryPoints.name('plural')}),
+                            content: "<p>" + game.i18n.format('QUESTWORLDS.dialog.RefreshPointsMessage',{storypoints: StoryPoints.name('plural')}) + "</p>",
+                            yes: () => { StoryPoints.refreshAllCharacterPoints() },
+                            no: () => {},
+                        });
                     }
                 } else {    // player
                     if (usePool) {
-                        // TODO: confirmation dialog: spend pool point
-                        StoryPoints.spendPointFromPool();
+                        Dialog.confirm({
+                            title: game.i18n.format('QUESTWORLDS.dialog.SpendPointTitle',{storypoint: StoryPoints.name()}),
+                            content: "<p>" + game.i18n.format('QUESTWORLDS.dialog.SpendPoolPointMessage',{
+                                storypoint: StoryPoints.name(),
+                                pool: StoryPoints.name('pool'),
+                            }) + "</p>",
+                            yes: () => { StoryPoints.spendPointFromPool() },
+                            no: () => {},
+                        });
                     } else {
-                        // TODO: confirmation dialog: spend own point
                         const character = game.user.character;
-                        StoryPoints.spendPointFromCharacter(character);
+                        Dialog.confirm({
+                            title: game.i18n.format('QUESTWORLDS.dialog.SpendPointTitle',{storypoint: StoryPoints.name()}),
+                            content: "<p>" + game.i18n.format('QUESTWORLDS.dialog.SpendPointMessage',{storypoint: StoryPoints.name()}) + "</p>",
+                            yes: () => { StoryPoints.spendPointFromCharacter(character) },
+                            no: () => {},
+                        });
                     }
                 }
             }
