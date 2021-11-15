@@ -1,3 +1,9 @@
+v0.1.0 (2021-11-15):
+
+- **First Beta release!**
+- Various bugfixes to sheet layouts, rune support code
+- Added confirmation dialogs for using Story Points
+
 v0.0.15 (2021-11-13):
 
 - Beta release candidate
