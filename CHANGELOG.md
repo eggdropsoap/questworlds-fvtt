@@ -3,6 +3,7 @@ v0.1.0 (2021-11-15):
 - **First Beta release!**
 - Various bugfixes to sheet layouts, rune support code
 - Added confirmation dialogs for using Story Points
+- Compatibility with Foundry v0.8.9 tested
 
 v0.0.15 (2021-11-13):
 
