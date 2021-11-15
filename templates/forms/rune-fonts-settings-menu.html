@@ -1,5 +1,12 @@
 <form id="rune-settings" class="flexcol" autocomplete="off">
-
+    {{#unless useRunes}}
+    <div style="margin-top: 1em; text-align: center;">
+        {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.RuneSupportNotEnabled'}}
+        <div style="width: 100%; text-align: center; margin-top:1em; font-size: 2em;">
+            &#x2619;
+        </div>
+    </div>
+    {{else}}
     <h2>{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Header'}}</h2>
 
     <p class="notes">
@@ -91,6 +98,8 @@
             {{/each}}
         </tbody>
     </table>
+
+    {{/unless}} {{!-- unless useRunes --}}
 
     {{!--
     <h2>Custom Runes</h2>
