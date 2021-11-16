@@ -8,9 +8,9 @@ This Foundry system module uses trademarks owned by Chaosium Inc/Moon Design Pub
 
 ## Installation
 
-Use this manifest URL to install Foundry manually:
+Use this manifest URL to install manually in Foundry:
 
-    https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json
+[`https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json`](https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json)
 
 With luck, installation by searching within Foundry will be possible soon.
 
