@@ -4,7 +4,7 @@ QuestWorlds-FVTT is an *unofficial* system module for Foundry VTT to support pla
 
 ## QuestWorlds FVTT is not affiliated with Chaosium
 
-This Foundry system module uses trademarks owned by Chaosium Inc/Moon Design Publications LLC, which are used under Chaosium Inc’s Fan Material Policy. We are expressly prohibited from charging you to use or access this content. This Foundry system module is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc’s products, please visit [www.chaosium.com][chaosium].
+This Foundry system module uses trademarks and/or copyrights owned by Chaosium Inc/Moon Design Publications LLC, which are used under Chaosium Inc’s Fan Material Policy. We are expressly prohibited from charging you to use or access this content. This Foundry system module is not published, endorsed, or specifically approved by Chaosium Inc. For more information about Chaosium Inc’s products, please visit [www.chaosium.com][chaosium].
 
 ## Installation
 
