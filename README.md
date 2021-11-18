@@ -1,4 +1,4 @@
-# QuestWorlds FVTT
+# QuestWorlds FVTT (Unofficial)
 
 QuestWorlds-FVTT is an *unofficial* system module for Foundry VTT to support playing [_QuestWorlds_][qwsrd], the narrative RPG system from [Chaosium][chaosium].
 
