@@ -8,11 +8,11 @@ This Foundry system module uses trademarks and/or copyrights owned by Chaosium I
 
 ## Installation
 
-Use this manifest URL to install manually in Foundry:
+Installation is easy: search for `questworlds` in Foundry.
+
+You can also use this manifest URL to install manually:
 
 [`https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json`](https://github.com/eggdropsoap/questworlds-fvtt/releases/latest/download/system.json)
-
-With luck, installation by searching within Foundry will be possible soon.
 
 ## Features
 
@@ -26,11 +26,11 @@ While I would love to automate a lot of the paperwork and logic of QuestWorlds, 
 
 As an unexpected side effect, this simplicity also makes QuestWorlds-FVTT somewhat useful for playing earlier editions that use slightly different logic, modifier scales, and contest rules. Some easy optional support for ealier editions is provided.
 
-Note that **no font files are included in QuestWorlds-FVTT.** Rune *support* is included, but requires the GM to install their desired font files during world setup in the system settings panel provided. This is for simple copyright reasons: I do not have permission to distribute anyone's font files within QuestWorlds-FVTT. As a bonus, this means you can use your preferred fonts for runes. [Chaosium provides a very nice rune font][runefont] that you might enjoy.
+Note that **no font files are included in QuestWorlds-FVTT.** Rune *support* is included, but requires the GM to install their desired font files during world setup in the system settings panel provided. This is for simple copyright reasons: I do not have permission to distribute anyone's font files with QuestWorlds-FVTT. As a bonus, this means you can use your preferred fonts for runes. [Chaosium provides a very nice rune font][runefont] that you might enjoy.
 
 ## Bugs?
 
-QuestWorlds-FVTT is currently in a beta state. There may be bugs. There will probably be bugs! You can report bugs at the [issues page](https://github.com/eggdropsoap/questworlds-fvtt/issues) or by using the Bug Reporter module (which you can install from Foundry's list of modules).
+QuestWorlds-FVTT is currently in a beta state. There may be bugs. There will probably be bugs! You can report bugs at the [issues page](https://github.com/eggdropsoap/questworlds-fvtt/issues) or by using the [Bug Reporter](https://github.com/League-of-Foundry-Developers/bug-reporter) module (which you can install from Foundry's list of modules).
 
 ## Future plans
 
