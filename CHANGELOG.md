@@ -1,3 +1,8 @@
+v0.1.1 (2021-11-15):
+
+- Documentation tweaks to unambiguously state unofficial status (that is, not affiliated with or endorsed by Chaosium)
+- System title updated to *QuestWorlds (Unofficial)* inside Foundry accordingly
+
 v0.1.0 (2021-11-15):
 
 - **First Beta release!**
