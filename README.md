@@ -28,6 +28,40 @@ As an unexpected side effect, this simplicity also makes QuestWorlds-FVTT somewh
 
 Note that **no font files are included in QuestWorlds-FVTT.** Rune *support* is included, but requires the GM to install their desired font files during world setup in the system settings panel provided. This is for simple copyright reasons: I do not have permission to distribute anyone's font files with QuestWorlds-FVTT. As a bonus, this means you can use your preferred fonts for runes. [Chaosium provides a very nice rune font][runefont] that you might enjoy.
 
+### 1. Contests
+
+Simple contests are supported. A player clicking an ability will prompt to start a new contest with that ability as the Tactic. Contests are handled as chat cards that are visible only to the player and the GM until the final rolls are made. The limited visibility of contests before their final outcome is determined means less clutter in the chat for players when the GM is running group simple contests.
+
+A contest chat card lists:
+
+- possible benefits and consequences the PC has, and allows them to be selected
+- an input for an arbitrary modifer covering all situatoinal modifiers
+- a drop-down for setting the difficulty level of the Resistance
+
+The player and GM can both set options for the contest, with the player having first. The contest details can be turned over to the GM for approval or further modifications. The contest card lets the player and GM pass control back and forth until both are satisfied—it's assumed that the GM and player will also be discussing the contest's details, but negotiations can be managed by simply setting options and turning it back over to the other person for approval.
+
+Once the GM is satisfied with the contest details, they can click to approve the roll, giving control back to the player to finally roll the contest. Both the player roll and the Resistance/GM's rolls are automatically made and the contest card details are replaced with the result of the rolls and the outcome of the contest. The player's roll is shown on the left and the opposition/world/GM's roll is shown on the right. The outcome of comparing the rolls is listed underneath the dice results. The contest chat card is made public as soon as it is rolled.
+
+Once a contest has been rolled, the player can spend one Story Point by right-clicking the chat card and choosing that option from the pop-out menu. The Story Point will appear as a badge on the character's roll result, and the Outcome of the contest will be recalculated with the added Success from the Story Point.
+
+### 2. Character sheets
+
+The character sheet is structured but freeform, in the spirit of QuestWorlds. The header contains the name, Concept, and portrait. Abilities, Benefits and Consequences, and Flaws have their own sections in the main centre section of the sheet's default tab. The footer of the default tab contains trackers for Ability Slots, Improvement Points, XP, and Story Points. The Biography tab has two text areas, one for a description and one for a biography; groups using the Prose method can use the description for their 100 words, and the other for their own more detailed background. The Art tab provides room for a gallery of images for the PC. The Notes tab provides room for a player's campaign notes.
+
+To create abilities, benefits/consequences, or flaws, click the plus ("+") in the section's header.
+
+- **Keywords and Abilities:** Items can be Abilities, Keywords, Sidekicks, or Magic Groups. Each has its own right-click menu that allows adding nested items appropriate to its type. The type of an ability-item can be changed by editing it and changing its type in the item sheet's header.
+- **Benefits and Consequences:** Set a positive rating to make a Benefit and a negative rating to create a Consequence.
+- **Flaws:** Flaws always have positive ratings. Flaws may have a zero rating, which can be useful for unrated Flaw notes like "Various spirit taboos", as sometimes seen on example character sheets.
+
+In the footer, a manual number field tracks Ability Slots for character creation (and during play for the As You Go method). Players can update the number to help keep track of how many unused Ability Slots they have left.
+
+Improvement Points work the same: players can use the three fields to keep track of the general-purpose Improvement Points during or left over from character creation, and separately the Ability-only and Keyword-only Improvement Points gained from advances.
+
+Experience Points are tracked with the XP bar. An "add" button appears under the bar for the GM only, allowing granting XP. When players have enough XP to earn an advance, available advances are shown beside the bar. The available-advance indictator can be clicked to choose the two advancement options for that advance, which will be recorded in the character's advancement history. Choosing Improvement Points for an advance adds them to the appropriate trackers—all other options are left to the player to manually update on the sheet. Clicking the indicator when no advances are available shows the advancement history—useful for remembering which options you just picked, or for auditing advacement.
+
+Story Points in the Story Point Pool are listed on the sheet, as well as in Foundry's Player List. Clicking on Story Points allows spending them as a player, or refreshing them as a GM. Dialog prompts check for confirmation, to avoid mis-clicks spending points accidentally. When using the Individual Story Points house rule option, the GM's controls are slightly different: click a player's individual points to awared a new Story Point, and click the Story Points header in the Player List to refresh everyone's Story Points.
+
 ## Bugs?
 
 QuestWorlds-FVTT is currently in a beta state. There may be bugs. There will probably be bugs! You can report bugs at the [issues page](https://github.com/eggdropsoap/questworlds-fvtt/issues) or by using the [Bug Reporter](https://github.com/League-of-Foundry-Developers/bug-reporter) module (which you can install from Foundry's list of modules).
