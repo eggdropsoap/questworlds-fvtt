@@ -66,6 +66,12 @@ Story Points in the Story Point Pool are listed on the sheet, as well as in Foun
 
 QuestWorlds-FVTT is currently in a beta state. There may be bugs. There will probably be bugs! You can report bugs at the [issues page](https://github.com/eggdropsoap/questworlds-fvtt/issues) or by using the [Bug Reporter](https://github.com/League-of-Foundry-Developers/bug-reporter) module (which you can install from Foundry's list of modules).
 
+## New Features?
+
+Feature requests are very welcome! QuestWorlds-FVTT is a work in progress. Feel free to submit feature requests to the [issue tracker][issues] or by getting my attention on the Foundry discord. Using the Bug Reporter module for feature requests is A-OK too, especially if you don't have or want to make a Github or Discord account just to ask for an improvement.
+
+There seem to be as many ways to play QuestWorlds as there are groups who play it, and my hope is to provide a flexible Foundry system that can handle how you run your games. QuestWorlds-FVTT takes the QWSRD as core, and provides a few settings and features to accommodate variations from the QWSRD "rules as written". I hope to expand "a few" to "many", and telling me how QW-FVTT could work differently for your group is how to expand that beyond the current options. If there is a feature or option or change that would better support how your group plays QuestWorlds, including house rules or rules held over from previous editions, please do submit a feature request.
+
 ## Future plans
 
 Opportunities for feature enhancements remain. Things I would like to see later include, in no particular order:
@@ -93,3 +99,4 @@ Finally, a profound and heartfelt thanks to Ian Cooper and everyone backing the 
   [qwsrd]: https://questworlds.chaosium.com
   [chaosium]: https://www.chaosium.com
   [runefont]: https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/
+  [issues]: https://github.com/eggdropsoap/questworlds-fvtt/issues
