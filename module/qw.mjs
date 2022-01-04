@@ -114,18 +114,21 @@ Hooks.once("socketlib.ready", () => {
 
 Hooks.once("ready", async function() {
   // Warn that socketlib is required
-  if(!game.modules.get('socketlib')?.active && game.user.isGM) {
-    // const error_message = "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.";
-    const buttonLabels = {
-      settings: game.i18n.localize('SETTINGS.SettingsHeader'),
-      modules: game.i18n.localize('SETTINGS.ManageModules')
+  if(!game.modules.get('socketlib')?.active) { 
+    if (game.user.isGM) {
+      // const error_message = "QuestWorlds depends on the socketlib module. Please activate socketlib in <i class=\"fas fa-cogs\"></i> Game Settings \u2192 <i class=\"fas fa-cube\"></i> Manage Modules.";
+      const buttonLabels = {
+        settings: game.i18n.localize('SETTINGS.SettingsHeader'),
+        modules: game.i18n.localize('SETTINGS.ManageModules')
+      }
+      const error_message = game.i18n.format('QUESTWORLDS.socketlibError',buttonLabels);
+      ui.notifications.error(error_message);
     }
-    const error_message = game.i18n.format('QUESTWORLDS.socketlibError',buttonLabels);
-    ui.notifications.error(error_message);
+  } else {
+    // Register ui.players.render with socketlib if it exists, and when it's ready
+    CONFIG.QUESTWORLDS.socket.register('refreshPlayerList',() => { ui.players.render() });
   }
 
-  // Register ui.players.render with socketlib now that it's ready
-  CONFIG.QUESTWORLDS.socket.register('refreshPlayerList',() => { ui.players.render() });
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
