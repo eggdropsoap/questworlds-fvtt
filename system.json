@@ -9,7 +9,7 @@
 	"changelog": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/CHANGELOG.md",
 	"bugs": "https://github.com/eggdropsoap/questworlds-fvtt/issues",
 	"minimumCoreVersion": "0.8.8",
-	"compatibleCoreVersion": "0.8.9",
+	"compatibleCoreVersion": "9.238",
 	"flags": {
 		"allowBugReporter": true
 	},
