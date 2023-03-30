@@ -20,7 +20,6 @@ export const DEFAULT_ICONS = {
  * @param {String} name   // new ability's name
  */
 class EmbeddedAbility {
-
     constructor(type, parentId, name, rating, masteries, rune) {
         // one id schema for all embeds, since they can switch type later
         this.id = "embed-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -42,7 +41,6 @@ class EmbeddedAbility {
         // initialize with its own empty embeds list
         this.embeds = [];
   }
-
 }
 
 
@@ -55,15 +53,15 @@ export class QuestWorldsItem extends Item {
     /** @override */
      async _preCreate(data, options, userId) {
         await super._preCreate(data, options, userId);
-
+        const itemType = this.system?.variant || this.type;
+        
         // set default Item icon per type and variant
         if (data.img === undefined) {
-            const img = DEFAULT_ICONS[data?.data?.variant] || DEFAULT_ICONS[data.type];
-            if (img) await this.data.update({ img: img });
+            const img = DEFAULT_ICONS[itemType];
+            if (img) await this.updateSource({ img : img});
         }
 
-        // set default rating
-        const itemType = this.data.data?.variant || this.type;
+        // set default rating 
         let defaultRating;
         switch (itemType) {
             case 'ability':
@@ -73,17 +71,19 @@ export class QuestWorldsItem extends Item {
                 defaultRating = RatingHelper.defaultRating(itemType);
             default:
         }
-        if (defaultRating) await this.data.update({ data: {rating: defaultRating} });
+        if (defaultRating) await this.updateSource({rating: defaultRating});
     }
+    
 
     get variant() {
         if (this.type == 'benefit')
             return RatingHelper.merge({
-                rating: this.data.data.rating,
-                masteries: this.data.data.masteries
+                rating: this.system.rating,
+                masteries: this.system.masteries
             }) >= 0 ? 'benefit' : 'consequence';
-        else return this.data?.data?.variant || this.type || undefined;
+        else return this.system?.variant || this.type || undefined;
     }
+
 
     /**
      * Augment the basic Item data model with additional dynamic data.
@@ -102,7 +102,7 @@ export class QuestWorldsItem extends Item {
         // If present, return the actor's roll data.
         if ( !this.actor ) return null;
         const rollData = this.actor.getRollData();
-        rollData.item = foundry.utils.deepClone(this.data.data);
+        rollData.item = foundry.utils.deepClone(this.system);
         rollData.item.name = this.name;
         rollData.item.type = this.type;
 
@@ -115,21 +115,20 @@ export class QuestWorldsItem extends Item {
      * @private
      */
     async roll(embedId=null) {
-        const item = this.data;
+        const item = this;
 
         // Initialize chat data.
         const speaker = ChatMessage.getSpeaker({ actor: this.actor });
         const rollMode = game.settings.get('core', 'rollMode');
         const itemType = this.variant;
-        let rating = item.data.rating;
-        let masteries = item.data.masteries;
+        let rating = item.system.rating;
+        let masteries = item.system.masteries;
         let fullRating = RatingHelper.format(rating,masteries);
-        let rune = item.data.rune ? tokenNameToHTML(item.data.rune) + ' ' : '';
+        let rune = item.system.rune ? tokenNameToHTML(item.system.rune) + ' ' : '';
         let name = item.name;
 
         let label = `${rune}${name} ${fullRating}`;
 
-        // console.log(itemType);
         // Benefits/consequences can't be rolled, send an info card message to chat
         if (itemType == 'benefit' || itemType == 'consequence') {
             fullRating = RatingHelper.format(rating,masteries,true);
@@ -138,7 +137,7 @@ export class QuestWorldsItem extends Item {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: game.i18n.localize(`QUESTWORLDS.${itemType.capitalize()}`) + ": " + label,
-                content: item.data.description ?? ''
+                content: item.system.description ?? ''
             });
             return;
         }
@@ -146,18 +145,17 @@ export class QuestWorldsItem extends Item {
         else {
             // Retrieve roll data.
             const rollData = this.getRollData();
-            // console.log(rollData);
 
             // prepare some form data
             const benefitsItems = this.actor.items.contents.filter(item => { return item.type == 'benefit' });
             const benefits = JSON.parse(JSON.stringify(benefitsItems));
+
             for (const key of Object.keys(benefitsItems)) {
                 benefits[key]['variant'] = benefitsItems[key].variant;
             }
 
             if (embedId) {
-                const embed = QuestWorldsItem.getEmbedById(this.data.data.embeds,embedId);
-                // console.log("embed", embed);
+                const embed = QuestWorldsItem.getEmbedById(this.system.embeds,embedId);
 
                 // if it's an info line, send an info card to chat
                 if (embed.type == 'info') {
@@ -170,8 +168,6 @@ export class QuestWorldsItem extends Item {
                     });
                     return;
                 }
-            
-
 
                 rating = embed.rating;
                 masteries = embed.masteries;
@@ -179,13 +175,19 @@ export class QuestWorldsItem extends Item {
                 rune = embed.runes ? tokenMarkupToHTML(embed.runes) + ' ' : '';
                 if (embed.type == 'breakout') {
                     // rating is just a bonus, so add to the parent (assumed a keyword)
-                    let parent = QuestWorldsItem.getEmbedById(this.data.data.embeds,embed.parentId);
-                    if(!parent) parent = item.data; // it's a breakout directly from an Item, not embed
-                    ({rating, masteries} = RatingHelper.add(
-                        {rating: rating, masteries: masteries},
-                        {rating: parent?.rating, masteries: parent?.masteries})
-                    );
-                    // console.log(RatingHelper.format(rating,masteries,true));
+                    let parent = QuestWorldsItem.getEmbedById(this.system.embeds,embed.parentId);
+                    if(!parent) parent = item; // it's a breakout directly from an Item, not embed                    
+                    if (item.system.variant == 'sidekick') {
+                        ({rating, masteries} = RatingHelper.add(
+                            {rating: rating, masteries: masteries},
+                            {rating: parent?.rating, masteries: parent?.masteries})
+                        );
+                    } else {
+                        ({rating, masteries} = RatingHelper.add(
+                            {rating: rating, masteries: masteries},
+                            {rating: parent?.system.rating, masteries: parent?.system.masteries})
+                        );
+                    }
                 }
                 fullRating = RatingHelper.format(rating,masteries);
 
@@ -211,15 +213,21 @@ export class QuestWorldsItem extends Item {
             });
             if (gatecheckPassed == false) return;
 
+            const GMs = game.users.filter(user => user.isGM === true).map(gm => gm.id);
+            const actor = game.actors.get(speaker.actor); 
+            const owners = actor.ownership;
+            const actorOwners = (owners.default === 3) ? 
+                game.users.players.map(player => player.id) : 
+                Object.keys(owners).filter(key => owners[key] === 3);
+            const whisperTargets = GMs.concat(actorOwners.filter(owner => GMs.indexOf(owner) < 0));
 
             // create the message first since we need the ID for the form
             const msg = await ChatMessage.create({
                 speaker: speaker,
-                // rollMode: 'gmroll',     // this is bugged in FVTT 0.8.x, reminder here for 0.9
-                whisper: ChatMessage.getWhisperRecipients('gm'),    // current workaround
+                whisper: whisperTargets,
                 flavor: game.i18n.localize('QUESTWORLDS.chatcontest.Tactic') +": " + label,
             });
-
+                        
             const formData = {
                 chatId: msg.id,
                 waitingForPlayer: true,
@@ -231,9 +239,9 @@ export class QuestWorldsItem extends Item {
                         remap[key].id = benefits[key]._id;
                         remap[key].name = benefits[key].name;
                         remap[key].variant = benefits[key].variant;
-                        remap[key].data = {
-                            rating: benefits[key].data.rating,
-                            masteries: benefits[key].data.masteries,
+                        remap[key].system = {
+                            rating: benefits[key].system.rating,
+                            masteries: benefits[key].system.masteries,
                         }
                         remap[key].checked = false;
                     }
@@ -252,43 +260,26 @@ export class QuestWorldsItem extends Item {
                         let result = {};
                         let list = RatingHelper.getDifficultyTable();
                         for (const key of Object.keys(list)) {
-                            const name = list[key].name;
+                            const name = game.i18n.localize('QUESTWORLDS.chatcontest.difficulties.' + list[key].name.split(" ").join(""));
                             let mod = RatingHelper.format(list[key].modifier, 0,true,false);
                             mod = mod ? mod : '+0';
                             const min = list[key]?.min ? list[key].min : null;
                             const label = min ? `${name} (${mod} or ${min})` : `${name} (${mod})`;
                             result[key] = label;
+                            console.log(mod);
                         }
                         return result;
                     })(),
                 }
             }
-
+            //Add a line to difficultyLevels for Manual Entry regardless of which table is being used.
+            Object.assign(formData.settings.difficultyLevels, {'manual_entry': game.i18n.localize('QUESTWORLDS.chatcontest.difficulties.ManualEntry')});
+            
             await msg.setFlag('questworlds','formData',formData);
-
-            // console.log('Initial flags',msg);
-
             const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
-            // const content = "<div>hello?</div>";
-
             await msg.update({'content': content});
             ui.chat.scrollBottom();
-
         }
-
-        // else {
-        //   // Retrieve roll data.
-        //   const rollData = this.getRollData();
-
-        //   // Invoke the roll and submit it to chat.
-        //   const roll = new Roll("1d20", rollData).roll();
-        //   roll.toMessage({
-        //     speaker: speaker,
-        //     rollMode: rollMode,
-        //     flavor: label,
-        //   });
-        //   return roll;
-        // }
     }
 
     /**
@@ -297,15 +288,14 @@ export class QuestWorldsItem extends Item {
      * @param {Object} item         The item object.
      */
     static async createEmbed(event, item) {
-        
         const a = event.currentTarget;
         const parentId = a.dataset.parentId;
-        const embeds = item.data.data.embeds;
+        const embeds = item.system.embeds;
         const newEmbedType = a.dataset.type;
 
         const newBreakout = new EmbeddedAbility(newEmbedType,parentId);
         const breakoutId = newBreakout.id;
-        
+
         if (parentId) {
             // find the sub-ability to embed the new ability inside
             const parent = this.getEmbedById(embeds,parentId);
@@ -318,7 +308,7 @@ export class QuestWorldsItem extends Item {
         }
 
         // update the item data & then show the edit dialog
-        item.update({'data.embeds': embeds})
+        item.update({'system.embeds': embeds})
             .then(() => { _breakoutDialog(item,breakoutId) });
 
 
@@ -335,7 +325,7 @@ export class QuestWorldsItem extends Item {
         const a = event.currentTarget;
         // const li = $(a).parents("li.breakout");
         const breakout_id = a.dataset.breakoutId;
-        const ability = item.data.data;
+        const ability = item.system;
 
         /** removeFromTree() is (c) Rodrigo Rodrigues, licensed CC BY-SA 4.0 at https://stackoverflow.com/a/55083533/ */
         function removeFromTree(node, targetId) {
@@ -357,7 +347,7 @@ export class QuestWorldsItem extends Item {
             yes: () => {
                 const breakout = `#${breakout_id}`;
                 doItemTween(breakout,'delete', () => {
-                    item.update({'data.embeds': prunedAbility.embeds})
+                    item.update({'system.embeds': prunedAbility.embeds})
                 });
             },
             no: () => {},
@@ -387,7 +377,6 @@ export class QuestWorldsItem extends Item {
      * @param {String} id           // the id to find
      */
     static getEmbedById(embeds, id) {
-
         /**
          * flatten() is (c) Thomas, licensed CC BY-SA 3.0 at https://stackoverflow.com/a/35272973/
          * Create a flattened array of an arbitrarily nested structure
@@ -401,14 +390,12 @@ export class QuestWorldsItem extends Item {
             into.push(node);
             return flatten(into, node.embeds);
         }
-        
-        const list = flatten([], embeds);
 
+        const list = flatten([], embeds);
         const i = list.findIndex(entry => { return entry.id == id });
         if (i == -1) return null;
         return list[i];
     }
-
 }
 
 export function doItemTween(target, action='remove', callback=null) {
@@ -438,7 +425,7 @@ export function doItemTween(target, action='remove', callback=null) {
  */
 async function _breakoutDialog(item,breakout_id) {
 
-    const breakoutData = QuestWorldsItem.getEmbedById(item.data.data.embeds, breakout_id);
+    const breakoutData = QuestWorldsItem.getEmbedById(item.system.embeds, breakout_id);
     const context = foundry.utils.deepClone(breakoutData);
     context.settings = {
         useRunes: game.settings.get('questworlds','useRunes'),
@@ -466,7 +453,7 @@ async function _breakoutDialog(item,breakout_id) {
     }).render(true);
 
     function _updateBreakout(html,item,breakout_id) {
-        const embeds = item.data.data.embeds;
+        const embeds = item.system.embeds;
     
         // get new info from the dialog
         const newRunes = html.find('input[name="runes"]').val();
@@ -485,10 +472,8 @@ async function _breakoutDialog(item,breakout_id) {
         targetEmbed.name = newName;
         targetEmbed.rating = newRating.rating;
         targetEmbed.masteries = newRating.masteries;
-    
+        
         //update the item data with copy contents
-        item.update({'data.embeds': embeds});
-    
+        item.update({'system.embeds': embeds});
     } // _updateBreakout()
-
 } // _breakoutDialog
