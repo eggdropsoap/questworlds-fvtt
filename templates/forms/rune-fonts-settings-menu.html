@@ -7,121 +7,128 @@
         </div>
     </div>
     {{else}}
-    <h2>{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Header'}}</h2>
+    
+    <div>
+        <h2>{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Header'}}</h2>
 
-    <p class="notes">
-        {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint1Instructions'}}
-    </p>
-    <p class="notes">
-        {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint2LinkA'}}
-        <a href="https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/">Glorantha Core Rune Font</a>
-        {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint2LinkB'}}
-    </p>
-    <p class="notes">{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.NumberInstalled'}}: {{fontCount}}.</p>
-    {{!--
-    <p>
-        <a class="test" style="border: 1px solid black; padding: 1ex; margin: 1ex;"><i class="fas fa-test"></i> Test Button</a>
-    </p>
-    --}}
+        
+        <p class="notes">
+            {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint1Instructions'}}
+        </p>
+        <p class="notes">
+            {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint2LinkA'}}
+            <a href="https://wellofdaliath.chaosium.com/home/gloranthan-documents/glorantha-2/glorantha-core-rune-font/">Glorantha Core Rune Font</a>
+            {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Builtins.Hint2LinkB'}}
+        </p>
+    
+        <p class="notes">{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.NumberInstalled'}}: {{fontCount}}.</p>
+        {{!--
+        <p>
+            <a class="test" style="border: 1px solid black; padding: 1ex; margin: 1ex;"><i class="fas fa-test"></i> Test Button</a>
+        </p>
+        --}}
 
-    {{!-- add font button --}}
-    <div class="table-controls">
-        <label>
-            <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
-                <i class="fas fa-file-import fa-fw"></i>
-                {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.AddFont'}}
-            </button>
-            <input type="hidden" name="newfont.url" data-dtype="String"/>
-        </label>
-    </div>
+        {{!-- add font button --}}
+        <div class="table-controls">
+            <label>
+                <button type="button" class="font-file-picker" data-type="image" data-target="newfont.url" title="~Font Browser~" tabindex="-1">
+                    <i class="fas fa-file-import fa-fw"></i>
+                    {{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.AddFont'}}
+                </button>
+                <input type="hidden" name="newfont.url" data-dtype="String"/>
+            </label>
+        </div>
 
-    {{!-- Hidden update control --}}
-    <input type="checkbox" name="fontupdate" style="display: none">
+        {{!-- Hidden update control --}}
+        <input type="checkbox" name="fontupdate" style="display: none">
 
-    {{!-- List of built-in runes --}}
+        {{!-- List of built-in runes --}}
 
-    <table id="built-in-runes">
-        {{!-- header --}}
-        <thead>
-            <tr>
-                <th>{{localize 'QUESTWORLDS.Rune'}}</th>
-                {{!-- List of fonts --}}
-                {{# each fonts as | font |}}
-                <th class="font-nameplate"{{#if (gt ../fontCount 1)}} draggable="true"{{/if}} data-font-index="{{@index}}">
-                    <div class="font-name">{{font.name}}</div>
-                    <div>
-                        <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
-                    </div>
-                    <div class="font-controls">
-                        <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.RemoveFont'}}">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                        <input type="hidden" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
-                    </div>
-                </th>
-                {{/each}}    
-            </tr>
-        </thead>
-        {{!-- List of Runes --}}
-        <tbody>
-            {{#each runes as | rune |}}
-            <tr>
-                <td class="rune-name">
-                    <div>
-                        {{#if (ne rune.render.class 'rune-token')~}}
-                        <span class="{{rune.render.class}}">{{rune.render.text}}</span>
-                        {{~/if}}
-                        <span class="name">{{localize rune.name}}</span>
-                    </div>
-                    <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
-                    <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
-                    <div>
-                        <span class="token">[[{{rune.token}}]]</span>
-                    </div>
-                </td>
-                {{#each rune.fonts as | symbol |}}
-                {{#if (lt @key ../../fontCount)}}
-                <td class="rune-symbol">
-                    <input type="
-                        {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
-                        " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+        <table id="built-in-runes">
+            {{!-- header --}}
+            <thead>
+                <tr>
+                    <th>{{localize 'QUESTWORLDS.Rune'}}</th>
+                    {{!-- List of fonts --}}
+                    {{# each fonts as | font |}}
+                    <th class="font-nameplate"{{#if (gt ../fontCount 1)}} draggable="true"{{/if}} data-font-index="{{@index}}">
+                        <div class="font-name">{{font.name}}</div>
+                        <div>
+                            <input type="hidden" name="fonts.{{@index}}.name" value="{{font.name}}" data-dtype="String"/>
+                        </div>
+                        <div class="font-controls">
+                            <a class="font-control" data-action="delete" data-target="fonts.{{@index}}.url" title="{{localize 'QUESTWORLDS.SETTINGS.RuneMenu.Fonts.RemoveFont'}}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            <input type="hidden" name="fonts.{{@index}}.url" value="{{font.url}}" data-dtype="String"/>
+                        </div>
+                    </th>
+                    {{/each}}    
+                </tr>
+            </thead>
+            {{!-- List of Runes --}}
+            <tbody>
+                {{#each runes as | rune |}}
+                <tr>
+                    <td class="rune-name">
+                        <div>
+                            {{#if (ne rune.render.class 'rune-token')~}}
+                            <span class="{{rune.render.class}}">{{rune.render.text}}</span>
+                            {{~/if}}
+                            <span class="name">{{localize rune.name}}</span>
+                        </div>
+                        <input type="hidden" name="runes.{{rune.token}}.name" value="{{rune.name}}" data-dtype="String"/>
+                        <input type="hidden" name="runes.{{rune.token}}.token" value="{{rune.token}}" data-dtype="String"/>
+                        <div>
+                            <span class="token">[[{{rune.token}}]]</span>
+                        </div>
+                    </td>
+                    {{#each rune.fonts as | symbol |}}
                     {{#if (lt @key ../../fontCount)}}
-                    <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
+                    <td class="rune-symbol">
+                        <input type="
+                            {{~#if (lt @key ../../fontCount)}}text{{else}}hidden{{/if~}}
+                            " name="runes.{{rune.token}}.fonts.{{@key}}" value="{{symbol}}" data-dtype="String" style="flex: 1; width: 1.5em; height: 1.5em; text-align: center;" />
+                        {{#if (lt @key ../../fontCount)}}
+                        <span class="rune-font{{@key}}" title="{{localize rune.name}}">{{symbol}}</span>
+                        {{/if}}
+                        {{#if (eq ../../fontCount 0)}}
+                        <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
+                        {{/if}}
+                    </td>
                     {{/if}}
-                    {{#if (eq ../../fontCount 0)}}
-                    <input type="text" disabled style="width: 1.5em; height: 1.5em; text-align: center;"/>
-                    {{/if}}
-                </td>
-                {{/if}}
+                    {{/each}}
+                </tr>
                 {{/each}}
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
     {{/unless}} {{!-- unless useRunes --}}
 
     {{!--
-    <h2>Custom Runes</h2>
-    <p class="notes">
-        Add custom runes here. Each rune needs a display name, a token to refer to it, and a image file.
-    </p>
-    <header class="table-header flexrow">
-        <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
-        <label>{{localize 'QUESTWORLDS.Token'}}</label>
-        <label>{{localize 'QUESTWORLDS.ImageFile'}}</label>
-    </header>
-    {{#each customrunes as | rune |}}
-        {{rune.name}} {{rune.token}} {{rune.file}}        
-    {{else}}
-        [blank]
-        [blank]
-        [blank]
-        Add custom rune? [Button!]
-    {{/each}}
+    <div>
+        <h2>Custom Runes</h2>
+        <p class="notes">
+            Add custom runes here. Each rune needs a display name, a token to refer to it, and a image file.
+        </p>
+        <header class="table-header flexrow">
+            <label class="index">{{localize 'QUESTWORLDS.Rune'}}</label>
+            <label>{{localize 'QUESTWORLDS.Token'}}</label>
+            <label>{{localize 'QUESTWORLDS.ImageFile'}}</label>
+        </header>
+        {{#each customrunes as | rune |}}
+            {{rune.name}} {{rune.token}} {{rune.file}}        
+        {{else}}
+            [blank]
+            [blank]
+            [blank]
+            Add custom rune? [Button!]
+        {{/each}}
 
-    <div style="border-top: 1px solid darkgrey;">
-        Footer
+        <div style="border-top: 1px solid darkgrey;">
+            Footer
+        </div>
     </div>
     --}}
 
