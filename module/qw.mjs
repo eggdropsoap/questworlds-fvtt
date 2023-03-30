@@ -106,8 +106,34 @@ Hooks.once("socketlib.ready", () => {
     }
   ]
   for (const fn of socketFunctions) socket.register(fn.name,fn.call);
+
+  socket.register("sktSetChatFlag", sktSetChatFlag);
+  socket.register("sktUpdateChatMessage", sktUpdateChatMessage);
+  socket.register("sktDeleteChatMessage", sktDeleteChatMessage);
+  //socket.register("reducePool", reducePool);
+
 });
 
+/* -------------------------------------------- */
+/*  Socketlib functions                         */
+/* -------------------------------------------- */
+
+async function sktSetChatFlag(messageID, flagDiff) {
+  const message = game.messages.filter(message => message.id.includes(messageID)).pop();
+  await message.setFlag('questworlds', 'formData', flagDiff);
+  ui.chat.scrollBottom();
+}
+
+async function sktUpdateChatMessage(messageID, msgUpdate) {
+  const message = game.messages.filter(message => message.id.includes(messageID)).pop();
+  await message.update(msgUpdate);
+  ui.chat.scrollBottom();
+}
+
+async function sktDeleteChatMessage(messageID) {
+  const message = game.messages.get(messageID);
+  message.delete();
+}
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -171,12 +197,15 @@ Hooks.on('getChatLogEntryContext', (html, options) => StoryPoints.Handlers.onCha
  */
 async function createItemMacro(data, slot) {
   if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
-  const item = data.data;
+  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
+    return ui.notifications.warn("You can only create macro buttons for owned Items");
+  }
+  // If it is, retrieve it based on the uuid.
+  const item = await Item.fromDropData(data);
 
   // Create the macro command
-  const command = `game.questworlds.rollItemMacro("${item.name}");`;
-  let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
+  const command = `game.questworlds.rollItemMacro("${data.uuid}");`;
+  let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
@@ -193,17 +222,23 @@ async function createItemMacro(data, slot) {
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
- * @param {string} itemName
- * @return {Promise}
+ * @param {string} itemUuid
  */
-function rollItemMacro(itemName) {
-  const speaker = ChatMessage.getSpeaker();
-  let actor;
-  if (speaker.token) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
-  const item = actor ? actor.items.find(i => i.name === itemName) : null;
-  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+function rollItemMacro(itemUuid) {
+  // Reconstruct the drop data so that we can load the item.
+  const dropData = {
+    type: 'Item',
+    uuid: itemUuid
+  };
+  // Load the item from the uuid.
+  Item.fromDropData(dropData).then(item => {
+    // Determine if the item loaded and if it's an owned item.
+    if (!item || !item.parent) {
+      const itemName = item?.name ?? itemUuid;
+      return ui.notifications.warn(`Could not find item ${itemName}. You may need to delete and recreate this macro.`);
+    }
 
-  // Trigger the item roll
-  return item.roll();
+    // Trigger the item roll
+    item.roll();
+  });
 }
