@@ -36,7 +36,6 @@ export class ChatContest {
     static HookListeners = {
 
         async renderChatLog(app, html, data) {
-            // console.log('ChatContest.renderChatLogHook()');
         },  // listener for renderChatLog hook
     
         /* make sure the game is ready before trying to get flags &c */
@@ -52,18 +51,24 @@ export class ChatContest {
         },
 
         async _renderChatMessage(chatMessage, html, data) {
-            // console.log('ChatContest._renderChatMessageHook()');
-
             const context = await chatMessage.getFlag('questworlds','formData');
-            // console.log('context for chatMessage ID',chatMessage.id, context);
-
             if (!(context)) return; // not a contest chat card
-            if (context?.closed) return;    // do nothing; the template took care of disabling the form
-
+            if (context?.closed) return; // do nothing; the template took care of disabling the form
             const user = game.user;
-            const messageOwner = chatMessage.data.user;
+            const messageOwner = chatMessage.user;
+            const actorName = data.alias; //could also use chatMessage.speaker.alias
+            const messageOwners = chatMessage.whisper;
 
-            const HTML_waitingForPlayer = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingForPlayer') +'</i>';
+            // All of this can probably be removed. Saving til I'm sure. xD
+            /*const GMs = game.users.filter(user => user.isGM === true).map(gm => gm.id);
+            const actor = game.actors.get(chatMessage.speaker.actor); 
+            const owners = actor.ownership;
+            const actorOwners = (owners.default === 3) ? 
+                game.users.players.map(player => player.id) : 
+                Object.keys(owners).filter(key => owners[key] === 3);
+            const whisperTargets = GMs.concat(actorOwners.filter(owner => GMs.indexOf(owner) < 0));*/
+
+            const HTML_waitingForName = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingFor') + actorName + '...' + '</i>';
             const HTML_waitingForGM = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingForGM') +'</i>';
             const HTML_rollApproved = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.RollApproved') +'</i>';
 
@@ -72,7 +77,7 @@ export class ChatContest {
             const rollButton = html.find('button[name="roll"]');
             const waitingForPlayer = context?.waitingForPlayer;
             const readyToRoll = context?.readyToRoll;
-            
+
             overButton.on('click',e => ChatContest.Handlers.clickOverButton(e,chatMessage));
             approveButton.on('click',e => ChatContest.Handlers.clickApproveButton(e,chatMessage));
             rollButton.on('click',e => ChatContest.Handlers.clickRollButton(e,chatMessage,html));
@@ -87,7 +92,7 @@ export class ChatContest {
 
                 if (waitingForPlayer) {
                     _disableAllControls(html);
-                    overButton.html(HTML_waitingForPlayer);
+                    overButton.html(HTML_waitingForName);
                 }
                 if (readyToRoll) {
                     _disableAllControls(html);
@@ -95,9 +100,8 @@ export class ChatContest {
                     approveButton.html(HTML_rollApproved);
                 } 
             }
-            else if (user.id == messageOwner) {
+            else if (messageOwners.indexOf(user.id) > -1) { 
                 approveButton.hide();   // never for players
-
                 if (!waitingForPlayer) { 
                     // waiting for the GM
                     _disableAllControls(html);
@@ -110,11 +114,10 @@ export class ChatContest {
                 } else {
                     rollButton.hide();
                 } 
-            } else { // we're a different player
+            } else { // we're a different player               
                 _disableAllControls(html);
                 _hideAllControls(html);
             }
-
         },  // listener for renderChatMessage hook
     
         async updateChatMessage(chatMessage, chatData, diff, speaker) {
@@ -131,12 +134,18 @@ export class ChatContest {
 
         async clickOverButton(event,chatMessage) {
             event.preventDefault();
+            const socket = CONFIG.QUESTWORLDS.socket;
+            const messageID = chatMessage.id;
             const flagDiff = {
                 waitingForPlayer: game.user.isGM
             }
-            chatMessage.setFlag('questworlds','formData',flagDiff);
-        },  // clickOverButton
 
+            await socket.executeAsGM("sktSetChatFlag", messageID, flagDiff)
+                .catch(e => {
+                    ui.notifications.error(`${e.name}: ${e.message}`);
+                });
+        },  // clickOverButton
+        
         async clickApproveButton(event,chatMessage) {
             event.preventDefault();
             const flagDiff = {
@@ -150,7 +159,7 @@ export class ChatContest {
                 _resolveRoll(chatMessage);
 
         },  // clickApproveButton
-
+        
         /**
          * 
          * @param event 
@@ -174,7 +183,6 @@ export class ChatContest {
          */
         async blurField(event,chatMessage,html) {
             event.preventDefault();
-
             const newFocus = event.relatedTarget;   // whatever got focus after the blurring input
             const chatMessageId = chatMessage.id;   // to find form after the re-render replaces it
 
@@ -199,15 +207,14 @@ export class ChatContest {
                     if (elem && (elem.focus instanceof Function)) elem.focus();
                 }
             }
-
         },  // blurField()
 
         async clickRollButton(event,chatMessage,html) {
             event.preventDefault();
+            console.log("inside clickRollButton");
+            console.log(chatMessage.flags.questworlds.formData);
             _resolveRoll(chatMessage);
-
         },  // clickRollButton()
-
     }   // Handlers
 
 
@@ -219,7 +226,30 @@ export class ChatContest {
     static async refreshChatMessage(chatMessage) {
         const formData = await chatMessage.getFlag('questworlds','formData');
         const content = await renderTemplate("systems/questworlds/templates/chat/chat-contest.html",formData);
-        chatMessage.update({'content': content});
+        const messages = Array.from(game.messages);
+        const lastMessage = messages[messages.length - 1];
+        const socket = CONFIG.QUESTWORLDS.socket;        
+        
+        if (messages.length === 0) return; // no messages in log, nothing to refresh
+        if ((chatMessage.id == lastMessage.id)) { // Update the message if it is the most recent.
+            await socket.executeAsGM("sktUpdateChatMessage", chatMessage.id, {'timestamp': Date.now()});
+            await socket.executeAsGM("sktUpdateChatMessage", chatMessage.id, {'content': content});
+        } else { // Otherwise, repost and delete it.
+            // Initialize chat data.
+            const speaker = chatMessage.speaker;
+            const flavor = chatMessage.flavor;
+
+            //create the message
+            const msg = await ChatMessage.create({
+                speaker: speaker,
+                whisper: chatMessage.whisper,    
+                flavor: flavor,
+            });
+            await socket.executeAsGM("sktSetChatFlag", msg.id, formData);
+            await socket.executeAsGM("sktUpdateChatMessage", msg.id, {'content': content});
+            await socket.executeAsGM("sktDeleteChatMessage", chatMessage.id);
+        }
+        ui.chat.scrollBottom();
     }
 
     static resolve(chatMessage) {
@@ -246,8 +276,7 @@ export class ChatContest {
  */
 function _processFormData(formData) {
     /* calculate modified tactic rating */
-
-    // get the starting rating of the tactic
+    // get the starting rating of the tactic    
     const tactic = {
         rating: formData.tactic.rating || 0,
         masteries: formData.tactic.masteries || 0,
@@ -265,27 +294,42 @@ function _processFormData(formData) {
     // add selected benefits / consequences to the runningTotal
     let beneMods = {rating: 0, masteries: 0};
     let benefitsRisked = 0;
+
     for (let key of Object.keys(formData.benefits)) {
         const bene = formData.benefits[key];
         if (bene.checked) {
-            beneMods = RatingHelper.add(beneMods,bene.data);
+            beneMods = RatingHelper.add(beneMods,bene.system);
             benefitsRisked += (bene.variant == 'benefit') ? 1 : 0;
         }
     }
     runningTotal = RatingHelper.add(runningTotal,beneMods);
     
     /* calculate modified resistance rating */
-    const resistance = RatingHelper.getDifficulty(formData.difficultyLevel);
+    /* if 'Manual Entry' is selected, provide */
+    const resistance = (formData.difficultyLevel == 'manual_entry') ? {rating: 0, masteries: 0} : RatingHelper.getDifficulty(formData.difficultyLevel);
+
+    console.log(resistance);
+
+    // add the difficulty modifiers
+    const diffMods = {
+        rating: formData.difficultyModifiers || 0,
+        masteries: 0,
+    }
+    let difficultyTotal = RatingHelper.add(
+        {rating: resistance.rating, masteries: resistance.masteries},
+        {rating: diffMods.rating, masteries: diffMods.masteries});
+
+    console.log(difficultyTotal);
 
     /* check for assured contests */
-    const assuredVictory = RatingHelper.merge(resistance) <= 0;
+    const assuredVictory = RatingHelper.merge(difficultyTotal) <= 0;
     const assuredDefeat = RatingHelper.merge(runningTotal) <= 0;
 
     /* merge and return */
     formData = mergeObject(formData,{
         total: runningTotal,
         tactic: tactic,
-        resistance: resistance,
+        resistance: difficultyTotal,
         benefitsRisked: benefitsRisked,
         assured: assuredDefeat || assuredVictory,
         assuredVictory: assuredVictory,
@@ -297,6 +341,7 @@ function _processFormData(formData) {
 
 async function _resolveRoll(chatMessage) {
     const formData = await _getContext(chatMessage);
+    const socket = CONFIG.QUESTWORLDS.socket;
 
     if (!formData.assured) {
         const pcTN = formData.total.rating;
@@ -306,7 +351,6 @@ async function _resolveRoll(chatMessage) {
         const storypoint = formData?.storypoint;
         const storypointImage = StoryPoints.pointImage({solid: true, color: true});
         const storypointTitle = game.i18n.format('QUESTWORLDS.chatcontest.StoryPointTitle',{storypoint: StoryPoints.name()});
-
 
         let pcResult,resResult;
         if (formData.outcome) {     // already rolled
@@ -381,7 +425,7 @@ async function _resolveRoll(chatMessage) {
             outcomeText = srdText;
         }
 
-        const diff = {
+        const flagDiff = {
             pcResult: pcResult,
             pcSuccesses: pcSuccesses,
             resResult: resResult,
@@ -405,8 +449,10 @@ async function _resolveRoll(chatMessage) {
             closed: true,       // close the card
         }
         // update the data store with the roll results
-        await chatMessage.setFlag('questworlds','formData',diff);
-
+        await socket.executeAsGM("sktSetChatFlag", chatMessage.id, flagDiff)
+            .catch(e => {
+                ui.notifications.error(`${e.name}: ${e.message}`);
+            }); 
     }   // if !assured
     else {  // it's an assured contest
         let victory,defeat,cssClass,outcomeText;
@@ -422,7 +468,7 @@ async function _resolveRoll(chatMessage) {
         }
 
         // minimal update of the data store
-        await chatMessage.setFlag('questworlds','formData',{
+        const flagDiff = {
             outcome: {
                 victory: victory,
                 defeat: defeat,
@@ -430,32 +476,43 @@ async function _resolveRoll(chatMessage) {
                 cssClass: cssClass,
             },
             closed: true,       // close the card
-        });
+        }
+
+        await socket.executeAsGM("sktSetChatFlag", chatMessage.id, flagDiff)
+            .catch(e => {
+                ui.notifications.error(`${e.name}: ${e.message}`);
+            });
 
     }
 
-    ChatContest.refreshChatMessage(chatMessage);
-    chatMessage.update({whisper: [], blind: false});    // reveal to everyone
-
+    ChatContest.refreshChatMessage(chatMessage); 
+    await socket.executeAsGM("sktUpdateChatMessage", chatMessage.id, {whisper: [], blind: false})
+        .catch(e => {
+            ui.notifications.error(`${e.name}: ${e.message}`);
+        }); //reveal to everyone
 }   // _resolveRoll()
 
 function _updateChatMessage(chatMessage,formData) {
     if (formData) {
         // process derived data from form options
         formData = _processFormData(formData);
+
         if (formData) {
-            chatMessage.setFlag('questworlds','formData',formData).then( () => {
+            const socket = CONFIG.QUESTWORLDS.socket;
+            const messageID = chatMessage.id;
+            socket.executeAsGM("sktSetChatFlag", messageID, formData)
+                .then( () => {
                 ChatContest.refreshChatMessage(chatMessage)
-            });
-            // await chatMessage.setFlag('questworlds','formData',formData);
-            // await ChatContest.refreshChatMessage(chatMessage);    
+            });   
         }
     }
 }
 
-function _enableControl(ctrl) { ctrl.removeAttr('disabled'); }
+function _enableControl(ctrl) {
+    ctrl.removeAttr('disabled'); }
 
-function _disableControl(ctrl) { ctrl.attr('disabled',true); }
+function _disableControl(ctrl) { 
+    ctrl.attr('disabled',true); }
 
 function _disableAllControls(html) {
     const allControls = html.find('button, input, select');
@@ -486,7 +543,7 @@ function _getContext(chatMessage) {
 function _getCurrentFormData(html) {
     const form = $(html).find('form')[0];
     const theForm = new FormDataExtended(form);
-    const formContents = theForm.toObject();
+    const formContents = theForm.object;
 
     return formContents;
 }
