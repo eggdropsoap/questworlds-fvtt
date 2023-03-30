@@ -16,21 +16,21 @@
             </div>
             
         </div>
-        {{#if data.description}}
+        {{#if system.description}}
         <div class="flexrow item-name description">
             <h4>(
                 {{~#if settings.useRunes~}}
-                {{~runes data.description~}}
+                {{~runes system.description~}}
                 {{~else~}}
-                {{~data.description~}}
+                {{~system.description~}}
                 {{~/if~}} 
             )</h4>
         </div>
         {{/if}}
     </div>
-    {{#if item.data.embeds}}
+    {{#if item.system.embeds}}
     <ol class="breakouts-list">
-        {{#each item.data.embeds as | breakout |}}
+        {{#each item.system.embeds as | breakout |}}
             {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
     </ol>
