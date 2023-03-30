@@ -3,13 +3,13 @@
         <div class="item-name">
             <h4>
                 <a class="rollable" data-roll-type="item">
-                    {{~#if settings.useRunes}}{{rune item.data.rune}} {{/if~}}
-                    <strong>{{item.name}} {{fullRating item.data}}</strong>
-                    {{#if item.data.description}}(
+                    {{~#if settings.useRunes}}{{rune item.system.rune}} {{/if~}}
+                    <strong>{{item.name}} {{fullRating item.system}}</strong>
+                    {{#if item.system.description}}(
                         {{~#if settings.useRunes~}}
-                        {{~runes data.description~}}
+                        {{~runes system.description~}}
                         {{~else~}}
-                        {{~data.description~}}
+                        {{~system.description~}}
                         {{~/if~}}
                     ){{/if}}
                 </a>
@@ -25,9 +25,9 @@
         </div>
     </div>
 
-    {{#if item.data.embeds}}
+    {{#if item.system.embeds}}
     <ol class="breakouts-list">
-        {{#each item.data.embeds as | breakout |}}
+        {{#each item.system.embeds as | breakout |}}
             {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
     </ol>
