@@ -133,7 +133,7 @@ export class StoryPoints {
                     if (user.character) {
                         const actor = user.character;
                         // const userId = user.id;
-                        const sp = actor.data.data.points.hero;
+                        const sp = actor.system.points.hero;
                         const context = {
                             storypoints: sp,
                             userCssClass: game.user === user ? 'me' : game.user.isGM ? 'gm' : '',
@@ -212,7 +212,6 @@ export class StoryPoints {
         },
 
         async onChatEntryContext(html, options) {
-            
             options.unshift({
                 name: 'QUESTWORLDS.chatcontest.ImproveTactic',
                 icon: '<i class="fas fa-plus"></i>',
@@ -236,7 +235,7 @@ export class StoryPoints {
                     message: message,
                     user: game.user,
                     isGM: game.user.isGM,
-                    messageOwner: game.users.get(message.data.user),
+                    messageOwner: game.users.get(message.user),
                     isRolledContest: (message.getFlag('questworlds','formData'))?.closed,
                     storypoint: (message.getFlag('questworlds','formData'))?.storypoint,
                     hasPoints: game.user.character?.hasStoryPoints(),
