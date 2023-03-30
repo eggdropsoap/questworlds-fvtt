@@ -54,6 +54,8 @@
         "KeywordsAndAbilities": "Keywords & Abilities",
         "Flaws": "Flaws",
         "BreakoutAbilities": "Breakout Abilities",
+        "InfoLines": "Info Lines",
+        "BreakoutAndInfo": "Breakout Abilities & Info Lines",
         "BenefitsAndConsequences": "Benefits & Consequences",
 
         "keyword": "keyword",
@@ -241,14 +243,36 @@
             "SituationalAndOtherModifiers": "Situational and Other Modifiers",
             "Difficulty": "Difficulty",
             "DifficultyLevel": "Difficulty Level",
+            "DifficultyModifiers": "Difficulty Modifiers",
             "Base": "Base",
             "Success": "Success",
             "Successes": "Successes",
             "BenefitsLost": "Benefits Lost",
 
+            "difficulties": {
+                "Exceptional": "Exceptional",
+                "Punishing": "Punishing",
+                "Hard": "Hard",
+                "Challenging": "Challenging",
+                "Base": "Base",
+                "Straightforward": "Straightforward",
+                "Routine": "Routine",
+                "Easy": "Easy",
+                "Simple": "Simple",
+                
+                "NearlyImpossible": "Nearly Impossible",
+                "VeryHigh": "Very High",
+                "High": "High",
+                "Moderate": "Moderate",
+                "Low": "Low",
+                "VeryLow": "Very Low",
+
+                "ManualEntry": "Manual Entry"
+            },
+
             "Ready": "Ready?",
+            "WaitingFor": "Waiting for ",
             "WaitingForGM": "Waiting for GM…",
-            "WaitingForPlayer": "Waiting for player…",
             "ApproveRoll": "Approve Roll",
             "RollApproved": "Roll approved, waiting…",
             "Roll": "Roll",
