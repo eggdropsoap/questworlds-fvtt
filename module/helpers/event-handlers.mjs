@@ -104,6 +104,13 @@ export class ContextMenus {
       const buttonHeight = menu.find('a').css('height').replace('px','');
       let top = event.clientY - buttonHeight; // pointer between 1st & 2nd controls
       let left = event.clientX - 4; // pointer on left padding
+
+      console.log("Possible issue with v9 to v10 conversion .data reference...")
+      console.log("**** event, event.data?.position, & event.system?.position: ****");
+      console.log(event);
+      console.log(event.data?.position);
+      console.log(event.system?.position);
+      
       switch (event.data?.position) {
         case 'left':
           // pointer on right padding
@@ -120,6 +127,7 @@ export class ContextMenus {
           left = event.clientX - ( $(menu)[0].getBoundingClientRect().width / 2 );
           break;
       }
+
       menu.css("top",top); 
       menu.css('left',left);
       gsap.to('.menu.active',{
@@ -152,7 +160,6 @@ export class ContextMenus {
 
   static ConvertToMenu(div) {
     // pack child controls into a new div
-    // console.log("ConvertToMenu()",div);
     const newMenu = $('<div class="breakout-controls menu"></div>');
     const bg = $('<div class="bg"></div>');
     div.find('a').appendTo(bg);
@@ -197,16 +204,15 @@ export class XPControls {
 
   static onClickAddXP(event) {
     event.preventDefault();
-    const name = this.object.data.name;
+    const name = this.object.name;
 
     function _doAddXP(event) {
       const requiredXP = game.settings.get('questworlds','XPtoAdvance');
-      // const e = event.currentTarget;
       const pc = this.object;
       const points = {
-        xp: pc.data.data.points.xp,
-        careerXp: pc.data.data.points.careerXp,
-        advances: pc.data.data.points.advances,
+        xp: pc.system.points.xp,
+        careerXp: pc.system.points.careerXp,
+        advances: pc.system.points.advances,
       };
       points.xp++;
       points.careerXp++;
@@ -214,7 +220,7 @@ export class XPControls {
         points.advances++;
         points.xp = 0;
       }
-      pc.update({'data.points': points})
+      pc.update({'system.points': points})
 
     }
 
@@ -235,10 +241,10 @@ export class XPControls {
   static async openAdvancesHistory(event) {
     event.preventDefault();
 
-    const sheetContext = this.getData();
+    const sheetContext = this.object;
 
     const panelContext = {
-      advances: sheetContext.data.advanceHistory,
+      advances: sheetContext.system.advanceHistory,
       title: game.i18n.localize('QUESTWORLDS.AdvancePanels.AdvanceHistory'),
       cssClass: "advanceHistory",
       XPtoAdvance: game.settings.get('questworlds','XPtoAdvance'),
@@ -265,7 +271,7 @@ export class XPControls {
 
     _activateListeners();
 
-    const sheetContext = this.getData();
+    const sheetContext = this.object;
     const actor = this.actor;
 
     const ADVANCE_OPTIONS = {
@@ -314,7 +320,7 @@ export class XPControls {
     selectOptions = Object.fromEntries(selectOptions);  // turn into indexed Object
 
     const panelContext = {
-      advances: sheetContext.data.advanceHistory,
+      advances: sheetContext.system.advanceHistory,
       options: selectOptions,
     }
 
@@ -346,17 +352,17 @@ export class XPControls {
     }
 
     function _updateAdvances(html,actor) {
-      const formElement = $(html).find('form')[0];
+      const formElement = $(html).find('form')[0]; 
       const form = new FormDataExtended(formElement);
-      const data = form.toObject();
+      const data = form.object; 
 
       if (data.choice1 == '' || data.choice2 == '') {
         ui.notifications.warn(game.i18n.localize('QUESTWORLDS.AdvancePanels.ValidationWarning'));
         return;
       }
 
-      const points = actor.data.data.points;
-      const history = actor.data.data.advanceHistory;
+      const points = actor.system.points;
+      const history = actor.system.advanceHistory;
 
       const newOptionsArr = [];
       newOptionsArr.push(["0",ADVANCE_OPTIONS[data.choice1]]);
@@ -387,8 +393,8 @@ export class XPControls {
 
       points.advances--;
       actor.update({
-        'data.advanceHistory': newEntry,
-        'data.points': points,
+        'system.advanceHistory': newEntry,
+        'system.points': points,
       });
       
 
@@ -483,17 +489,16 @@ export class GalleryControls {
     function _doDelete() {
       const target = event.currentTarget.dataset.target;
       const actor = this.object;
-      
-      const galleryArray = Object.values(actor.data.data.gallery); // get gallery, convert to array
+      const galleryArray = Object.values(actor.system.gallery); // get gallery, convert to array
       galleryArray.splice(target,1);  // remove target index
       const newGalleryObj = Object.assign({},galleryArray); // back to object with sequential indices
   
-      actor.update({'data.gallery': newGalleryObj},{render: false});  // store without re-render...
+      actor.update({'system.gallery': newGalleryObj},{render: false});  // store without re-render...
       // The last update *merged* new with old gallery, leaving last entry duplicated.
       // Delete last item to remove duplciation, this time with re-render
       // (TODO: see if there is a single-operation way to do this.)
       const lastIndex = galleryArray.length;
-      actor.update({'data.gallery': {[`-=${lastIndex}`]: null}});
+      actor.update({'system.gallery': {[`-=${lastIndex}`]: null}});
     }
 
   }
@@ -504,7 +509,7 @@ export class GalleryControls {
 
     const path = event.currentTarget.dataset?.path;
     const caption = $(event.currentTarget).parents('li.art').find('input').val();
-    const character = this.actor.data.name;
+    const character = this.actor.system.name;
     const title = caption ? `“${caption}”` : game.i18n.localize('QUESTWORLDS.untitled');
     if (path) {
       const ip = new ImagePopout(path, {
@@ -548,14 +553,14 @@ export class GalleryControls {
 
       const actor = this.object;
       // get gallery, convert to array
-      const galleryArray = Object.values(actor.data.data.gallery);
+      const galleryArray = Object.values(actor.system.gallery);
       // insert ahead of target
       moveIndex(galleryArray,sourceIndex,targetIndex);
       // reserialize as an object
       const galleryObj = Object.assign({},galleryArray);
 
       // update with rearranged gallery
-      actor.update({'data.gallery': galleryObj});
+      actor.update({'system.gallery': galleryObj});
     }
 
   }
