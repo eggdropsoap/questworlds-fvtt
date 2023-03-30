@@ -21,12 +21,9 @@ export class QuestWorldsItemSheet extends ItemSheet {
     /** @override */
     get template() {
         const path = "systems/questworlds/templates/item";
-        
+
         // Return a sheet for each item type and/or item type variant
-        if (this.item.data.type == "ability")
-            return `${path}/item-${this.item.data.data.variant}-sheet.html`;
-        else
-            return `${path}/item-${this.item.data.type}-sheet.html`;
+        return `${path}/item-${this.item.type}-sheet.html`;
     }
 
     /* -------------------------------------------- */
@@ -37,7 +34,7 @@ export class QuestWorldsItemSheet extends ItemSheet {
         const context = super.getData();
 
         // Use a safe clone of the item data for further operations.
-        const itemData = context.item.data;
+        const itemData = context.item;
 
         // Retrieve the roll data for TinyMCE editors.
         context.rollData = {};
@@ -46,11 +43,11 @@ export class QuestWorldsItemSheet extends ItemSheet {
             context.rollData = actor.getRollData();
         }
 
-        // Add the item's data to context.data for easier access, as well as flags.
-        context.data = itemData.data;
+        // Add the item's data to context.system for easier access, as well as flags.
+        context.system = itemData.system;
         context.flags = itemData.flags;
         // Add item type to the data.
-        context.data.itemType = context.item.type;
+        context.system.itemType = context.item.type;
 
         // set up runes data
 
@@ -106,8 +103,6 @@ export class QuestWorldsItemSheet extends ItemSheet {
         // adjust size of header field [input]s according to content
         html.on('keypress keyup',".header-fields h1 input.resizing", FieldHelpers.AdjustSizeToContent);
         $('.header-fields h1 input.resizing').trigger('keyup');
-
-
     }
 
     /* -------------------------------------------- */
@@ -120,13 +115,13 @@ export class QuestWorldsItemSheet extends ItemSheet {
         if (item.type == 'benefit') {
             // get variant of NEW data
             const newVariant = RatingHelper.merge({
-                rating: formData['data.rating'],
-                masteries: formData['data.masteries']
+                rating: formData['system.rating'],
+                masteries: formData['system.masteries']
             }) >= 0 ? 'benefit' : 'consequence';
             updateDefaultImage(newVariant);
         } else
         if (this.object.type == 'ability') {
-            const newVariant = formData['data.variant'];
+            const newVariant = formData['system.variant'];
             updateDefaultImage(newVariant);
         }
 
@@ -138,7 +133,7 @@ export class QuestWorldsItemSheet extends ItemSheet {
          * @param {String} newVariant   The variant-to-be based on new form data
          */
         function updateDefaultImage(newVariant) {
-            const img = item.data.img;
+            const img = item.img;
             if (img == DEFAULT_ICONS[item.variant] && item.variant != newVariant) {
                 formData.img = DEFAULT_ICONS[newVariant];
             }
@@ -147,8 +142,8 @@ export class QuestWorldsItemSheet extends ItemSheet {
         // rationalize ratings
         const isModifier = (item.type == 'benefit');
         let fixedRating = RatingHelper.rationalize({
-            rating: formData['data.rating'],
-            masteries: formData['data.masteries']
+            rating: formData['system.rating'],
+            masteries: formData['system.masteries']
         },isModifier);
 
         // make sure benefits are always non-zero
@@ -161,8 +156,8 @@ export class QuestWorldsItemSheet extends ItemSheet {
         }
 
 
-        formData['data.rating'] = fixedRating.rating;
-        formData['data.masteries'] = fixedRating.masteries;
+        formData['system.rating'] = fixedRating.rating;
+        formData['system.masteries'] = fixedRating.masteries;
 
         return super._updateObject(event, formData);
     }
