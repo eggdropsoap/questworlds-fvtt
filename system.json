@@ -2,14 +2,19 @@
 	"name": "questworlds",
 	"title": "QuestWorlds (Unofficial)",
 	"description": "A Foundry VTT system to play QuestWorlds, the rules-lite storytelling RPG from Chaosium. Based on the rules in the QuestWorlds SRD.",
-	"version": "0.1.1",
-	"author": "eggdropsoap",
+	"version": "0.1.2",
+	"authors": [{
+		"name": "eggdropsoap"
+	  }],
 	"license": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/LICENSE.txt",
 	"readme": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/README.md",
 	"changelog": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/CHANGELOG.md",
 	"bugs": "https://github.com/eggdropsoap/questworlds-fvtt/issues",
-	"minimumCoreVersion": "0.8.8",
-	"compatibleCoreVersion": "9.238",
+	"compatibility": {
+		"minimum": 10,
+		"verified": "10.287",
+		"maximum": 10
+	  },	
 	"flags": {
 		"allowBugReporter": true
 	},
@@ -17,9 +22,13 @@
 		"module/qw.mjs",
 		"../scripts/greensock/esm/gsap-core.js"
 	],
-	"dependencies": [
-		{ "name": "socketlib", "type": "module" }
-	],
+	"relationships": {
+		"requires": [{
+		  "id": "socketlib",
+		  "type": "module",
+		  "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
+		}]
+	},
 	"styles": [ "css/qw.css" ],
 	"languages": [
 		{
@@ -38,4 +47,3 @@
 	"manifest": "https://github.com/eggdropsoap/questworlds-fvtt/blob/master/system.json",
 	"download": ""
 }
-

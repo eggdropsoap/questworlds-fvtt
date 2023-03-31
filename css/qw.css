@@ -1403,6 +1403,25 @@
 .system-questworlds #chat-log .chat-contest .difficulty .options div {
   margin-bottom: 5px;
 }
+.system-questworlds #chat-log .chat-contest .difficulty .options .difficulty-modifiers {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.system-questworlds #chat-log .chat-contest .difficulty .options .difficulty-modifiers label {
+  margin-top: auto;
+  margin-bottom: auto; 
+}
+.system-questworlds #chat-log .chat-contest .difficulty .options .difficulty-modifiers input {
+  width: 2.6em;
+  max-width: 2.6em;
+  min-width: 2.6em;
+  margin-left: 1ex;
+  flex: 0;
+  height: 1.4em;
+  text-align: center;
+}
 .system-questworlds #chat-log .chat-contest .tactic .options div {
   /* vertical-align: middle; */
   width: fit-content;
@@ -1496,7 +1515,6 @@
   width: 2.6em;
   max-width: 2.6em;
   min-width: 2.6em;
-  /* margin-right: auto; */
   margin-left: 1ex;
   flex: 0;
   height: 1.4em;

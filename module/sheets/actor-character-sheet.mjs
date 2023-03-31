@@ -26,7 +26,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/questworlds/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+    return `systems/questworlds/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
 
   /** @override */
@@ -37,18 +37,18 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData(options) {
     // Retrieve the data structure from the base sheet. You can inspect or log
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
-    const context = super.getData();
+    const context = super.getData(options);
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = context.actor.data;
+    const actorData = this.actor.toObject(false);   
 
-    // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = actorData.data;
+    // Add the actor's data to context.system for easier access, as well as flags.
+    context.system = actorData.system;
     context.flags = actorData.flags;
 
     // Add some game settings to the context
@@ -79,10 +79,19 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     context.rollData = context.actor.getRollData();
 
     // Prepare rune replacements on description, biography, notes
-    this._prepareRunesInEditors(context.data,['biography', 'description', 'notes']);
+    this._prepareRunesInEditors(context.system,['biography', 'description', 'notes']);
 
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
+
+    // Prepare enrichedSystemDescription
+    context.enrichedSystemDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});
+
+    // Prepare enrichedSystemBiography
+    context.enrichedSystemBiography = await TextEditor.enrichHTML(this.object.system.biography, {async: true});
+
+    // Prepare enrichedSystemNotes
+    context.enrichedSystemNotes = await TextEditor.enrichHTML(this.object.system.notes, {async: true});
 
     return context;
   }
@@ -120,8 +129,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     for (let i of context.items) {
       // Set up image
       i.img = i.img || DEFAULT_TOKEN;
-      // Graft item.type into item.data for convenient access
-      i.data.itemType = i.type;
+      // Graft item.type into item.system for convenient access
+      i.system.itemType = i.type;
 
       // Append to main abilities.
       if (i.type === 'keyword' || i.type === 'ability' || i.type === 'sidekick') {
@@ -167,12 +176,11 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     // Art gallery lightbox for limited-permission users
     html.find('.tab.art .gallery').on('click','a[data-action="view"]',GalleryControls.onClickView.bind(this));
 
-
+    
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
     
-
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
@@ -184,8 +192,9 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
           yes: () => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.items.get(li.data("itemId"));
-            doItemTween(`#item-${item.data._id}`,'remove',() => {
+            doItemTween(`#item-${item._id}`,'remove',() => {
               item.delete();
+              li.slideUp(200, () => this.render(false));
             });      
           },
           no: () => {},
@@ -280,12 +289,12 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     const itemData = {
       name: name,
       type: type,
-      data: data
+      system: data
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
+    delete itemData.system["type"];
 
-    // Finally, create the item!
+    // Finally, create the item! Might not need ", renderSheet: true"
     return Item.create(itemData, {parent: this.actor, renderSheet: true});
   }
 
@@ -293,8 +302,8 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
 
     if (formData.newart) {
       const filepath = formData.newart;
-      const nextIndex = Object.keys(this.object.data.data.gallery).length;
-      formData[`data.gallery.${nextIndex}`] = {
+      const nextIndex = Object.keys(this.object.system.gallery).length;
+      formData[`system.gallery.${nextIndex}`] = {
         img: filepath,
         caption: "",
       };

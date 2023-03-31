@@ -29,8 +29,8 @@ export class QuestWorldsActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this.data;
-    const data = actorData.data;
+    const actorData = this;
+    const systemData = actorData.system;
     const flags = actorData.flags.questworlds || {};
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
@@ -46,15 +46,7 @@ export class QuestWorldsActor extends Actor {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
-    const data = actorData.data;
-
-    /*
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(data.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
-    }
-    */
+    const systemData = actorData.system;
   }
 
   /**
@@ -64,8 +56,7 @@ export class QuestWorldsActor extends Actor {
     if (actorData.type !== 'npc') return;
 
     // Make modifications to data here. For example:
-    const data = actorData.data;
-    //data.xp = (data.cr * data.cr) * 100;
+    const systemData = actorData.system;
   }
 
   /**
@@ -85,56 +76,39 @@ export class QuestWorldsActor extends Actor {
    * Prepare character roll data.
    */
   _getCharacterRollData(data) {
-    if (this.data.type !== 'character') return;
-
-    /*
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-    }
-    */
-
-    /*
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
-    }
-    */
+    if (this.type !== 'character') return;
   }
 
   /**
    * Prepare NPC roll data.
    */
   _getNpcRollData(data) {
-    if (this.data.type !== 'npc') return;
+    if (this.type !== 'npc') return;
 
     // Process additional NPC data here.
   }
 
   hasStoryPoints() {
-    return this.data.data.points.hero > 0;
+    return this.system.points.hero > 0;
   }
 
   async spendStoryPoint() {
     if (game.settings.get('questworlds','useIndividualStoryPoints')) {
       // spend from actor's data
-      let sp = this.data.data.points.hero;
+      let sp = this.system.points.hero;
       sp = sp > 0 ? --sp : sp;
-      await this.update({'data.points.hero':sp});
+      await this.update({'system.points.hero':sp});
     }
   }
 
   async addStoryPoint() {
     // add a point to the sheet
-    const sp = this.data.data.points.hero;
-    await this.update({'data.points.hero':sp+1});
+    const sp = this.system.points.hero;
+    await this.update({'system.points.hero':sp+1});
   }
 
   async refreshStoryPoints() {
     // set sheet points to 3
-    await this.update({'data.points.hero':3});
+    await this.update({'system.points.hero':3});
   }
 }

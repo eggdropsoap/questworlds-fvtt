@@ -6,12 +6,12 @@
       <h1>
         <span class="nowrap">
           <input name="name" type="text" class="resizing" value="{{item.name}}" placeholder="Name"/>
-          {{fullRating data}}
+          {{fullRating system}}
         </span>
         <span class="nowrap">
-          {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
-          <input name="data.description" type="text" class="resizing" value="{{data.description}}" data-dtype="String"/>
-          {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+          {{#if system.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
+          <input name="system.description" type="text" class="resizing" value="{{system.description}}" data-dtype="String"/>
+          {{~#if system.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
         </span>
         
         <span class="hidden-sizer"></span>
@@ -22,8 +22,6 @@
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-
     {{>"systems/questworlds/templates/item/parts/item-rating-inputs.html"}}
-
   </section>
 </form>

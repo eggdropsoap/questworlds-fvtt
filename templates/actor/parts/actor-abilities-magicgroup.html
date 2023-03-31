@@ -4,11 +4,11 @@
             <h4>
                 <a class="rollable" data-roll-type="item">
                     <strong>{{item.name}}</strong>
-                    {{#if item.data.description}}(
+                    {{#if item.system.description}}(
                         {{~#if settings.useRunes~}}
-                        {{~runes data.description~}}
+                        {{~runes system.description~}}
                         {{~else~}}
-                        {{~data.description~}}
+                        {{~system.description~}}
                         {{~/if~}}
                     ){{/if}}
                 </a>
@@ -17,20 +17,20 @@
         <div class="item-controls menu">
             <div class="bg">
                 <a class="item-control item-edit" title="{{localize 'QUESTWORLDS.EditMagicGroup'}}"><i class="fas fa-edit"></i></a>
-                <a class="breakout-control breakout-create" data-action="create" title="{{localize 'QUESTWORLDS.AddBreakoutAbility'}}"><i class="fas fa-plus"></i></a>
+                <a class="breakout-control" data-action="create" data-type="info" title="{{localize 'QUESTWORLDS.AddInfo'}}"><i class="fas fa-plus"></i></a>
                 <a class="item-control item-delete" title="{{localize 'QUESTWORLDS.DeleteMagicGroup'}}"><i class="fas fa-trash"></i></a>
             </div>
         </div>
     </div>
-    {{#if data.linkedAbility}}
+    {{#if system.linkedAbility}}
     <div class="flexrow item-name description">
-        <h4>{{data.linkedAbility}}</h4>
+        <h4>{{system.linkedAbility}}</h4>
     </div>
     {{/if}}
 
-    {{#if item.data.embeds}}
+    {{#if item.system.embeds}}
     <ol class="breakouts-list">
-        {{#each item.data.embeds as | breakout |}}
+        {{#each item.system.embeds as | breakout |}}
             {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
     </ol>
