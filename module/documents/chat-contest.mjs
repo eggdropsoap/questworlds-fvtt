@@ -55,18 +55,8 @@ export class ChatContest {
             if (!(context)) return; // not a contest chat card
             if (context?.closed) return; // do nothing; the template took care of disabling the form
             const user = game.user;
-            const messageOwner = chatMessage.user;
             const actorName = data.alias; //could also use chatMessage.speaker.alias
             const messageOwners = chatMessage.whisper;
-
-            // All of this can probably be removed. Saving til I'm sure. xD
-            /*const GMs = game.users.filter(user => user.isGM === true).map(gm => gm.id);
-            const actor = game.actors.get(chatMessage.speaker.actor); 
-            const owners = actor.ownership;
-            const actorOwners = (owners.default === 3) ? 
-                game.users.players.map(player => player.id) : 
-                Object.keys(owners).filter(key => owners[key] === 3);
-            const whisperTargets = GMs.concat(actorOwners.filter(owner => GMs.indexOf(owner) < 0));*/
 
             const HTML_waitingForName = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingFor') + actorName + '...' + '</i>';
             const HTML_waitingForGM = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingForGM') +'</i>';
@@ -144,6 +134,7 @@ export class ChatContest {
                 .catch(e => {
                     ui.notifications.error(`${e.name}: ${e.message}`);
                 });
+                ui.chat.scrollBottom();
         },  // clickOverButton
         
         async clickApproveButton(event,chatMessage) {
@@ -211,8 +202,6 @@ export class ChatContest {
 
         async clickRollButton(event,chatMessage,html) {
             event.preventDefault();
-            console.log("inside clickRollButton");
-            console.log(chatMessage.flags.questworlds.formData);
             _resolveRoll(chatMessage);
         },  // clickRollButton()
     }   // Handlers
@@ -305,10 +294,9 @@ function _processFormData(formData) {
     runningTotal = RatingHelper.add(runningTotal,beneMods);
     
     /* calculate modified resistance rating */
-    /* if 'Manual Entry' is selected, provide */
-    const resistance = (formData.difficultyLevel == 'manual_entry') ? {rating: 0, masteries: 0} : RatingHelper.getDifficulty(formData.difficultyLevel);
-
-    console.log(resistance);
+    // get the starting rating of the resistance or '0' if manual entry is selected
+    const manualEntryCheck = formData.difficultyLevel == 'manual_entry';
+    const resistance = (manualEntryCheck) ? {rating: 0, masteries: 0} : RatingHelper.getDifficulty(formData.difficultyLevel);
 
     // add the difficulty modifiers
     const diffMods = {
@@ -319,7 +307,18 @@ function _processFormData(formData) {
         {rating: resistance.rating, masteries: resistance.masteries},
         {rating: diffMods.rating, masteries: diffMods.masteries});
 
-    console.log(difficultyTotal);
+    // grab custom difficulty or set to 0
+    const diffCustom = {
+        rating: formData.manualDifficulty || 0,
+        masteries: 0,
+    }
+    
+    // only add custom difficulty if manual entry is selected and custom difficulty is not set to 0
+    if (manualEntryCheck && diffCustom != {rating: 0, masteries: 0}) {
+        difficultyTotal = RatingHelper.add(
+            {rating: difficultyTotal.rating, masteries: difficultyTotal.masteries},
+            {rating: diffCustom.rating, masteries: diffCustom.masteries});
+    }
 
     /* check for assured contests */
     const assuredVictory = RatingHelper.merge(difficultyTotal) <= 0;
