@@ -266,7 +266,6 @@ export class QuestWorldsItem extends Item {
                             const min = list[key]?.min ? list[key].min : null;
                             const label = min ? `${name} (${mod} or ${min})` : `${name} (${mod})`;
                             result[key] = label;
-                            console.log(mod);
                         }
                         return result;
                     })(),
