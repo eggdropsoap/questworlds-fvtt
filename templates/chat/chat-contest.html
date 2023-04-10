@@ -43,13 +43,21 @@
         </div>
         <div class="options">
             <!-- <hr> -->
-            <div class="difficulty-level">
-                <label>{{localize 'QUESTWORLDS.chatcontest.DifficultyLevel'}} ({{localize 'QUESTWORLDS.chatcontest.Base'}} {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
-                <select name="difficultyLevel">
-                    <optgroup label="Base difficulty: {{formatRating baseDifficulty.rating baseDifficulty.masteries useRunes="false"}}">
-                        {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}}
-                    </optgroup>
-                </select>
+            <div class="flexrow">
+                <div class="difficulty-level">
+                    <label>{{localize 'QUESTWORLDS.chatcontest.DifficultyLevel'}} ({{localize 'QUESTWORLDS.chatcontest.Base'}} {{formatRating baseDifficulty.rating baseDifficulty.masteries}})</label>
+                    <select name="difficultyLevel">
+                        <optgroup label="Base difficulty: {{formatRating baseDifficulty.rating baseDifficulty.masteries useRunes="false"}}">
+                            {{selectOptions settings.difficultyLevels selected=difficultyLevel localize=false}}
+                        </optgroup>
+                    </select>
+                </div>
+                <!-- only show manual entry label and input if it is selected in the dropdown -->
+                {{#if (iseq difficultyLevel 'manual_entry')}}
+                <div class="manual-entry">
+                    <input name="manualDifficulty" type="number" value="{{manualDifficulty}}" data-dtype="Number">
+                </div>
+                {{/if}}
             </div>
             <div class="flexrow difficulty-modifiers">
                 <label class="flex0 nowrap">{{localize 'QUESTWORLDS.chatcontest.DifficultyModifiers'}}</label>
