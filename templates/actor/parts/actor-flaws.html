@@ -10,11 +10,11 @@
       <div class="item-body flexrow">
         <div class="item-name">
           <h4>
-            {{#if item.data.rating}}
+            {{#if item.system.rating}}
             <a class="rollable" data-roll-type="item">
             {{/if}}
-              {{item.name}} {{#unless (zeroRating item.data)}}{{fullRating item.data}}{{/unless}} {{#if data.description}}({{data.description}}){{/if}}</h4>
-            {{#if item.data.rating}}
+              {{item.name}} {{#unless (zeroRating item.system)}}{{fullRating item.system}}{{/unless}} {{#if system.description}}({{system.description}}){{/if}}</h4>
+            {{#if item.system.rating}}
             </a>
             {{/if}}
         </div>

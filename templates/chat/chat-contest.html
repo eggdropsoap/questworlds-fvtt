@@ -16,7 +16,7 @@
                     <li class="{{variant}} {{#if checked}}active{{/if}}">
                         <i class="{{#if checked}}fas fa-check-circle{{else}}far fa-circle{{/if}}"></i>
                         <label for="msg-{{../chatId}}-benefit-{{id}}">
-                            {{name}} <strong>{{formatRating data.rating data.masteries modifier="true"}}</strong>
+                            {{name}} <strong>{{formatRating system.rating system.masteries modifier="true"}}</strong>
                         </label>
                         <input id="msg-{{../chatId}}-benefit-{{id}}" type="checkbox" name="benefits.{{@key}}.checked" data-dtype="Boolean" {{checked checked}}>
                         

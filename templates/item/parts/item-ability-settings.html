@@ -1,14 +1,14 @@
 <div class="ability-variant">
-<div class="select-wrapper">
-  <select name="data.variant">
-  <optgroup label="{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}"">
-    <option value="ability" {{#if (iseq data.variant 'ability')}}selected{{/if}}>{{localize 'QUESTWORLDS.Ability'}}</option>
-    <option value="keyword" {{#if (iseq data.variant 'keyword')}}selected{{/if}}>{{localize 'QUESTWORLDS.Keyword'}}</option>
-    <option value="sidekick" {{#if (iseq data.variant 'sidekick')}}selected{{/if}}>{{localize (concat 'QUESTWORLDS.' settings.sidekickName)}}</option>
-  </optgroup>
-  <optgroup label="{{localize 'QUESTWORLDS.Groups'}}">
-    <option value="magicgroup" {{#if (iseq data.variant 'magicgroup')}}selected{{/if}}>{{localize 'QUESTWORLDS.MagicGroup'}}</option>
-  </optgroup>
-</select>
-</div>
+  <div class="select-wrapper">
+    <select name="system.variant">
+    <optgroup label="{{localize 'QUESTWORLDS.KeywordsAndAbilities'}}"">
+      <option value="ability" {{#if (iseq system.variant 'ability')}}selected{{/if}}>{{localize 'QUESTWORLDS.Ability'}}</option>
+      <option value="keyword" {{#if (iseq system.variant 'keyword')}}selected{{/if}}>{{localize 'QUESTWORLDS.Keyword'}}</option>
+      <option value="sidekick" {{#if (iseq system.variant 'sidekick')}}selected{{/if}}>{{localize (concat 'QUESTWORLDS.' settings.sidekickName)}}</option>
+    </optgroup>
+    <optgroup label="{{localize 'QUESTWORLDS.Groups'}}">
+      <option value="magicgroup" {{#if (iseq system.variant 'magicgroup')}}selected{{/if}}>{{localize 'QUESTWORLDS.MagicGroup'}}</option>
+    </optgroup>
+  </select>
+  </div>
 </div>

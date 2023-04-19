@@ -19,25 +19,34 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData(options) {
     // Retrieve the data structure from the base sheet. You can inspect or log
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
-    const context = super.getData();
+    const context = super.getData(options);
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = context.actor.data;
+    const actorData = this.actor.toObject(false);
 
-    // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = actorData.data;
+    // Add the actor's data to context.system for easier access, as well as flags.
+    context.system = actorData.system;
     context.flags = actorData.flags;
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
     // Prepare rune token replacement in editors
-    this._prepareRunesInEditors(context.data,['description']);
+    this._prepareRunesInEditors(context.system,['description']);
+
+    // Prepare enrichedSystemDescription
+    context.enrichedSystemDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});
+
+    // Prepare enrichedSystemReputation
+    context.enrichedSystemReputation = await TextEditor.enrichHTML(this.object.system.biography, {async: true});
+
+    // Prepare enrichedSystemNotes
+    context.enrichedSystemNotes = await TextEditor.enrichHTML(this.object.system.notes, {async: true});
 
     return context;
   }
@@ -102,10 +111,10 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
     const itemData = {
       name: name,
       type: type,
-      data: data
+      system: data
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
+    delete itemData.system["type"];
 
     // Finally, create the item!
     return await Item.create(itemData, {parent: this.actor});

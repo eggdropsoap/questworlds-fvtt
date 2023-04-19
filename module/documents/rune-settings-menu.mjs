@@ -21,8 +21,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
     }
 
     getData() {
-        // console.log("getData() fired");
-
         const settingData = game.settings.get('questworlds', 'runeFontSettings');
         // const settingData = {};   // DEBUG: Clear settings. If paired with .set(), wipes stored settings too!
         
@@ -41,7 +39,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
         let defaultRunesCount = defaultRunes.length;
         if (settingsRunesCount < defaultRunesCount) {
             ui.notifications.info(`defaultRunes contains ${defaultRunesCount - settingsRunesCount} new Runes. Merging…`);
-            // console.log(defaultRunes);
             // construct the settings object, merging from the default runes set
             for (let value of defaultRunes ) {
                 settingData.runes[value] = {
@@ -86,8 +83,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
     }
 
     _updateObject(event, formData) {
-        // console.log("_updateObject() fired")
-
         // bail early if rune support not enabled
         const useRunes = game.settings.get('questworlds','useRunes');
         if (!useRunes) return;
@@ -144,8 +139,6 @@ export class RuneFontsSettingsMenuClass extends FormApplication {
                 data.cssRules = old_data.cssRules;
             }
         }
-
-        // console.log(data);
 
         // don't store temporary state formdata
         delete data.newfont;

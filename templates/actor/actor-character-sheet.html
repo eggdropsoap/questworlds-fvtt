@@ -6,7 +6,7 @@
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
       </h1>
-      <input name="data.concept" type="text" class="charconcept" value="{{data.concept}}" data-dtype="String" placeholder="{{localize 'QUESTWORLDS.CharacterConcept'}}">
+      <input name="system.concept" type="text" class="charconcept" value="{{system.concept}}" data-dtype="String" placeholder="{{localize 'QUESTWORLDS.CharacterConcept'}}">
     </div>
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="60" width="60"/>
   </header>
@@ -41,27 +41,27 @@
       {{!-- Hero points, XP, and such --}}
       <section class="resources footer flexrow" >
         <div class="resource-group slots">
-          <label for="data.points.abilitySlots" class="resource-label">{{localize 'QUESTWORLDS.AbilitySlots'}}</label>
+          <label for="system.points.abilitySlots" class="resource-label">{{localize 'QUESTWORLDS.AbilitySlots'}}</label>
           <div>
-            <input type="text" name="data.points.abilitySlots" value="{{data.points.abilitySlots}}" data-dtype="Number"/>
+            <input type="text" name="system.points.abilitySlots" value="{{system.points.abilitySlots}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource-group improvement">
-          <label for="data.points.improvement.asYouGo" class="resource-label">{{localize 'QUESTWORLDS.ImprovementPoints'}}</label>
+          <label for="system.points.improvement.asYouGo" class="resource-label">{{localize 'QUESTWORLDS.ImprovementPoints'}}</label>
           <div class="flexrow points">
             <div class="flexcol">
-              <input type="text" name="data.points.improvement.asYouGo" value="{{data.points.improvement.asYouGo}}" data-dtype="Number"/>
+              <input type="text" name="system.points.improvement.asYouGo" value="{{system.points.improvement.asYouGo}}" data-dtype="Number"/>
               <span class="type label">{{localize 'QUESTWORLDS.Any'}}</span>
             </div>
             <div class="divider">/</div>
             <div class="flexcol">
-              <input type="text" name="data.points.improvement.ability" value="{{data.points.improvement.ability}}" data-dtype="Number"/>
+              <input type="text" name="system.points.improvement.ability" value="{{system.points.improvement.ability}}" data-dtype="Number"/>
               <span class="type label">{{localize 'QUESTWORLDS.Abilities'}}</span>
             </div>
             <div class="divider">/</div>
             <div class="flexcol">
-              <input type="text" name="data.points.improvement.keyword" value="{{data.points.improvement.keyword}}" data-dtype="Number"/>  
+              <input type="text" name="system.points.improvement.keyword" value="{{system.points.improvement.keyword}}" data-dtype="Number"/>  
               <span class="type label">{{localize 'QUESTWORLDS.Keywords'}}</span>
             </div>
           </div>
@@ -70,25 +70,25 @@
         <div class="resource-group xp">
           <div class="xp-hud flexrow">
             {{>"systems/questworlds/templates/actor/parts/actor-xp-bar.html"}}
-            <div class="advances flex0 {{#if data.points.advances}}available new{{else}}history{{/if}}">
-              {{data.points.advances}}
+            <div class="advances flex0 {{#if system.points.advances}}available new{{else}}history{{/if}}">
+              {{system.points.advances}}
             </div>
           </div>
           {{!--
           <div>
-            <input type="text" name="data.points.xp" value="{{data.points.xp}}" data-dtype="Number"/>
-            <input type="text" name="data.points.careerXp" value="{{data.points.careerXp}}" data-dtype="Number"/>
-            <input type="text" name="data.points.advances" value="{{data.points.advances}}" data-dtype="Number"/>              
+            <input type="text" name="system.points.xp" value="{{system.points.xp}}" data-dtype="Number"/>
+            <input type="text" name="system.points.careerXp" value="{{system.points.careerXp}}" data-dtype="Number"/>
+            <input type="text" name="system.points.advances" value="{{system.points.advances}}" data-dtype="Number"/>              
           </div>
           --}}
         </div>
 
         <div class="resource-group storypoints {{#if usePool}}pool{{else}}personal{{/if}}" data-actor-id={{actor.id}}>
-          <label for="data.points.hero" class="resource-label">
+          <label for="system.points.hero" class="resource-label">
             {{~#if settings.usePool}}{{storyPointsPoolName}}{{else}}{{storyPointsName}}{{/if~}}
           </label>
           <div>
-            <span class="story-points-pool">{{#if settings.usePool}}{{poolValue}}{{else}}{{data.points.hero}}{{/if}}</span>
+            <span class="story-points-pool">{{#if settings.usePool}}{{poolValue}}{{else}}{{system.points.hero}}{{/if}}</span>
           </div>
         </div>
 
@@ -102,11 +102,23 @@
       <div class="grid grid-2col">
         <section class="flexcol">
           <h2>{{localize 'QUESTWORLDS.PhysicalDescription'}}</h2>
-          {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+          {{editor 
+            enrichedSystemDescription
+            target="system.description" 
+            button=true 
+            editable=editable
+            engine="prosemirror"
+          }}
         </section>
         <section class="flexcol">
           <h2>{{localize 'QUESTWORLDS.Biography'}}</h2>
-          {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+          {{editor 
+            enrichedSystemBiography
+            target="system.biography" 
+            button=true 
+            editable=editable
+            engine="prosemirror"
+          }}
         </section>
       </div>
     </div>
@@ -124,15 +136,15 @@
             </figcaption>
           </figure>
         </li>
-        {{#each data.gallery as |art|}}
+        {{#each system.gallery as |art|}}
         <li class="art">
           <figure>
             <img class="" src="{{art.img}}" width="200" data-index="{{@key}}" data-path="{{art.img}}">
             <figcaption>
-              <div class="nice fake-input {{#unless art.caption}}placeholder{{/unless}}" data-target-input="data.gallery.{{@key}}.caption">
+              <div class="nice fake-input {{#unless art.caption}}placeholder{{/unless}}" data-target-input="system.gallery.{{@key}}.caption">
                 {{~#if art.caption}}{{art.caption}}{{else}}{{localize 'QUESTWORLDS.untitled'}}{{/if~}}
               </div>
-              <input type="hidden" name="data.gallery.{{@key}}.caption" value="{{art.caption}}" placeholder="{{localize 'QUESTWORLDS.untitled'}}">
+              <input type="hidden" name="system.gallery.{{@key}}.caption" value="{{art.caption}}" placeholder="{{localize 'QUESTWORLDS.untitled'}}">
             </figcaption>
           </figure>
           <ol class="controls">
@@ -153,11 +165,16 @@
     {{!-- Notes Tab --}}
     {{#if editable}}
     <div class="tab player-notes" data-group="primary" data-tab="notes">
-      {{editor content=data.notes target="data.notes" rollData=rollData button=true owner=owner editable=editable}}
+      {{editor 
+        enrichedSystemNotes
+        target="system.notes" 
+        button=true 
+        editable=editable
+        engine="prosemirror"
+      }}
     </div>
     {{/if}}
 
   </section>
 
 </form>
-
