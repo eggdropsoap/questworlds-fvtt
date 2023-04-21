@@ -8,9 +8,9 @@
           <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
         </span>
         <span class="nowrap">
-          {{#if data.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
-          <input name="data.description" type="text" class="resizing" value="{{data.description}}" data-dtype="String"/>
-          {{~#if data.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
+          {{#if system.description}}({{else}}<span class="placeholder">(</span>{{/if~}}
+          <input name="system.description" type="text" class="resizing" value="{{system.description}}" data-dtype="String"/>
+          {{~#if system.description}}){{else}}<span class="placeholder">)</span>{{/if~}}
         </span>
 
         <span class="hidden-sizer"></span>
@@ -34,7 +34,7 @@
           <!-- <a class="breakout-control" title="{{localize 'QUESTWORLDS.BreakoutAbility'}}" data-action="create" data-type="breakout"><i class="fas fa-share fa-flip-vertical"></i></a> -->
         {{/"systems/questworlds/templates/item/parts/item-breakouts-header.html"}}
 
-        {{#each data.embeds as |breakout index|}}
+        {{#each system.embeds as |breakout index|}}
           {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
       </ol>

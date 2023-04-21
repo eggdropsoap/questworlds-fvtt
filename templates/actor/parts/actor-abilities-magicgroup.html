@@ -4,11 +4,11 @@
             <h4>
                 <a class="rollable" data-roll-type="item">
                     <strong>{{item.name}}</strong>
-                    {{#if item.data.description}}(
+                    {{#if item.system.description}}(
                         {{~#if settings.useRunes~}}
-                        {{~runes data.description~}}
+                        {{~runes system.description~}}
                         {{~else~}}
-                        {{~data.description~}}
+                        {{~system.description~}}
                         {{~/if~}}
                     ){{/if}}
                 </a>
@@ -22,15 +22,15 @@
             </div>
         </div>
     </div>
-    {{#if data.linkedAbility}}
+    {{#if system.linkedAbility}}
     <div class="flexrow item-name description">
-        <h4>{{data.linkedAbility}}</h4>
+        <h4>{{system.linkedAbility}}</h4>
     </div>
     {{/if}}
 
-    {{#if item.data.embeds}}
+    {{#if item.system.embeds}}
     <ol class="breakouts-list">
-        {{#each item.data.embeds as | breakout |}}
+        {{#each item.system.embeds as | breakout |}}
             {{> "systems/questworlds/templates/embeds/embed.html" breakout=breakout settings=../settings }}
         {{/each}}
     </ol>

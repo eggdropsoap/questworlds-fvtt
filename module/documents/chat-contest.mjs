@@ -36,7 +36,6 @@ export class ChatContest {
     static HookListeners = {
 
         async renderChatLog(app, html, data) {
-            // console.log('ChatContest.renderChatLogHook()');
         },  // listener for renderChatLog hook
     
         /* make sure the game is ready before trying to get flags &c */
@@ -52,16 +51,11 @@ export class ChatContest {
         },
 
         async _renderChatMessage(chatMessage, html, data) {
-            // console.log('ChatContest._renderChatMessageHook()');
-
             const context = await chatMessage.getFlag('questworlds','formData');
-            // console.log('context for chatMessage ID',chatMessage.id, context);
-
             if (!(context)) return; // not a contest chat card
             if (context?.closed) return;    // do nothing; the template took care of disabling the form
-
             const user = game.user;
-            const messageOwner = chatMessage.data.user;
+            const messageOwner = chatMessage.user.id;
 
             const HTML_waitingForPlayer = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingForPlayer') +'</i>';
             const HTML_waitingForGM = '<i>'+ game.i18n.localize('QUESTWORLDS.chatcontest.WaitingForGM') +'</i>';
@@ -268,7 +262,7 @@ function _processFormData(formData) {
     for (let key of Object.keys(formData.benefits)) {
         const bene = formData.benefits[key];
         if (bene.checked) {
-            beneMods = RatingHelper.add(beneMods,bene.data);
+            beneMods = RatingHelper.add(beneMods,bene.system);
             benefitsRisked += (bene.variant == 'benefit') ? 1 : 0;
         }
     }
@@ -446,9 +440,7 @@ function _updateChatMessage(chatMessage,formData) {
         if (formData) {
             chatMessage.setFlag('questworlds','formData',formData).then( () => {
                 ChatContest.refreshChatMessage(chatMessage)
-            });
-            // await chatMessage.setFlag('questworlds','formData',formData);
-            // await ChatContest.refreshChatMessage(chatMessage);    
+            });    
         }
     }
 }
@@ -486,7 +478,7 @@ function _getContext(chatMessage) {
 function _getCurrentFormData(html) {
     const form = $(html).find('form')[0];
     const theForm = new FormDataExtended(form);
-    const formContents = theForm.toObject();
+    const formContents = theForm.object;
 
     return formContents;
 }
