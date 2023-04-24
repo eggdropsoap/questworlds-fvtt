@@ -45,7 +45,7 @@ export class QuestWorldsActorCharacterSheet extends ActorSheet {
     const context = super.getData(options);
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = this.actor.toObject(false);
+    const actorData = context.actor.toObject(false);
 
     // Add the actor's data to context.system for easier access, as well as flags.
     context.system = actorData.system;
