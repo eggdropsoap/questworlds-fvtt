@@ -178,7 +178,7 @@ export class QuestWorldsItem extends Item {
                 if (embed.type == 'breakout') {
                     // rating is just a bonus, so add to the parent (assumed a keyword)
                     let parent = QuestWorldsItem.getEmbedById(this.system.embeds,embed.parentId);
-                    if(!parent) parent = item; // it's a breakout directly from an Item, not embed
+                    if(!parent) parent = item.system; // it's a breakout directly from an Item, not embed
                     ({rating, masteries} = RatingHelper.add(
                         {rating: rating, masteries: masteries},
                         {rating: parent?.rating, masteries: parent?.masteries})
