@@ -23,7 +23,12 @@ export class QuestWorldsItemSheet extends ItemSheet {
         const path = "systems/questworlds/templates/item";
         
         // Return a sheet for each item type and/or item type variant
-        return `${path}/item-${this.item.type}-sheet.html`;
+        if (this.item.type == "ability")
+            // abilities, keywords, sidekicks, and magic-groups (variants of an Ability Item)
+            return `${path}/item-${this.item.system.variant}-sheet.html`;
+        else
+            // Flaws and Benefits (a consequence is just a Benefit Item with negative rating)
+            return `${path}/item-${this.item.type}-sheet.html`;
     }
 
     /* -------------------------------------------- */
