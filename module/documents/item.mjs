@@ -73,7 +73,7 @@ export class QuestWorldsItem extends Item {
                 defaultRating = RatingHelper.defaultRating(itemType);
             default:
         }
-        if (defaultRating) await this.updateSource({rating: defaultRating});
+        if (defaultRating) await this.updateSource({system: {rating: defaultRating}});
     }
 
     get variant() {
