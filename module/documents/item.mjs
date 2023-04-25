@@ -76,6 +76,22 @@ export class QuestWorldsItem extends Item {
         if (defaultRating) await this.updateSource({system: {rating: defaultRating}});
     }
 
+    /**
+     * variant() accessor
+     * 
+     * Deduce what kind of item this is, and return its most specific type identity string
+     * 
+     * Pseudocode:
+     * If this is a Benefit Item, type is based on rating sign
+     *      - get item's rating and mastery
+     *      - translate them into an integer
+     *      - if integer is zero or positive: benefit variant
+     *      - other: consequence variant
+     * Otherwise this is any other kind of Item, which is either identified from Item Type or system.variant
+     *      - is system.variant not null? Then it's that string
+     *      - else is Item Type not null? Then it's that string
+     *      - else it's undefined (which should never happen outside bugs), so return undefined
+     */
     get variant() {
         if (this.type == 'benefit')
             return RatingHelper.merge({
