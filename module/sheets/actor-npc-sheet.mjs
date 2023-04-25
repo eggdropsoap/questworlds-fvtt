@@ -43,7 +43,7 @@ export class QuestWorldsActorNpcSheet extends ActorSheet {
     context.enrichedSystemDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});
 
     // Prepare enrichedSystemReputation
-    context.enrichedSystemReputation = await TextEditor.enrichHTML(this.object.system.biography, {async: true});
+    context.enrichedSystemReputation = await TextEditor.enrichHTML(this.object.system.reputation, {async: true});
 
     // Prepare enrichedSystemNotes
     context.enrichedSystemNotes = await TextEditor.enrichHTML(this.object.system.notes, {async: true});
