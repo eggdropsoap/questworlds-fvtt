@@ -1,3 +1,12 @@
+v0.1.3 (2023-05-27):
+
+- Compatibility update for v10 thanks to contributions by @Cosmic-Cocoa.
+
+v0.1.2 (2022-01-04):
+
+- Bumped version compatibility for v9 stable. Initial testing indicates it works unmodified—bug reports welcome.
+- Fix a minor console error caused by trying to load socketlib regardless of whether it has been activated yet.
+
 v0.1.1 (2021-11-15):
 
 - Documentation tweaks to unambiguously state unofficial status (that is, not affiliated with or endorsed by Chaosium)
